@@ -78,6 +78,17 @@ export class ChatController {
         content: dto.userMessage,
       })
 
+      // Auto-title: set conversation title from the first user message
+      const history = await this.chatService.getMessageHistory(dto.conversationId)
+      const userMessages = history.filter((m) => m.role === 'user')
+      if (userMessages.length === 1) {
+        const shortTitle = dto.userMessage.length > 50
+          ? dto.userMessage.slice(0, 50) + '…'
+          : dto.userMessage
+        await this.chatService.updateConversationTitle(dto.conversationId, shortTitle)
+        send({ type: 'title', title: shortTitle })
+      }
+
       // 2. Detect action intent before streaming (project / document creation)
       const actionResult = await this.detectAndExecuteAction(
         dto.userMessage,
@@ -112,6 +123,8 @@ export class ChatController {
           role: 'assistant',
           content: fullResponse,
         })
+        // Extract and persist memories from user's message (non-blocking)
+        this.contextEngine.extractAndSaveMemories(userId, dto.userMessage).catch(() => {})
       }
 
       send({ type: 'done', response: fullResponse })

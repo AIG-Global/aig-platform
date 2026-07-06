@@ -77,8 +77,45 @@ export class ContextEngine {
   }
 
   /**
-   * After a conversation turn, extract and save memorable facts.
-   * Called async, non-blocking.
+   * Extract memorable facts from the user's message and persist them.
+   * Runs after each turn. Uses heuristics (no extra LLM call needed).
+   */
+  async extractAndSaveMemories(userId: string, userMessage: string): Promise<void> {
+    const msg = userMessage.toLowerCase()
+
+    // User's name
+    const nameMatch = userMessage.match(/(?:my name is|i'm|i am|call me)\s+([A-Z][a-z]+)/i)
+    if (nameMatch) {
+      await this.saveMemory(userId, 'name', nameMatch[1], 'user_preference')
+    }
+
+    // Programming language preference
+    const langMatch = msg.match(/(?:i (?:use|prefer|work with|know)|using|we use)\s+(python|javascript|typescript|rust|go|java|c\+\+|ruby|php)/i)
+    if (langMatch) {
+      await this.saveMemory(userId, 'programming_language', langMatch[1], 'technical_constraint')
+    }
+
+    // Company or project context
+    const companyMatch = userMessage.match(/(?:my company|our company|we're building|i'm building|working on)\s+(?:is called\s+)?["']?([A-Z][A-Za-z0-9\s]{2,30})["']?/i)
+    if (companyMatch) {
+      await this.saveMemory(userId, 'company_context', companyMatch[1].trim(), 'project_context')
+    }
+
+    // Role/title
+    const roleMatch = userMessage.match(/(?:i'm a|i am a|my role is|i work as)\s+([a-z\s]+(?:developer|designer|manager|founder|ceo|cto|engineer|architect|lead))/i)
+    if (roleMatch) {
+      await this.saveMemory(userId, 'role', roleMatch[1].trim(), 'user_preference')
+    }
+
+    // Explicit preference statements
+    const prefMatch = userMessage.match(/(?:i prefer|i like|i always|i usually|i want|please)\s+(.{10,60})/i)
+    if (prefMatch && !prefMatch[1].includes('?')) {
+      await this.saveMemory(userId, `preference_${Date.now()}`, prefMatch[1].trim().slice(0, 100), 'user_preference')
+    }
+  }
+
+  /**
+   * Persist a memory entry (upsert by userId + category + key).
    */
   async saveMemory(
     userId: string,

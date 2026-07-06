@@ -185,6 +185,8 @@ export default function ChatPage() {
   const [documents, setDocuments] = useState<DocItem[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [streaming, setStreaming] = useState(false)
+  const abortRef = useRef<AbortController | null>(null)
+  const [lastUserMessage, setLastUserMessage] = useState('')
 
   // Initialize conversation on mount
   useEffect(() => {
@@ -322,6 +324,11 @@ export default function ChatPage() {
     setInputValue('')
     setLoading(true)
     setStreaming(true)
+    setLastUserMessage(messageText)
+
+    // Create abort controller for cancel support
+    const abort = new AbortController()
+    abortRef.current = abort
 
     // Add user message immediately
     const userMsgId = Date.now().toString()
@@ -336,6 +343,7 @@ export default function ChatPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ conversationId, userMessage: messageText, userId }),
+        signal: abort.signal,
       })
 
       if (!response.ok) throw new Error(`API error: ${response.status}`)
@@ -362,34 +370,60 @@ export default function ChatPage() {
             if (data.type === 'chunk' && data.content) {
               fullContent += data.content
               setMessages((prev) => prev.map((m) => m.id === placeholderId ? { ...m, content: fullContent } : m))
+            } else if (data.type === 'title') {
+              setConversationTitle(data.title)
+              fetch(`${API}/api/chat/user/${userId}`).then(r => r.ok ? r.json() : []).then(setConversations).catch(() => {})
             } else if (data.type === 'action') {
               if (data.action === 'create_project') fetch(`${API}/api/projects/user/${userId}`).then(r => r.ok ? r.json() : []).then(setProjects).catch(() => {})
               if (data.action === 'create_document') fetch(`${API}/api/documents/user/${userId}`).then(r => r.ok ? r.json() : []).then(setDocuments).catch(() => {})
             } else if (data.type === 'done') {
-              // Auto-title
-              if (messages.length <= 1) {
-                const shortTitle = messageText.length > 40 ? messageText.slice(0, 40) + '…' : messageText
-                fetch(`${API}/api/chat/${conversationId}/title`, {
-                  method: 'PATCH', headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ title: shortTitle }),
-                }).then(() => {
-                  setConversationTitle(shortTitle)
-                  fetch(`${API}/api/chat/user/${userId}`).then(r => r.ok ? r.json() : []).then(setConversations).catch(() => {})
-                }).catch(() => {})
-              }
+              // Refresh conversation list
+              fetch(`${API}/api/chat/user/${userId}`).then(r => r.ok ? r.json() : []).then(setConversations).catch(() => {})
             }
           } catch {}
         }
       }
       // Ensure final content rendered
       if (fullContent) setMessages((prev) => prev.map((m) => m.id === placeholderId ? { ...m, content: fullContent } : m))
-    } catch (error) {
-      console.error('Stream error:', error)
-      setMessages((prev) => prev.map((m) => m.id === placeholderId ? { ...m, content: 'Sorry, I encountered an error. Please try again.' } : m))
+    } catch (error: any) {
+      if (error?.name === 'AbortError') {
+        // User cancelled — keep partial content, mark as stopped
+        setMessages((prev) => prev.map((m) =>
+          m.id === placeholderId && !m.content
+            ? { ...m, content: '*Generation stopped.*' }
+            : m
+        ))
+      } else {
+        console.error('Stream error:', error)
+        setMessages((prev) => prev.map((m) => m.id === placeholderId ? { ...m, content: 'Sorry, I encountered an error. Please try again.' } : m))
+      }
     } finally {
+      abortRef.current = null
       setLoading(false)
       setStreaming(false)
     }
+  }
+
+  const handleCancel = () => {
+    abortRef.current?.abort()
+  }
+
+  const handleRetry = async () => {
+    if (!lastUserMessage || streaming) return
+    // Remove last assistant message and resend
+    setMessages((prev) => {
+      const withoutLast = [...prev]
+      while (withoutLast.length > 0 && withoutLast[withoutLast.length - 1].role === 'assistant') {
+        withoutLast.pop()
+      }
+      return withoutLast
+    })
+    setInputValue(lastUserMessage)
+    // Small delay to let state settle, then submit
+    setTimeout(() => {
+      const form = document.querySelector('form')
+      form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+    }, 50)
   }
 
   const handleLogout = () => {
@@ -791,7 +825,7 @@ export default function ChatPage() {
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask Diana anything..."
+                placeholder={streaming ? 'Diana is typing...' : 'Ask Diana anything...'}
                 disabled={loading || streaming}
                 style={{
                   flex: 1,
@@ -809,30 +843,71 @@ export default function ChatPage() {
                 onFocus={(e) => !loading && !streaming && (e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.5)')}
                 onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
               />
-              <button
-                type="submit"
-                disabled={loading || streaming || !inputValue.trim()}
-                style={{
-                  padding: '12px 24px',
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: '#fff',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  cursor: loading || streaming || !inputValue.trim() ? 'not-allowed' : 'pointer',
-                  opacity: loading || streaming || !inputValue.trim() ? 0.6 : 1,
-                  transition: 'all 0.3s ease',
-                }}
-                onMouseEnter={(e) => {
-                  if (!loading && !streaming && inputValue.trim()) {
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                  }
-                }}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-              >
-                Send
-              </button>
+              {streaming ? (
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  style={{
+                    padding: '12px 20px',
+                    background: 'rgba(239, 68, 68, 0.2)',
+                    border: '1px solid rgba(239, 68, 68, 0.4)',
+                    borderRadius: '8px',
+                    color: '#f87171',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.3)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'}
+                >
+                  Stop
+                </button>
+              ) : (
+                <>
+                  {lastUserMessage && messages.length > 0 && messages[messages.length - 1].role === 'assistant' && (
+                    <button
+                      type="button"
+                      onClick={handleRetry}
+                      title="Retry last message"
+                      style={{
+                        padding: '12px 14px',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        borderRadius: '8px',
+                        color: '#aaa',
+                        fontSize: '16px',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = '#aaa'}
+                    >
+                      ↺
+                    </button>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={!inputValue.trim()}
+                    style={{
+                      padding: '12px 24px',
+                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      border: 'none',
+                      borderRadius: '8px',
+                      color: '#fff',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      cursor: !inputValue.trim() ? 'not-allowed' : 'pointer',
+                      opacity: !inputValue.trim() ? 0.6 : 1,
+                      transition: 'all 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => { if (inputValue.trim()) e.currentTarget.style.transform = 'translateY(-2px)' }}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                  >
+                    Send
+                  </button>
+                </>
+              )}
             </form>
           </main>
         </div>
