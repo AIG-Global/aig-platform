@@ -190,6 +190,7 @@ export default function ChatPage() {
   const abortRef = useRef<AbortController | null>(null)
   const [lastUserMessage, setLastUserMessage] = useState('')
   const [createdWorkspace, setCreatedWorkspace] = useState<{ workspaceId: string; title: string } | null>(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   // Initialize conversation on mount
   useEffect(() => {
@@ -501,20 +502,29 @@ export default function ChatPage() {
   return (
     <html>
       <body style={{ margin: 0, padding: 0, backgroundColor: '#0a0a0a', color: '#fff', fontFamily: 'system-ui, sans-serif' }}>
-        <div style={{
-          display: 'flex',
-          height: '100vh',
-          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)',
-        }}>
+        <style>{`
+          .chat-layout { display: flex; height: 100dvh; }
+          .chat-sidebar { width: 260px; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; background: rgba(0,0,0,0.3); overflow-y: auto; transition: transform 0.25s ease; }
+          .chat-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+          .msg-bubble { max-width: 70%; padding: 12px 16px; border-radius: 12px; word-break: break-word; line-height: 1.5; }
+          .sidebar-overlay { display: none; }
+          @media (max-width: 640px) {
+            .chat-sidebar { position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; transform: translateX(-100%); width: 280px; }
+            .chat-sidebar.open { transform: translateX(0); box-shadow: 4px 0 32px rgba(0,0,0,0.6); }
+            .sidebar-overlay { display: block; position: fixed; inset: 0; z-index: 49; background: rgba(0,0,0,0.5); }
+            .msg-bubble { max-width: 88% !important; }
+            .menu-btn { display: flex !important; }
+          }
+          @media (min-width: 641px) {
+            .menu-btn { display: none !important; }
+          }
+        `}</style>
+        <div className="chat-layout" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)' }}>
+          {/* Mobile sidebar overlay */}
+          {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
+
           {/* Sidebar */}
-          <aside style={{
-            width: '260px',
-            borderRight: '1px solid rgba(255, 255, 255, 0.1)',
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'rgba(0, 0, 0, 0.3)',
-            overflowY: 'auto',
-          }}>
+          <aside className={`chat-sidebar${sidebarOpen ? ' open' : ''}`}>
             <div style={{ padding: '16px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
               <button
               onClick={async () => {
@@ -675,11 +685,7 @@ export default function ChatPage() {
           </aside>
 
           {/* Main Chat Area */}
-          <main style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-          }}>
+          <main className="chat-main">
             {/* Header */}
             <header style={{
               display: 'flex',
@@ -690,6 +696,8 @@ export default function ChatPage() {
               background: 'rgba(0, 0, 0, 0.2)',
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                {/* Mobile menu button */}
+                <button className="menu-btn" onClick={() => setSidebarOpen(true)} style={{ display: 'none', background: 'none', border: 'none', color: '#fff', fontSize: '20px', cursor: 'pointer', padding: '4px', lineHeight: 1 }}>☰</button>
                 <div style={{
                   width: '32px',
                   height: '32px',
