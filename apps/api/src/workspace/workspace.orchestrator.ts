@@ -26,19 +26,25 @@ function classifyGoal(goal: string): { type: string; confidence: number } {
 }
 
 function extractTitle(goal: string): string {
+  // Try to pull the meaningful noun phrase from common goal patterns
   const patterns = [
-    /(?:build|create|launch|start|develop) (?:an? )?(.+?)(?:\s+(?:company|startup|business|app|platform|system))?$/i,
-    /(?:learn|study|master) (.+?)(?:\s+(?:from scratch|basics|fundamentals))?$/i,
-    /^(?:i want to |i need to |help me )(.+)/i,
+    /(?:i want to |i'm going to |i plan to |help me |let's )(?:build|create|start|launch|develop)\s+(?:an?\s+)?(.+?)(?:\s+(?:from scratch|today|now|asap))?$/i,
+    /(?:build|create|launch|start|develop)\s+(?:an?\s+)?(.+?)(?:\s+(?:from scratch|today|now))?$/i,
+    /(?:learn|study|master)\s+(.+?)(?:\s+(?:from scratch|basics|fundamentals|today))?$/i,
+    /^(?:i want to|i need to|help me|let's|lets)\s+(.+)/i,
   ]
   for (const pattern of patterns) {
     const m = goal.match(pattern)
     if (m?.[1]) {
-      return m[1].trim().replace(/\.$/, '').split(/\s+/).slice(0, 4).join(' ')
+      // Capitalise first letter, keep up to 4 words
+      const title = m[1].trim().replace(/\.$/, '').split(/\s+/).slice(0, 4).join(' ')
+      return title.charAt(0).toUpperCase() + title.slice(1)
     }
   }
-  // Fallback: first 3–4 meaningful words
-  return goal.replace(/^(i want to|i need to|help me|let's|lets)\s+/i, '').split(/\s+/).slice(0, 4).join(' ')
+  // Fallback: strip leading filler, take first 4 words
+  const cleaned = goal.replace(/^(i want to|i need to|help me|let's|lets)\s+/i, '')
+  const words = cleaned.split(/\s+/).slice(0, 4).join(' ')
+  return words.charAt(0).toUpperCase() + words.slice(1)
 }
 
 // ─── Starter templates per mission type ─────────────────────────────────────
