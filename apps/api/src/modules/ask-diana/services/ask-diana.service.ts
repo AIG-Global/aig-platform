@@ -5,11 +5,21 @@ import {
   AnthropicProvider,
   OllamaProvider,
   AIMessage,
+  ProviderManager,
+  ProviderConfig,
 } from '../providers'
 import { MemoryManager } from '../memory/memory-manager'
-import { ContextEngine } from './context-engine'
+import {
+  ContextEngine,
+  UserIdentity,
+  ContextBundle,
+  ConversationContextData,
+} from './context-engine'
 import { ToolRunner } from '../tools/tool-runner'
-import { PromptBuilder } from '../prompts/prompt-builder'
+import { LayeredPromptBuilder } from '../prompts/layered-prompt-builder'
+import { SafetyEngine } from '../safety/safety-engine'
+import { KnowledgeEngine } from '../knowledge/knowledge-engine'
+import { EventBus, AskDianaEvent } from '../events/event-bus'
 import {
   ChatMessage,
   CreateChatRequest,
@@ -19,219 +29,307 @@ import {
 } from '../dto'
 
 /**
- * Main Ask Diana chat service
- * Orchestrates AI providers, memory, context, and tools
+ * Ask Diana Service - Main Orchestrator
+ * 
+ * Coordinates all components:
+ * - ContextEngine: Assembles request context
+ * - MemoryManager: Manages conversation history
+ * - ProviderManager: Routes to AI providers
+ * - ToolRunner: Executes tools/functions
+ * - SafetyEngine: Validates inputs/outputs
+ * - KnowledgeEngine: RAG and document search
+ * - PromptBuilder: Constructs layered prompts
+ * - EventBus: Publishes lifecycle events
  */
 @Injectable()
 export class AskDianaService {
-  private providers = new Map<string, IAIProvider>()
-  private defaultProviderId = 'openai'
   private memoryManager: MemoryManager
   private contextEngine: ContextEngine
+  private providerManager: ProviderManager
   private toolRunner: ToolRunner
+  private safetyEngine: SafetyEngine
+  private knowledgeEngine: KnowledgeEngine
+  private promptBuilder: LayeredPromptBuilder
+  private eventBus: EventBus
 
   constructor() {
     this.memoryManager = new MemoryManager()
     this.contextEngine = new ContextEngine()
+    this.providerManager = new ProviderManager()
     this.toolRunner = new ToolRunner()
-    this.initializeDefaultProviders()
+    this.safetyEngine = new SafetyEngine()
+    this.knowledgeEngine = new KnowledgeEngine()
+    this.promptBuilder = new LayeredPromptBuilder()
+    this.eventBus = new EventBus()
+
+    this.initializeProviders()
     this.registerDefaultTools()
   }
 
-  private initializeDefaultProviders(): void {
-    // Initialize with environment variables or defaults
+  /**
+   * Initialize AI providers
+   */
+  private initializeProviders(): void {
     const openaiKey = process.env.OPENAI_API_KEY
     if (openaiKey) {
-      this.registerProvider(
-        'openai',
-        new OpenAIProvider({ apiKey: openaiKey }),
-      )
+      this.providerManager.registerProvider({
+        id: 'openai',
+        provider: new OpenAIProvider({ apiKey: openaiKey }),
+        priority: 1,
+        maxRetries: 3,
+        timeout: 30000,
+        costMultiplier: 1,
+        rateLimit: {
+          requestsPerMinute: 100,
+          tokensPerDay: 1000000,
+        },
+      })
     }
 
     const anthropicKey = process.env.ANTHROPIC_API_KEY
     if (anthropicKey) {
-      this.registerProvider(
-        'anthropic',
-        new AnthropicProvider({ apiKey: anthropicKey }),
-      )
+      this.providerManager.registerProvider({
+        id: 'anthropic',
+        provider: new AnthropicProvider({ apiKey: anthropicKey }),
+        priority: 2,
+        maxRetries: 3,
+        timeout: 30000,
+        costMultiplier: 0.8,
+        rateLimit: {
+          requestsPerMinute: 100,
+          tokensPerDay: 1000000,
+        },
+      })
     }
 
     const ollamaUrl = process.env.OLLAMA_BASE_URL
     if (ollamaUrl) {
-      this.registerProvider(
-        'ollama',
-        new OllamaProvider({ apiKey: '', baseUrl: ollamaUrl }),
-      )
+      this.providerManager.registerProvider({
+        id: 'ollama',
+        provider: new OllamaProvider({ apiKey: '', baseUrl: ollamaUrl }),
+        priority: 3,
+        maxRetries: 2,
+        timeout: 60000,
+        costMultiplier: 0,
+        rateLimit: {
+          requestsPerMinute: 50,
+          tokensPerDay: 1000000,
+        },
+      })
     }
   }
 
+  /**
+   * Register default tools
+   */
   private registerDefaultTools(): void {
-    // Example tool: Web search
-    this.toolRunner.registerTool(
-      'web_search',
-      'Search the web for information',
-      'search',
-      {
-        type: 'object',
-        properties: {
-          query: {
-            type: 'string',
-            description: 'Search query',
-          },
-          limit: {
-            type: 'number',
-            description: 'Number of results',
-          },
-        },
-        required: ['query'],
-      },
-      async (input) => {
-        // Placeholder implementation
-        return {
-          success: true,
-          data: {
-            results: `Search results for: ${input.query}`,
-          },
-        }
-      },
-    )
-
-    // Example tool: Calculator
-    this.toolRunner.registerTool(
-      'calculator',
-      'Perform mathematical calculations',
-      'math',
-      {
-        type: 'object',
-        properties: {
-          expression: {
-            type: 'string',
-            description: 'Mathematical expression',
-          },
-        },
-        required: ['expression'],
-      },
-      async (input) => {
-        try {
-          // Simple calculator - in production, use safer evaluation
-          const result = Function('"use strict";return (' + input.expression + ')')()
-          return {
-            success: true,
-            data: { result },
-          }
-        } catch (error) {
-          return {
-            success: false,
-            error: String(error),
-          }
-        }
-      },
-    )
+    // Tools will be registered with the new unified interface
+    // See tools/example-tools.ts for implementations
   }
 
-  registerProvider(id: string, provider: IAIProvider): void {
-    this.providers.set(id, provider)
-  }
-
-  async chat(userId: string, request: CreateChatRequest): Promise<ChatResponse> {
+  /**
+   * Main chat handler (non-streaming)
+   */
+  async chat(
+    userId: string,
+    request: CreateChatRequest,
+  ): Promise<ChatResponse> {
+    const startTime = new Date()
     const conversationId = request.conversationId || this.generateId()
-    const provider = this.getProvider(request.modelId || this.defaultProviderId)
 
-    // Initialize conversation if new
-    if (!this.memoryManager.getConversation(conversationId)) {
-      this.memoryManager.createConversation(conversationId)
-      this.contextEngine.createContext(conversationId, userId)
-    }
+    try {
+      // 1. SAFETY CHECK
+      const inputSafety = this.safetyEngine.analyzeInput(request.message)
+      if (!inputSafety.safe) {
+        await this.eventBus.publish({
+          type: 'error:occurred',
+          timestamp: new Date(),
+          data: { error: 'Input failed safety check', details: inputSafety },
+          metadata: { userId, conversationId },
+        })
+        throw new Error(
+          `Request blocked: ${inputSafety.recommendations.join(', ')}`,
+        )
+      }
 
-    // Update context
-    this.contextEngine.updateContext(conversationId, request.message)
+      // 2. INITIALIZE CONVERSATION
+      if (!this.memoryManager.getConversation(conversationId)) {
+        this.memoryManager.createConversation(conversationId, userId)
+        this.contextEngine.createConversationContext(conversationId, request.message)
 
-    // Add user message to memory
-    this.memoryManager.addMessage(conversationId, 'user', request.message)
+        await this.eventBus.publish({
+          type: 'conversation:created',
+          timestamp: new Date(),
+          data: { conversationId },
+          metadata: { userId },
+        })
+      }
 
-    // Build messages for API
-    const messages: AIMessage[] = this.memoryManager
-      .getRecentMessages(conversationId, 10)
-      .map((m) => ({
-        role: m.role,
-        content: m.content,
-      }))
+      // 3. BUILD CONTEXT
+      const user: UserIdentity = {
+        userId,
+        username: userId,
+        roles: ['user'],
+        preferences: request.metadata,
+      }
 
-    // Build prompt
-    const promptBuilder = new PromptBuilder({
-      userId,
-      conversationId,
-      toolsAvailable: request.tools,
-    })
+      const conversation =
+        this.contextEngine.getContext(conversationId) ||
+        this.contextEngine.createConversationContext(conversationId, request.message)
 
-    // Call AI provider
-    const response = await provider.chat(messages, {
-      temperature: request.temperature,
-      maxTokens: request.maxTokens,
-      systemPrompt: promptBuilder.getSystemPrompt(),
-    })
+      this.contextEngine.updateContext(conversation, request.message)
 
-    // Add assistant response to memory
-    this.memoryManager.addMessage(conversationId, 'assistant', response.content)
+      // 4. RETRIEVE KNOWLEDGE
+      const knowledge = this.knowledgeEngine.search(request.message, 3)
 
-    return {
-      id: this.generateId(),
-      conversationId,
-      message: response.content,
-      modelId: response.model,
-      tokensUsed: response.tokensUsed,
-      toolsUsed: response.toolCalls?.map((t) => t.name),
-      timestamp: new Date(),
+      const context = this.contextEngine.buildContext(
+        user,
+        conversation,
+        this.memoryManager.getLongTermMemory().retrieve(userId).slice(0, 3).map((m) => m.content),
+        {
+          documents: knowledge.map((k) => ({
+            id: k.document.id,
+            title: k.document.title,
+            relevance: k.relevance,
+          })),
+          summary: `Found ${knowledge.length} relevant documents`,
+        },
+      )
+
+      // 5. BUILD PROMPT
+      const systemPrompt = this.promptBuilder.getSystemPrompt(context)
+
+      // 6. ADD TO MEMORY
+      this.memoryManager.addMessage(conversationId, 'user', request.message)
+
+      // 7. GET PROVIDER
+      const provider = this.providerManager.selectProvider(
+        request.modelId,
+        request.metadata?.costOptimized,
+      )
+
+      // 8. CALL PROVIDER
+      const messages: AIMessage[] = this.memoryManager
+        .getRecentMessages(conversationId, 10)
+        .map((m) => ({
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+        }))
+
+      const response = await provider.chat(messages, {
+        temperature: request.temperature,
+        maxTokens: request.maxTokens,
+        systemPrompt,
+      })
+
+      // 9. SAFETY CHECK RESPONSE
+      const responseSafety = this.safetyEngine.analyzeResponse(response.content)
+      let finalResponse = response.content
+
+      if (!responseSafety.safe) {
+        console.warn('Response flagged by safety check:', responseSafety)
+        finalResponse = '[Response filtered due to safety guidelines]'
+      }
+
+      // 10. SAVE TO MEMORY
+      this.memoryManager.addMessage(conversationId, 'assistant', finalResponse)
+
+      // 11. PUBLISH EVENT
+      await this.eventBus.publish({
+        type: 'response:completed',
+        timestamp: new Date(),
+        data: {
+          messageId: this.generateId(),
+          tokensUsed: response.tokensUsed,
+        },
+        metadata: { userId, conversationId },
+      })
+
+      return {
+        id: this.generateId(),
+        conversationId,
+        message: finalResponse,
+        modelId: response.model,
+        tokensUsed: response.tokensUsed,
+        toolsUsed: response.toolCalls?.map((t) => t.name),
+        timestamp: new Date(),
+      }
+    } catch (error) {
+      await this.eventBus.publish({
+        type: 'response:failed',
+        timestamp: new Date(),
+        data: { error: String(error) },
+        metadata: { userId, conversationId },
+      })
+      throw error
     }
   }
 
+  /**
+   * Streaming chat handler
+   */
   async *streamChat(
     userId: string,
     request: StreamChatRequest,
   ): AsyncIterable<StreamEvent> {
     const conversationId = request.conversationId || this.generateId()
-    const provider = this.getProvider(request.modelId || this.defaultProviderId)
-
-    // Initialize conversation if new
-    if (!this.memoryManager.getConversation(conversationId)) {
-      this.memoryManager.createConversation(conversationId)
-      this.contextEngine.createContext(conversationId, userId)
-    }
-
-    // Update context
-    this.contextEngine.updateContext(conversationId, request.message)
-
-    // Add user message to memory
-    this.memoryManager.addMessage(conversationId, 'user', request.message)
-
-    // Build messages for API
-    const messages: AIMessage[] = this.memoryManager
-      .getRecentMessages(conversationId, 10)
-      .map((m) => ({
-        role: m.role,
-        content: m.content,
-      }))
-
-    // Build prompt
-    const promptBuilder = new PromptBuilder({
-      userId,
-      conversationId,
-      toolsAvailable: request.tools,
-    })
-
-    yield {
-      type: 'start',
-      data: { conversationId },
-      timestamp: new Date(),
-    }
-
-    let fullResponse = ''
 
     try {
+      // 1. SAFETY CHECK
+      const inputSafety = this.safetyEngine.analyzeInput(request.message)
+      if (!inputSafety.safe) {
+        yield {
+          type: 'error',
+          data: { error: 'Input failed safety check' },
+          timestamp: new Date(),
+        }
+        return
+      }
+
+      // 2-7. Similar setup as non-streaming...
+      if (!this.memoryManager.getConversation(conversationId)) {
+        this.memoryManager.createConversation(conversationId, userId)
+        this.contextEngine.createConversationContext(conversationId, request.message)
+      }
+
+      const user: UserIdentity = {
+        userId,
+        username: userId,
+        roles: ['user'],
+        preferences: request.metadata,
+      }
+
+      const conversation =
+        this.contextEngine.getContext(conversationId) ||
+        this.contextEngine.createConversationContext(conversationId, request.message)
+
+      this.contextEngine.updateContext(conversation, request.message)
+
+      this.memoryManager.addMessage(conversationId, 'user', request.message)
+
+      const provider = this.providerManager.selectProvider(request.modelId)
+      const context = this.contextEngine.buildContext(user, conversation)
+      const systemPrompt = this.promptBuilder.getSystemPrompt(context)
+
+      const messages: AIMessage[] = this.memoryManager
+        .getRecentMessages(conversationId, 10)
+        .map((m) => ({
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+        }))
+
+      yield {
+        type: 'start',
+        data: { conversationId },
+        timestamp: new Date(),
+      }
+
+      let fullResponse = ''
+
       for await (const event of provider.streamChat(messages, {
         temperature: request.temperature,
         maxTokens: request.maxTokens,
-        systemPrompt: promptBuilder.getSystemPrompt(),
+        systemPrompt,
       })) {
         if (event.type === 'token') {
           fullResponse += event.data.token || ''
@@ -255,8 +353,14 @@ export class AskDianaService {
         }
       }
 
-      // Add assistant response to memory
       this.memoryManager.addMessage(conversationId, 'assistant', fullResponse)
+
+      await this.eventBus.publish({
+        type: 'response:completed',
+        timestamp: new Date(),
+        data: { conversationId },
+        metadata: { userId },
+      })
     } catch (error) {
       yield {
         type: 'error',
@@ -266,36 +370,61 @@ export class AskDianaService {
     }
   }
 
+  /**
+   * Get conversation history
+   */
   async getConversationHistory(conversationId: string) {
     const conversation = this.memoryManager.getConversation(conversationId)
     if (!conversation) return null
 
     return {
       id: conversationId,
-      messages: conversation.messages,
+      messages: conversation.getMessages(),
       statistics: this.memoryManager.getStatistics(conversationId),
     }
   }
 
+  /**
+   * Delete conversation
+   */
   async deleteConversation(conversationId: string): Promise<void> {
     this.memoryManager.clear(conversationId)
-    // In production, also delete from database
+
+    await this.eventBus.publish({
+      type: 'conversation:deleted',
+      timestamp: new Date(),
+      data: { conversationId },
+    })
   }
 
+  /**
+   * Get available models
+   */
   getAvailableModels() {
-    return Array.from(this.providers.keys())
+    return this.providerManager.getAllProviders().map((p) => p.id)
   }
 
+  /**
+   * Get available tools
+   */
   getAvailableTools() {
     return this.toolRunner.getAvailableTools()
   }
 
-  private getProvider(providerId: string): IAIProvider {
-    const provider = this.providers.get(providerId)
-    if (!provider) {
-      throw new Error(`Provider ${providerId} not found`)
+  /**
+   * Get components for testing/extension
+   */
+  getComponents() {
+    return {
+      memoryManager: this.memoryManager,
+      contextEngine: this.contextEngine,
+      providerManager: this.providerManager,
+      toolRunner: this.toolRunner,
+      safetyEngine: this.safetyEngine,
+      knowledgeEngine: this.knowledgeEngine,
+      promptBuilder: this.promptBuilder,
+      eventBus: this.eventBus,
     }
-    return provider
   }
 
   private generateId(): string {

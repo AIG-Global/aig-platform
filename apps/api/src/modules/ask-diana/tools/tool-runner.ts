@@ -1,87 +1,74 @@
 /**
- * Tool execution engine
- * Manages tool definitions, validation, and execution
+ * Tool Runner
+ * 
+ * Manages tool registration, validation, and execution
+ * Works with unified ITool interface
  */
 
-export interface ToolInput {
-  [key: string]: any
-}
+import { ITool, ToolInput, ToolOutput } from './tool.interface'
 
-export interface ToolOutput {
-  success: boolean
-  data?: any
-  error?: string
-}
-
-export type ToolExecutor = (input: ToolInput) => Promise<ToolOutput>
-
-export interface RegisteredTool {
-  name: string
-  description: string
-  category: string
-  schema: {
-    type: string
-    properties: Record<string, any>
-    required?: string[]
-  }
-  executor: ToolExecutor
-  enabled: boolean
+export interface ToolExecutionRecord {
+  toolName: string
+  input: ToolInput
+  output: ToolOutput
+  duration: number
+  timestamp: Date
 }
 
 export class ToolRunner {
-  private tools = new Map<string, RegisteredTool>()
-  private executionHistory: Array<{
-    toolName: string
-    input: ToolInput
-    output: ToolOutput
-    duration: number
-  }> = []
+  private tools = new Map<string, ITool>()
+  private executionHistory: ToolExecutionRecord[] = []
+  private maxHistorySize = 1000
 
-  registerTool(
-    name: string,
-    description: string,
-    category: string,
-    schema: any,
-    executor: ToolExecutor,
-  ): void {
-    this.tools.set(name, {
-      name,
-      description,
-      category,
-      schema,
-      executor,
-      enabled: true,
-    })
+  /**
+   * Register a tool
+   */
+  registerTool(tool: ITool): void {
+    this.tools.set(tool.metadata.id, tool)
   }
 
-  async executeTool(name: string, input: ToolInput): Promise<ToolOutput> {
-    const tool = this.tools.get(name)
+  /**
+   * Unregister a tool
+   */
+  unregisterTool(toolId: string): boolean {
+    return this.tools.delete(toolId)
+  }
+
+  /**
+   * Execute a tool with validation
+   */
+  async executeTool(
+    toolId: string,
+    input: ToolInput,
+    context?: Record<string, any>,
+  ): Promise<ToolOutput> {
+    const tool = this.tools.get(toolId)
 
     if (!tool) {
       return {
         success: false,
-        error: `Tool ${name} not found`,
+        error: `Tool ${toolId} not found`,
       }
     }
 
-    if (!tool.enabled) {
+    // Validate input
+    const validation = tool.validate(input)
+    if (!validation.valid) {
       return {
         success: false,
-        error: `Tool ${name} is disabled`,
+        error: `Validation failed: ${validation.errors?.join(', ')}`,
       }
     }
 
     const startTime = Date.now()
 
     try {
-      const output = await tool.executor(input)
+      const output = await tool.execute(input, context)
 
-      this.executionHistory.push({
-        toolName: name,
-        input,
-        output,
-        duration: Date.now() - startTime,
-      })
+      const duration = Date.now() - startTime
+
+      // Record execution
+      this.recordExecution(toolId, input, output, duration)
 
       return output
     } catch (error) {
@@ -90,44 +77,131 @@ export class ToolRunner {
         error: String(error),
       }
 
-      this.executionHistory.push({
-        toolName: name,
-        input,
-        output,
-        duration: Date.now() - startTime,
-      })
+      this.recordExecution(toolId, input, output, Date.now() - startTime)
 
       return output
     }
   }
 
-  getTool(name: string): RegisteredTool | undefined {
-    return this.tools.get(name)
+  /**
+   * Batch execute multiple tools
+   */
+  async executeBatch(
+    requests: Array<{ toolId: string; input: ToolInput }>,
+    context?: Record<string, any>,
+  ): Promise<Array<{ toolId: string; output: ToolOutput }>> {
+    return Promise.all(
+      requests.map(async (req) => ({
+        toolId: req.toolId,
+        output: await this.executeTool(req.toolId, req.input, context),
+      })),
+    )
   }
 
-  getAvailableTools(): RegisteredTool[] {
-    return Array.from(this.tools.values()).filter((t) => t.enabled)
+  /**
+   * Get tool by ID
+   */
+  getTool(toolId: string): ITool | undefined {
+    return this.tools.get(toolId)
   }
 
-  getToolsByCategory(category: string): RegisteredTool[] {
-    return this.getAvailableTools().filter((t) => t.category === category)
+  /**
+   * Get all available tools
+   */
+  getAvailableTools(): ITool[] {
+    return Array.from(this.tools.values())
   }
 
-  disableTool(name: string): void {
-    const tool = this.tools.get(name)
-    if (tool) tool.enabled = false
+  /**
+   * Get tools by category
+   */
+  getToolsByCategory(category: string): ITool[] {
+    return Array.from(this.tools.values()).filter(
+      (t) => t.metadata.category === category,
+    )
   }
 
-  enableTool(name: string): void {
-    const tool = this.tools.get(name)
-    if (tool) tool.enabled = true
+  /**
+   * Check tool health
+   */
+  async checkToolHealth(toolId: string): Promise<boolean> {
+    const tool = this.tools.get(toolId)
+    if (!tool) return false
+
+    try {
+      return await tool.healthCheck()
+    } catch {
+      return false
+    }
   }
 
-  getExecutionHistory(limit: number = 100) {
-    return this.executionHistory.slice(-limit)
+  /**
+   * Get execution history
+   */
+  getExecutionHistory(toolId?: string, limit: number = 100): ToolExecutionRecord[] {
+    let history = this.executionHistory
+
+    if (toolId) {
+      history = history.filter((r) => r.toolName === toolId)
+    }
+
+    return history.slice(-limit)
   }
 
+  /**
+   * Clear execution history
+   */
   clearExecutionHistory(): void {
     this.executionHistory = []
+  }
+
+  /**
+   * Get execution statistics
+   */
+  getExecutionStats(toolId?: string) {
+    const history = toolId
+      ? this.executionHistory.filter((r) => r.toolName === toolId)
+      : this.executionHistory
+
+    if (history.length === 0) {
+      return {
+        totalExecutions: 0,
+        successCount: 0,
+        failureCount: 0,
+        averageDuration: 0,
+      }
+    }
+
+    const successful = history.filter((r) => r.output.success)
+
+    return {
+      totalExecutions: history.length,
+      successCount: successful.length,
+      failureCount: history.length - successful.length,
+      averageDuration:
+        history.reduce((sum, r) => sum + r.duration, 0) / history.length,
+      successRate: (successful.length / history.length) * 100,
+    }
+  }
+
+  private recordExecution(
+    toolId: string,
+    input: ToolInput,
+    output: ToolOutput,
+    duration: number,
+  ): void {
+    const record: ToolExecutionRecord = {
+      toolName: toolId,
+      input,
+      output,
+      duration,
+      timestamp: new Date(),
+    }
+
+    this.executionHistory.push(record)
+
+    if (this.executionHistory.length > this.maxHistorySize) {
+      this.executionHistory.shift()
+    }
   }
 }

@@ -1,45 +1,58 @@
 /**
- * Memory management for conversations
- * Handles conversation history, context windows, and summarization
+ * Memory Manager
+ * 
+ * Unified memory management coordinating:
+ * - ConversationMemory: Current chat history
+ * - LongTermMemory: User facts and preferences
+ * - SemanticMemory: Concepts and relationships
+ * - MemoryPruner: Intelligent cleanup
  */
 
-export interface ConversationMemory {
-  conversationId: string
-  messages: Array<{
-    role: 'user' | 'assistant'
-    content: string
-    timestamp: Date
-  }>
-  metadata: {
-    tokenCount: number
-    createdAt: Date
-    updatedAt: Date
-  }
-}
+import {
+  ConversationMemory,
+  LongTermMemory,
+  SemanticMemory,
+  MemoryPruner,
+  PruneStrategy,
+} from './sub-engines'
 
 export class MemoryManager {
   private conversations = new Map<string, ConversationMemory>()
-  private maxTokensPerConversation = 8000
-  private maxMessages = 50
+  private longTermMemory: LongTermMemory
+  private semanticMemory: SemanticMemory
+  private pruner: MemoryPruner
 
-  createConversation(conversationId: string): ConversationMemory {
-    const memory: ConversationMemory = {
-      conversationId,
-      messages: [],
-      metadata: {
-        tokenCount: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    }
+  private defaultStrategy: PruneStrategy = {
+    maxMessages: 50,
+    maxTokens: 8000,
+    keepImportant: true,
+    summarizeThreshold: 5000,
+  }
 
+  constructor() {
+    this.longTermMemory = new LongTermMemory()
+    this.semanticMemory = new SemanticMemory()
+    this.pruner = new MemoryPruner()
+  }
+
+  /**
+   * Create or get conversation memory
+   */
+  createConversation(conversationId: string, userId: string): ConversationMemory {
+    const existing = this.conversations.get(conversationId)
+    if (existing) return existing
+
+    const memory = new ConversationMemory(conversationId, userId)
     this.conversations.set(conversationId, memory)
     return memory
   }
 
+  /**
+   * Add message to conversation
+   */
   addMessage(
     conversationId: string,
-    role: 'user' | 'assistant',
+    role: 'user' | 'assistant' | 'system',
     content: string,
   ): void {
     const conversation = this.conversations.get(conversationId)
@@ -47,68 +60,101 @@ export class MemoryManager {
       throw new Error(`Conversation ${conversationId} not found`)
     }
 
-    conversation.messages.push({
-      role,
-      content,
-      timestamp: new Date(),
-    })
-
-    conversation.metadata.tokenCount += Math.ceil(content.length / 4)
-    conversation.metadata.updatedAt = new Date()
-
+    conversation.addMessage(role, content)
     this.pruneIfNeeded(conversationId)
   }
 
+  /**
+   * Get conversation memory
+   */
   getConversation(conversationId: string): ConversationMemory | undefined {
     return this.conversations.get(conversationId)
   }
 
+  /**
+   * Get messages from conversation
+   */
   getMessages(conversationId: string) {
     const conversation = this.conversations.get(conversationId)
-    return conversation?.messages || []
+    return conversation?.getMessages() || []
   }
 
+  /**
+   * Get recent messages (for context window)
+   */
   getRecentMessages(conversationId: string, count: number) {
-    const messages = this.getMessages(conversationId)
-    return messages.slice(-count)
+    const conversation = this.conversations.get(conversationId)
+    if (!conversation) return []
+    return conversation.getMessages(count)
   }
 
+  /**
+   * Clear conversation
+   */
   clear(conversationId: string): void {
     this.conversations.delete(conversationId)
   }
 
+  /**
+   * Get all conversations
+   */
+  getAllConversations(): ConversationMemory[] {
+    return Array.from(this.conversations.values())
+  }
+
+  /**
+   * Get statistics for conversation
+   */
+  getStatistics(conversationId: string) {
+    const conversation = this.conversations.get(conversationId)
+    return conversation?.getStats() || null
+  }
+
+  /**
+   * Access long-term memory
+   */
+  getLongTermMemory() {
+    return this.longTermMemory
+  }
+
+  /**
+   * Access semantic memory
+   */
+  getSemanticMemory() {
+    return this.semanticMemory
+  }
+
+  /**
+   * Prune if needed
+   */
   private pruneIfNeeded(conversationId: string): void {
     const conversation = this.conversations.get(conversationId)
     if (!conversation) return
 
-    // Remove messages from start if exceeded
-    while (
-      conversation.metadata.tokenCount > this.maxTokensPerConversation &&
-      conversation.messages.length > 1
-    ) {
-      const removed = conversation.messages.shift()
-      if (removed) {
-        conversation.metadata.tokenCount -= Math.ceil(removed.content.length / 4)
-      }
-    }
-
-    // Keep recent messages if exceeded
-    if (conversation.messages.length > this.maxMessages) {
-      conversation.messages = conversation.messages.slice(-this.maxMessages)
+    if (this.pruner.needsPruning(conversation, this.defaultStrategy)) {
+      this.pruner.prune(conversation, this.defaultStrategy)
     }
   }
 
-  getStatistics(conversationId: string) {
-    const conversation = this.conversations.get(conversationId)
-    if (!conversation) return null
+  /**
+   * Run cleanup on all memories
+   */
+  cleanup(): void {
+    this.longTermMemory.cleanup()
+  }
 
+  /**
+   * Get memory statistics
+   */
+  getMemoryStats() {
     return {
-      messageCount: conversation.messages.length,
-      tokenCount: conversation.metadata.tokenCount,
-      duration:
-        new Date().getTime() - conversation.metadata.createdAt.getTime(),
-      createdAt: conversation.metadata.createdAt,
-      updatedAt: conversation.metadata.updatedAt,
+      conversations: this.conversations.size,
+      totalMessages: Array.from(this.conversations.values()).reduce(
+        (sum, c) => sum + c.messages.length,
+        0,
+      ),
+      longTermMemories: this.longTermMemory.retrieve('*').length,
+      concepts: this.semanticMemory.getAllConcepts().length,
     }
   }
 }
