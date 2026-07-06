@@ -242,7 +242,7 @@ export default function ChatPage() {
 
       // Create new conversation
       try {
-        const response = await fetch('${API}/api/chat/create', {
+        const response = await fetch(`${API}/api/chat/create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -256,10 +256,10 @@ export default function ChatPage() {
           setConversationId(data.id)
           setConversationTitle(data.title || 'New Chat')
 
-          const greeting = `Welcome to AIGINVEST. I'm Diana. Let's build something together.`
+          const greeting = `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?`
 
           // Save Diana's greeting to DB
-          await fetch('${API}/api/chat/message', {
+          await fetch(`${API}/api/chat/message`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -289,7 +289,7 @@ export default function ChatPage() {
             {
               id: '0',
               role: 'assistant',
-              content: `Welcome to AIGINVEST. I'm Diana. Let's build something together.`,
+              content: `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?`,
               timestamp: new Date(),
             },
           ])
@@ -302,7 +302,7 @@ export default function ChatPage() {
           {
             id: '0',
             role: 'assistant',
-            content: `Welcome to AIGINVEST. I'm Diana. Let's build something together.`,
+            content: `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?`,
             timestamp: new Date(),
           },
         ])
@@ -500,15 +500,15 @@ export default function ChatPage() {
               onClick={async () => {
                   if (!userId) return
                   try {
-                    const response = await fetch('${API}/api/chat/create', {
+                    const response = await fetch(`${API}/api/chat/create`, {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify({ userId, title: 'New Chat' }),
                     })
                     if (response.ok) {
                       const data = await response.json()
-                      const greeting = `Welcome to AIGINVEST. I'm Diana. Let's build something together.`
-                      await fetch('${API}/api/chat/message', {
+                      const greeting = `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?`
+                      await fetch(`${API}/api/chat/message`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ conversationId: data.id, role: 'assistant', content: greeting }),
@@ -522,7 +522,7 @@ export default function ChatPage() {
                   } catch {
                     setConversationId(`temp-${Date.now()}`)
                     setConversationTitle('New Chat')
-                    setMessages([{ id: '0', role: 'assistant', content: `Welcome to AIGINVEST. I'm Diana. Let's build something together.`, timestamp: new Date() }])
+                    setMessages([{ id: '0', role: 'assistant', content: `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?`, timestamp: new Date() }])
                   }
                 }}
                 style={{
@@ -736,14 +736,20 @@ export default function ChatPage() {
             }}>
               {messages.length === 0 ? (
                 <div style={{ textAlign: 'center', color: '#666', paddingTop: '60px' }}>
-                  <p style={{ fontSize: '18px', marginBottom: '24px', color: '#aaa' }}>What would you like to work on?</p>
+                  <p style={{ fontSize: '18px', marginBottom: '24px', color: '#aaa' }}>What would you like to accomplish today?</p>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', maxWidth: '480px', margin: '0 auto' }}>
-                    {['Create my first project', 'Continue yesterday\'s work', 'Generate a document', 'Organize my tasks', 'Help me learn something'].map((prompt) => (
+                    {[
+                      { emoji: '🚀', label: 'Build a Startup', goal: 'I want to build a startup' },
+                      { emoji: '💼', label: 'Grow My Business', goal: 'I want to grow my business' },
+                      { emoji: '📚', label: 'Learn Something', goal: 'I want to learn something new' },
+                      { emoji: '📝', label: 'Create a Project', goal: 'I want to create a project' },
+                      { emoji: '💡', label: 'Start from Scratch', goal: 'I want to start something new' },
+                    ].map(({ emoji, label, goal }) => (
                       <button
-                        key={prompt}
-                        onClick={() => setInputValue(prompt)}
+                        key={label}
+                        onClick={() => setInputValue(goal)}
                         style={{
-                          padding: '8px 16px',
+                          padding: '10px 18px',
                           background: 'rgba(102, 126, 234, 0.1)',
                           border: '1px solid rgba(102, 126, 234, 0.3)',
                           borderRadius: '20px',
@@ -751,11 +757,14 @@ export default function ChatPage() {
                           fontSize: '13px',
                           cursor: 'pointer',
                           transition: 'all 0.2s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
                         }}
                         onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(102, 126, 234, 0.2)'; e.currentTarget.style.color = '#fff' }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(102, 126, 234, 0.1)'; e.currentTarget.style.color = '#aaa' }}
                       >
-                        {prompt}
+                        <span>{emoji}</span> {label}
                       </button>
                     ))}
                   </div>
