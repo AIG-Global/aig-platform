@@ -127,11 +127,55 @@ export default function MissionsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Missions</h1>
-          <p className="text-slate-400">Create and manage your missions to organize your goals and track progress.</p>
+      <div className="max-w-6xl mx-auto">
+        {/* Header with Diana for empty state */}
+        <div className="mb-12">
+          <div className="flex items-center gap-6 mb-8">
+            <div>
+              <h1 className="text-4xl font-bold text-white mb-2">Missions</h1>
+              <p className="text-slate-400">Create and manage your missions to organize your goals and track progress.</p>
+            </div>
+          </div>
+
+          {/* Diana Mission Guide - Show when no missions or as intro */}
+          {missions.length === 0 && !loading && (
+            <div className="bg-gradient-to-r from-slate-800/50 to-slate-800/30 border border-slate-700 rounded-lg p-8 mb-8">
+              <div className="flex gap-6 items-start">
+                {/* Diana Avatar */}
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center text-3xl shadow-lg">
+                    ✨
+                  </div>
+                </div>
+
+                {/* Diana Message */}
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-white mb-2">Welcome! Let's build your first mission.</h3>
+                  <p className="text-slate-300 mb-4">
+                    I'll help you turn your goals into outcomes. A mission is a time-bounded effort with a clear objective.
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="flex gap-2">
+                      <span className="text-blue-400 font-semibold">1.</span>
+                      <span className="text-slate-300">Give your mission a clear title</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="text-blue-400 font-semibold">2.</span>
+                      <span className="text-slate-300">Define what success looks like</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="text-blue-400 font-semibold">3.</span>
+                      <span className="text-slate-300">I'll create a workspace for you</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="text-blue-400 font-semibold">4.</span>
+                      <span className="text-slate-300">Start breaking it into tasks</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Error Message */}
@@ -143,7 +187,9 @@ export default function MissionsPage() {
 
         {/* Create Mission Form */}
         <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4">Create New Mission</h2>
+          <h2 className="text-xl font-semibold text-white mb-4">
+            {missions.length === 0 ? '🚀 Create Your First Mission' : 'Create New Mission'}
+          </h2>
           <form onSubmit={handleCreateMission} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">
@@ -207,7 +253,7 @@ export default function MissionsPage() {
             </div>
           ) : missions.length === 0 ? (
             <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-8 text-center">
-              <p className="text-slate-400">No missions yet. Create your first mission above!</p>
+              <p className="text-slate-400">Fill out the form above to create your first mission and get started! Diana will be with you every step of the way.</p>
             </div>
           ) : (
             missions.map((mission) => (
