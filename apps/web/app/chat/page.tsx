@@ -2,12 +2,156 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import ReactMarkdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import rehypeRaw from 'rehype-raw'
+import remarkGfm from 'remark-gfm'
 
 interface Message {
   id: string
   role: 'user' | 'assistant'
   content: string
   timestamp: Date
+}
+
+interface Conversation {
+  id: string
+  title: string
+  updatedAt: string
+}
+
+// Message Renderer Component
+const MessageRenderer = ({ content, role }: { content: string; role: 'user' | 'assistant' }) => {
+  if (role === 'user') {
+    return <div>{content}</div>
+  }
+
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeRaw]}
+      components={{
+        code(props: any) {
+          const { children, className, inline } = props
+          const match = /language-(\w+)/.exec(className || '')
+          const language = match ? match[1] : 'text'
+
+          if (inline) {
+            return (
+              <code
+                style={{
+                  background: 'rgba(0, 0, 0, 0.3)',
+                  padding: '2px 6px',
+                  borderRadius: '4px',
+                  fontSize: '0.9em',
+                }}
+              >
+                {children}
+              </code>
+            )
+          }
+
+          return (
+            <div
+              style={{
+                position: 'relative',
+                marginTop: '12px',
+                marginBottom: '12px',
+                borderRadius: '8px',
+                overflow: 'hidden',
+              }}
+            >
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(String(children).replace(/\n$/, ''))
+                }}
+                style={{
+                  position: 'absolute',
+                  top: '8px',
+                  right: '8px',
+                  padding: '4px 8px',
+                  background: 'rgba(0, 0, 0, 0.5)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '4px',
+                  color: '#fff',
+                  fontSize: '12px',
+                  cursor: 'pointer',
+                  zIndex: 10,
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(0, 0, 0, 0.5)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                }}
+              >
+                Copy
+              </button>
+              <SyntaxHighlighter
+                language={language}
+                style={oneDark}
+                customStyle={{
+                  margin: 0,
+                  padding: '12px 16px',
+                  fontSize: '13px',
+                  lineHeight: '1.4',
+                }}
+              >
+                {String(children).replace(/\n$/, '')}
+              </SyntaxHighlighter>
+            </div>
+          )
+        },
+        h1: ({ children }: any) => (
+          <h1 style={{ fontSize: '1.8em', marginTop: '12px', marginBottom: '8px' }}>{children}</h1>
+        ),
+        h2: ({ children }: any) => (
+          <h2 style={{ fontSize: '1.4em', marginTop: '12px', marginBottom: '8px' }}>{children}</h2>
+        ),
+        h3: ({ children }: any) => (
+          <h3 style={{ fontSize: '1.1em', marginTop: '10px', marginBottom: '6px' }}>{children}</h3>
+        ),
+        ul: ({ children }: any) => (
+          <ul style={{ marginLeft: '20px', marginTop: '8px', marginBottom: '8px' }}>{children}</ul>
+        ),
+        ol: ({ children }: any) => (
+          <ol style={{ marginLeft: '20px', marginTop: '8px', marginBottom: '8px' }}>{children}</ol>
+        ),
+        li: ({ children }: any) => <li style={{ marginBottom: '4px' }}>{children}</li>,
+        p: ({ children }: any) => <p style={{ marginTop: '8px', marginBottom: '8px', lineHeight: '1.6' }}>{children}</p>,
+        a: ({ children, href }: any) => (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#667eea', textDecoration: 'underline', cursor: 'pointer' }}
+          >
+            {children}
+          </a>
+        ),
+        blockquote: ({ children }: any) => (
+          <blockquote
+            style={{
+              borderLeft: '3px solid #667eea',
+              paddingLeft: '12px',
+              marginLeft: '0',
+              marginTop: '8px',
+              marginBottom: '8px',
+              opacity: 0.8,
+            }}
+          >
+            {children}
+          </blockquote>
+        ),
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  )
 }
 
 export default function ChatPage() {
@@ -17,6 +161,11 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false)
   const [conversationId, setConversationId] = useState('')
   const [userEmail, setUserEmail] = useState('')
+  const [userId, setUserId] = useState('')
+  const [conversationTitle, setConversationTitle] = useState('New Chat')
+  const [editingTitle, setEditingTitle] = useState(false)
+  const [titleInput, setTitleInput] = useState('')
+  const [conversations, setConversations] = useState<Conversation[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [streaming, setStreaming] = useState(false)
 
@@ -24,14 +173,28 @@ export default function ChatPage() {
   useEffect(() => {
     const initializeChat = async () => {
       const email = localStorage.getItem('userEmail')
-      const userId = localStorage.getItem('userId')
+      const id = localStorage.getItem('userId')
 
-      if (!email || !userId) {
+      if (!email || !id) {
         router.push('/login')
         return
       }
 
       setUserEmail(email)
+      setUserId(id)
+
+      // Fetch user's conversations
+      try {
+        const conversationsResponse = await fetch(
+          `http://localhost:3333/api/api/chat/user/${id}`
+        )
+        if (conversationsResponse.ok) {
+          const convs = await conversationsResponse.json()
+          setConversations(convs)
+        }
+      } catch (error) {
+        console.error('Failed to fetch conversations:', error)
+      }
 
       // Create new conversation
       try {
@@ -39,21 +202,22 @@ export default function ChatPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            userId,
-            title: 'Chat with Diana',
+            userId: id,
+            title: 'New Chat',
           }),
         })
 
         if (response.ok) {
           const data = await response.json()
           setConversationId(data.id)
+          setConversationTitle(data.title || 'New Chat')
 
           // Add initial greeting from Diana
           setMessages([
             {
               id: '0',
               role: 'assistant',
-              content: `Welcome back, ${email.split('@')[0]}. I'm Diana. Ready to continue building North Star ONE?`,
+              content: `# Welcome, ${email.split('@')[0]}!\n\nI'm Diana, your AI companion for building products. Whether you need help thinking through ideas, writing code, organizing your thoughts, or just exploring possibilities—I'm here for you.\n\n**What would you like to work on today?**`,
               timestamp: new Date(),
             },
           ])
@@ -179,193 +343,355 @@ export default function ChatPage() {
     router.push('/login')
   }
 
+  const updateConversationTitle = async () => {
+    if (!titleInput.trim() || !conversationId) return
+
+    try {
+      const response = await fetch(`http://localhost:3333/api/api/chat/${conversationId}/title`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: titleInput }),
+      })
+
+      if (response.ok) {
+        setConversationTitle(titleInput)
+        setEditingTitle(false)
+      }
+    } catch (error) {
+      console.error('Failed to update title:', error)
+    }
+  }
+
+  const loadConversation = async (convId: string) => {
+    try {
+      const response = await fetch(`http://localhost:3333/api/api/chat/${convId}`)
+      if (response.ok) {
+        const data = await response.json()
+        setConversationId(convId)
+        setConversationTitle(data.title || 'New Chat')
+        setMessages(
+          data.messages.map((msg: any) => ({
+            id: msg.id,
+            role: msg.role,
+            content: msg.content,
+            timestamp: new Date(msg.createdAt),
+          }))
+        )
+      }
+    } catch (error) {
+      console.error('Failed to load conversation:', error)
+    }
+  }
+
   return (
     <html>
       <body style={{ margin: 0, padding: 0, backgroundColor: '#0a0a0a', color: '#fff', fontFamily: 'system-ui, sans-serif' }}>
-        <main style={{
+        <div style={{
           display: 'flex',
-          flexDirection: 'column',
           height: '100vh',
           background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)',
         }}>
-          {/* Header */}
-          <header style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '16px 24px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-            background: 'rgba(0, 0, 0, 0.3)',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{
-                width: '32px',
-                height: '32px',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '18px',
-                fontWeight: 'bold',
-              }}>
-                ◇
-              </div>
-              <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>Diana</h1>
-            </div>
-            <button
-              onClick={handleLogout}
-              style={{
-                padding: '8px 16px',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: '6px',
-                color: '#fff',
-                fontSize: '13px',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-              }}
-            >
-              Sign out
-            </button>
-          </header>
-
-          {/* Messages Container */}
-          <div style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: '24px',
+          {/* Sidebar */}
+          <aside style={{
+            width: '260px',
+            borderRight: '1px solid rgba(255, 255, 255, 0.1)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '16px',
+            background: 'rgba(0, 0, 0, 0.3)',
+            overflowY: 'auto',
           }}>
-            {messages.length === 0 ? (
-              <div style={{ textAlign: 'center', color: '#666', paddingTop: '60px' }}>
-                <p style={{ fontSize: '16px', marginBottom: '12px' }}>Start a conversation with Diana</p>
-              </div>
-            ) : (
-              messages.map((msg) => (
-                <div
-                  key={msg.id}
+            <div style={{ padding: '16px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <button
+                onClick={() => {
+                  setConversationId('')
+                  setMessages([])
+                  setConversationTitle('New Chat')
+                }}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  border: 'none',
+                  borderRadius: '6px',
+                  color: '#fff',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+              >
+                + New Chat
+              </button>
+            </div>
+
+            <div style={{ padding: '12px', flex: 1, overflowY: 'auto' }}>
+              <p style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999', marginBottom: '12px' }}>
+                Recent
+              </p>
+              {conversations.map((conv) => (
+                <button
+                  key={conv.id}
+                  onClick={() => loadConversation(conv.id)}
                   style={{
-                    display: 'flex',
-                    justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                    width: '100%',
+                    padding: '10px 12px',
+                    marginBottom: '8px',
+                    background: conv.id === conversationId ? 'rgba(102, 126, 234, 0.2)' : 'transparent',
+                    border: '1px solid ' + (conv.id === conversationId ? 'rgba(102, 126, 234, 0.5)' : 'transparent'),
+                    borderRadius: '6px',
+                    color: '#fff',
+                    fontSize: '12px',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (conv.id !== conversationId) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (conv.id !== conversationId) {
+                      e.currentTarget.style.background = 'transparent'
+                    }
                   }}
                 >
-                  <div style={{
-                    maxWidth: '70%',
-                    padding: '12px 16px',
-                    borderRadius: '12px',
-                    background: msg.role === 'user'
-                      ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                      : 'rgba(255, 255, 255, 0.08)',
-                    border: msg.role === 'user' ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
-                    color: '#fff',
-                    wordBreak: 'break-word',
-                    lineHeight: '1.5',
-                  }}>
-                    {msg.content}
-                  </div>
-                </div>
-              ))
-            )}
-            {streaming && (
-              <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '6px', padding: '12px 16px' }}>
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: '#667eea',
-                  animation: 'pulse 1.5s infinite',
-                }} />
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: '#667eea',
-                  animation: 'pulse 1.5s infinite',
-                  animationDelay: '0.3s',
-                }} />
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: '#667eea',
-                  animation: 'pulse 1.5s infinite',
-                  animationDelay: '0.6s',
-                }} />
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
+                  {conv.title}
+                </button>
+              ))}
+            </div>
 
-          {/* Input Area */}
-          <form
-            onSubmit={handleSendMessage}
-            style={{
+            <div style={{ padding: '12px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <button
+                onClick={handleLogout}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '6px',
+                  color: '#fff',
+                  fontSize: '12px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                }}
+              >
+                Sign out
+              </button>
+            </div>
+          </aside>
+
+          {/* Main Chat Area */}
+          <main style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            {/* Header */}
+            <header style={{
               display: 'flex',
-              gap: '12px',
-              padding: '24px',
-              borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '16px 24px',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
               background: 'rgba(0, 0, 0, 0.2)',
-            }}
-          >
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask Diana anything..."
-              disabled={loading || streaming}
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                }}>
+                  ◇
+                </div>
+                {editingTitle ? (
+                  <input
+                    autoFocus
+                    value={titleInput}
+                    onChange={(e) => setTitleInput(e.target.value)}
+                    onBlur={updateConversationTitle}
+                    onKeyDown={(e) => e.key === 'Enter' && updateConversationTitle()}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      border: '1px solid rgba(102, 126, 234, 0.5)',
+                      borderRadius: '4px',
+                      color: '#fff',
+                      padding: '4px 8px',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      outline: 'none',
+                    }}
+                  />
+                ) : (
+                  <h1
+                    onClick={() => {
+                      setEditingTitle(true)
+                      setTitleInput(conversationTitle)
+                    }}
+                    style={{
+                      margin: 0,
+                      fontSize: '16px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      transition: 'all 0.2s ease',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
+                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                  >
+                    {conversationTitle}
+                  </h1>
+                )}
+              </div>
+            </header>
+
+            {/* Messages Container */}
+            <div style={{
+              flex: 1,
+              overflowY: 'auto',
+              padding: '24px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
+            }}>
+              {messages.length === 0 ? (
+                <div style={{ textAlign: 'center', color: '#666', paddingTop: '60px' }}>
+                  <p style={{ fontSize: '16px', marginBottom: '12px' }}>Start a conversation with Diana</p>
+                </div>
+              ) : (
+                messages.map((msg) => (
+                  <div
+                    key={msg.id}
+                    style={{
+                      display: 'flex',
+                      justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                    }}
+                  >
+                    <div style={{
+                      maxWidth: '70%',
+                      padding: '12px 16px',
+                      borderRadius: '12px',
+                      background: msg.role === 'user'
+                        ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                        : 'rgba(255, 255, 255, 0.08)',
+                      border: msg.role === 'user' ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
+                      color: '#fff',
+                      wordBreak: 'break-word',
+                      lineHeight: '1.5',
+                    }}>
+                      <MessageRenderer content={msg.content} role={msg.role} />
+                    </div>
+                  </div>
+                ))
+              )}
+              {streaming && (
+                <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '6px', padding: '12px 16px' }}>
+                  <div style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: '#667eea',
+                    animation: 'pulse 1.5s infinite',
+                  }} />
+                  <div style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: '#667eea',
+                    animation: 'pulse 1.5s infinite',
+                    animationDelay: '0.3s',
+                  }} />
+                  <div style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: '#667eea',
+                    animation: 'pulse 1.5s infinite',
+                    animationDelay: '0.6s',
+                  }} />
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input Area */}
+            <form
+              onSubmit={handleSendMessage}
               style={{
-                flex: 1,
-                padding: '12px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '8px',
-                color: '#fff',
-                fontSize: '14px',
-                boxSizing: 'border-box',
-                outline: 'none',
-                opacity: loading || streaming ? 0.5 : 1,
-                cursor: loading || streaming ? 'not-allowed' : 'text',
+                display: 'flex',
+                gap: '12px',
+                padding: '24px',
+                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                background: 'rgba(0, 0, 0, 0.2)',
               }}
-              onFocus={(e) => !loading && !streaming && (e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.5)')}
-              onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
-            />
-            <button
-              type="submit"
-              disabled={loading || streaming || !inputValue.trim()}
-              style={{
-                padding: '12px 24px',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                border: 'none',
-                borderRadius: '8px',
-                color: '#fff',
-                fontSize: '14px',
-                fontWeight: '600',
-                cursor: loading || streaming || !inputValue.trim() ? 'not-allowed' : 'pointer',
-                opacity: loading || streaming || !inputValue.trim() ? 0.6 : 1,
-                transition: 'all 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                if (!loading && !streaming && inputValue.trim()) {
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                }
-              }}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
             >
-              Send
-            </button>
-          </form>
-        </main>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Ask Diana anything..."
+                disabled={loading || streaming}
+                style={{
+                  flex: 1,
+                  padding: '12px 16px',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '8px',
+                  color: '#fff',
+                  fontSize: '14px',
+                  boxSizing: 'border-box',
+                  outline: 'none',
+                  opacity: loading || streaming ? 0.5 : 1,
+                  cursor: loading || streaming ? 'not-allowed' : 'text',
+                }}
+                onFocus={(e) => !loading && !streaming && (e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.5)')}
+                onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+              />
+              <button
+                type="submit"
+                disabled={loading || streaming || !inputValue.trim()}
+                style={{
+                  padding: '12px 24px',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  color: '#fff',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: loading || streaming || !inputValue.trim() ? 'not-allowed' : 'pointer',
+                  opacity: loading || streaming || !inputValue.trim() ? 0.6 : 1,
+                  transition: 'all 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  if (!loading && !streaming && inputValue.trim()) {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                  }
+                }}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+              >
+                Send
+              </button>
+            </form>
+          </main>
+        </div>
 
         <style>{`
           @keyframes pulse {
