@@ -36,21 +36,26 @@ export class ContextEngine {
 
   /**
    * Build the full message array for the LLM:
-   * [system prompt + memories + workspace context] + [conversation history] + [current message]
+   * [system prompt + mission context + memories + workspace context] + [conversation history] + [current message]
    */
   async buildMessages(
     conversationId: string,
     userMessage: string,
     userId: string
   ): Promise<LLMMessage[]> {
-    const [history, memories, workspaceContext, progressContext] = await Promise.all([
+    const [history, memories, workspaceContext, progressContext, missionContext] = await Promise.all([
       this.getHistory(conversationId),
       this.getMemories(userId),
       this.getWorkspaceContext(userId),
       this.getProgressContext(userId),
+      this.getMissionContext(userId),
     ])
 
     let systemContent = DIANA_SYSTEM_PROMPT
+
+    if (missionContext) {
+      systemContent += `\n\n## Active Mission Context:\n${missionContext}`
+    }
 
     if (memories.length > 0) {
       systemContent += `\n\n## What I remember about you:\n${memories.map((m) => `- ${m}`).join('\n')}`
@@ -119,6 +124,38 @@ export class ContextEngine {
     if (total === 0) return null
     const pct = Math.round((completed / total) * 100)
     return `Tasks: ${completed}/${total} completed (${pct}%)`
+  }
+
+  /**
+   * Get mission context for the user's active mission
+   */
+  private async getMissionContext(userId: string): Promise<string | null> {
+    const mission = await this.prisma.mission.findFirst({
+      where: { ownerId: userId, status: { in: ['active', 'planning'] } },
+      orderBy: { updatedAt: 'desc' },
+      include: {
+        progress: true,
+      },
+    })
+
+    if (!mission) return null
+
+    const lines: string[] = [`Mission: "${mission.title}"`]
+    if (mission.objective) lines.push(`Objective: ${mission.objective}`)
+    if (mission.progress) {
+      lines.push(`Progress: ${mission.progress.percentComplete}% complete (${mission.progress.tasksCompleted}/${mission.progress.tasksTotal} tasks)`)
+    }
+    if (mission.deadline) {
+      const daysLeft = Math.ceil((new Date(mission.deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+      if (daysLeft > 0) {
+        lines.push(`Timeline: ${daysLeft} days remaining`)
+      }
+    }
+    if (mission.status) {
+      lines.push(`Status: ${mission.status}`)
+    }
+
+    return lines.join('\n')
   }
 
   private async getHistory(conversationId: string): Promise<LLMMessage[]> {

@@ -11,6 +11,7 @@ import { TaskModule } from './tasks/task.module.js'
 import { WorkspaceModule } from './workspace/workspace.module.js'
 import { ActivityModule } from './activity/activity.module.js'
 import { ProgressModule } from './progress/progress.module.js'
+import { MissionModule } from './mission/mission.module.js'
 
 // ESM compatibility
 const __filename = fileURLToPath(import.meta.url)
@@ -61,6 +62,7 @@ class AppController {
     WorkspaceModule,
     ActivityModule,
     ProgressModule,
+    MissionModule,
     IdentityModule,
     //UserManagementModule,
     //OrganizationManagementModule,

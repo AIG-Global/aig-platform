@@ -36,6 +36,11 @@ model User {
   documents         Document[]
   dianaMemories     DianaMemory[]
   activities        Activity[]
+  
+  // Phase 1 relationships
+  organizations     Organization[] @relation("OrganizationMembers")
+  ownedMissions     Mission[]      @relation("MissionOwner")
+  teams             Team[]         @relation("TeamMembers")
 
   @@map("users")
 }
@@ -46,6 +51,7 @@ model User {
 model Workspace {
   id          String    @id @default(cuid())
   ownerId     String
+  missionId   String?   @unique  // Optional: workspace for a mission
   
   // Workspace identity
   title       String
@@ -58,6 +64,7 @@ model Workspace {
 
   // Relations
   owner         User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  mission       Mission?       @relation(fields: [missionId], references: [id])
   projects      Project[]
   documents     Document[]
   conversations Conversation[]
@@ -68,6 +75,7 @@ model Workspace {
   deletedAt   DateTime?
 
   @@index([ownerId])
+  @@index([missionId])
   @@map("workspaces")
 }
 
@@ -145,6 +153,7 @@ model Project {
   userId            String
   workspaceId       String?           // Optional: projects belong to a workspace
   conversationId    String?
+  missionId         String?           // Phase 1: projects can belong to a mission
   
   // Project details
   name              String
@@ -164,12 +173,15 @@ model Project {
   user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
   conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  mission           Mission?          @relation("MissionProjects", fields: [missionId], references: [id], onDelete: SetNull)
   tasks             ProjectTask[]
+
   documents         Document[]
 
   @@index([userId])
   @@index([workspaceId])
   @@index([conversationId])
+  @@index([missionId])
   @@map("projects")
 }
 
@@ -179,12 +191,14 @@ model Project {
 model ProjectTask {
   id                String            @id @default(cuid())
   projectId         String
+  missionId         String?           // Phase 1: tasks can belong to a mission
+  milestoneId       String?           // Phase 1: tasks can belong to a milestone
   
   // Task details
   title             String
   description       String?           @db.Text
-  status            String            @default("todo") // 'todo' | 'in_progress' | 'done'
-  priority          String            @default("medium") // 'low' | 'medium' | 'high'
+  status            String            @default("todo") // 'todo' | 'in_progress' | 'done' | 'blocked'
+  priority          String            @default("medium") // 'low' | 'medium' | 'high' | 'critical'
   
   // Task metadata
   order             Int               @default(0)
@@ -196,8 +210,12 @@ model ProjectTask {
 
   // Relations
   project           Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  mission           Mission?          @relation("MissionTasks", fields: [missionId], references: [id], onDelete: SetNull)
+  milestone         Milestone?        @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
 
   @@index([projectId])
+  @@index([missionId])
+  @@index([milestoneId])
   @@map("project_tasks")
 }
 
@@ -210,6 +228,7 @@ model Document {
   workspaceId       String?           // Optional: documents belong to a workspace
   conversationId    String?
   projectId         String?
+  missionId         String?           // Phase 1: documents can belong to a mission
   
   // Document metadata
   title             String
@@ -233,11 +252,13 @@ model Document {
   workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
   conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: SetNull)
   project           Project?          @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  mission           Mission?          @relation("MissionDocuments", fields: [missionId], references: [id], onDelete: SetNull)
 
   @@index([userId])
   @@index([workspaceId])
   @@index([conversationId])
   @@index([projectId])
+  @@index([missionId])
   @@map("documents")
 }
 
@@ -246,11 +267,12 @@ model Document {
 // ============================================================================
 model DianaMemory {
   id                String            @id @default(cuid())
-  userId            String
+  userId            String?
   workspaceId       String?           // Optional: memories scoped to a workspace
+  missionId         String?           @unique // Phase 1: memories scoped to a mission (one-to-one)
   
   // Memory classification
-  category          String            // 'user_preference' | 'working_style' | 'project_context' | 'technical_constraint'
+  category          String            // 'user_preference' | 'working_style' | 'project_context' | 'technical_constraint' | 'mission_context'
   key               String            // Unique identifier for this memory
   value             String            @db.Text // The actual memory content
   
@@ -264,11 +286,13 @@ model DianaMemory {
   expiresAt         DateTime?         // Optional: memory expires after time
 
   // Relations
-  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
   workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  mission           Mission?          @relation("MissionMemory", fields: [missionId], references: [id], onDelete: Cascade)
 
   @@unique([userId, category, key])
   @@index([userId])
+  @@index([missionId])
   @@index([category])
   @@map("diana_memories")
 }
@@ -300,3 +324,201 @@ model Activity {
   @@index([createdAt])
   @@map("activities")
 }
+
+// ============================================================================
+// PHASE 1: MISSION-CENTRIC ARCHITECTURE
+// ============================================================================
+
+// ============================================================================
+// ORGANIZATION MODEL - Multi-tenant container for missions and teams
+// ============================================================================
+model Organization {
+  id              String    @id @default(cuid())
+  name            String
+  slug            String    @unique
+  description     String?   @db.Text
+  
+  // Org metadata
+  subscriptionTier String   @default("free") // 'free' | 'starter' | 'pro' | 'enterprise'
+  
+  // Relations
+  members         User[]    @relation("OrganizationMembers")
+  missions        Mission[]
+  teams           Team[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  createdBy       String
+  
+  @@index([slug])
+  @@map("organizations")
+}
+
+// ============================================================================
+// MISSION MODEL - The operational center of AIGINVEST
+// ============================================================================
+model Mission {
+  id                  String          @id @default(cuid())
+  organizationId      String
+  ownerId             String
+  
+  // Mission identity
+  title               String
+  description         String?         @db.Text
+  objective           String          @db.Text
+  successCriteria     String          @db.Text // JSON array of criteria
+  
+  // Status and priority
+  status              String          @default("planning") // planning | active | paused | completed | archived
+  priority            String          @default("high") // critical | high | medium | low
+  
+  // Timeline
+  deadline            DateTime?
+  startDate           DateTime?
+  completedDate       DateTime?
+  
+  // Associated resources
+  workspaceId         String?         @unique // Optional: link to workspace
+  
+  // Relations
+  organization        Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  owner               User           @relation("MissionOwner", fields: [ownerId], references: [id])
+  workspace           Workspace?
+  
+  projects            Project[]       @relation("MissionProjects")
+  tasks               ProjectTask[]   @relation("MissionTasks")
+  documents           Document[]      @relation("MissionDocuments")
+  milestones          Milestone[]
+  
+  progress            MissionProgress?
+  memory              DianaMemory?    @relation("MissionMemory")
+  
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  
+  @@index([organizationId])
+  @@index([ownerId])
+  @@index([status])
+  @@map("missions")
+}
+
+// ============================================================================
+// MILESTONE MODEL - Planned checkpoint within a mission
+// ============================================================================
+model Milestone {
+  id              String    @id @default(cuid())
+  missionId       String
+  
+  title           String
+  description     String?   @db.Text
+  
+  targetDate      DateTime
+  completedDate   DateTime?
+  
+  successCriteria String?   @db.Text
+  status          String    @default("planned") // planned | active | completed | missed
+  
+  // Relations
+  mission         Mission   @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  tasks           ProjectTask[]
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([missionId])
+  @@map("milestones")
+}
+
+// ============================================================================
+// MISSION PROGRESS MODEL - Tangible advancement tracking
+// ============================================================================
+model MissionProgress {
+  id                      String    @id @default(cuid())
+  missionId               String    @unique
+  
+  percentComplete         Int       @default(0)
+  tasksTotal              Int       @default(0)
+  tasksCompleted          Int       @default(0)
+  tasksBlocked            Int       @default(0)
+  
+  milestonesReached       Int       @default(0)
+  milestonesTotalPlanned  Int       @default(0)
+  
+  score                   Int       @default(0)
+  trend                   String    @default("stable") // accelerating | stable | decelerating
+  
+  estimatedCompletion     DateTime?
+  
+  updatedAt               DateTime  @updatedAt
+  
+  // Relations
+  mission                 Mission   @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  
+  @@map("mission_progress")
+}
+
+// ============================================================================
+// TEAM MODEL - Collaborative unit within organization
+// ============================================================================
+model Team {
+  id              String    @id @default(cuid())
+  organizationId  String
+  name            String
+  description     String?   @db.Text
+  
+  // Relations
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  members         User[]       @relation("TeamMembers")
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([organizationId])
+  @@map("teams")
+}
+
+// ============================================================================
+// EVENT MODEL - Immutable event log for event sourcing
+// ============================================================================
+model Event {
+  id              String    @id @default(cuid())
+  type            String    // mission.created | task.completed | etc
+  aggregateId     String    // Which entity does this concern?
+  aggregateType   String    // 'Mission' | 'Task' | 'Document'
+  
+  data            String    @db.Text // JSON data for this event
+  metadata        String?   @db.Text // JSON metadata (userId, timestamp, causedBy, etc)
+  
+  version         Int       @default(1)
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([aggregateId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("events")
+}
+
+// ============================================================================
+// WEBHOOK SUBSCRIPTION MODEL - Extensions and integrations
+// ============================================================================
+model WebhookSubscription {
+  id              String    @id @default(cuid())
+  organizationId  String
+  
+  event           String    // task.completed | mission.created | etc
+  url             String
+  secret          String    // For HMAC signature verification
+  
+  isActive        Boolean   @default(true)
+  retryCount      Int       @default(0)
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([organizationId])
+  @@index([event])
+  @@map("webhook_subscriptions")
+}
+
+// ============================================================================
+// UPDATE USER MODEL - Add organization membership
+// ============================================================================
+// Note: User model already defined above. Add these relations:

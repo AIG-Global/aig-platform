@@ -62,6 +62,7 @@ export default function HomePage() {
               <span style={{ fontWeight: 600, fontSize: '15px' }}>AIGINVEST</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <button onClick={() => router.push('/missions')} style={{ background: 'none', border: 'none', color: '#aaa', fontSize: '13px', cursor: 'pointer' }}>Missions</button>
               <button onClick={() => router.push('/chat')} style={{ background: 'none', border: 'none', color: '#aaa', fontSize: '13px', cursor: 'pointer' }}>Ask Diana</button>
               <button onClick={() => { localStorage.clear(); router.push('/login') }} style={{ background: 'none', border: 'none', color: '#555', fontSize: '13px', cursor: 'pointer' }}>Sign out</button>
             </div>

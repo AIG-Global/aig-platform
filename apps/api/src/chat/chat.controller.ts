@@ -44,13 +44,13 @@ export class ChatController {
   /**
    * POST /api/chat/greet
    * Generate a contextual greeting for a returning user.
-   * Returns { greeting: string } based on workspace + progress context.
+   * Returns { greeting: string } based on mission + workspace + progress context.
    */
   @Post('greet')
   async greet(@Headers('x-user-id') userId: string): Promise<{ greeting: string }> {
     if (!userId) return { greeting: `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?` }
 
-    const [workspace, progress] = await Promise.all([
+    const [workspace, progress, activeMission] = await Promise.all([
       this.prisma.workspace.findFirst({
         where: { ownerId: userId, status: 'active', deletedAt: null },
         orderBy: { updatedAt: 'desc' },
@@ -66,16 +66,47 @@ export class ChatController {
       this.prisma.projectTask.count({
         where: { project: { userId, deletedAt: null }, status: 'done', deletedAt: null },
       }),
+      this.prisma.mission.findFirst({
+        where: { ownerId: userId, status: { in: ['active', 'planning'] } },
+        orderBy: { updatedAt: 'desc' },
+        include: {
+          progress: true,
+        },
+      }),
     ])
 
     // First-time user
-    if (!workspace) {
+    if (!workspace && !activeMission) {
       return { greeting: `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?` }
     }
 
+    // Returning user with mission — reference mission context
+    if (activeMission) {
+      let greeting = `Welcome back.\n\nYou're working on **${activeMission.title}**.`
+      
+      if (activeMission.objective) {
+        greeting += `\n\n**Goal:** ${activeMission.objective}`
+      }
+      
+      if (activeMission.progress) {
+        const progressPercent = activeMission.progress.percentComplete || 0
+        greeting += `\n\n**Progress:** ${progressPercent}% complete (${activeMission.progress.tasksCompleted}/${activeMission.progress.tasksTotal} tasks)`
+      }
+      
+      if (activeMission.deadline) {
+        const daysLeft = Math.ceil((new Date(activeMission.deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+        if (daysLeft > 0) {
+          greeting += `\n\n**Timeline:** ${daysLeft} days remaining`
+        }
+      }
+      
+      greeting += `\n\nWhat should we focus on next?`
+      return { greeting }
+    }
+
     // Returning user — reference workspace + progress
-    const nextTask = workspace.projects[0]?.tasks[0]?.title
-    let greeting = `Welcome back.\n\nYour **${workspace.title}** workspace is ready.`
+    const nextTask = workspace?.projects[0]?.tasks[0]?.title
+    let greeting = `Welcome back.\n\nYour **${workspace?.title}** workspace is ready.`
     if (progress > 0) {
       greeting += ` You've completed **${progress} task${progress > 1 ? 's' : ''}** so far.`
     }

@@ -14,6 +14,12 @@ export interface DianaAction {
 export interface DianaResult {
   response: string
   action: DianaAction
+  missionContext?: {
+    title: string
+    objective: string
+    progress: number
+    status: string
+  }
 }
 
 @Injectable()
@@ -139,10 +145,40 @@ export class DianaService {
   }
 
   /**
+   * Get mission context for the user
+   */
+  async getMissionContext(userId: string): Promise<DianaResult['missionContext'] | undefined> {
+    const mission = await this.prisma.mission.findFirst({
+      where: { ownerId: userId, status: { in: ['active', 'planning'] } },
+      orderBy: { updatedAt: 'desc' },
+      include: {
+        progress: true,
+      },
+    })
+
+    if (!mission) return undefined
+
+    return {
+      title: mission.title,
+      objective: mission.objective || '',
+      progress: mission.progress?.percentComplete || 0,
+      status: mission.status,
+    }
+  }
+
+  /**
    * Main entry: generate Diana's response with full context
    */
-  async respond(conversationId: string, userMessage: string): Promise<DianaResult> {
-    const history = await this.getConversationContext(conversationId)
-    return this.generateResult(userMessage, history)
+  async respond(conversationId: string, userMessage: string, userId?: string): Promise<DianaResult> {
+    const [history, missionContext] = await Promise.all([
+      this.getConversationContext(conversationId),
+      userId ? this.getMissionContext(userId) : Promise.resolve(undefined),
+    ])
+
+    const result = this.generateResult(userMessage, history)
+    if (missionContext) {
+      result.missionContext = missionContext
+    }
+    return result
   }
 }
