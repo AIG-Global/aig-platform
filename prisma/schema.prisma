@@ -1,4 +1,5 @@
-// Prisma schema for Diana Chat MVP
+// Prisma schema for AIGINVEST Alpha 0.1 - Meet Diana
+// Workstream: Database persistence for Diana conversations, memories, and projects
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,76 +9,222 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// User model (basic structure for chat ownership)
+// ============================================================================
+// USER MODEL - Track user identity and Diana preferences
+// ============================================================================
 model User {
-  id            String          @id @default(cuid())
-  email         String          @unique
-  name          String?
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  deletedAt     DateTime?
+  id                String          @id @default(cuid())
+  email             String          @unique
+  displayName       String?
+  avatarUrl         String?
+  
+  // Diana preferences
+  dianaTone         String          @default("professional") // 'professional' | 'casual' | 'mentor'
+  dianaLanguage     String          @default("en")
+  notificationsOn   Boolean         @default(true)
+  
+  // Account metadata
+  lastLoginAt       DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  deletedAt         DateTime?
 
   // Relations
-  conversations Conversation[]
-  documents     Document[]
+  conversations     Conversation[]
+  projects          Project[]
+  documents         Document[]
+  dianaMemories     DianaMemory[]
 
   @@map("users")
 }
 
-// Conversation model - represents a chat thread
+// ============================================================================
+// CONVERSATION MODEL - Chat threads with Diana
+// ============================================================================
 model Conversation {
-  id        String    @id @default(cuid())
-  userId    String
-  title     String?   @default("New Chat")
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  id                String            @id @default(cuid())
+  userId            String
+  title             String            @default("New Chat")
+  
+  // Context for Diana memory
+  context           String?           @db.Text // Summary of conversation purpose
+  memoryNotes       String?           @db.Text // Key facts Diana should remember
+  
+  // Metadata
+  messageCount      Int               @default(0)
+  isArchived        Boolean           @default(false)
+  
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  deletedAt         DateTime?
 
   // Relations
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  messages  Message[]
-  documents Document[]
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages          Message[]
+  documents         Document[]
+  projects          Project[]
 
   @@index([userId])
+  @@index([createdAt])
   @@map("conversations")
 }
 
-// Message model - individual messages within a conversation
+// ============================================================================
+// MESSAGE MODEL - Individual messages with metadata for streaming
+// ============================================================================
 model Message {
-  id             String    @id @default(cuid())
-  conversationId String
-  role           String    @default("user") // 'user' | 'assistant'
-  content        String
-  tokens         Int?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  deletedAt      DateTime?
+  id                String            @id @default(cuid())
+  conversationId    String
+  
+  // Message content and role
+  role              String            @default("user") // 'user' | 'assistant'
+  content           String            @db.Text
+  
+  // Streaming and processing metadata
+  isStreaming       Boolean           @default(false)
+  streamStatus      String?           // 'pending' | 'complete' | 'error'
+  tokens            Int?              // Token count for cost tracking
+  
+  // Message classification for Diana intelligence
+  intent            String?           // 'question' | 'request' | 'clarification' | 'feedback'
+  isActionable      Boolean           @default(false)
+  
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  deletedAt         DateTime?
 
   // Relations
-  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversation      Conversation      @relation(fields: [conversationId], references: [id], onDelete: Cascade)
 
   @@index([conversationId])
+  @@index([createdAt])
   @@map("messages")
 }
 
-// Document model - generated documents saved from conversations
-model Document {
-  id              String    @id @default(cuid())
-  conversationId  String?
-  userId          String
-  title           String
-  content         String    @db.Text
-  documentType    String    @default("document") // 'document', 'project', 'board', etc
-  tags            String[]  @default([])
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  deletedAt       DateTime?
+// ============================================================================
+// PROJECT MODEL - Projects created from Diana conversations (AIG-003)
+// ============================================================================
+model Project {
+  id                String            @id @default(cuid())
+  userId            String
+  conversationId    String?
+  
+  // Project details
+  name              String
+  description       String?           @db.Text
+  status            String            @default("active") // 'active' | 'paused' | 'completed'
+  color             String            @default("blue")
+  
+  // Project organization
+  tags              String[]          @default([])
+  isPublic          Boolean           @default(false)
+  
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  deletedAt         DateTime?
 
   // Relations
-  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  tasks             ProjectTask[]
+  documents         Document[]
 
   @@index([userId])
   @@index([conversationId])
+  @@map("projects")
+}
+
+// ============================================================================
+// PROJECT TASK MODEL - Tasks within projects (for Diana to organize work)
+// ============================================================================
+model ProjectTask {
+  id                String            @id @default(cuid())
+  projectId         String
+  
+  // Task details
+  title             String
+  description       String?           @db.Text
+  status            String            @default("todo") // 'todo' | 'in_progress' | 'done'
+  priority          String            @default("medium") // 'low' | 'medium' | 'high'
+  
+  // Task metadata
+  order             Int               @default(0)
+  dueDate           DateTime?
+  
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  deletedAt         DateTime?
+
+  // Relations
+  project           Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("project_tasks")
+}
+
+// ============================================================================
+// DOCUMENT MODEL - Artifacts generated from conversations
+// ============================================================================
+model Document {
+  id                String            @id @default(cuid())
+  userId            String
+  conversationId    String?
+  projectId         String?
+  
+  // Document metadata
+  title             String
+  content           String            @db.Text
+  documentType      String            @default("document") // 'document' | 'specification' | 'plan' | 'notes'
+  
+  // Organization
+  tags              String[]          @default([])
+  isStarred         Boolean           @default(false)
+  
+  // Export metadata
+  lastExportedAt    DateTime?
+  exportFormats     String[]          @default([]) // 'pdf' | 'markdown' | 'html'
+  
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  deletedAt         DateTime?
+
+  // Relations
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  project           Project?          @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([conversationId])
+  @@index([projectId])
   @@map("documents")
+}
+
+// ============================================================================
+// DIANA MEMORY MODEL - Long-term context for Diana across conversations
+// ============================================================================
+model DianaMemory {
+  id                String            @id @default(cuid())
+  userId            String
+  
+  // Memory classification
+  category          String            // 'user_preference' | 'working_style' | 'project_context' | 'technical_constraint'
+  key               String            // Unique identifier for this memory
+  value             String            @db.Text // The actual memory content
+  
+  // Importance scoring
+  confidence        Int               @default(100) // 0-100 scale
+  lastReferencedAt  DateTime?
+  referenceCount    Int               @default(0)
+  
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  expiresAt         DateTime?         // Optional: memory expires after time
+
+  // Relations
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, category, key])
+  @@index([userId])
+  @@index([category])
+  @@map("diana_memories")
 }

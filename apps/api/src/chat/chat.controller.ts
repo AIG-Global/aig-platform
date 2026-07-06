@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Patch, Body, Param, Res, HttpCode } from '@nestjs/common'
 import type { Response } from 'express'
-import { ChatServiceMemory } from './chat.service.memory.js'
+import { ChatService } from './chat.service.js'
 import { DianaService } from './diana.service.js'
 import {
   CreateConversationDto,
@@ -12,7 +12,7 @@ import {
 @Controller('chat')
 export class ChatController {
   constructor(
-    private chatService: ChatServiceMemory,
+    private chatService: ChatService,
     private dianaService: DianaService
   ) {}
 

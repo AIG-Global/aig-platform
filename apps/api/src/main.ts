@@ -5,6 +5,7 @@ import { createRequire } from 'module'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
 import { ChatModule } from './chat/chat.module.js'
+import { AuthModule } from './auth/auth.module.js'
 
 // ESM compatibility
 const __filename = fileURLToPath(import.meta.url)
@@ -49,6 +50,7 @@ class AppController {
 @Module({
   imports: [
     ChatModule,
+    AuthModule,
     IdentityModule,
     //UserManagementModule,
     //OrganizationManagementModule,

@@ -237,39 +237,53 @@ export default function ChatPage() {
           setConversationId(data.id)
           setConversationTitle(data.title || 'New Chat')
 
-          // Add initial greeting from Diana
+          const greeting = `Welcome to AIGINVEST. I'm Diana. Let's build something together.`
+
+          // Save Diana's greeting to DB
+          await fetch('http://localhost:3333/api/chat/message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              conversationId: data.id,
+              role: 'assistant',
+              content: greeting,
+            }),
+          })
+
           setMessages([
             {
               id: '0',
               role: 'assistant',
-              content: `# Welcome, ${email.split('@')[0]}!\n\nI'm Diana, your AI companion for building products. Whether you need help thinking through ideas, writing code, organizing your thoughts, or just exploring possibilities—I'm here for you.\n\n**What would you like to work on today?**`,
+              content: greeting,
               timestamp: new Date(),
             },
           ])
+
+          // Refresh sidebar
+          const convRes = await fetch(`http://localhost:3333/api/chat/user/${id}`)
+          if (convRes.ok) setConversations(await convRes.json())
         } else {
-          console.warn(`Failed to create conversation: ${response.status}`, await response.text())
-          // Generate a temporary ID so we can still send messages
+          console.warn(`Failed to create conversation: ${response.status}`)
           const tempId = `temp-${Date.now()}`
           setConversationId(tempId)
           setMessages([
             {
               id: '0',
               role: 'assistant',
-              content: `# Welcome!\n\nI'm Diana. Let's build something together.`,
+              content: `Welcome to AIGINVEST. I'm Diana. Let's build something together.`,
               timestamp: new Date(),
             },
           ])
         }
       } catch (error) {
         console.error('Failed to create conversation:', error)
-        // Generate a temporary ID as fallback
         const tempId = `temp-${Date.now()}`
         setConversationId(tempId)
         setMessages([
           {
             id: '0',
             role: 'assistant',
-            content: `# Welcome!\n\nI'm Diana. Let's build something together.`,
+            content: `Welcome to AIGINVEST. I'm Diana. Let's build something together.`,
             timestamp: new Date(),
           },
         ])
@@ -332,6 +346,27 @@ export default function ChatPage() {
 
       // Update messages with assistant message
       setMessages((prev) => [...prev, assistantMessage])
+
+      // Auto-title: set conversation title from first user message
+      if (messages.length <= 1) {
+        const shortTitle = messageText.length > 40 ? messageText.slice(0, 40) + '…' : messageText
+        try {
+          await fetch(`http://localhost:3333/api/chat/${conversationId}/title`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: shortTitle }),
+          })
+          setConversationTitle(shortTitle)
+        } catch {}
+      }
+
+      // Refresh sidebar
+      if (userId) {
+        try {
+          const convRes = await fetch(`http://localhost:3333/api/chat/user/${userId}`)
+          if (convRes.ok) setConversations(await convRes.json())
+        } catch {}
+      }
     } catch (error) {
       console.error('Failed to send message:', error)
       // Add error message
@@ -415,10 +450,33 @@ export default function ChatPage() {
           }}>
             <div style={{ padding: '16px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
               <button
-                onClick={() => {
-                  setConversationId('')
-                  setMessages([])
-                  setConversationTitle('New Chat')
+              onClick={async () => {
+                  if (!userId) return
+                  try {
+                    const response = await fetch('http://localhost:3333/api/chat/create', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ userId, title: 'New Chat' }),
+                    })
+                    if (response.ok) {
+                      const data = await response.json()
+                      const greeting = `Welcome to AIGINVEST. I'm Diana. Let's build something together.`
+                      await fetch('http://localhost:3333/api/chat/message', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ conversationId: data.id, role: 'assistant', content: greeting }),
+                      })
+                      setConversationId(data.id)
+                      setConversationTitle('New Chat')
+                      setMessages([{ id: '0', role: 'assistant', content: greeting, timestamp: new Date() }])
+                      const convRes = await fetch(`http://localhost:3333/api/chat/user/${userId}`)
+                      if (convRes.ok) setConversations(await convRes.json())
+                    }
+                  } catch {
+                    setConversationId(`temp-${Date.now()}`)
+                    setConversationTitle('New Chat')
+                    setMessages([{ id: '0', role: 'assistant', content: `Welcome to AIGINVEST. I'm Diana. Let's build something together.`, timestamp: new Date() }])
+                  }
                 }}
                 style={{
                   width: '100%',
@@ -520,7 +578,7 @@ export default function ChatPage() {
               borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
               background: 'rgba(0, 0, 0, 0.2)',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <div style={{
                   width: '32px',
                   height: '32px',
@@ -587,7 +645,29 @@ export default function ChatPage() {
             }}>
               {messages.length === 0 ? (
                 <div style={{ textAlign: 'center', color: '#666', paddingTop: '60px' }}>
-                  <p style={{ fontSize: '16px', marginBottom: '12px' }}>Start a conversation with Diana</p>
+                  <p style={{ fontSize: '18px', marginBottom: '24px', color: '#aaa' }}>What would you like to work on?</p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', maxWidth: '480px', margin: '0 auto' }}>
+                    {['Create my first project', 'Continue yesterday\'s work', 'Generate a document', 'Organize my tasks', 'Help me learn something'].map((prompt) => (
+                      <button
+                        key={prompt}
+                        onClick={() => setInputValue(prompt)}
+                        style={{
+                          padding: '8px 16px',
+                          background: 'rgba(102, 126, 234, 0.1)',
+                          border: '1px solid rgba(102, 126, 234, 0.3)',
+                          borderRadius: '20px',
+                          color: '#aaa',
+                          fontSize: '13px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(102, 126, 234, 0.2)'; e.currentTarget.style.color = '#fff' }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(102, 126, 234, 0.1)'; e.currentTarget.style.color = '#aaa' }}
+                      >
+                        {prompt}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 messages.map((msg) => (

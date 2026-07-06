@@ -7,20 +7,32 @@ export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setError('')
 
     try {
-      // In a real app, this would call your auth API
-      // For now, just store the email in localStorage and redirect
-      localStorage.setItem('userId', email.split('@')[0])
-      localStorage.setItem('userEmail', email)
+      const res = await fetch('http://localhost:3333/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+      })
+
+      if (!res.ok) {
+        throw new Error(`Login failed: ${res.status}`)
+      }
+
+      const user = await res.json()
+      localStorage.setItem('userId', user.id)
+      localStorage.setItem('userEmail', user.email)
+      localStorage.setItem('userDisplayName', user.displayName || email.split('@')[0])
       router.push('/chat')
-    } catch (error) {
-      console.error('Login failed:', error)
-      alert('Login failed. Please try again.')
+    } catch (err: any) {
+      console.error('Login error:', err)
+      setError('Could not sign in. Please try again.')
       setLoading(false)
     }
   }
@@ -60,8 +72,8 @@ export default function LoginPage() {
               }}>
                 ◇
               </div>
-              <h1 style={{ margin: '0 0 10px 0', fontSize: '28px' }}>North Star ONE</h1>
-              <p style={{ margin: '0', color: '#999', fontSize: '14px' }}>Meet Diana</p>
+              <h1 style={{ margin: '0 0 8px 0', fontSize: '24px', fontWeight: '700' }}>AIGINVEST</h1>
+              <p style={{ margin: '0', color: '#999', fontSize: '14px' }}>Meet Diana. Let's build something together.</p>
             </div>
 
             {/* Login Form */}
@@ -92,6 +104,10 @@ export default function LoginPage() {
                 />
               </div>
 
+              {error && (
+                <p style={{ margin: 0, color: '#f87171', fontSize: '13px' }}>{error}</p>
+              )}
+
               <button
                 type="submit"
                 disabled={loading}
@@ -112,11 +128,10 @@ export default function LoginPage() {
                 }}
                 onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
-                {loading ? 'Signing in...' : 'Sign in'}
+                {loading ? 'Signing in...' : 'Meet Diana →'}
               </button>
             </form>
 
-            {/* Demo Info */}
             <div style={{
               marginTop: '30px',
               padding: '16px',
@@ -126,12 +141,7 @@ export default function LoginPage() {
               color: '#aaa',
               lineHeight: '1.6',
             }}>
-              Demo credentials:
-              <br />
-              Email: demo@example.com
-              <br />
-              <br />
-              This will start your first conversation with Diana.
+              Enter any email to begin. Your conversations with Diana are saved automatically.
             </div>
           </div>
         </main>
