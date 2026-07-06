@@ -171,8 +171,10 @@ export default function ChatPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const conversationIdFromQuery = searchParams.get('id')
+  const goalFromQuery = searchParams.get('goal')
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
+  const [autoSubmitGoal, setAutoSubmitGoal] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [conversationId, setConversationId] = useState('')
   const [userEmail, setUserEmail] = useState('')
@@ -281,6 +283,11 @@ export default function ChatPage() {
           // Refresh sidebar
           const convRes = await fetch(`${API}/api/chat/user/${id}`)
           if (convRes.ok) setConversations(await convRes.json())
+
+          // If a goal was passed via query param, auto-send it
+          if (goalFromQuery) {
+            setAutoSubmitGoal(goalFromQuery)
+          }
         } else {
           console.warn(`Failed to create conversation: ${response.status}`)
           const tempId = `temp-${Date.now()}`
@@ -316,6 +323,19 @@ export default function ChatPage() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  // Auto-submit goal from query param once conversation is ready
+  useEffect(() => {
+    if (!autoSubmitGoal || !conversationId || loading || streaming) return
+    setAutoSubmitGoal(null)
+    setInputValue(autoSubmitGoal)
+    // Small delay so the input state settles before submit
+    const t = setTimeout(() => {
+      const form = document.querySelector('form')
+      form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+    }, 150)
+    return () => clearTimeout(t)
+  }, [autoSubmitGoal, conversationId, loading, streaming])
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()

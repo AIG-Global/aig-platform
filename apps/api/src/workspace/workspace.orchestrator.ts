@@ -6,10 +6,10 @@ import { WorkspaceBundleDto } from './workspace.dto.js'
 // ─── Mission type classifier ────────────────────────────────────────────────
 
 const MISSION_PATTERNS: Record<string, string[]> = {
-  startup:  ['start', 'launch', 'build a company', 'found', 'startup', 'business', 'venture'],
-  software: ['app', 'software', 'platform', 'api', 'develop', 'coding', 'system', 'website'],
+  startup:  ['start', 'launch', 'build a company', 'found', 'startup', 'business', 'venture', 'company', 'ai company', 'saas', 'product company', 'scale'],
+  software: ['app', 'software', 'platform', 'api', 'develop', 'coding', 'system', 'website', 'mobile app', 'web app'],
   personal: ['personal', 'journal', 'habit', 'goals', 'health', 'fitness', 'life', 'self'],
-  learning: ['learn', 'study', 'understand', 'course', 'practice', 'master', 'improve'],
+  learning: ['learn', 'study', 'understand', 'course', 'practice', 'master', 'improve', 'get better at'],
 }
 
 function classifyGoal(goal: string): { type: string; confidence: number } {
@@ -54,7 +54,9 @@ const STARTER_TASKS: Record<string, Array<{ title: string; priority: string }>> 
     { title: 'Define vision and mission statement', priority: 'high' },
     { title: 'Identify your target customer', priority: 'high' },
     { title: 'Research 3 key competitors', priority: 'medium' },
+    { title: 'Validate the core problem with 5 potential users', priority: 'high' },
     { title: 'Prototype your core feature', priority: 'medium' },
+    { title: 'Define go-to-market strategy', priority: 'medium' },
   ],
   software: [
     { title: 'Define architecture and tech stack', priority: 'high' },
@@ -81,6 +83,70 @@ const STARTER_TASKS: Record<string, Array<{ title: string; priority: string }>> 
     { title: 'Start with the smallest next action', priority: 'medium' },
   ],
 }
+
+// Extra documents for startup workspaces (in addition to welcome doc)
+const STARTUP_EXTRA_DOCS: Array<{ title: string; documentType: string; content: (title: string) => string }> = [
+  {
+    title: 'Business Vision',
+    documentType: 'specification',
+    content: (title) => `# ${title} — Business Vision
+
+## Mission
+*What problem do you solve? For whom?*
+
+## Vision
+*Where will ${title} be in 5 years?*
+
+## Core Values
+1. 
+2. 
+3. 
+
+## The Problem
+*Describe the problem in the customer's own words.*
+
+## Our Solution
+*How does ${title} uniquely solve this problem?*
+
+## Why Now?
+*What has changed that makes this the right moment?*
+
+---
+*Complete this document first. Everything else follows from your vision.*
+`,
+  },
+  {
+    title: 'Product Roadmap',
+    documentType: 'plan',
+    content: (title) => `# ${title} — Product Roadmap
+
+## Phase 1 — Foundation (Month 1–3)
+- [ ] Core feature working end-to-end
+- [ ] 10 beta users onboarded
+- [ ] Basic analytics in place
+
+## Phase 2 — Validation (Month 3–6)
+- [ ] 100 active users
+- [ ] First paying customers
+- [ ] Product-market fit signals
+
+## Phase 3 — Growth (Month 6–12)
+- [ ] 1,000 users
+- [ ] Team of 3+
+- [ ] Repeatable acquisition channel
+
+## Key Metrics
+| Metric | Target | Current |
+|--------|--------|---------|
+| Users | 1,000 | 0 |
+| MRR | €10,000 | 0 |
+| NPS | 50+ | - |
+
+---
+*Update this roadmap every month.*
+`,
+  },
+]
 
 const WELCOME_DOC: Record<string, (title: string, goal: string) => string> = {
   startup: (title, goal) => `# ${title}
@@ -256,6 +322,24 @@ export class WorkspaceOrchestrator {
         documentType: 'document',
       },
     })
+
+    // 4b. For startup workspaces, create additional rich documents
+    if (type === 'startup') {
+      await Promise.all(
+        STARTUP_EXTRA_DOCS.map((d) =>
+          this.prisma.document.create({
+            data: {
+              userId: ownerId,
+              workspaceId: workspace.id,
+              projectId: project.id,
+              title: d.title,
+              content: d.content(title),
+              documentType: d.documentType,
+            },
+          }),
+        ),
+      )
+    }
 
     // 5. Create starter tasks
     const taskTemplates = STARTER_TASKS[type] ?? STARTER_TASKS.general

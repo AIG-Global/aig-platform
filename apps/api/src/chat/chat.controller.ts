@@ -113,10 +113,16 @@ export class ChatController {
       }
 
       // 3. Build context-aware message array
+      // If a workspace was just created, prepend context so Diana's response is specific
       const userId = dto.userId || 'anonymous'
+      let effectiveMessage = dto.userMessage
+      if (workspaceBundle) {
+        const { workspace, projectId, taskIds } = workspaceBundle
+        effectiveMessage = `${dto.userMessage}\n\n[SYSTEM: Workspace "${workspace.title}" was just created with 1 project, ${taskIds.length} starter tasks, and documents including Business Vision and Product Roadmap. Acknowledge this specifically and ask one concrete next-step question to help the user start working.]`
+      }
       const messages = await this.contextEngine.buildMessages(
         dto.conversationId,
-        dto.userMessage,
+        effectiveMessage,
         userId
       )
 
