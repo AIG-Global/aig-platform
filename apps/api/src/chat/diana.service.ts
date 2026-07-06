@@ -1,96 +1,95 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service.js'
 
+interface ChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+}
+
 @Injectable()
 export class DianaService {
   constructor(private prisma: PrismaService) {}
 
   /**
-   * Mock Diana response generator
-   * In production, this will call OpenAI/Claude/etc
+   * Generate a context-aware response from Diana.
+   * Uses conversation history to maintain continuity.
+   * In production: replace with OpenAI / Claude / local model call.
    */
-  async *streamDianaResponse(userMessage: string): AsyncGenerator<string> {
-    // Simulated Diana thinking time
-    const responses = {
-      default: [
-        'I understand. ',
-        'Let me think about that. ',
-        'Based on what you told me, ',
-        'Here is what I recommend: ',
-        '1. Start with a clear objective. ',
-        '2. Break it into milestones. ',
-        '3. Define success metrics. ',
-        'This approach has worked well for many teams. ',
-        'What aspect would you like to explore first?',
-      ],
-      project: [
-        'Building a great product requires: ',
-        '1. Clear vision and milestones ',
-        '2. A focused team ',
-        '3. Regular feedback loops ',
-        '4. Ruthless prioritization ',
-        'Let us define your first sprint together.',
-      ],
+  generateResponse(userMessage: string, history: ChatMessage[] = []): string {
+    const msg = userMessage.toLowerCase().trim()
+    const prevUserMessages = history.filter((m) => m.role === 'user').map((m) => m.content)
+    const isReturningUser = prevUserMessages.length > 1
+    const firstName = null // Future: extract from user profile
+
+    // --- Context: what has the user talked about? ---
+    const hasDiscussedProject = history.some(
+      (m) => m.content.toLowerCase().includes('project') || m.content.toLowerCase().includes('build')
+    )
+    const hasDiscussedDocument = history.some(
+      (m) => m.content.toLowerCase().includes('document') || m.content.toLowerCase().includes('write')
+    )
+
+    // --- Intent detection ---
+    if (msg.includes('project') || msg.includes('create') || msg.includes('start') || msg.includes('build')) {
+      if (hasDiscussedProject && isReturningUser) {
+        return `We were talking about your project — let me continue from there.\n\nTo make this concrete, I suggest we define three things:\n\n1. **What problem does it solve?**\n2. **Who is the first user?**\n3. **What does success look like in 30 days?**\n\nAnswer whichever feels most important right now.`
+      }
+      return `Let's build this together.\n\nA strong project starts with three questions:\n\n1. **What problem are you solving?**\n2. **Who is the first person this helps?**\n3. **What would a working version look like in 2 weeks?**\n\nTell me about the problem first — everything else follows from that.`
     }
 
-    // Determine response type based on keywords
-    const keyword = userMessage.toLowerCase()
-    const responseText = keyword.includes('project') || keyword.includes('build')
-      ? responses.project
-      : responses.default
-
-    // Stream response word by word
-    for (const chunk of responseText) {
-      await new Promise((resolve) => setTimeout(resolve, 100)) // Simulate network delay
-      yield `data: ${JSON.stringify({
-        type: 'text',
-        content: chunk,
-        timestamp: new Date().toISOString(),
-      })}\n\n`
+    if (msg.includes('document') || msg.includes('write') || msg.includes('draft')) {
+      return `I can help you create that.\n\nTell me:\n- **What's the document for?** (specification, plan, notes, proposal)\n- **Who will read it?**\n- **What's the core message?**\n\nI'll draft a structure and we'll refine it together.`
     }
 
-    // End stream
-    yield `data: ${JSON.stringify({
-      type: 'done',
-      timestamp: new Date().toISOString(),
-    })}\n\n`
+    if (msg.includes('help') || msg.includes('what can you do') || msg.includes('who are you')) {
+      return `I'm Diana — your AI companion inside AIGINVEST.\n\nHere's what I'm good at right now:\n\n- **Thinking through ideas** — I ask the right questions\n- **Creating projects** — structure, milestones, tasks\n- **Generating documents** — specs, plans, notes\n- **Remembering context** — I keep track of what we've discussed\n\nWhat would you like to work on?`
+    }
+
+    if (msg.includes('remember') || msg.includes('last time') || msg.includes('before') || msg.includes('earlier')) {
+      if (prevUserMessages.length > 0) {
+        const lastTopic = prevUserMessages[prevUserMessages.length - 2] || prevUserMessages[0]
+        return `Yes — earlier you mentioned: *"${lastTopic.slice(0, 80)}${lastTopic.length > 80 ? '...' : ''}"*\n\nShall we continue from there, or is there something new you'd like to explore?`
+      }
+      return `This is the beginning of our conversation, so I'm starting fresh. But from this point forward, I'll remember everything you tell me in this session.\n\nWhat's on your mind?`
+    }
+
+    if (msg.includes('task') || msg.includes('todo') || msg.includes('organize')) {
+      return `Organizing work well makes everything easier.\n\nLet's create a task list. Tell me:\n- **What's the goal?**\n- **What are the three most important things to accomplish?**\n\nI'll help you prioritize and sequence them.`
+    }
+
+    if (msg.includes('learn') || msg.includes('explain') || msg.includes('how') || msg.includes('what is')) {
+      return `Good question. Let me break this down clearly.\n\n${userMessage.endsWith('?') ? userMessage : `You asked: "${userMessage}"`}\n\nTo give you a useful answer, could you tell me a bit more about your background with this topic? That way I can pitch the explanation at exactly the right level.`
+    }
+
+    if (msg.includes('thank') || msg.includes('great') || msg.includes('perfect') || msg.includes('good')) {
+      return `Happy to help. That's what I'm here for.\n\nWhat's the next thing you'd like to tackle?`
+    }
+
+    // Default: thoughtful, contextual
+    if (isReturningUser && hasDiscussedProject) {
+      return `Building on what we've discussed — ${userMessage.slice(0, 60)}${userMessage.length > 60 ? '...' : ''}\n\nHere's how I'd think about this: start with the smallest version that proves the idea works. What's blocking you right now?`
+    }
+
+    return `That's a good direction to explore.\n\nLet me ask you one clarifying question: what would a successful outcome look like for you here?\n\nOnce I understand what "done" means, I can give you much more specific help.`
   }
 
   /**
-   * Process streaming response and return async generator
+   * Get full conversation history from DB for context
    */
-  async getStreamingResponse(
-    conversationId: string,
-    userMessage: string
-  ): Promise<AsyncGenerator<string>> {
-    // Save user message
-    await this.prisma.message.create({
-      data: {
-        conversationId,
-        role: 'user',
-        content: userMessage,
-      },
+  async getConversationContext(conversationId: string): Promise<ChatMessage[]> {
+    const messages = await this.prisma.message.findMany({
+      where: { conversationId, deletedAt: null },
+      orderBy: { createdAt: 'asc' },
+      take: 20, // Last 20 messages for context window
     })
-
-    // Generate streaming response
-    return this.streamDianaResponse(userMessage)
+    return messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }))
   }
 
   /**
-   * Save complete response after streaming
+   * Main entry: generate Diana's response with full context
    */
-  async saveStreamResponse(
-    conversationId: string,
-    fullResponse: string,
-    tokenCount: number = 0
-  ) {
-    return this.prisma.message.create({
-      data: {
-        conversationId,
-        role: 'assistant',
-        content: fullResponse,
-        tokens: tokenCount,
-      },
-    })
+  async respond(conversationId: string, userMessage: string): Promise<string> {
+    const history = await this.getConversationContext(conversationId)
+    return this.generateResponse(userMessage, history)
   }
 }

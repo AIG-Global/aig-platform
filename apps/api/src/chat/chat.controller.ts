@@ -47,35 +47,24 @@ export class ChatController {
     @Body() dto: { conversationId: string; userMessage: string }
   ): Promise<{ response: string; type: string }> {
     try {
-      // Save user message
+      // Save user message first
       await this.chatService.saveMessage({
         conversationId: dto.conversationId,
         role: 'user',
         content: dto.userMessage,
       })
 
-      // Get Diana's response
-      const responses = [
-        'That sounds interesting! Tell me more about what you\'re trying to accomplish.',
-        'I understand. Here\'s my suggestion: break this down into smaller, manageable steps.',
-        'Great question! Let me help you think through this systematically.',
-        'I\'ve been thinking about this. Here are a few key principles that might help:',
-        'That\'s a solid plan. Let\'s refine it together by focusing on your core objectives first.',
-      ]
-
-      const response = responses[Math.floor(Math.random() * responses.length)]
+      // Get context-aware response from Diana
+      const response = await this.dianaService.respond(dto.conversationId, dto.userMessage)
 
       // Save Diana's response
-      const messageResponse = await this.chatService.saveMessage({
+      await this.chatService.saveMessage({
         conversationId: dto.conversationId,
         role: 'assistant',
         content: response,
       })
 
-      return {
-        response,
-        type: 'complete',
-      }
+      return { response, type: 'complete' }
     } catch (error) {
       return {
         response: `I encountered an error: ${error.message}`,
