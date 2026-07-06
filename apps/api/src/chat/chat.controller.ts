@@ -9,7 +9,7 @@ import {
   MessageResponseDto,
 } from './chat.dto.js'
 
-@Controller('api/chat')
+@Controller('chat')
 export class ChatController {
   constructor(
     private chatService: ChatService,

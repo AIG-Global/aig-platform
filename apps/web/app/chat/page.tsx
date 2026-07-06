@@ -201,7 +201,7 @@ export default function ChatPage() {
       // If conversation ID is provided in query params, load it
       if (conversationIdFromQuery) {
         try {
-          const response = await fetch(`http://localhost:3333/api/api/chat/${conversationIdFromQuery}`)
+          const response = await fetch(`http://localhost:3333/api/chat/${conversationIdFromQuery}`)
           if (response.ok) {
             const data = await response.json()
             setConversationId(data.id)
@@ -223,7 +223,7 @@ export default function ChatPage() {
 
       // Create new conversation
       try {
-        const response = await fetch('http://localhost:3333/api/api/chat/create', {
+        const response = await fetch('http://localhost:3333/api/chat/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -280,7 +280,7 @@ export default function ChatPage() {
 
     try {
       // Send message and stream response
-      const response = await fetch('http://localhost:3333/api/api/chat/stream', {
+      const response = await fetch('http://localhost:3333/api/chat/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

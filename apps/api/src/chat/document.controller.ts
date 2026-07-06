@@ -2,7 +2,7 @@ import { Controller, Post, Get, Patch, Delete, Body, Param } from '@nestjs/commo
 import { DocumentService } from './document.service.js'
 import { CreateDocumentDto, UpdateDocumentDto, DocumentResponseDto } from './document.dto.js'
 
-@Controller('api/documents')
+@Controller('documents')
 export class DocumentController {
   constructor(private documentService: DocumentService) {}
 

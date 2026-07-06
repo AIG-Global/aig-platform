@@ -44,7 +44,7 @@ export default function HomePage() {
 
       // Fetch recent conversations
       try {
-        const response = await fetch(`http://localhost:3333/api/api/chat/user/${id}`)
+        const response = await fetch(`http://localhost:3333/api/chat/user/${id}`)
         if (response.ok) {
           const convs = await response.json()
           setConversations(convs.slice(0, 3)) // Show top 3

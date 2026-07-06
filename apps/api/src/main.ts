@@ -35,7 +35,7 @@ class AppController {
     }
   }
 
-  @Get('/api/info')
+  @Get('info')
   apiInfo() {
     return {
       name: 'AIG Platform API',
