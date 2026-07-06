@@ -34,7 +34,15 @@ export default function LoginPage() {
       localStorage.setItem('userId', user.id)
       localStorage.setItem('userEmail', user.email)
       localStorage.setItem('userDisplayName', user.displayName || email.split('@')[0])
-      router.push('/chat')
+
+      // First-time users go to onboarding, returning users go to home
+      const isNewUser = !user.lastLoginAt || new Date(user.lastLoginAt).getTime() === new Date(user.createdAt).getTime()
+      const onboardingDone = localStorage.getItem('onboardingDone')
+      if (isNewUser && !onboardingDone) {
+        router.push('/onboarding')
+      } else {
+        router.push('/home')
+      }
     } catch {
       setError('Could not sign in. Please try again.')
       setLoading(false)

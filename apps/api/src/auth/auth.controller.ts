@@ -35,6 +35,7 @@ export class AuthController {
       email: user.email,
       displayName: user.displayName,
       createdAt: user.createdAt,
+      lastLoginAt: user.lastLoginAt,
     }
   }
 
