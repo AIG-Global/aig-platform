@@ -257,12 +257,18 @@ export default function WorkspacePage() {
             ) : (
               workspace.documents.map((d) => (
                 <Card key={d.id}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ fontSize: '14px' }}>
-                      {d.documentType === 'specification' ? '📋' : d.documentType === 'plan' ? '🗺️' : '📝'}
-                    </span>
-                    <span style={{ fontSize: '13px', fontWeight: 500 }}>{d.title}</span>
-                  </div>
+                  <button
+                    onClick={() => router.push(`/workspace/${workspaceId}/doc/${d.id}`)}
+                    style={{ background: 'none', border: 'none', color: '#fff', textAlign: 'left', cursor: 'pointer', width: '100%', padding: 0 }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '14px' }}>
+                        {d.documentType === 'specification' ? '📋' : d.documentType === 'plan' ? '🗺️' : '📝'}
+                      </span>
+                      <span style={{ fontSize: '13px', fontWeight: 500, color: '#fff' }}>{d.title}</span>
+                      <span style={{ marginLeft: 'auto', fontSize: '11px', color: '#555' }}>→</span>
+                    </div>
+                  </button>
                 </Card>
               ))
             )}
