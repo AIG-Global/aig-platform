@@ -7,6 +7,7 @@ import { ProjectService } from '../projects/project.service.js'
 import { TaskService } from '../tasks/task.service.js'
 import { LLMService } from '../ai/llm.service.js'
 import { ContextEngine } from '../ai/context.engine.js'
+import { WorkspaceOrchestrator } from '../workspace/workspace.orchestrator.js'
 import {
   CreateConversationDto,
   SendMessageDto,
@@ -24,6 +25,7 @@ export class ChatController {
     private taskService: TaskService,
     private llmService: LLMService,
     private contextEngine: ContextEngine,
+    private workspaceOrchestrator: WorkspaceOrchestrator,
   ) {}
 
   /**
@@ -91,6 +93,15 @@ export class ChatController {
         send({ type: 'title', title: shortTitle })
       }
 
+    // Detect workspace creation intent FIRST (before other actions)
+      const workspaceBundle = await this.detectAndCreateWorkspace(
+        dto.userMessage,
+        dto.userId,
+      )
+      if (workspaceBundle) {
+        send({ type: 'workspace.created', workspace: workspaceBundle })
+      }
+
       // 2. Detect action intent before streaming (project / document creation)
       const actionResult = await this.detectAndExecuteAction(
         dto.userMessage,
@@ -135,6 +146,23 @@ export class ChatController {
     } finally {
       res.end()
     }
+  }
+
+  private async detectAndCreateWorkspace(
+    userMessage: string,
+    userId?: string,
+  ) {
+    if (!userId) return null
+    const msg = userMessage.toLowerCase()
+
+    // Goal patterns that indicate workspace creation intent
+    const isGoal =
+      /(?:i want to|i'm going to|i plan to|let's|i need to|help me)\s+(?:build|create|start|launch|develop|learn|work on)/i.test(msg) ||
+      /(?:start|launch|build|create)\s+(?:an?|my)\s+(?:company|startup|business|app|project|website|product)/i.test(msg) ||
+      /(?:learn|study|master)\s+(?:how to|to)?\s*\w+/i.test(msg)
+
+    if (!isGoal) return null
+    return this.workspaceOrchestrator.createFromGoal(userId, userMessage)
   }
 
   private async detectAndExecuteAction(

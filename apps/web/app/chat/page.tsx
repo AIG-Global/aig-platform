@@ -187,6 +187,7 @@ export default function ChatPage() {
   const [streaming, setStreaming] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
   const [lastUserMessage, setLastUserMessage] = useState('')
+  const [createdWorkspace, setCreatedWorkspace] = useState<{ workspaceId: string; title: string } | null>(null)
 
   // Initialize conversation on mount
   useEffect(() => {
@@ -376,6 +377,11 @@ export default function ChatPage() {
             } else if (data.type === 'action') {
               if (data.action === 'create_project') fetch(`${API}/api/projects/user/${userId}`).then(r => r.ok ? r.json() : []).then(setProjects).catch(() => {})
               if (data.action === 'create_document') fetch(`${API}/api/documents/user/${userId}`).then(r => r.ok ? r.json() : []).then(setDocuments).catch(() => {})
+            } else if (data.type === 'workspace.created') {
+                setCreatedWorkspace({
+                  workspaceId: data.workspace.workspace.id,
+                  title: data.workspace.workspace.title,
+                })
             } else if (data.type === 'done') {
               // Refresh conversation list
               fetch(`${API}/api/chat/user/${userId}`).then(r => r.ok ? r.json() : []).then(setConversations).catch(() => {})
@@ -809,6 +815,49 @@ export default function ChatPage() {
               )}
               <div ref={messagesEndRef} />
             </div>
+
+            {/* Workspace Created Banner */}
+            {createdWorkspace && (
+              <div style={{
+                margin: '0 24px 16px',
+                padding: '16px 20px',
+                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%)',
+                border: '1px solid rgba(102, 126, 234, 0.4)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '16px',
+              }}>
+                <div>
+                  <p style={{ margin: 0, fontWeight: 600, color: '#fff', fontSize: '14px' }}>
+                    🚀 Workspace ready: {createdWorkspace.title}
+                  </p>
+                  <p style={{ margin: '4px 0 0', color: '#aaa', fontSize: '12px' }}>
+                    Diana created your project, documents, and tasks.
+                  </p>
+                </div>
+                <button
+                  onClick={() => router.push(`/workspace/${createdWorkspace.workspaceId}`)}
+                  style={{
+                    padding: '10px 20px',
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    border: 'none',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    transition: 'opacity 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.opacity = '0.85'}
+                  onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                >
+                  Open Workspace →
+                </button>
+              </div>
+            )}
 
             {/* Input Area */}
             <form

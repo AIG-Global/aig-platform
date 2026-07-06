@@ -77,22 +77,32 @@ const STARTER_TASKS: Record<string, Array<{ title: string; priority: string }>> 
 }
 
 const WELCOME_DOC: Record<string, (title: string, goal: string) => string> = {
-  startup: (title, goal) => `# ${title} — Vision
+  startup: (title, goal) => `# ${title}
 
 ## Your Goal
 ${goal}
 
 ## Mission
-Define the mission for ${title} here.
+*Define the mission for ${title} here — what problem does it solve and for whom?*
 
-## Problem We Solve
-Describe the problem your startup addresses.
+## Vision
+*Where will ${title} be in 3 years?*
 
 ## Value Proposition
-What makes ${title} uniquely valuable?
+*What makes ${title} uniquely valuable compared to alternatives?*
+
+## Target Customer
+*Who is your ideal customer? Describe them specifically.*
+
+---
 
 ## Next Steps
-See the task board to get started.
+1. Complete the Vision & Mission statement
+2. Identify your target customer segment
+3. Research 3 key competitors
+4. Define your core differentiator
+
+*Diana will help you work through each of these.*
 `,
   software: (title, goal) => `# ${title} — Architecture
 
@@ -100,28 +110,91 @@ See the task board to get started.
 ${goal}
 
 ## System Overview
-Describe the system here.
+*Describe the system and its primary purpose.*
+
+## Core Features
+1. *Feature 1*
+2. *Feature 2*
+3. *Feature 3*
 
 ## Tech Stack
 - Frontend: 
 - Backend: 
 - Database: 
+- Infrastructure: 
 
 ## Key Design Decisions
-List key decisions here.
+*Record important architectural decisions here as you make them.*
+
+---
+
+*Diana will help you refine the architecture as you build.*
 `,
-  general: (title, goal) => `# ${title} — Welcome
+  learning: (title, goal) => `# Learning: ${title}
 
 ## Your Goal
 ${goal}
 
-## What Diana Has Prepared
-- A project to organize your work
-- Starter tasks to get moving
-- This document to capture your thinking
+## What Success Looks Like
+*How will you know when you've achieved your learning goal?*
 
-## Next Steps
-Review the task board and start with the first task.
+## Learning Path
+1. *Start with fundamentals*
+2. *Build something small*
+3. *Tackle a real project*
+4. *Teach it to solidify understanding*
+
+## Resources
+*Add books, courses, and docs here as you find them.*
+
+---
+
+*Diana will guide you through each step.*
+`,
+  personal: (title, goal) => `# ${title}
+
+## Your Goal
+${goal}
+
+## Current State
+*Where are you now? Be honest.*
+
+## Desired State
+*Where do you want to be?*
+
+## Key Habits to Build
+1. 
+2. 
+3. 
+
+## Weekly Check-in Questions
+- What went well this week?
+- What was difficult?
+- What will I do differently?
+
+---
+
+*Diana will check in with you regularly.*
+`,
+  general: (title, goal) => `# ${title}
+
+## Your Goal
+${goal}
+
+## What Does Success Look Like?
+*Define what "done" means for this goal.*
+
+## Major Milestones
+1. 
+2. 
+3. 
+
+## Key Resources Needed
+*People, tools, information, or budget.*
+
+---
+
+*Diana has prepared this workspace to help you stay organized.*
 `,
 }
 
