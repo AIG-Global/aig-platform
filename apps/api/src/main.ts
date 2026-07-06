@@ -1,7 +1,27 @@
-import { Controller, Get } from '@nestjs/common'
+import 'reflect-metadata'
 import { NestFactory } from '@nestjs/core'
-import { Module } from '@nestjs/common'
-import { AskDianaModule } from './modules/ask-diana/ask-diana.module'
+import { Module, Controller, Get } from '@nestjs/common'
+import { createRequire } from 'module'
+import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'path'
+
+// ESM compatibility
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+const require = createRequire(import.meta.url)
+
+// Dynamically require Phase 2 modules using absolute paths
+const identityPath = resolve(__dirname, '../../../packages/identity/dist')
+//const userMgmtPath = resolve(__dirname, '../../../packages/user-management/dist')
+//const orgMgmtPath = resolve(__dirname, '../../../packages/organization-management/dist')
+
+const identityDist = require(identityPath)
+//const userMgmtDist = require(userMgmtPath)
+//const orgMgmtDist = require(orgMgmtPath)
+
+const IdentityModule = identityDist.IdentityModule
+//const UserManagementModule = userMgmtDist.UserManagementModule
+//const OrganizationManagementModule = orgMgmtDist.OrganizationManagementModule
 
 @Controller()
 class AppController {
@@ -18,15 +38,19 @@ class AppController {
   apiInfo() {
     return {
       name: 'AIG Platform API',
-      version: '0.1.0',
-      modules: ['ask-diana'],
+      version: '0.2.0',
+      modules: ['identity'],
       timestamp: new Date().toISOString(),
     }
   }
 }
 
 @Module({
-  imports: [AskDianaModule],
+  imports: [
+    IdentityModule,
+    //UserManagementModule,
+    //OrganizationManagementModule,
+  ],
   controllers: [AppController],
 })
 class AppModule {}
@@ -34,20 +58,18 @@ class AppModule {}
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  // Enable CORS
   app.enableCors({
     origin: '*',
     credentials: true,
   })
 
-  // Global prefix
   app.setGlobalPrefix('api')
 
   const port = process.env.PORT || 3333
   await app.listen(port)
 
   console.log(`🚀 AIG Platform API running on http://localhost:${port}`)
-  console.log(`📚 Ask Diana module loaded`)
+  console.log(`📚 v0.2.0 - Phase 2 (Identity, User, Organization) services loaded`)
 }
 
 bootstrap()

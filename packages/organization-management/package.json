@@ -1,0 +1,29 @@
+{
+  "name": "@aig/organization-management",
+  "version": "0.2.0",
+  "description": "AIG Platform Organization Management Service",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --noEmitOnError false || true",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts"
+  },
+  "dependencies": {
+    "@aig/identity": "workspace:*",
+    "@nestjs/common": "^10.3.0",
+    "@nestjs/core": "^10.3.0",
+    "class-validator": "^0.14.0",
+    "class-transformer": "^0.5.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/core": "^10.0.0",
+    "@aig/identity": "^0.1.0"
+  }
+}

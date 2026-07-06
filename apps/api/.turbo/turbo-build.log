@@ -1,0 +1,231 @@
+
+> api@0.1.0 build C:\Users\PC\AIG-Global\aig-platform\apps\api
+> tsc -p tsconfig.json
+
+src/main.ts(8,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/main.ts(8,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | (() => { status: string; service: string; timestamp: string; })'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | (() => { status: string; service: string; timestamp: string; })'.
+src/main.ts(17,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/main.ts(17,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | (() => { name: string; version: string; modules: string[]; timestamp: string; })'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | (() => { name: string; version: string; modules: string[]; timestamp: string; })'.
+src/main.ts(46,16): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+src/main.ts(49,3): error TS2584: Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+src/main.ts(50,3): error TS2584: Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(13,26): error TS2307: Cannot find module 'express' or its corresponding type declarations.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(41,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(41,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((request: CreateChatRequest) => Promise<ChatResponse>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((request: CreateChatRequest) => Promise<ChatResponse>)'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(42,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(42,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((request: CreateChatRequest) => Promise<ChatResponse>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((request: CreateChatRequest) => Promise<ChatResponse>)'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(44,5): error TS1206: Decorators are not valid here.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(60,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(60,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((request: StreamChatRequest, res: Response) => Promise<void>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((request: StreamChatRequest, res: Response) => Promise<void>)'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(62,5): error TS1206: Decorators are not valid here.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(63,5): error TS1206: Decorators are not valid here.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(87,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(87,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((page?: string, pageSize?: string) => Promise<ListConversationsResponse>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((page?: string, pageSize?: string) => Promise<ListConversationsResponse>)'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(89,5): error TS1206: Decorators are not valid here.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(90,5): error TS1206: Decorators are not valid here.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(106,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(106,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((conversationId: string) => Promise<GetConversationResponse>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((conversationId: string) => Promise<GetConversationResponse>)'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(108,5): error TS1206: Decorators are not valid here.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(133,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(133,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((conversationId: string) => Promise<void>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((conversationId: string) => Promise<void>)'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(134,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(134,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((conversationId: string) => Promise<void>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((conversationId: string) => Promise<void>)'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(135,28): error TS1206: Decorators are not valid here.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(143,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(143,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((tool: any) => Promise<void>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((tool: any) => Promise<void>)'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(144,22): error TS1206: Decorators are not valid here.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(153,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(153,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | (() => Promise<ListToolsResponse>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | (() => Promise<ListToolsResponse>)'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(159,15): error TS2339: Property 'name' does not exist on type 'ITool'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(160,17): error TS2339: Property 'name' does not exist on type 'ITool'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(161,24): error TS2339: Property 'description' does not exist on type 'ITool'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(162,21): error TS2339: Property 'category' does not exist on type 'ITool'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(164,20): error TS2339: Property 'enabled' does not exist on type 'ITool'.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(177,3): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+src/modules/ask-diana/controllers/ask-diana.controller.ts(177,4): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | (() => Promise<ListModelsResponse>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | (() => Promise<ListModelsResponse>)'.
+src/modules/ask-diana/dto/chat.dto.ts(2,3): error TS2564: Property 'role' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(3,3): error TS2564: Property 'content' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(10,3): error TS2564: Property 'message' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(19,3): error TS2564: Property 'id' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(20,3): error TS2564: Property 'conversationId' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(21,3): error TS2564: Property 'message' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(22,3): error TS2564: Property 'modelId' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(23,3): error TS2564: Property 'tokensUsed' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(30,3): error TS2564: Property 'timestamp' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(35,3): error TS2564: Property 'message' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(44,3): error TS2564: Property 'type' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/chat.dto.ts(46,3): error TS2564: Property 'timestamp' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(9,3): error TS2564: Property 'id' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(10,3): error TS2564: Property 'userId' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(11,3): error TS2564: Property 'title' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(12,3): error TS2564: Property 'messageCount' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(14,3): error TS2564: Property 'createdAt' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(15,3): error TS2564: Property 'updatedAt' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(20,3): error TS2564: Property 'messages' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(29,3): error TS2564: Property 'conversations' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(30,3): error TS2564: Property 'total' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(31,3): error TS2564: Property 'page' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/conversation.dto.ts(32,3): error TS2564: Property 'pageSize' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(10,3): error TS2564: Property 'contextWindow' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(11,3): error TS2564: Property 'costPer1kInputTokens' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(12,3): error TS2564: Property 'costPer1kOutputTokens' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(13,3): error TS2564: Property 'releaseDate' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(18,3): error TS2564: Property 'id' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(19,3): error TS2564: Property 'name' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(20,3): error TS2564: Property 'provider' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(21,3): error TS2564: Property 'capabilities' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(22,3): error TS2564: Property 'metadata' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(23,3): error TS2564: Property 'enabled' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(24,3): error TS2564: Property 'version' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(28,3): error TS2564: Property 'models' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/model.dto.ts(29,3): error TS2564: Property 'defaultModelId' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(2,3): error TS2564: Property 'name' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(3,3): error TS2564: Property 'type' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(4,3): error TS2564: Property 'description' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(5,3): error TS2564: Property 'required' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(10,3): error TS2564: Property 'id' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(11,3): error TS2564: Property 'name' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(12,3): error TS2564: Property 'description' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(13,3): error TS2564: Property 'category' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(14,3): error TS2564: Property 'parameters' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(15,3): error TS2564: Property 'enabled' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(16,3): error TS2564: Property 'version' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(20,3): error TS2564: Property 'name' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(21,3): error TS2564: Property 'description' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(22,3): error TS2564: Property 'category' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(23,3): error TS2564: Property 'parameters' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(27,3): error TS2564: Property 'id' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(28,3): error TS2564: Property 'name' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(29,3): error TS2564: Property 'description' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(30,3): error TS2564: Property 'category' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(31,3): error TS2564: Property 'parameters' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(32,3): error TS2564: Property 'enabled' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(33,3): error TS2564: Property 'version' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(34,3): error TS2564: Property 'createdAt' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(35,3): error TS2564: Property 'updatedAt' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(39,3): error TS2564: Property 'tools' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/dto/tool.dto.ts(40,3): error TS2564: Property 'total' has no initializer and is not definitely assigned in the constructor.
+src/modules/ask-diana/prompts/layered-prompt-builder.ts(14,31): error TS2307: Cannot find module './context-engine' or its corresponding type declarations.
+src/modules/ask-diana/providers/anthropic.provider.ts(37,31): error TS2345: Argument of type 'ToolDefinition[] | undefined' is not assignable to parameter of type 'any[]'.
+  Type 'undefined' is not assignable to type 'any[]'.
+src/modules/ask-diana/providers/anthropic.provider.ts(65,31): error TS2345: Argument of type 'ToolDefinition[] | undefined' is not assignable to parameter of type 'any[]'.
+  Type 'undefined' is not assignable to type 'any[]'.
+src/modules/ask-diana/providers/anthropic.provider.ts(68,28): error TS2304: Cannot find name 'fetch'.
+src/modules/ask-diana/providers/anthropic.provider.ts(85,25): error TS2304: Cannot find name 'TextDecoder'.
+src/modules/ask-diana/providers/anthropic.provider.ts(171,32): error TS2304: Cannot find name 'fetch'.
+src/modules/ask-diana/providers/anthropic.provider.ts(184,15): error TS2304: Cannot find name 'setTimeout'.
+src/modules/ask-diana/providers/anthropic.provider.ts(195,11): error TS2304: Cannot find name 'setTimeout'.
+src/modules/ask-diana/providers/index.ts(1,15): error TS2307: Cannot find module './ai.provider' or its corresponding type declarations.
+src/modules/ask-diana/providers/ollama.provider.ts(62,28): error TS2304: Cannot find name 'fetch'.
+src/modules/ask-diana/providers/ollama.provider.ts(77,25): error TS2304: Cannot find name 'TextDecoder'.
+src/modules/ask-diana/providers/ollama.provider.ts(120,30): error TS2304: Cannot find name 'fetch'.
+src/modules/ask-diana/providers/ollama.provider.ts(129,30): error TS2304: Cannot find name 'fetch'.
+src/modules/ask-diana/providers/ollama.provider.ts(142,28): error TS2304: Cannot find name 'fetch'.
+src/modules/ask-diana/providers/openai.provider.ts(37,31): error TS2345: Argument of type 'ToolDefinition[] | undefined' is not assignable to parameter of type 'any[]'.
+  Type 'undefined' is not assignable to type 'any[]'.
+src/modules/ask-diana/providers/openai.provider.ts(66,31): error TS2345: Argument of type 'ToolDefinition[] | undefined' is not assignable to parameter of type 'any[]'.
+  Type 'undefined' is not assignable to type 'any[]'.
+src/modules/ask-diana/providers/openai.provider.ts(69,28): error TS2304: Cannot find name 'fetch'.
+src/modules/ask-diana/providers/openai.provider.ts(85,25): error TS2304: Cannot find name 'TextDecoder'.
+src/modules/ask-diana/providers/openai.provider.ts(168,32): error TS2304: Cannot find name 'fetch'.
+src/modules/ask-diana/providers/openai.provider.ts(180,15): error TS2304: Cannot find name 'setTimeout'.
+src/modules/ask-diana/providers/openai.provider.ts(191,11): error TS2304: Cannot find name 'setTimeout'.
+src/modules/ask-diana/providers/provider-manager.ts(12,10): error TS2305: Module '"../providers"' has no exported member 'IAIProvider'.
+src/modules/ask-diana/providers/provider-manager.ts(12,23): error TS2724: '"../providers"' has no exported member named 'AIProviderConfig'. Did you mean 'ProviderConfig'?
+src/modules/ask-diana/services/ask-diana.service.ts(3,3): error TS2305: Module '"../providers"' has no exported member 'IAIProvider'.
+src/modules/ask-diana/services/ask-diana.service.ts(7,3): error TS2305: Module '"../providers"' has no exported member 'AIMessage'.
+src/modules/ask-diana/services/ask-diana.service.ts(73,23): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+src/modules/ask-diana/services/ask-diana.service.ts(89,26): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+src/modules/ask-diana/services/ask-diana.service.ts(105,23): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+src/modules/ask-diana/services/ask-diana.service.ts(188,9): error TS2345: Argument of type 'string[]' is not assignable to parameter of type 'MemoryContext'.
+  Type 'string[]' is missing the following properties from type 'MemoryContext': longTermFacts, semanticConcepts, relatedConversations
+src/modules/ask-diana/services/ask-diana.service.ts(230,9): error TS2584: Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+src/modules/ask-diana/services/ask-diana.service.ts(254,45): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/modules/ask-diana/streaming/streaming-response.ts(13,26): error TS2307: Cannot find module 'express' or its corresponding type declarations.
+src/modules/ask-diana/streaming/streaming-response.ts(63,7): error TS2584: Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+src/modules/ask-diana/streaming/streaming-response.ts(125,7): error TS2584: Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+src/modules/ask-diana/streaming/streaming-response.ts(132,60): error TS2503: Cannot find namespace 'NodeJS'.
+src/modules/ask-diana/streaming/streaming-response.ts(133,12): error TS2304: Cannot find name 'setInterval'.
+src/modules/ask-diana/streaming/streaming-response.ts(179,7): error TS2304: Cannot find name 'clearInterval'.
+src/modules/ask-diana/streaming/streaming-response.ts(203,11): error TS2584: Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+src/modules/ask-diana/streaming/streaming-response.ts(222,7): error TS2304: Cannot find name 'clearInterval'.
+src/modules/ask-diana/streaming/streaming-response.ts(246,13): error TS2304: Cannot find name 'setTimeout'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(6,37): error TS2307: Cannot find module '@nestjs/testing' or its corresponding type declarations.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(10,1): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(14,3): error TS2304: Cannot find name 'beforeEach'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(24,3): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(25,5): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(28,3): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(29,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(32,9): error TS2304: Cannot find name 'fail'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(34,9): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(34,16): error TS18046: 'error' is of type 'unknown'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(38,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(40,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(41,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(45,3): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(46,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(48,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(49,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(50,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(54,3): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(55,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(57,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(58,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(59,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(63,3): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(64,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(66,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(67,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(68,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.controller.spec.ts(69,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(6,37): error TS2307: Cannot find module '@nestjs/testing' or its corresponding type declarations.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(7,33): error TS2307: Cannot find module '../ask-diana.service' or its corresponding type declarations.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(9,1): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(12,3): error TS2304: Cannot find name 'beforeEach'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(20,3): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(21,5): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(24,3): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(25,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(30,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(31,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(32,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(33,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(34,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(37,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(52,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(56,3): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(57,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(59,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(63,3): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(64,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(66,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(67,7): error TS2304: Cannot find name 'expect'.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(71,3): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(72,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/modules/ask-diana/tests/ask-diana.service.spec.ts(86,7): error TS2304: Cannot find name 'expect'.
+ ELIFECYCLE  Command failed with exit code 2.
