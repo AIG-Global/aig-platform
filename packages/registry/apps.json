@@ -1,0 +1,153 @@
+{
+  "$schema": "https://aig-global.dev/schemas/apps-registry-v1.json",
+  "version": "1.0.0",
+  "lastUpdated": "2026-07-06T14:49:44.699Z",
+  "registry": "aig-platform-ecosystem",
+  "apps": [
+    {
+      "id": "ask-diana",
+      "name": "Ask Diana",
+      "description": "AI-powered conversational interface for knowledge queries and task automation",
+      "version": "0.1.1",
+      "status": "testing",
+      "category": "core",
+      "entry": "/apps/ask-diana",
+      "icon": "/assets/ask-diana-icon.svg",
+      "homepage": "https://github.com/AIG-Global/aig-platform/tree/main/apps/ask-diana",
+      "author": {
+        "name": "AIG Global",
+        "email": "dev@aig-global.dev"
+      },
+      "permissions": [
+        "memory",
+        "identity",
+        "documents",
+        "chat",
+        "search"
+      ],
+      "dependencies": {
+        "@aig/identity": "workspace:*",
+        "@aig/ask-diana-core": "workspace:*"
+      },
+      "exports": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "scripts": {
+        "dev": "vite --port 3000",
+        "build": "vite build",
+        "preview": "vite preview"
+      }
+    },
+    {
+      "id": "admin",
+      "name": "Admin Panel",
+      "description": "Administrative dashboard for managing users, organizations, and platform settings",
+      "version": "0.1.0",
+      "status": "development",
+      "category": "admin",
+      "entry": "/apps/admin",
+      "icon": "/assets/admin-icon.svg",
+      "permissions": [
+        "identity",
+        "user-management",
+        "organization-management",
+        "settings",
+        "audit-logs"
+      ],
+      "dependencies": {
+        "@aig/identity": "workspace:*",
+        "@aig/user-management": "workspace:*",
+        "@aig/organization-management": "workspace:*"
+      },
+      "exports": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    },
+    {
+      "id": "academy",
+      "name": "Academy",
+      "description": "Learning platform with courses, tutorials, and certification programs",
+      "version": "0.1.0",
+      "status": "development",
+      "category": "learning",
+      "entry": "/apps/academy",
+      "icon": "/assets/academy-icon.svg",
+      "permissions": [
+        "identity",
+        "documents",
+        "memory",
+        "analytics"
+      ],
+      "exports": {
+        "default": "./dist/index.js"
+      }
+    },
+    {
+      "id": "marketplace",
+      "name": "Marketplace",
+      "description": "Plugin and extension marketplace for AIG Platform ecosystem",
+      "version": "0.1.0",
+      "status": "development",
+      "category": "commerce",
+      "entry": "/apps/marketplace",
+      "icon": "/assets/marketplace-icon.svg",
+      "permissions": [
+        "identity",
+        "documents",
+        "payments"
+      ],
+      "exports": {
+        "default": "./dist/index.js"
+      }
+    },
+    {
+      "id": "beam-me-up",
+      "name": "Beam Me Up",
+      "description": "Instant application deployment and orchestration tool",
+      "version": "0.1.0",
+      "status": "development",
+      "category": "devops",
+      "entry": "/apps/beam-me-up",
+      "icon": "/assets/beam-me-up-icon.svg",
+      "permissions": [
+        "identity",
+        "deployment",
+        "infrastructure",
+        "monitoring"
+      ],
+      "exports": {
+        "default": "./dist/index.js"
+      }
+    },
+    {
+      "id": "mobile",
+      "name": "Mobile App",
+      "description": "Native mobile application for iOS and Android",
+      "version": "0.1.0",
+      "status": "development",
+      "category": "mobile",
+      "entry": "/apps/mobile",
+      "icon": "/assets/mobile-icon.svg",
+      "permissions": [
+        "identity",
+        "memory",
+        "offline"
+      ],
+      "exports": {
+        "default": "./dist/index.js"
+      }
+    }
+  ],
+  "metadata": {
+    "ecosystem": "aig-platform",
+    "version": "0.2.0",
+    "compatibleVersions": [
+      "0.2.0"
+    ],
+    "discoveryMethod": "registry-based",
+    "loadingStrategy": "lazy",
+    "maxConcurrentApps": 10
+  }
+}

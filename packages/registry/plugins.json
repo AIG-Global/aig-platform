@@ -1,0 +1,242 @@
+{
+  "$schema": "https://aig-global.dev/schemas/plugins-registry-v1.json",
+  "version": "1.0.0",
+  "lastUpdated": "2026-07-06T14:49:44.699Z",
+  "registry": "aig-platform-ecosystem",
+  "plugins": [
+    {
+      "id": "passport-jwt",
+      "name": "Passport JWT Strategy",
+      "description": "Passport.js JWT authentication strategy",
+      "type": "authentication",
+      "version": "0.4.1",
+      "status": "stable",
+      "package": "passport-jwt",
+      "location": "node_modules/passport-jwt",
+      "category": "auth",
+      "tags": [
+        "jwt",
+        "passport",
+        "authentication"
+      ],
+      "integration": {
+        "target": "@aig/identity",
+        "method": "strategy"
+      },
+      "permissions": [
+        "auth:verify"
+      ],
+      "configuration": {
+        "secretOrPublicKey": "process.env.JWT_SECRET",
+        "algorithms": [
+          "HS256"
+        ]
+      }
+    },
+    {
+      "id": "bcryptjs",
+      "name": "Bcrypt Password Hashing",
+      "description": "Password hashing using bcryptjs",
+      "type": "security",
+      "version": "2.4.3",
+      "status": "stable",
+      "package": "bcryptjs",
+      "location": "node_modules/bcryptjs",
+      "category": "security",
+      "tags": [
+        "password",
+        "hashing",
+        "security"
+      ],
+      "integration": {
+        "target": "@aig/identity",
+        "method": "utility"
+      },
+      "permissions": [
+        "security:hash"
+      ],
+      "configuration": {
+        "rounds": 10
+      }
+    },
+    {
+      "id": "typeorm",
+      "name": "TypeORM Database",
+      "description": "Object-Relational Mapping for database operations",
+      "type": "database",
+      "version": "0.3.0",
+      "status": "stable",
+      "package": "typeorm",
+      "location": "node_modules/typeorm",
+      "category": "database",
+      "tags": [
+        "orm",
+        "database",
+        "persistence"
+      ],
+      "integration": {
+        "target": "all-services",
+        "method": "repository"
+      },
+      "permissions": [
+        "database:read",
+        "database:write"
+      ],
+      "supportedDatabases": [
+        "postgresql",
+        "mysql",
+        "sqlite",
+        "mongodb"
+      ]
+    },
+    {
+      "id": "nestjs-passport",
+      "name": "NestJS Passport Module",
+      "description": "Passport.js integration for NestJS",
+      "type": "framework",
+      "version": "10.0.0",
+      "status": "stable",
+      "package": "@nestjs/passport",
+      "location": "node_modules/@nestjs/passport",
+      "category": "framework",
+      "tags": [
+        "nestjs",
+        "passport",
+        "authentication"
+      ],
+      "integration": {
+        "target": "@aig/identity",
+        "method": "module"
+      },
+      "permissions": [
+        "auth:configure"
+      ]
+    },
+    {
+      "id": "redis",
+      "name": "Redis Cache",
+      "description": "In-memory data store for caching and sessions",
+      "type": "cache",
+      "version": "4.6.0",
+      "status": "optional",
+      "package": "redis",
+      "location": "node_modules/redis",
+      "category": "cache",
+      "tags": [
+        "cache",
+        "session",
+        "performance"
+      ],
+      "integration": {
+        "target": "all-services",
+        "method": "provider"
+      },
+      "permissions": [
+        "cache:read",
+        "cache:write"
+      ],
+      "configuration": {
+        "host": "localhost",
+        "port": 6379
+      }
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe Payment Integration",
+      "description": "Payment processing and billing",
+      "type": "payment",
+      "version": "14.0.0",
+      "status": "optional",
+      "package": "stripe",
+      "location": "node_modules/stripe",
+      "category": "payments",
+      "tags": [
+        "payment",
+        "billing",
+        "commerce"
+      ],
+      "integration": {
+        "target": "marketplace",
+        "method": "provider"
+      },
+      "permissions": [
+        "payments:process"
+      ],
+      "configuration": {
+        "apiKeyEnv": "STRIPE_API_KEY"
+      }
+    },
+    {
+      "id": "openai-api",
+      "name": "OpenAI API Integration",
+      "description": "Integration with OpenAI GPT models",
+      "type": "ai",
+      "version": "1.0.0",
+      "status": "stable",
+      "package": "openai",
+      "location": "node_modules/openai",
+      "category": "ai",
+      "tags": [
+        "ai",
+        "gpt",
+        "language-model"
+      ],
+      "integration": {
+        "target": "@aig/ask-diana-core",
+        "method": "provider"
+      },
+      "permissions": [
+        "ai:query",
+        "ai:generate"
+      ],
+      "configuration": {
+        "apiKeyEnv": "OPENAI_API_KEY",
+        "models": [
+          "gpt-4",
+          "gpt-3.5-turbo"
+        ]
+      }
+    },
+    {
+      "id": "anthropic-api",
+      "name": "Anthropic Claude Integration",
+      "description": "Integration with Anthropic Claude models",
+      "type": "ai",
+      "version": "1.0.0",
+      "status": "stable",
+      "package": "@anthropic-ai/sdk",
+      "location": "node_modules/@anthropic-ai/sdk",
+      "category": "ai",
+      "tags": [
+        "ai",
+        "claude",
+        "language-model"
+      ],
+      "integration": {
+        "target": "@aig/ask-diana-core",
+        "method": "provider"
+      },
+      "permissions": [
+        "ai:query",
+        "ai:generate"
+      ],
+      "configuration": {
+        "apiKeyEnv": "ANTHROPIC_API_KEY"
+      }
+    }
+  ],
+  "metadata": {
+    "ecosystem": "aig-platform",
+    "totalPlugins": 8,
+    "categories": [
+      "auth",
+      "security",
+      "database",
+      "framework",
+      "cache",
+      "payments",
+      "ai"
+    ],
+    "pluginLoadingStrategy": "on-demand"
+  }
+}

@@ -1,4 +1,4 @@
-// Prisma schema placeholder
+// Prisma schema for Diana Chat MVP
 generator client {
   provider = "prisma-client-js"
 }
@@ -6,4 +6,54 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// User model (basic structure for chat ownership)
+model User {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  name          String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  deletedAt     DateTime?
+
+  // Relations
+  conversations Conversation[]
+
+  @@map("users")
+}
+
+// Conversation model - represents a chat thread
+model Conversation {
+  id        String    @id @default(cuid())
+  userId    String
+  title     String?   @default("New Chat")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  // Relations
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@index([userId])
+  @@map("conversations")
+}
+
+// Message model - individual messages within a conversation
+model Message {
+  id             String    @id @default(cuid())
+  conversationId String
+  role           String    @default("user") // 'user' | 'assistant'
+  content        String
+  tokens         Int?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+
+  // Relations
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@map("messages")
 }

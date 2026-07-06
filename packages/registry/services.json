@@ -1,0 +1,196 @@
+{
+  "$schema": "https://aig-global.dev/schemas/services-registry-v1.json",
+  "version": "1.0.0",
+  "lastUpdated": "2026-07-06T14:49:44.699Z",
+  "registry": "aig-platform-ecosystem",
+  "services": [
+    {
+      "id": "identity",
+      "name": "Identity Service",
+      "description": "Authentication, authorization, and identity management",
+      "type": "backend",
+      "version": "0.2.0",
+      "status": "stable",
+      "package": "@aig/identity",
+      "entry": "packages/identity",
+      "port": 3001,
+      "protocol": "http",
+      "endpoints": [
+        {
+          "path": "/auth/login",
+          "method": "POST",
+          "description": "User login with credentials"
+        },
+        {
+          "path": "/auth/register",
+          "method": "POST",
+          "description": "User registration"
+        },
+        {
+          "path": "/auth/verify",
+          "method": "POST",
+          "description": "Verify JWT token"
+        }
+      ],
+      "permissions": [
+        "auth:read",
+        "auth:write",
+        "user:read"
+      ],
+      "dependencies": [],
+      "healthCheck": {
+        "path": "/health",
+        "interval": 30000,
+        "timeout": 5000
+      }
+    },
+    {
+      "id": "user-management",
+      "name": "User Management Service",
+      "description": "User CRUD operations, profiles, and permissions",
+      "type": "backend",
+      "version": "0.2.0",
+      "status": "stable",
+      "package": "@aig/user-management",
+      "entry": "packages/user-management",
+      "port": 3002,
+      "protocol": "http",
+      "endpoints": [
+        {
+          "path": "/users",
+          "method": "GET",
+          "description": "List all users"
+        },
+        {
+          "path": "/users",
+          "method": "POST",
+          "description": "Create new user"
+        },
+        {
+          "path": "/users/:id",
+          "method": "GET",
+          "description": "Get user by ID"
+        },
+        {
+          "path": "/users/:id",
+          "method": "PATCH",
+          "description": "Update user"
+        },
+        {
+          "path": "/users/:id",
+          "method": "DELETE",
+          "description": "Delete user"
+        }
+      ],
+      "permissions": [
+        "users:read",
+        "users:write",
+        "roles:read"
+      ],
+      "dependencies": [
+        "identity"
+      ],
+      "healthCheck": {
+        "path": "/health",
+        "interval": 30000,
+        "timeout": 5000
+      }
+    },
+    {
+      "id": "organization-management",
+      "name": "Organization Management Service",
+      "description": "Organization CRUD, member management, and billing",
+      "type": "backend",
+      "version": "0.2.0",
+      "status": "stable",
+      "package": "@aig/organization-management",
+      "entry": "packages/organization-management",
+      "port": 3003,
+      "protocol": "http",
+      "endpoints": [
+        {
+          "path": "/organizations",
+          "method": "GET",
+          "description": "List organizations"
+        },
+        {
+          "path": "/organizations",
+          "method": "POST",
+          "description": "Create organization"
+        },
+        {
+          "path": "/organizations/:id",
+          "method": "GET",
+          "description": "Get organization"
+        },
+        {
+          "path": "/organizations/:id",
+          "method": "PATCH",
+          "description": "Update organization"
+        }
+      ],
+      "permissions": [
+        "organizations:read",
+        "organizations:write"
+      ],
+      "dependencies": [
+        "identity"
+      ],
+      "healthCheck": {
+        "path": "/health",
+        "interval": 30000,
+        "timeout": 5000
+      }
+    },
+    {
+      "id": "ask-diana-core",
+      "name": "Ask Diana Core Module",
+      "description": "Core conversation engine and AI integration",
+      "type": "backend",
+      "version": "0.1.1",
+      "status": "testing",
+      "package": "@aig/ask-diana-core",
+      "entry": "packages/ask-diana-core",
+      "port": 3004,
+      "protocol": "http",
+      "endpoints": [
+        {
+          "path": "/chat",
+          "method": "POST",
+          "description": "Submit message to conversation"
+        },
+        {
+          "path": "/chat/:id",
+          "method": "GET",
+          "description": "Get conversation history"
+        },
+        {
+          "path": "/models",
+          "method": "GET",
+          "description": "List available AI models"
+        }
+      ],
+      "permissions": [
+        "chat:read",
+        "chat:write",
+        "models:read"
+      ],
+      "dependencies": [
+        "identity",
+        "memory"
+      ],
+      "healthCheck": {
+        "path": "/health",
+        "interval": 30000,
+        "timeout": 5000
+      }
+    }
+  ],
+  "metadata": {
+    "ecosystem": "aig-platform",
+    "apiGateway": "localhost:3333/api",
+    "serviceRegistry": "consul",
+    "loadBalancing": "round-robin",
+    "versionStrategy": "semver"
+  }
+}

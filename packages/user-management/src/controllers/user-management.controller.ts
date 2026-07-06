@@ -18,7 +18,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common'
-import { JwtAuthGuard } from '@aig/identity'
+import { JwtAuthGuard } from '../../../identity/src/guards/jwt-auth.guard.js'
 import { UserManagementService } from '../services/user-management.service'
 import {
   CreateUserDto,
@@ -58,14 +58,7 @@ export class UserManagementController {
   @Get()
   async listUsers(@Query() query: ListUsersQueryDto, @Request() req: any) {
     const organizationId = req.user?.organizationId || query.organizationId
-    return this.userService.listUsers(organizationId, {
-      page: query.page,
-      limit: query.limit,
-      search: query.search,
-      status: query.status,
-      sortBy: query.sortBy,
-      sortOrder: query.sortOrder,
-    })
+    return this.userService.listUsers(organizationId)
   }
 
   /**

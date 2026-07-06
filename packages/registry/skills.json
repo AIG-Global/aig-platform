@@ -1,0 +1,206 @@
+{
+  "$schema": "https://aig-global.dev/schemas/skills-registry-v1.json",
+  "version": "1.0.0",
+  "lastUpdated": "2026-07-06T14:49:44.699Z",
+  "registry": "aig-platform-ecosystem",
+  "skills": [
+    {
+      "id": "project-setup-info",
+      "name": "Project Setup Information",
+      "description": "Comprehensive setup steps for creating complete project structures",
+      "version": "1.0.0",
+      "status": "stable",
+      "category": "devops",
+      "location": "c:\\Users\\PC\\AppData\\Local\\Programs\\Microsoft VS Code\\4fe60c8b1c\\resources\\app\\extensions\\copilot\\assets\\prompts\\skills\\project-setup-info-local\\SKILL.md",
+      "tags": [
+        "setup",
+        "scaffolding",
+        "initialization"
+      ],
+      "useCases": [
+        "Create new TypeScript projects",
+        "Initialize React applications",
+        "Set up Node.js servers",
+        "Create VS Code extensions"
+      ],
+      "permissions": [
+        "filesystem:read",
+        "filesystem:write"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "get-search-view-results",
+      "name": "Get Search View Results",
+      "description": "Retrieve current search results from VS Code Search view",
+      "version": "1.0.0",
+      "status": "stable",
+      "category": "editor",
+      "location": "c:\\Users\\PC\\AppData\\Local\\Programs\\Microsoft VS Code\\4fe60c8b1c\\resources\\app\\extensions\\copilot\\assets\\prompts\\skills\\get-search-view-results\\SKILL.md",
+      "tags": [
+        "search",
+        "editor",
+        "navigation"
+      ],
+      "useCases": [
+        "Find code patterns",
+        "Analyze search results",
+        "Navigate codebase"
+      ],
+      "permissions": [
+        "editor:read"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "agent-customization",
+      "name": "Agent Customization",
+      "description": "Create, update, and manage VS Code agent customization files",
+      "version": "1.0.0",
+      "status": "stable",
+      "category": "agent",
+      "location": "c:\\Users\\PC\\AppData\\Local\\Programs\\Microsoft VS Code\\4fe60c8b1c\\resources\\app\\extensions\\copilot\\assets\\prompts\\skills\\agent-customization\\SKILL.md",
+      "tags": [
+        "agent",
+        "customization",
+        "configuration"
+      ],
+      "useCases": [
+        "Save coding preferences",
+        "Configure agent behavior",
+        "Define custom workflows",
+        "Create specialized agents"
+      ],
+      "permissions": [
+        "filesystem:read",
+        "filesystem:write",
+        "agent:configure"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "authentication",
+      "name": "Authentication Skill",
+      "description": "Implement JWT-based authentication and authorization",
+      "version": "0.2.0",
+      "status": "stable",
+      "category": "security",
+      "package": "@aig/identity",
+      "tags": [
+        "auth",
+        "jwt",
+        "security"
+      ],
+      "capabilities": [
+        "JWT token generation",
+        "Password hashing with bcrypt",
+        "Role-based access control",
+        "Permission validation"
+      ],
+      "permissions": [
+        "auth:create",
+        "auth:validate",
+        "roles:read"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "user-management",
+      "name": "User Management Skill",
+      "description": "User CRUD operations and profile management",
+      "version": "0.2.0",
+      "status": "stable",
+      "category": "users",
+      "package": "@aig/user-management",
+      "tags": [
+        "users",
+        "crud",
+        "profiles"
+      ],
+      "capabilities": [
+        "Create users",
+        "Update user profiles",
+        "Manage user roles",
+        "Deactivate/reactivate users",
+        "List organization users"
+      ],
+      "permissions": [
+        "users:read",
+        "users:write"
+      ],
+      "dependencies": [
+        "authentication"
+      ]
+    },
+    {
+      "id": "organization-management",
+      "name": "Organization Management Skill",
+      "description": "Organization CRUD and member management",
+      "version": "0.2.0",
+      "status": "stable",
+      "category": "organizations",
+      "package": "@aig/organization-management",
+      "tags": [
+        "organizations",
+        "teams",
+        "members"
+      ],
+      "capabilities": [
+        "Create organizations",
+        "Manage members",
+        "Update organization settings",
+        "Manage billing and plans",
+        "Organization statistics"
+      ],
+      "permissions": [
+        "organizations:read",
+        "organizations:write"
+      ],
+      "dependencies": [
+        "authentication"
+      ]
+    },
+    {
+      "id": "conversation-engine",
+      "name": "Conversation Engine Skill",
+      "description": "Core chat and conversation handling",
+      "version": "0.1.1",
+      "status": "testing",
+      "category": "ai",
+      "package": "@aig/ask-diana-core",
+      "tags": [
+        "chat",
+        "conversation",
+        "ai"
+      ],
+      "capabilities": [
+        "Process user messages",
+        "Generate AI responses",
+        "Maintain conversation context",
+        "Support multiple models",
+        "Stream responses"
+      ],
+      "permissions": [
+        "chat:read",
+        "chat:write",
+        "memory:read"
+      ],
+      "dependencies": [
+        "authentication"
+      ]
+    }
+  ],
+  "metadata": {
+    "ecosystem": "aig-platform",
+    "totalSkills": 8,
+    "categories": [
+      "devops",
+      "editor",
+      "agent",
+      "security",
+      "users",
+      "organizations",
+      "ai"
+    ]
+  }
+}

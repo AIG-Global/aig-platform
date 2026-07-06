@@ -4,6 +4,7 @@ import { Module, Controller, Get } from '@nestjs/common'
 import { createRequire } from 'module'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
+import { ChatModule } from './chat/chat.module.js'
 
 // ESM compatibility
 const __filename = fileURLToPath(import.meta.url)
@@ -12,16 +13,16 @@ const require = createRequire(import.meta.url)
 
 // Dynamically require Phase 2 modules using absolute paths
 const identityPath = resolve(__dirname, '../../../packages/identity/dist')
-const userMgmtPath = resolve(__dirname, '../../../packages/user-management/dist')
-const orgMgmtPath = resolve(__dirname, '../../../packages/organization-management/dist')
+//const userMgmtPath = resolve(__dirname, '../../../packages/user-management/dist/user-management/src')
+//const orgMgmtPath = resolve(__dirname, '../../../packages/organization-management/dist/organization-management/src')
 
 const identityDist = require(identityPath)
-const userMgmtDist = require(userMgmtPath)
-const orgMgmtDist = require(orgMgmtPath)
+//const userMgmtDist = require(userMgmtPath)
+//const orgMgmtDist = require(orgMgmtPath)
 
 const IdentityModule = identityDist.IdentityModule
-const UserManagementModule = userMgmtDist.UserManagementModule
-const OrganizationManagementModule = orgMgmtDist.OrganizationManagementModule
+//const UserManagementModule = userMgmtDist.UserManagementModule
+//const OrganizationManagementModule = orgMgmtDist.OrganizationManagementModule
 
 @Controller()
 class AppController {
@@ -39,7 +40,7 @@ class AppController {
     return {
       name: 'AIG Platform API',
       version: '0.2.0',
-      modules: ['identity'],
+      modules: ['identity', 'chat'],
       timestamp: new Date().toISOString(),
     }
   }
@@ -47,6 +48,7 @@ class AppController {
 
 @Module({
   imports: [
+    ChatModule,
     IdentityModule,
     //UserManagementModule,
     //OrganizationManagementModule,

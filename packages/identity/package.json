@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "@aig/identity",
   "version": "0.1.0",
   "description": "AIG Platform Identity & Authentication Service",

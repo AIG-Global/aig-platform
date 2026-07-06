@@ -16,7 +16,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common'
-import { JwtAuthGuard } from '@aig/identity'
+import { JwtAuthGuard } from '../../../identity/src/guards/jwt-auth.guard.js'
 import { OrganizationManagementService } from '../services/organization-management.service'
 import {
   CreateOrganizationDto,
@@ -53,13 +53,8 @@ export class OrganizationManagementController {
    */
   @UseGuards(JwtAuthGuard)
   @Get()
-  async listOrganizations(@Query() query: ListOrganizationsQueryDto) {
-    return this.orgService.listOrganizations({
-      page: query.page,
-      limit: query.limit,
-      status: query.status,
-      search: query.search,
-    })
+  async listOrganizations() {
+    return this.orgService.listOrganizations()
   }
 
   /**

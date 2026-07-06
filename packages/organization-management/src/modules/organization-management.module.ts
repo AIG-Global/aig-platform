@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 
-import { IdentityModule } from '@aig/identity'
+import { IdentityModule } from '../../../identity/src/modules/identity.module.js'
 import { OrganizationManagementService } from '../services/organization-management.service'
 import { OrganizationManagementController } from '../controllers/organization-management.controller'
 import { InMemoryOrganizationRepository } from '../repositories/organization.repository'
