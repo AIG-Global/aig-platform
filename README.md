@@ -1,48 +1,11 @@
-# aig-platform
+# AIG Platform
 
-Source code for the AIG platform.
+Monorepo scaffold for the AIG Platform.
 
-## Overview
-This repository contains the main platform codebase including backend services, APIs, and core business logic.
+Structure:
+- apps/web: Next.js frontend
+- apps/api: NestJS backend
+- packages: shared packages (ui, config, types)
+- infra: deployment and infra resources
 
-## Getting Started
-
-### Prerequisites
-- Node.js v24.18.0+
-- npm v11.16.0+
-- Docker 29.6.1+
-
-### Installation
-```bash
-npm install
-```
-
-### Development
-```bash
-npm run dev
-```
-
-### Build
-```bash
-npm run build
-```
-
-## Project Structure
-```
-aig-platform/
-├── src/
-│   ├── api/
-│   ├── services/
-│   ├── models/
-│   └── config/
-├── tests/
-├── public/
-├── package.json
-└── README.md
-```
-
-## Contributing
-Please follow the contribution guidelines in CONTRIBUTING.md
-
-## License
-MIT
+Milestone Zero: Open browser to see simple status page.
