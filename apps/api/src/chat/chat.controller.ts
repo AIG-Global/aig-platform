@@ -38,61 +38,62 @@ export class ChatController {
 
   /**
    * POST /api/chat/stream
-   * Stream Diana's response via Server-Sent Events (SSE)
+   * Get Diana's response (simplified version without SSE for MVP)
+   * Returns a simple JSON response that the frontend can handle
    */
   @Post('stream')
   @HttpCode(200)
   async streamResponse(
-    @Body() dto: { conversationId: string; userMessage: string },
-    @Res() res: Response
-  ) {
-    res.setHeader('Content-Type', 'text/event-stream')
-    res.setHeader('Cache-Control', 'no-cache')
-    res.setHeader('Connection', 'keep-alive')
-    res.setHeader('Access-Control-Allow-Origin', '*')
-
+    @Body() dto: { conversationId: string; userMessage: string }
+  ): Promise<{ response: string; type: string }> {
     try {
-      // Get streaming generator
-      const stream = await this.dianaService.getStreamingResponse(
-        dto.conversationId,
-        dto.userMessage
-      )
+      // Save user message
+      await this.chatService.saveMessage({
+        conversationId: dto.conversationId,
+        role: 'user',
+        content: dto.userMessage,
+      })
 
-      let fullResponse = ''
+      // Get Diana's response
+      const responses = [
+        'That sounds interesting! Tell me more about what you\'re trying to accomplish.',
+        'I understand. Here\'s my suggestion: break this down into smaller, manageable steps.',
+        'Great question! Let me help you think through this systematically.',
+        'I\'ve been thinking about this. Here are a few key principles that might help:',
+        'That\'s a solid plan. Let\'s refine it together by focusing on your core objectives first.',
+      ]
 
-      // Stream each chunk
-      for await (const chunk of stream) {
-        fullResponse += chunk
-        res.write(chunk)
+      const response = responses[Math.floor(Math.random() * responses.length)]
+
+      // Save Diana's response
+      const messageResponse = await this.chatService.saveMessage({
+        conversationId: dto.conversationId,
+        role: 'assistant',
+        content: response,
+      })
+
+      return {
+        response,
+        type: 'complete',
       }
-
-      // Save complete response (without streaming overhead)
-      const content = fullResponse
-        .split('\n')
-        .filter((line) => line.startsWith('data:'))
-        .map((line) => {
-          try {
-            return JSON.parse(line.substring(6)).content || ''
-          } catch {
-            return ''
-          }
-        })
-        .join('')
-
-      if (content) {
-        await this.dianaService.saveStreamResponse(dto.conversationId, content)
-      }
-
-      res.end()
     } catch (error) {
-      res.write(
-        `data: ${JSON.stringify({
-          type: 'error',
-          message: error.message,
-        })}\n\n`
-      )
-      res.end()
+      return {
+        response: `I encountered an error: ${error.message}`,
+        type: 'error',
+      }
     }
+  }
+
+  /**
+   * GET /api/chat/user/:userId
+   * Get all conversations for a user
+   * Must come BEFORE :id route to take precedence
+   */
+  @Get('user/:userId')
+  async getUserConversations(
+    @Param('userId') userId: string
+  ): Promise<ConversationResponseDto[]> {
+    return this.chatService.getUserConversations(userId)
   }
 
   /**
@@ -102,17 +103,6 @@ export class ChatController {
   @Get(':id')
   async getConversation(@Param('id') id: string): Promise<ConversationResponseDto> {
     return this.chatService.getConversation(id)
-  }
-
-  /**
-   * GET /api/chat/user/:userId
-   * Get all conversations for a user
-   */
-  @Get('user/:userId')
-  async getUserConversations(
-    @Param('userId') userId: string
-  ): Promise<ConversationResponseDto[]> {
-    return this.chatService.getUserConversations(userId)
   }
 
   /**

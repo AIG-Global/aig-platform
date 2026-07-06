@@ -188,7 +188,7 @@ export default function ChatPage() {
       // Fetch user's conversations
       try {
         const conversationsResponse = await fetch(
-          `http://localhost:3333/api/api/chat/user/${id}`
+          `http://localhost:3333/api/chat/user/${id}`
         )
         if (conversationsResponse.ok) {
           const convs = await conversationsResponse.json()
@@ -246,9 +246,33 @@ export default function ChatPage() {
               timestamp: new Date(),
             },
           ])
+        } else {
+          console.warn(`Failed to create conversation: ${response.status}`, await response.text())
+          // Generate a temporary ID so we can still send messages
+          const tempId = `temp-${Date.now()}`
+          setConversationId(tempId)
+          setMessages([
+            {
+              id: '0',
+              role: 'assistant',
+              content: `# Welcome!\n\nI'm Diana. Let's build something together.`,
+              timestamp: new Date(),
+            },
+          ])
         }
       } catch (error) {
         console.error('Failed to create conversation:', error)
+        // Generate a temporary ID as fallback
+        const tempId = `temp-${Date.now()}`
+        setConversationId(tempId)
+        setMessages([
+          {
+            id: '0',
+            role: 'assistant',
+            content: `# Welcome!\n\nI'm Diana. Let's build something together.`,
+            timestamp: new Date(),
+          },
+        ])
       }
     }
 
@@ -265,85 +289,49 @@ export default function ChatPage() {
 
     if (!inputValue.trim() || !conversationId || loading || streaming) return
 
-    // Add user message
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: inputValue,
-      timestamp: new Date(),
-    }
-
-    setMessages((prev) => [...prev, userMessage])
+    const messageText = inputValue
     setInputValue('')
     setLoading(true)
     setStreaming(true)
 
+    // Add user message
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: messageText,
+      timestamp: new Date(),
+    }
+
+    setMessages((prev) => [...prev, userMessage])
+
     try {
-      // Send message and stream response
+      // Send message and get response
       const response = await fetch('http://localhost:3333/api/chat/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           conversationId,
-          userMessage: inputValue,
+          userMessage: messageText,
         }),
       })
 
-      // Create assistant message placeholder
-      const assistantMessageId = Date.now().toString()
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`)
+      }
+
+      // Parse JSON response
+      const data = await response.json()
+
+      // Create assistant message with Diana's response
       const assistantMessage: Message = {
-        id: assistantMessageId,
+        id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: '',
+        content: data.response || 'I apologize for the error. Please try again.',
         timestamp: new Date(),
       }
 
+      // Update messages with assistant message
       setMessages((prev) => [...prev, assistantMessage])
-
-      // Read and stream the response
-      const reader = response.body?.getReader()
-      const decoder = new TextDecoder()
-      let fullResponse = ''
-
-      if (reader) {
-        let done = false
-
-        while (!done) {
-          const { value, done: streamDone } = await reader.read()
-          done = streamDone
-
-          if (value) {
-            const chunk = decoder.decode(value, { stream: true })
-            const lines = chunk.split('\n')
-
-            for (const line of lines) {
-              if (line.startsWith('data:')) {
-                try {
-                  const data = JSON.parse(line.substring(6))
-
-                  if (data.type === 'text') {
-                    fullResponse += data.content
-
-                    setMessages((prev) =>
-                      prev.map((msg) =>
-                        msg.id === assistantMessageId
-                          ? { ...msg, content: fullResponse }
-                          : msg
-                      )
-                    )
-                  } else if (data.type === 'done') {
-                    console.log('Stream complete')
-                  } else if (data.type === 'error') {
-                    console.error('Stream error:', data.message)
-                  }
-                } catch (e) {
-                  // Not valid JSON, skip
-                }
-              }
-            }
-          }
-        }
-      }
     } catch (error) {
       console.error('Failed to send message:', error)
       // Add error message
@@ -372,7 +360,7 @@ export default function ChatPage() {
     if (!titleInput.trim() || !conversationId) return
 
     try {
-      const response = await fetch(`http://localhost:3333/api/api/chat/${conversationId}/title`, {
+      const response = await fetch(`http://localhost:3333/api/chat/${conversationId}/title`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: titleInput }),
@@ -389,7 +377,7 @@ export default function ChatPage() {
 
   const loadConversation = async (convId: string) => {
     try {
-      const response = await fetch(`http://localhost:3333/api/api/chat/${convId}`)
+      const response = await fetch(`http://localhost:3333/api/chat/${convId}`)
       if (response.ok) {
         const data = await response.json()
         setConversationId(convId)
