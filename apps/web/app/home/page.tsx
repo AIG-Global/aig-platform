@@ -5,314 +5,148 @@ import { useRouter } from 'next/navigation'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
 
-interface Conversation {
+interface Workspace {
   id: string
   title: string
-  updatedAt: string
+  type: string
+  emoji: string
+  goal: string | null
+  _count?: { projects: number; documents: number }
 }
 
 export default function HomePage() {
   const router = useRouter()
   const [userName, setUserName] = useState('')
   const [userId, setUserId] = useState('')
-  const [conversations, setConversations] = useState<Conversation[]>([])
+  const [workspaces, setWorkspaces] = useState<Workspace[]>([])
   const [greeting, setGreeting] = useState('Hello')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const initializeHome = async () => {
+    const init = async () => {
       const email = localStorage.getItem('userEmail')
       const id = localStorage.getItem('userId')
+      const displayName = localStorage.getItem('userDisplayName')
+      if (!email || !id) { router.push('/login'); return }
 
-      if (!email || !id) {
-        router.push('/login')
-        return
-      }
-
-      // Extract name from email
-      const name = email.split('@')[0]
-      setUserName(name)
+      setUserName(displayName || email.split('@')[0])
       setUserId(id)
 
-      // Set greeting based on time of day
       const hour = new Date().getHours()
-      if (hour < 12) {
-        setGreeting('Good morning')
-      } else if (hour < 18) {
-        setGreeting('Good afternoon')
-      } else {
-        setGreeting('Good evening')
-      }
+      setGreeting(hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening')
 
-      // Fetch recent conversations
       try {
-        const response = await fetch(`${API}/api/chat/user/${id}`)
-        if (response.ok) {
-          const convs = await response.json()
-          setConversations(convs.slice(0, 3)) // Show top 3
-        }
-      } catch (error) {
-        console.error('Failed to fetch conversations:', error)
-      } finally {
-        setLoading(false)
-      }
+        const res = await fetch(`${API}/api/workspaces`, { headers: { 'x-user-id': id } })
+        if (res.ok) setWorkspaces(await res.json())
+      } catch {}
+      setLoading(false)
     }
-
-    initializeHome()
+    init()
   }, [router])
 
-  const startNewChat = () => {
-    router.push('/chat')
-  }
-
-  const continueChatRaw = (conversationId: string) => {
-    router.push(`/chat?id=${conversationId}`)
-  }
+  if (loading) return (
+    <html><body style={{ margin: 0, background: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'system-ui, sans-serif' }}>
+      <div style={{ fontSize: '32px' }}>◇</div>
+    </body></html>
+  )
 
   return (
     <html>
-      <body style={{ margin: 0, padding: 0, backgroundColor: '#0a0a0a', color: '#fff', fontFamily: 'system-ui, sans-serif' }}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100vh',
-            background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '24px',
-          }}
-        >
-          {/* Main Welcome Container */}
-          <div
-            style={{
-              maxWidth: '600px',
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}
-          >
-            {/* Diana Avatar - Idle Pose */}
-            <div
-              style={{
-                width: '120px',
-                height: '120px',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                borderRadius: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '60px',
-                fontWeight: 'bold',
-                marginBottom: '32px',
-                animation: 'float 3s ease-in-out infinite',
-                boxShadow: '0 20px 60px rgba(102, 126, 234, 0.3)',
-              }}
-            >
-              ◇
+      <body style={{ margin: 0, padding: 0, color: '#fff', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' }}>
+
+          {/* Nav */}
+          <nav style={{ padding: '16px 32px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ width: '28px', height: '28px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '7px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 'bold' }}>◇</div>
+              <span style={{ fontWeight: 600, fontSize: '15px' }}>AIGINVEST</span>
             </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <button onClick={() => router.push('/chat')} style={{ background: 'none', border: 'none', color: '#aaa', fontSize: '13px', cursor: 'pointer' }}>Ask Diana</button>
+              <button onClick={() => { localStorage.clear(); router.push('/login') }} style={{ background: 'none', border: 'none', color: '#555', fontSize: '13px', cursor: 'pointer' }}>Sign out</button>
+            </div>
+          </nav>
+
+          <main style={{ maxWidth: '860px', margin: '0 auto', padding: '48px 32px' }}>
 
             {/* Greeting */}
-            <h1
-              style={{
-                fontSize: '32px',
-                fontWeight: '700',
-                margin: '0 0 12px 0',
-                background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              {greeting}, {userName}.
-            </h1>
+            <div style={{ marginBottom: '48px' }}>
+              <h1 style={{ margin: '0 0 8px', fontSize: '32px', fontWeight: 700, background: 'linear-gradient(135deg, #fff, #aaa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                {greeting}, {userName}.
+              </h1>
+              <p style={{ margin: 0, color: '#888', fontSize: '16px' }}>
+                {workspaces.length === 0 ? "I'm Diana. What would you like to accomplish today?" : `You have ${workspaces.length} workspace${workspaces.length > 1 ? 's' : ''}. Where would you like to continue?`}
+              </p>
+            </div>
 
-            {/* Intro */}
-            <p
-              style={{
-                fontSize: '18px',
-                fontWeight: '500',
-                color: '#ccc',
-                margin: '0 0 8px 0',
-              }}
-            >
-              I'm Diana.
-            </p>
-
-            <p
-              style={{
-                fontSize: '16px',
-                color: '#999',
-                margin: '0 0 40px 0',
-                lineHeight: '1.6',
-              }}
-            >
-              Your AI companion for thinking, building, and organizing. I'll remember our conversations and help you continue where you left off.
-            </p>
-
-            {/* Recent Activity */}
-            {conversations.length > 0 && (
-              <div
-                style={{
-                  width: '100%',
-                  marginBottom: '40px',
-                  textAlign: 'left',
-                  padding: '20px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '12px',
-                }}
-              >
-                <p style={{ fontSize: '12px', textTransform: 'uppercase', color: '#999', marginBottom: '12px', margin: 0 }}>
-                  Recent Activity
-                </p>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '8px',
-                    marginTop: '12px',
-                  }}
-                >
-                  {conversations.map((conv) => (
-                    <button
-                      key={conv.id}
-                      onClick={() => continueChatRaw(conv.id)}
-                      style={{
-                        padding: '10px 12px',
-                        background: 'rgba(102, 126, 234, 0.1)',
-                        border: '1px solid rgba(102, 126, 234, 0.3)',
-                        borderRadius: '8px',
-                        color: '#fff',
-                        fontSize: '13px',
-                        textAlign: 'left',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(102, 126, 234, 0.2)'
-                        e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.5)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(102, 126, 234, 0.1)'
-                        e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.3)'
-                      }}
+            {/* Workspaces */}
+            {workspaces.length > 0 ? (
+              <section style={{ marginBottom: '48px' }}>
+                <h2 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.8px', color: '#666' }}>Your Workspaces</h2>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '16px' }}>
+                  {workspaces.map((w) => (
+                    <button key={w.id} onClick={() => router.push(`/workspace/${w.id}`)}
+                      style={{ padding: '20px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', color: '#fff', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s ease' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(102,126,234,0.1)'; e.currentTarget.style.borderColor = 'rgba(102,126,234,0.3)' }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
                     >
-                      • {conv.title}
+                      <div style={{ fontSize: '24px', marginBottom: '10px' }}>{w.emoji}</div>
+                      <div style={{ fontWeight: 600, fontSize: '15px', marginBottom: '4px' }}>{w.title}</div>
+                      {w.goal && <div style={{ fontSize: '12px', color: '#666', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{w.goal}</div>}
+                      <div style={{ marginTop: '12px', fontSize: '11px', color: '#555', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{w.type}</div>
+                    </button>
+                  ))}
+                  {/* New workspace tile */}
+                  <button onClick={() => router.push('/chat')}
+                    style={{ padding: '20px', background: 'transparent', border: '1px dashed rgba(255,255,255,0.15)', borderRadius: '12px', color: '#555', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100px', gap: '8px' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(102,126,234,0.4)'; e.currentTarget.style.color = '#aaa' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; e.currentTarget.style.color = '#555' }}
+                  >
+                    <span style={{ fontSize: '24px' }}>+</span>
+                    <span style={{ fontSize: '13px' }}>New workspace</span>
+                  </button>
+                </div>
+              </section>
+            ) : (
+              /* First-time user: show goal options */
+              <section style={{ marginBottom: '48px' }}>
+                <h2 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.8px', color: '#666' }}>Start your first workspace</h2>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '12px' }}>
+                  {[
+                    { emoji: '🚀', label: 'Build a Startup', goal: 'I want to build a startup' },
+                    { emoji: '💼', label: 'Grow My Business', goal: 'I want to grow my business' },
+                    { emoji: '📚', label: 'Learn Something', goal: 'I want to learn something new' },
+                    { emoji: '💻', label: 'Build Software', goal: 'I want to build a software product' },
+                    { emoji: '💡', label: 'Start a Project', goal: 'I want to start a new project' },
+                  ].map(({ emoji, label, goal }) => (
+                    <button key={label} onClick={() => router.push(`/chat?goal=${encodeURIComponent(goal)}`)}
+                      style={{ padding: '20px 16px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', color: '#fff', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s ease' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(102,126,234,0.12)'; e.currentTarget.style.borderColor = 'rgba(102,126,234,0.3)' }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
+                    >
+                      <div style={{ fontSize: '28px', marginBottom: '8px' }}>{emoji}</div>
+                      <div style={{ fontSize: '13px', fontWeight: 500 }}>{label}</div>
                     </button>
                   ))}
                 </div>
-              </div>
+              </section>
             )}
 
-            {/* Question Prompt */}
-            <p
-              style={{
-                fontSize: '16px',
-                fontWeight: '500',
-                color: '#ccc',
-                marginBottom: '20px',
-              }}
-            >
-              How can I help you today?
-            </p>
-
-            {/* Action Buttons */}
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-              }}
-            >
-              <button
-                onClick={startNewChat}
-                style={{
-                  padding: '14px 24px',
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: '#fff',
-                  fontSize: '15px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.boxShadow = '0 12px 24px rgba(102, 126, 234, 0.4)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              >
-                Start a New Conversation
-              </button>
-
-              <button
-                onClick={() => router.push('/login')}
-                style={{
-                  padding: '14px 24px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '8px',
-                  color: '#fff',
-                  fontSize: '15px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
-                }}
-              >
-                Sign Out
+            {/* Always-present Diana CTA */}
+            <div style={{ padding: '20px 24px', background: 'rgba(102,126,234,0.08)', border: '1px solid rgba(102,126,234,0.2)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
+              <div>
+                <p style={{ margin: 0, fontWeight: 500, fontSize: '14px' }}>◇ Ask Diana anything</p>
+                <p style={{ margin: '4px 0 0', color: '#888', fontSize: '12px' }}>She remembers your goals and context.</p>
+              </div>
+              <button onClick={() => router.push('/chat')} style={{ padding: '10px 20px', background: 'linear-gradient(135deg, #667eea, #764ba2)', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '13px', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                Open Diana →
               </button>
             </div>
 
-            {/* Quick Tips */}
-            <div
-              style={{
-                marginTop: '60px',
-                fontSize: '12px',
-                color: '#666',
-                textAlign: 'center',
-                lineHeight: '1.8',
-              }}
-            >
-              <p style={{ margin: '0 0 8px 0' }}>💡 Try asking me to:</p>
-              <p style={{ margin: '0 0 4px 0' }}>• Help you think through a problem</p>
-              <p style={{ margin: '0 0 4px 0' }}>• Generate a project plan or document</p>
-              <p style={{ margin: 0 }}>• Research a topic or explain a concept</p>
-            </div>
-          </div>
+          </main>
         </div>
-
-        <style>{`
-          @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-          }
-          
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          
-          body {
-            animation: fadeIn 0.6s ease-out;
-          }
-        `}</style>
       </body>
     </html>
   )
 }
+

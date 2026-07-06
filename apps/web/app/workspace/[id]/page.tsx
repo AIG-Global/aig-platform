@@ -47,6 +47,31 @@ export default function WorkspacePage() {
   const [workspace, setWorkspace] = useState<Workspace | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [togglingTask, setTogglingTask] = useState<string | null>(null)
+
+  const toggleTask = async (taskId: string, currentStatus: string) => {
+    const newStatus = currentStatus === 'done' ? 'todo' : 'done'
+    setTogglingTask(taskId)
+    try {
+      await fetch(`${API}/api/tasks/${taskId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      })
+      setWorkspace((prev) => {
+        if (!prev) return prev
+        return {
+          ...prev,
+          projects: prev.projects.map((p) => ({
+            ...p,
+            tasks: p.tasks.map((t) => t.id === taskId ? { ...t, status: newStatus } : t),
+          })),
+        }
+      })
+    } finally {
+      setTogglingTask(null)
+    }
+  }
 
   useEffect(() => {
     const fetchWorkspace = async () => {
@@ -250,39 +275,26 @@ export default function WorkspacePage() {
             ) : (
               allTasks.map((t) => (
                 <Card key={t.id}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <div
+                    style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', cursor: 'pointer' }}
+                    onClick={() => toggleTask(t.id, t.status)}
+                  >
                     <div style={{
-                      width: '14px',
-                      height: '14px',
-                      borderRadius: '3px',
-                      border: '1px solid rgba(255,255,255,0.3)',
-                      background: t.status === 'done' ? '#667eea' : 'transparent',
-                      flexShrink: 0,
-                      marginTop: '1px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '9px',
+                      width: '16px', height: '16px', borderRadius: '4px',
+                      border: t.status === 'done' ? 'none' : '1px solid rgba(255,255,255,0.3)',
+                      background: t.status === 'done' ? 'linear-gradient(135deg, #667eea, #764ba2)' : 'transparent',
+                      flexShrink: 0, marginTop: '1px',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '9px', opacity: togglingTask === t.id ? 0.5 : 1,
+                      transition: 'all 0.2s ease',
                     }}>
                       {t.status === 'done' && '✓'}
                     </div>
                     <div>
-                      <span style={{
-                        fontSize: '13px',
-                        color: t.status === 'done' ? '#666' : '#fff',
-                        textDecoration: t.status === 'done' ? 'line-through' : 'none',
-                      }}>
+                      <span style={{ fontSize: '13px', color: t.status === 'done' ? '#555' : '#fff', textDecoration: t.status === 'done' ? 'line-through' : 'none', transition: 'all 0.2s' }}>
                         {t.title}
                       </span>
-                      <span style={{
-                        display: 'inline-block',
-                        marginLeft: '8px',
-                        fontSize: '10px',
-                        padding: '1px 6px',
-                        borderRadius: '8px',
-                        background: t.priority === 'high' ? 'rgba(239,68,68,0.2)' : 'rgba(255,255,255,0.08)',
-                        color: t.priority === 'high' ? '#f87171' : '#888',
-                      }}>
+                      <span style={{ display: 'inline-block', marginLeft: '8px', fontSize: '10px', padding: '1px 6px', borderRadius: '8px', background: t.priority === 'high' ? 'rgba(239,68,68,0.2)' : 'rgba(255,255,255,0.08)', color: t.priority === 'high' ? '#f87171' : '#888' }}>
                         {t.priority}
                       </span>
                     </div>
