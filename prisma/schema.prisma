@@ -30,6 +30,7 @@ model User {
   deletedAt         DateTime?
 
   // Relations
+  workspaces        Workspace[]
   conversations     Conversation[]
   projects          Project[]
   documents         Document[]
@@ -39,11 +40,43 @@ model User {
 }
 
 // ============================================================================
+// WORKSPACE MODEL - Primary domain object. Everything belongs to a workspace.
+// ============================================================================
+model Workspace {
+  id          String    @id @default(cuid())
+  ownerId     String
+  
+  // Workspace identity
+  title       String
+  description String?   @db.Text
+  goal        String?   @db.Text   // Original natural-language goal that created this
+  type        String    @default("general") // 'startup' | 'software' | 'personal' | 'learning' | 'general'
+  status      String    @default("active")  // 'active' | 'archived'
+  color       String    @default("blue")
+  emoji       String    @default("🚀")
+
+  // Relations
+  owner         User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  projects      Project[]
+  documents     Document[]
+  conversations Conversation[]
+  memories      DianaMemory[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  @@index([ownerId])
+  @@map("workspaces")
+}
+
+// ============================================================================
 // CONVERSATION MODEL - Chat threads with Diana
 // ============================================================================
 model Conversation {
   id                String            @id @default(cuid())
   userId            String
+  workspaceId       String?           // Optional: conversations belong to a workspace
   title             String            @default("New Chat")
   
   // Context for Diana memory
@@ -60,11 +93,13 @@ model Conversation {
 
   // Relations
   user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
   messages          Message[]
   documents         Document[]
   projects          Project[]
 
   @@index([userId])
+  @@index([workspaceId])
   @@index([createdAt])
   @@map("conversations")
 }
@@ -107,6 +142,7 @@ model Message {
 model Project {
   id                String            @id @default(cuid())
   userId            String
+  workspaceId       String?           // Optional: projects belong to a workspace
   conversationId    String?
   
   // Project details
@@ -125,11 +161,13 @@ model Project {
 
   // Relations
   user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
   conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: SetNull)
   tasks             ProjectTask[]
   documents         Document[]
 
   @@index([userId])
+  @@index([workspaceId])
   @@index([conversationId])
   @@map("projects")
 }
@@ -168,6 +206,7 @@ model ProjectTask {
 model Document {
   id                String            @id @default(cuid())
   userId            String
+  workspaceId       String?           // Optional: documents belong to a workspace
   conversationId    String?
   projectId         String?
   
@@ -190,10 +229,12 @@ model Document {
 
   // Relations
   user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
   conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: SetNull)
   project           Project?          @relation(fields: [projectId], references: [id], onDelete: SetNull)
 
   @@index([userId])
+  @@index([workspaceId])
   @@index([conversationId])
   @@index([projectId])
   @@map("documents")
@@ -205,6 +246,7 @@ model Document {
 model DianaMemory {
   id                String            @id @default(cuid())
   userId            String
+  workspaceId       String?           // Optional: memories scoped to a workspace
   
   // Memory classification
   category          String            // 'user_preference' | 'working_style' | 'project_context' | 'technical_constraint'
@@ -222,6 +264,7 @@ model DianaMemory {
 
   // Relations
   user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
 
   @@unique([userId, category, key])
   @@index([userId])
