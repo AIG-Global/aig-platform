@@ -18,6 +18,15 @@ Instead of asking "What can this app do?", users ask "What do I want to achieve?
 
 **The Next 6 Weeks:** Build the complete end-to-end experience (goal → mission → work → knowledge) and recruit the 100-person validation cohort.
 
+**The Operating System:** AIGINVEST runs on internal OS principles. The company operates exactly like the platform:
+- Everything is a mission (company missions, product missions, engineering missions)
+- Diana becomes the internal COO (suggesting priorities, detecting risks)
+- Three parallel tracks execute simultaneously (Product, Platform, Learning)
+- Engineering compass guides every decision (5 questions before coding)
+- All decisions documented in company knowledge base (permanent reference)
+
+**The Result:** By July 7, 2026, AIGINVEST is not just a software project. It's an AI company with a proven operating system for sustainable, scalable execution.
+
 ---
 
 ## What We've Built (Week 1)
@@ -57,6 +66,81 @@ Think of AIGINVEST as three concentric rings:
 ```
 
 **Key Design Principle:** Outer rings depend on inner rings. Inner rings never depend on outer rings.
+
+---
+
+## The Operating System: From Software Company to AI Company
+
+This is the critical shift happening today.
+
+AIGINVEST is no longer "a software platform for users."
+
+AIGINVEST is "an AI company with an internal operating system."
+
+### What This Means
+
+The company operates **exactly** like the product:
+
+1. **Everything Is a Mission**
+   - 20-year vision becomes company missions
+   - Product goals become quarterly missions  
+   - Engineering sprints become weekly missions
+   - Individuals have annual missions (OKRs)
+   - Everything aligns from company mission → individual task
+
+2. **Diana Becomes Internal COO**
+   - Not just helping users
+   - Also helping run the company
+   - Synthesizing metrics from all systems
+   - Proactively surfacing risks and opportunities
+   - Learning company patterns and anticipating needs
+
+3. **Three Parallel Tracks Execute Together**
+   - **Product Track** — Deliver user features weekly
+   - **Platform Track** — Strengthen infrastructure bi-weekly
+   - **Learning Track** — Collect feedback, measure, refine continuously
+   - Each track reinforces the others (virtuous cycle)
+
+4. **Engineering Compass Guides Decisions**
+   - Before starting work, answer 5 questions:
+     1. Which mission does this support?
+     2. Which user problem does it solve?
+     3. How will we know it's successful?
+     4. How will Diana use it?
+     5. How will we test it?
+   - If any answer is unclear, stop and clarify
+
+5. **Company Knowledge Base Documents Everything**
+   - **Decisions** — Why we chose what we chose
+   - **Architecture** — How systems work
+   - **Product** — What users experience
+   - **Operations** — How the company runs
+   - All new employees start here
+
+### Why This Matters
+
+The difference between "building software" and "building a company" is **organizational operating system**.
+
+In software companies, culture is implicit (and fragile).
+
+In AI companies with operating systems, culture is **explicit and enforced** through:
+- Regular rituals (Friday outcomes ritual)
+- Documented decisions
+- Transparent metrics
+- Aligned missions
+- Evidence-based learning
+
+### The Friday Ritual (Weekly Culture Reset)
+
+Every Friday 4:00 PM, one question:
+
+> "What did our users accomplish this week because of what we built?"
+
+Not: "What features did we ship?"
+
+But: "What outcomes did our work enable?"
+
+This single ritual, repeated weekly, shifts the entire organization from feature-focused to outcome-focused.
 
 ---
 
@@ -152,7 +236,31 @@ This builds trust and defensibility.
 
 ---
 
-## The Next 5 Weeks (Weeks 2-6)
+## Reading Paths by Role
+
+**New to AIGINVEST?**
+1. This document (right now, 10 min)
+2. [AIGINVEST_OS.md](AIGINVEST_OS.md) (15 min)
+3. [AIGINVEST_OPERATING_DOCTRINE.md](AIGINVEST_OPERATING_DOCTRINE.md) (20 min)
+4. Pick your role below
+
+**Product Managers:**
+→ [THREE_TRACKS_MODEL.md](THREE_TRACKS_MODEL.md) (Product Track section)
+→ [COMPANY_KNOWLEDGE_BASE.md](COMPANY_KNOWLEDGE_BASE.md) (Product Collection)
+
+**Engineers:**
+→ [AIGINVEST_OS.md](AIGINVEST_OS.md) (Part 4: Engineering Compass)
+→ [THREE_TRACKS_MODEL.md](THREE_TRACKS_MODEL.md) (Track 3: Learning Track metrics)
+→ [IMPLEMENTATION_ROADMAP_W2-6.md](IMPLEMENTATION_ROADMAP_W2-6.md) (Week 2 starting Monday)
+
+**Designers:**
+→ [AIGINVEST_OS.md](AIGINVEST_OS.md) (3-Minute Rule section)
+→ [COMPANY_KNOWLEDGE_BASE.md](COMPANY_KNOWLEDGE_BASE.md) (Product Collection)
+
+**Leadership:**
+→ [AIGINVEST_OS.md](AIGINVEST_OS.md) (all sections)
+→ [THREE_TRACKS_MODEL.md](THREE_TRACKS_MODEL.md) (Coordination + metrics)
+→ [PROJECT_ONE_HUNDRED.md](PROJECT_ONE_HUNDRED.md) (validation strategy)
 
 ### Week 2: Trust Engine + Event Logging
 - Every action (user + Diana) becomes an event
@@ -216,25 +324,45 @@ This builds trust and defensibility.
 
 ### 🔒 LOCKED (Never Change Without Approval)
 
-1. **AIGINVEST_OPERATING_DOCTRINE.md**
+1. **AIGINVEST_OS.md**
+   - Company operating system
+   - Diana as internal COO
+   - Engineering compass
+   - Three parallel tracks
+   - Company knowledge base
+
+2. **AIGINVEST_OPERATING_DOCTRINE.md**
    - Four principles
    - Three rings
    - Trust engine
    - Amendment process
 
-2. **AIGINVEST_TECHNICAL_SPECIFICATION_v1.0.md**
+3. **AIGINVEST_TECHNICAL_SPECIFICATION_v1.0.md**
    - Domain model
    - Core services
    - API contract
    - Data schema
 
-3. **IMPLEMENTATION_ROADMAP_W2-6.md**
+4. **IMPLEMENTATION_ROADMAP_W2-6.md**
    - Week-by-week deliverables
    - Success criteria
    - Risk mitigation
    - Next phases
 
-4. **PROJECT_ONE_HUNDRED.md**
+5. **THREE_TRACKS_MODEL.md**
+   - Product track (weekly delivery)
+   - Platform track (bi-weekly cycles)
+   - Learning track (continuous feedback)
+   - Coordination cadence
+   - Metrics for all three
+
+6. **COMPANY_KNOWLEDGE_BASE.md**
+   - Decisions collection (why we chose what)
+   - Architecture collection (how systems work)
+   - Product collection (what users experience)
+   - Operations collection (how company runs)
+
+7. **PROJECT_ONE_HUNDRED.md**
    - Validation framework
    - Cohort definitions
    - Measurement system
