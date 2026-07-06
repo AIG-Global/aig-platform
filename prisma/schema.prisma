@@ -19,6 +19,7 @@ model User {
 
   // Relations
   conversations Conversation[]
+  documents     Document[]
 
   @@map("users")
 }
@@ -33,8 +34,9 @@ model Conversation {
   deletedAt DateTime?
 
   // Relations
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  messages Message[]
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  Message[]
+  documents Document[]
 
   @@index([userId])
   @@map("conversations")
@@ -56,4 +58,26 @@ model Message {
 
   @@index([conversationId])
   @@map("messages")
+}
+
+// Document model - generated documents saved from conversations
+model Document {
+  id              String    @id @default(cuid())
+  conversationId  String?
+  userId          String
+  title           String
+  content         String    @db.Text
+  documentType    String    @default("document") // 'document', 'project', 'board', etc
+  tags            String[]  @default([])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  // Relations
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([conversationId])
+  @@map("documents")
 }
