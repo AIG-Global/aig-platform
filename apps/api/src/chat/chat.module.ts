@@ -6,8 +6,10 @@ import { DocumentController } from './document.controller.js'
 import { DocumentService } from './document.service.js'
 import { PrismaService } from '../prisma.service.js'
 import { ProjectService } from '../projects/project.service.js'
+import { AIModule } from '../ai/ai.module.js'
 
 @Module({
+  imports: [AIModule],
   controllers: [ChatController, DocumentController],
   providers: [
     ChatService,

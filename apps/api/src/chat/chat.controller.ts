@@ -4,6 +4,8 @@ import { ChatService } from './chat.service.js'
 import { DianaService } from './diana.service.js'
 import { DocumentService } from './document.service.js'
 import { ProjectService } from '../projects/project.service.js'
+import { LLMService } from '../ai/llm.service.js'
+import { ContextEngine } from '../ai/context.engine.js'
 import {
   CreateConversationDto,
   SendMessageDto,
@@ -18,6 +20,8 @@ export class ChatController {
     private dianaService: DianaService,
     private documentService: DocumentService,
     private projectService: ProjectService,
+    private llmService: LLMService,
+    private contextEngine: ContextEngine,
   ) {}
 
   /**
@@ -45,57 +49,103 @@ export class ChatController {
    * Get Diana's response (simplified version without SSE for MVP)
    * Returns a simple JSON response that the frontend can handle
    */
+  /**
+   * POST /api/chat/stream
+   * SSE streaming endpoint — Diana responds word by word.
+   * Detects intent (create_project, create_document) and executes actions.
+   */
   @Post('stream')
-  @HttpCode(200)
   async streamResponse(
-    @Body() dto: { conversationId: string; userMessage: string; userId?: string }
-  ): Promise<{ response: string; type: string; action?: any; actionResult?: any }> {
+    @Body() dto: { conversationId: string; userMessage: string; userId?: string },
+    @Res() res: Response,
+  ): Promise<void> {
+    // SSE headers
+    res.setHeader('Content-Type', 'text/event-stream')
+    res.setHeader('Cache-Control', 'no-cache')
+    res.setHeader('Connection', 'keep-alive')
+    res.setHeader('X-Accel-Buffering', 'no')
+    res.flushHeaders()
+
+    const send = (data: Record<string, unknown>) => {
+      res.write(`data: ${JSON.stringify(data)}\n\n`)
+    }
+
     try {
-      // Save user message
+      // 1. Save user message
       await this.chatService.saveMessage({
         conversationId: dto.conversationId,
         role: 'user',
         content: dto.userMessage,
       })
 
-      // Get Diana's response + optional action
-      const result = await this.dianaService.respond(dto.conversationId, dto.userMessage)
+      // 2. Detect action intent before streaming (project / document creation)
+      const actionResult = await this.detectAndExecuteAction(
+        dto.userMessage,
+        dto.conversationId,
+        dto.userId
+      )
+      if (actionResult) {
+        send({ type: 'action', action: actionResult.type, result: actionResult.result })
+      }
 
-      // Execute action if present
-      let actionResult: any = null
-      if (result.action.type === 'create_project' && dto.userId) {
-        actionResult = await this.projectService.createProject({
-          userId: dto.userId,
+      // 3. Build context-aware message array
+      const userId = dto.userId || 'anonymous'
+      const messages = await this.contextEngine.buildMessages(
+        dto.conversationId,
+        dto.userMessage,
+        userId
+      )
+
+      // 4. Stream LLM response
+      let fullResponse = ''
+      for await (const chunk of this.llmService.stream(messages)) {
+        if (!chunk.done && chunk.content) {
+          fullResponse += chunk.content
+          send({ type: 'chunk', content: chunk.content })
+        }
+      }
+
+      // 5. Save Diana's complete response
+      if (fullResponse) {
+        await this.chatService.saveMessage({
           conversationId: dto.conversationId,
-          name: result.action.payload?.name || 'New Project',
-          description: result.action.payload?.description,
-        })
-      } else if (result.action.type === 'create_document' && dto.userId) {
-        actionResult = await this.documentService.createDocument({
-          userId: dto.userId,
-          conversationId: dto.conversationId,
-          title: result.action.payload?.title || 'New Document',
-          content: result.action.payload?.content || '',
-          documentType: 'document',
+          role: 'assistant',
+          content: fullResponse,
         })
       }
 
-      // Save Diana's response
-      await this.chatService.saveMessage({
-        conversationId: dto.conversationId,
-        role: 'assistant',
-        content: result.response,
-      })
-
-      return {
-        response: result.response,
-        type: 'complete',
-        action: result.action.type !== 'none' ? result.action : undefined,
-        actionResult,
-      }
+      send({ type: 'done', response: fullResponse })
     } catch (error) {
-      return { response: `I encountered an error: ${error.message}`, type: 'error' }
+      send({ type: 'error', message: error.message })
+    } finally {
+      res.end()
     }
+  }
+
+  private async detectAndExecuteAction(
+    userMessage: string,
+    conversationId: string,
+    userId?: string,
+  ): Promise<{ type: string; result: any } | null> {
+    if (!userId) return null
+    const msg = userMessage.toLowerCase()
+
+    if ((msg.includes('create') || msg.includes('new') || msg.includes('start') || msg.includes('make')) && msg.includes('project')) {
+      const nameMatch = userMessage.match(/(?:called|named|for|about)\s+["']?([^"'\n,]+)["']?/i)
+      const name = nameMatch ? nameMatch[1].trim() : 'New Project'
+      const result = await this.projectService.createProject({ userId, conversationId, name, description: userMessage })
+      return { type: 'create_project', result }
+    }
+
+    if ((msg.includes('create') || msg.includes('write') || msg.includes('draft') || msg.includes('generate')) && (msg.includes('document') || msg.includes('doc') || msg.includes('spec') || msg.includes('plan'))) {
+      const nameMatch = userMessage.match(/(?:called|named|for|about|titled)\s+["']?([^"'\n,]+)["']?/i)
+      const title = nameMatch ? nameMatch[1].trim() : 'New Document'
+      const content = `# ${title}\n\n*Generated by Diana on ${new Date().toLocaleDateString()}*\n\n## Overview\n\n${userMessage}\n\n## Next Steps\n\n- [ ] Review and refine\n- [ ] Share with team\n`
+      const result = await this.documentService.createDocument({ userId, conversationId, title, content, documentType: 'document' })
+      return { type: 'create_document', result }
+    }
+
+    return null
   }
 
   /**

@@ -3,11 +3,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
-
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import rehypeRaw from 'rehype-raw'
+
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
 import remarkGfm from 'remark-gfm'
 
 interface Message {
@@ -316,7 +316,6 @@ export default function ChatPage() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
-
     if (!inputValue.trim() || !conversationId || loading || streaming) return
 
     const messageText = inputValue
@@ -324,83 +323,69 @@ export default function ChatPage() {
     setLoading(true)
     setStreaming(true)
 
-    // Add user message
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: messageText,
-      timestamp: new Date(),
-    }
+    // Add user message immediately
+    const userMsgId = Date.now().toString()
+    setMessages((prev) => [...prev, { id: userMsgId, role: 'user', content: messageText, timestamp: new Date() }])
 
-    setMessages((prev) => [...prev, userMessage])
+    // Add empty placeholder for Diana's streaming response
+    const placeholderId = (Date.now() + 1).toString()
+    setMessages((prev) => [...prev, { id: placeholderId, role: 'assistant', content: '', timestamp: new Date() }])
 
     try {
-      // Send message and get response
-      const response = await fetch('${API}/api/chat/stream', {
+      const response = await fetch(`${API}/api/chat/stream`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          conversationId,
-          userMessage: messageText,          userId,        }),
+        body: JSON.stringify({ conversationId, userMessage: messageText, userId }),
       })
 
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`)
+      if (!response.ok) throw new Error(`API error: ${response.status}`)
+      if (!response.body) throw new Error('No response body')
+
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+      let fullContent = ''
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop() ?? ''
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue
+          const raw = line.slice(6).trim()
+          if (!raw) continue
+          try {
+            const data = JSON.parse(raw)
+            if (data.type === 'chunk' && data.content) {
+              fullContent += data.content
+              setMessages((prev) => prev.map((m) => m.id === placeholderId ? { ...m, content: fullContent } : m))
+            } else if (data.type === 'action') {
+              if (data.action === 'create_project') fetch(`${API}/api/projects/user/${userId}`).then(r => r.ok ? r.json() : []).then(setProjects).catch(() => {})
+              if (data.action === 'create_document') fetch(`${API}/api/documents/user/${userId}`).then(r => r.ok ? r.json() : []).then(setDocuments).catch(() => {})
+            } else if (data.type === 'done') {
+              // Auto-title
+              if (messages.length <= 1) {
+                const shortTitle = messageText.length > 40 ? messageText.slice(0, 40) + '…' : messageText
+                fetch(`${API}/api/chat/${conversationId}/title`, {
+                  method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ title: shortTitle }),
+                }).then(() => {
+                  setConversationTitle(shortTitle)
+                  fetch(`${API}/api/chat/user/${userId}`).then(r => r.ok ? r.json() : []).then(setConversations).catch(() => {})
+                }).catch(() => {})
+              }
+            }
+          } catch {}
+        }
       }
-
-      // Parse JSON response
-      const data = await response.json()
-
-      // Create assistant message with Diana's response
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: data.response || 'I apologize for the error. Please try again.',
-        timestamp: new Date(),
-      }
-
-      setMessages((prev) => [...prev, assistantMessage])
-
-      // Auto-title: set conversation title from first user message
-      if (messages.length <= 1) {
-        const shortTitle = messageText.length > 40 ? messageText.slice(0, 40) + '…' : messageText
-        try {
-          await fetch(`${API}/api/chat/${conversationId}/title`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title: shortTitle }),
-          })
-          setConversationTitle(shortTitle)
-        } catch {}
-      }
-
-      // Refresh sidebar + projects
-      if (userId) {
-        try {
-          const convRes = await fetch(`${API}/api/chat/user/${userId}`)
-          if (convRes.ok) setConversations(await convRes.json())
-          if (data.action?.type === 'create_project') {
-            const projRes = await fetch(`${API}/api/projects/user/${userId}`)
-            if (projRes.ok) setProjects(await projRes.json())
-          }
-          if (data.action?.type === 'create_document') {
-            const docRes = await fetch(`${API}/api/documents/user/${userId}`)
-            if (docRes.ok) setDocuments(await docRes.json())
-          }
-        } catch {}
-      }
+      // Ensure final content rendered
+      if (fullContent) setMessages((prev) => prev.map((m) => m.id === placeholderId ? { ...m, content: fullContent } : m))
     } catch (error) {
-      console.error('Failed to send message:', error)
-      // Add error message
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now().toString(),
-          role: 'assistant',
-          content: 'Sorry, I encountered an error. Please try again.',
-          timestamp: new Date(),
-        },
-      ])
+      console.error('Stream error:', error)
+      setMessages((prev) => prev.map((m) => m.id === placeholderId ? { ...m, content: 'Sorry, I encountered an error. Please try again.' } : m))
     } finally {
       setLoading(false)
       setStreaming(false)
