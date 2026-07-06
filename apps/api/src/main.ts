@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module.js'
 import { ProjectModule } from './projects/project.module.js'
 import { TaskModule } from './tasks/task.module.js'
 import { WorkspaceModule } from './workspace/workspace.module.js'
+import { ActivityModule } from './activity/activity.module.js'
 
 // ESM compatibility
 const __filename = fileURLToPath(import.meta.url)
@@ -57,6 +58,7 @@ class AppController {
     ProjectModule,
     TaskModule,
     WorkspaceModule,
+    ActivityModule,
     IdentityModule,
     //UserManagementModule,
     //OrganizationManagementModule,

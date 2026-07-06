@@ -26,6 +26,13 @@ interface Document {
   createdAt: string
 }
 
+interface ActivityEvent {
+  id: string
+  type: string
+  title: string
+  createdAt: string
+}
+
 interface Workspace {
   id: string
   title: string
@@ -45,6 +52,7 @@ export default function WorkspacePage() {
   const workspaceId = params.id as string
 
   const [workspace, setWorkspace] = useState<Workspace | null>(null)
+  const [activity, setActivity] = useState<ActivityEvent[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [togglingTask, setTogglingTask] = useState<string | null>(null)
@@ -76,9 +84,13 @@ export default function WorkspacePage() {
   useEffect(() => {
     const fetchWorkspace = async () => {
       try {
-        const res = await fetch(`${API}/api/workspaces/${workspaceId}`)
-        if (!res.ok) throw new Error(`${res.status}`)
-        setWorkspace(await res.json())
+        const [wsRes, actRes] = await Promise.all([
+          fetch(`${API}/api/workspaces/${workspaceId}`),
+          fetch(`${API}/api/activity/workspace/${workspaceId}?limit=15`),
+        ])
+        if (!wsRes.ok) throw new Error(`${wsRes.status}`)
+        setWorkspace(await wsRes.json())
+        if (actRes.ok) setActivity(await actRes.json())
       } catch (e: any) {
         setError('Could not load workspace.')
       } finally {
@@ -310,6 +322,33 @@ export default function WorkspacePage() {
             )}
           </Section>
         </div>
+
+        {/* Activity Timeline */}
+        {activity.length > 0 && (
+          <div style={{ marginTop: '32px' }}>
+            <h2 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.8px', color: '#666' }}>Activity</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              {activity.map((event, i) => {
+                const icon = event.type === 'workspace_created' ? '🚀'
+                  : event.type === 'task_completed' ? '✓'
+                  : event.type === 'document_created' ? '📄'
+                  : event.type === 'document_edited' ? '✏️'
+                  : '◇'
+                return (
+                  <div key={event.id} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', padding: '8px 0', borderBottom: i < activity.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
+                    <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(102,126,234,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', flexShrink: 0, marginTop: '1px' }}>{icon}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <span style={{ fontSize: '13px', color: '#ccc' }}>{event.title}</span>
+                    </div>
+                    <span style={{ fontSize: '11px', color: '#555', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                      {new Date(event.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Ask Diana inline */}
         <div style={{ marginTop: '32px', padding: '20px', background: 'rgba(102,126,234,0.08)', border: '1px solid rgba(102,126,234,0.2)', borderRadius: '12px' }}>

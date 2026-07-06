@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service.js'
+import { ActivityService } from '../activity/activity.service.js'
 
 export interface CreateTaskDto {
   projectId: string
@@ -32,7 +33,10 @@ export interface TaskResponseDto {
 
 @Injectable()
 export class TaskService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private activityService: ActivityService,
+  ) {}
 
   async createTask(dto: CreateTaskDto): Promise<TaskResponseDto> {
     const count = await this.prisma.projectTask.count({
@@ -70,7 +74,18 @@ export class TaskService {
         ...(dto.priority && { priority: dto.priority }),
         ...(dto.order !== undefined && { order: dto.order }),
       },
+      include: { project: { select: { userId: true } } },
     })
+    // Log task completion
+    if (dto.status === 'done') {
+      this.activityService.log({
+        userId: (task as any).project.userId,
+        type: 'task_completed',
+        title: `Task completed: "${task.title}"`,
+        resourceId: task.id,
+        resourceType: 'task',
+      }).catch(() => {})
+    }
     return this.map(task)
   }
 

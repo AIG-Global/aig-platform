@@ -35,6 +35,7 @@ model User {
   projects          Project[]
   documents         Document[]
   dianaMemories     DianaMemory[]
+  activities        Activity[]
 
   @@map("users")
 }
@@ -270,4 +271,32 @@ model DianaMemory {
   @@index([userId])
   @@index([category])
   @@map("diana_memories")
+}
+
+// ============================================================================
+// ACTIVITY MODEL - Timeline of everything Diana helps accomplish
+// ============================================================================
+model Activity {
+  id          String    @id @default(cuid())
+  userId      String
+  workspaceId String?
+
+  // What happened
+  type        String    // 'workspace_created' | 'document_created' | 'task_completed' | 'task_created' | 'document_edited' | 'goal_set'
+  title       String    // Human-readable summary: "Workspace 'AI Company' created"
+  description String?   // Optional detail
+
+  // Link back to the affected resource
+  resourceId   String?  // ID of workspace/document/task
+  resourceType String?  // 'workspace' | 'document' | 'task'
+
+  createdAt   DateTime  @default(now())
+
+  // Relations
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([workspaceId])
+  @@index([createdAt])
+  @@map("activities")
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service.js'
 import { WorkspaceService } from './workspace.service.js'
 import { WorkspaceBundleDto } from './workspace.dto.js'
+import { ActivityService } from '../activity/activity.service.js'
 
 // ─── Mission type classifier ────────────────────────────────────────────────
 
@@ -277,6 +278,7 @@ export class WorkspaceOrchestrator {
   constructor(
     private prisma: PrismaService,
     private workspaceService: WorkspaceService,
+    private activityService: ActivityService,
   ) {}
 
   /**
@@ -372,6 +374,17 @@ export class WorkspaceOrchestrator {
         value: JSON.stringify({ goal, title, type, workspaceId: workspace.id }),
       },
     })
+
+    // 7. Log activity (non-blocking)
+    this.activityService.log({
+      userId: ownerId,
+      workspaceId: workspace.id,
+      type: 'workspace_created',
+      title: `Workspace "${workspace.title}" created`,
+      description: goal,
+      resourceId: workspace.id,
+      resourceType: 'workspace',
+    }).catch(() => {})
 
     return {
       workspace,
