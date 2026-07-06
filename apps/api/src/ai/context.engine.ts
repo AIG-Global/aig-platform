@@ -36,27 +36,70 @@ export class ContextEngine {
 
   /**
    * Build the full message array for the LLM:
-   * [system prompt + memories] + [conversation history] + [current message]
+   * [system prompt + memories + workspace context] + [conversation history] + [current message]
    */
   async buildMessages(
     conversationId: string,
     userMessage: string,
     userId: string
   ): Promise<LLMMessage[]> {
-    const [history, memories] = await Promise.all([
+    const [history, memories, workspaceContext] = await Promise.all([
       this.getHistory(conversationId),
       this.getMemories(userId),
+      this.getWorkspaceContext(userId),
     ])
 
-    const systemContent = memories.length > 0
-      ? `${DIANA_SYSTEM_PROMPT}\n\n## What I remember about you:\n${memories.map((m) => `- ${m}`).join('\n')}`
-      : DIANA_SYSTEM_PROMPT
+    let systemContent = DIANA_SYSTEM_PROMPT
+
+    if (memories.length > 0) {
+      systemContent += `\n\n## What I remember about you:\n${memories.map((m) => `- ${m}`).join('\n')}`
+    }
+
+    if (workspaceContext) {
+      systemContent += `\n\n## Active workspace context:\n${workspaceContext}`
+    }
 
     return [
       { role: 'system', content: systemContent },
       ...history,
       { role: 'user', content: userMessage },
     ]
+  }
+
+  /**
+   * Load workspace context for the user's most recent active workspace.
+   * Includes workspace goal, document titles, and task summary.
+   */
+  private async getWorkspaceContext(userId: string): Promise<string | null> {
+    const workspace = await this.prisma.workspace.findFirst({
+      where: { ownerId: userId, status: 'active', deletedAt: null },
+      orderBy: { updatedAt: 'desc' },
+      include: {
+        projects: {
+          include: {
+            tasks: { where: { deletedAt: null, status: 'todo' }, take: 5, orderBy: { order: 'asc' } },
+          },
+          take: 1,
+        },
+        documents: { where: { deletedAt: null }, select: { title: true, documentType: true }, take: 5 },
+      },
+    })
+
+    if (!workspace) return null
+
+    const lines: string[] = [
+      `Workspace: "${workspace.title}" (${workspace.type})`,
+    ]
+    if (workspace.goal) lines.push(`Goal: ${workspace.goal}`)
+    if (workspace.documents.length > 0) {
+      lines.push(`Documents: ${workspace.documents.map((d) => d.title).join(', ')}`)
+    }
+    const todoTasks = workspace.projects[0]?.tasks ?? []
+    if (todoTasks.length > 0) {
+      lines.push(`Next tasks: ${todoTasks.map((t) => t.title).join('; ')}`)
+    }
+
+    return lines.join('\n')
   }
 
   private async getHistory(conversationId: string): Promise<LLMMessage[]> {

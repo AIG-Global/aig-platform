@@ -259,7 +259,18 @@ export default function ChatPage() {
           setConversationId(data.id)
           setConversationTitle(data.title || 'New Chat')
 
-          const greeting = `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?`
+          // Get contextual greeting (returns "Welcome back" for returning users)
+          let greeting = `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?`
+          try {
+            const greetRes = await fetch(`${API}/api/chat/greet`, {
+              method: 'POST',
+              headers: { 'x-user-id': id },
+            })
+            if (greetRes.ok) {
+              const greetData = await greetRes.json()
+              greeting = greetData.greeting
+            }
+          } catch {}
 
           // Save Diana's greeting to DB
           await fetch(`${API}/api/chat/message`, {

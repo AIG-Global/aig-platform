@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Patch, Body, Param, Res, HttpCode } from '@nestjs/common'
+import { Controller, Post, Get, Patch, Body, Param, Res, HttpCode, Headers } from '@nestjs/common'
 import type { Response } from 'express'
 import { ChatService } from './chat.service.js'
 import { DianaService } from './diana.service.js'
@@ -8,6 +8,7 @@ import { TaskService } from '../tasks/task.service.js'
 import { LLMService } from '../ai/llm.service.js'
 import { ContextEngine } from '../ai/context.engine.js'
 import { WorkspaceOrchestrator } from '../workspace/workspace.orchestrator.js'
+import { PrismaService } from '../prisma.service.js'
 import {
   CreateConversationDto,
   SendMessageDto,
@@ -26,6 +27,7 @@ export class ChatController {
     private llmService: LLMService,
     private contextEngine: ContextEngine,
     private workspaceOrchestrator: WorkspaceOrchestrator,
+    private prisma: PrismaService,
   ) {}
 
   /**
@@ -37,6 +39,46 @@ export class ChatController {
     @Body() dto: CreateConversationDto
   ): Promise<ConversationResponseDto> {
     return this.chatService.createConversation(dto)
+  }
+
+  /**
+   * POST /api/chat/greet
+   * Generate a contextual greeting for a returning user.
+   * Returns { greeting: string } based on workspace + memory context.
+   */
+  @Post('greet')
+  async greet(@Headers('x-user-id') userId: string): Promise<{ greeting: string }> {
+    if (!userId) return { greeting: `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?` }
+
+    // Load most recent workspace
+    const workspace = await this.prisma.workspace.findFirst({
+      where: { ownerId: userId, status: 'active', deletedAt: null },
+      orderBy: { updatedAt: 'desc' },
+      include: {
+        projects: {
+          include: {
+            tasks: { where: { status: 'todo', deletedAt: null }, take: 1, orderBy: { order: 'asc' } },
+          },
+          take: 1,
+        },
+      },
+    })
+
+    // First-time user
+    if (!workspace) {
+      return { greeting: `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?` }
+    }
+
+    // Returning user — reference their workspace
+    const nextTask = workspace.projects[0]?.tasks[0]?.title
+    let greeting = `Welcome back.\n\nYour **${workspace.title}** workspace is ready.`
+    if (nextTask) {
+      greeting += `\n\nYour next task: **${nextTask}**.\n\nShall we continue?`
+    } else {
+      greeting += `\n\nWhat would you like to work on today?`
+    }
+
+    return { greeting }
   }
 
   /**
