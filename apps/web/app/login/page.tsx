@@ -5,6 +5,78 @@ import { useRouter } from 'next/navigation'
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
 
+const DianaWelcome = () => (
+  <div style={{
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    padding: '40px',
+    color: '#fff',
+  }}>
+    <div style={{ marginBottom: '32px' }}>
+      <div style={{
+        width: '80px',
+        height: '80px',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        borderRadius: '20px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '48px',
+        marginBottom: '24px',
+        boxShadow: '0 20px 40px rgba(102, 126, 234, 0.3)',
+      }}>
+        ✨
+      </div>
+      <h2 style={{ margin: '0 0 12px', fontSize: '28px', fontWeight: '700' }}>
+        Welcome to AIGINVEST
+      </h2>
+      <p style={{
+        margin: '0 0 24px',
+        fontSize: '16px',
+        color: '#aaa',
+        lineHeight: '1.6',
+      }}>
+        I'm Diana. I help people turn intentions into outcomes.
+      </p>
+      <p style={{
+        margin: 0,
+        fontSize: '14px',
+        color: '#888',
+        lineHeight: '1.6',
+      }}>
+        Let's start by creating your first mission. You'll see how we work together to turn your goals into completed work.
+      </p>
+    </div>
+
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gap: '12px',
+      marginTop: '32px',
+    }}>
+      {[
+        { icon: '🎯', label: 'Set Goals' },
+        { icon: '🗺️', label: 'Plan Work' },
+        { icon: '⚡', label: 'Execute' },
+        { icon: '📊', label: 'Track Progress' },
+      ].map(({ icon, label }) => (
+        <div key={label} style={{
+          padding: '16px',
+          background: 'rgba(255, 255, 255, 0.05)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: '12px',
+          textAlign: 'center',
+        }}>
+          <div style={{ fontSize: '24px', marginBottom: '6px' }}>{icon}</div>
+          <div style={{ fontSize: '12px', fontWeight: '500' }}>{label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+)
+
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -54,41 +126,50 @@ export default function LoginPage() {
       <body style={{ margin: 0, padding: 0, backgroundColor: '#0a0a0a', color: '#fff', fontFamily: 'system-ui, sans-serif' }}>
         <main style={{
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
           minHeight: '100vh',
           background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)',
         }}>
+          {/* Diana Welcome Guide - Left Side */}
+          <DianaWelcome />
+
+          {/* Login Form - Right Side */}
           <div style={{
-            width: '100%',
-            maxWidth: '400px',
-            padding: '48px 40px',
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '16px',
-            backdropFilter: 'blur(10px)',
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '40px',
           }}>
-            {/* Logo */}
-            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-              <div style={{
-                width: '56px',
-                height: '56px',
-                margin: '0 auto 16px',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                borderRadius: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '26px',
-                fontWeight: 'bold',
-              }}>
-                ◇
+            <div style={{
+              width: '100%',
+              maxWidth: '400px',
+              padding: '48px 40px',
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '16px',
+              backdropFilter: 'blur(10px)',
+            }}>
+              {/* Logo */}
+              <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+                <div style={{
+                  width: '48px',
+                  height: '48px',
+                  margin: '0 auto 12px',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                }}>
+                  ◇
+                </div>
+                <h1 style={{ margin: '0 0 4px', fontSize: '18px', fontWeight: '700' }}>Sign In</h1>
+                <p style={{ margin: 0, color: '#999', fontSize: '12px' }}>
+                  to start building with Diana
+                </p>
               </div>
-              <h1 style={{ margin: '0 0 8px', fontSize: '22px', fontWeight: '700' }}>AIGINVEST</h1>
-              <p style={{ margin: 0, color: '#999', fontSize: '14px' }}>
-                Turn every goal into completed work.
-              </p>
-            </div>
 
             {/* Form */}
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -154,15 +235,15 @@ export default function LoginPage() {
             </form>
 
             <p style={{
-              marginTop: '24px',
+              marginTop: '20px',
               textAlign: 'center',
-              fontSize: '12px',
+              fontSize: '11px',
               color: '#555',
               lineHeight: 1.6,
             }}>
-              Enter your email to sign in or create an account.<br />
-              No password required.
+              Enter your email to sign in or create an account.
             </p>
+            </div>
           </div>
         </main>
       </body>
