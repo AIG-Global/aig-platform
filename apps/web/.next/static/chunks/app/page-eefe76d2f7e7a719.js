@@ -1,9 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[931],{5738:function(e,t,n){Promise.resolve().then(n.bind(n,6474))},6474:function(e,t,n){"use strict";n.r(t),n.d(t,{default:function(){return Page}});var r=n(2656),o=n(6871),s=n(81);function Page(){let e=(0,s.useRouter)();return(0,o.useEffect)(()=>{let t=localStorage.getItem("userEmail");t?e.push("/chat"):e.push("/login")},[e]),(0,r.jsx)("html",{children:(0,r.jsx)("body",{style:{margin:0,padding:0,backgroundColor:"#0a0a0a",display:"flex",alignItems:"center",justifyContent:"center",minHeight:"100vh",fontFamily:"system-ui, sans-serif",color:"#fff"},children:(0,r.jsx)("main",{style:{textAlign:"center"},children:(0,r.jsx)("p",{children:"Loading Diana..."})})})})}},3411:function(e,t,n){"use strict";/**
- * @license React
- * react-jsx-runtime.production.min.js
- *
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */var r=n(6871),o=Symbol.for("react.element"),s=Symbol.for("react.fragment"),i=Object.prototype.hasOwnProperty,u=r.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,a={key:!0,ref:!0,__self:!0,__source:!0};function q(e,t,n){var r,s={},f=null,l=null;for(r in void 0!==n&&(f=""+n),void 0!==t.key&&(f=""+t.key),void 0!==t.ref&&(l=t.ref),t)i.call(t,r)&&!a.hasOwnProperty(r)&&(s[r]=t[r]);if(e&&e.defaultProps)for(r in t=e.defaultProps)void 0===s[r]&&(s[r]=t[r]);return{$$typeof:o,type:e,key:f,ref:l,props:s,_owner:u.current}}t.Fragment=s,t.jsx=q,t.jsxs=q},2656:function(e,t,n){"use strict";e.exports=n(3411)},81:function(e,t,n){e.exports=n(1668)}},function(e){e.O(0,[836,554,744],function(){return e(e.s=5738)}),_N_E=e.O()}]);

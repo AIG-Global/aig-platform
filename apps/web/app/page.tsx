@@ -9,7 +9,7 @@ export default function Page() {
   useEffect(() => {
     const userEmail = localStorage.getItem('userEmail')
     if (userEmail) {
-      router.push('/chat')
+      router.push('/home')
     } else {
       router.push('/login')
     }

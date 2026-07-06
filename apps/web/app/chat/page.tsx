@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -156,6 +156,8 @@ const MessageRenderer = ({ content, role }: { content: string; role: 'user' | 'a
 
 export default function ChatPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const conversationIdFromQuery = searchParams.get('id')
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
@@ -194,6 +196,29 @@ export default function ChatPage() {
         }
       } catch (error) {
         console.error('Failed to fetch conversations:', error)
+      }
+
+      // If conversation ID is provided in query params, load it
+      if (conversationIdFromQuery) {
+        try {
+          const response = await fetch(`http://localhost:3333/api/api/chat/${conversationIdFromQuery}`)
+          if (response.ok) {
+            const data = await response.json()
+            setConversationId(data.id)
+            setConversationTitle(data.title || 'New Chat')
+            setMessages(
+              data.messages.map((msg: any) => ({
+                id: msg.id,
+                role: msg.role,
+                content: msg.content,
+                timestamp: new Date(msg.createdAt),
+              }))
+            )
+            return
+          }
+        } catch (error) {
+          console.error('Failed to load conversation:', error)
+        }
       }
 
       // Create new conversation
