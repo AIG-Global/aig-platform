@@ -1,11 +1,35 @@
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+
 export default function Page() {
+  const router = useRouter()
+
+  useEffect(() => {
+    const userEmail = localStorage.getItem('userEmail')
+    if (userEmail) {
+      router.push('/chat')
+    } else {
+      router.push('/login')
+    }
+  }, [router])
+
   return (
     <html>
-      <body>
-        <main style={{fontFamily: 'system-ui, sans-serif', padding: 24}}>
-          <h1>AIG Platform</h1>
-          <p>Project Genesis — Status: Online</p>
-          <p>Version: 0.1.0-alpha</p>
+      <body style={{
+        margin: 0,
+        padding: 0,
+        backgroundColor: '#0a0a0a',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        fontFamily: 'system-ui, sans-serif',
+        color: '#fff',
+      }}>
+        <main style={{ textAlign: 'center' }}>
+          <p>Loading Diana...</p>
         </main>
       </body>
     </html>
