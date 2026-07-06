@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
+
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import rehypeRaw from 'rehype-raw'
@@ -19,6 +21,17 @@ interface Conversation {
   id: string
   title: string
   updatedAt: string
+}
+
+interface Project {
+  id: string
+  name: string
+  color: string
+}
+
+interface DocItem {
+  id: string
+  title: string
 }
 
 // Message Renderer Component
@@ -168,6 +181,8 @@ export default function ChatPage() {
   const [editingTitle, setEditingTitle] = useState(false)
   const [titleInput, setTitleInput] = useState('')
   const [conversations, setConversations] = useState<Conversation[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
+  const [documents, setDocuments] = useState<DocItem[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [streaming, setStreaming] = useState(false)
 
@@ -185,23 +200,24 @@ export default function ChatPage() {
       setUserEmail(email)
       setUserId(id)
 
-      // Fetch user's conversations
+      // Fetch user's conversations, projects, documents in parallel
       try {
-        const conversationsResponse = await fetch(
-          `http://localhost:3333/api/chat/user/${id}`
-        )
-        if (conversationsResponse.ok) {
-          const convs = await conversationsResponse.json()
-          setConversations(convs)
-        }
+        const [convRes, projRes, docRes] = await Promise.all([
+          fetch(`${API}/api/chat/user/${id}`),
+          fetch(`${API}/api/projects/user/${id}`),
+          fetch(`${API}/api/documents/user/${id}`),
+        ])
+        if (convRes.ok) setConversations(await convRes.json())
+        if (projRes.ok) setProjects(await projRes.json())
+        if (docRes.ok) setDocuments(await docRes.json())
       } catch (error) {
-        console.error('Failed to fetch conversations:', error)
+        console.error('Failed to fetch user data:', error)
       }
 
       // If conversation ID is provided in query params, load it
       if (conversationIdFromQuery) {
         try {
-          const response = await fetch(`http://localhost:3333/api/chat/${conversationIdFromQuery}`)
+          const response = await fetch(`${API}/api/chat/${conversationIdFromQuery}`)
           if (response.ok) {
             const data = await response.json()
             setConversationId(data.id)
@@ -223,7 +239,7 @@ export default function ChatPage() {
 
       // Create new conversation
       try {
-        const response = await fetch('http://localhost:3333/api/chat/create', {
+        const response = await fetch('${API}/api/chat/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -240,7 +256,7 @@ export default function ChatPage() {
           const greeting = `Welcome to AIGINVEST. I'm Diana. Let's build something together.`
 
           // Save Diana's greeting to DB
-          await fetch('http://localhost:3333/api/chat/message', {
+          await fetch('${API}/api/chat/message', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -260,7 +276,7 @@ export default function ChatPage() {
           ])
 
           // Refresh sidebar
-          const convRes = await fetch(`http://localhost:3333/api/chat/user/${id}`)
+          const convRes = await fetch(`${API}/api/chat/user/${id}`)
           if (convRes.ok) setConversations(await convRes.json())
         } else {
           console.warn(`Failed to create conversation: ${response.status}`)
@@ -320,13 +336,12 @@ export default function ChatPage() {
 
     try {
       // Send message and get response
-      const response = await fetch('http://localhost:3333/api/chat/stream', {
+      const response = await fetch('${API}/api/chat/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           conversationId,
-          userMessage: messageText,
-        }),
+          userMessage: messageText,          userId,        }),
       })
 
       if (!response.ok) {
@@ -344,14 +359,13 @@ export default function ChatPage() {
         timestamp: new Date(),
       }
 
-      // Update messages with assistant message
       setMessages((prev) => [...prev, assistantMessage])
 
       // Auto-title: set conversation title from first user message
       if (messages.length <= 1) {
         const shortTitle = messageText.length > 40 ? messageText.slice(0, 40) + '…' : messageText
         try {
-          await fetch(`http://localhost:3333/api/chat/${conversationId}/title`, {
+          await fetch(`${API}/api/chat/${conversationId}/title`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title: shortTitle }),
@@ -360,11 +374,19 @@ export default function ChatPage() {
         } catch {}
       }
 
-      // Refresh sidebar
+      // Refresh sidebar + projects
       if (userId) {
         try {
-          const convRes = await fetch(`http://localhost:3333/api/chat/user/${userId}`)
+          const convRes = await fetch(`${API}/api/chat/user/${userId}`)
           if (convRes.ok) setConversations(await convRes.json())
+          if (data.action?.type === 'create_project') {
+            const projRes = await fetch(`${API}/api/projects/user/${userId}`)
+            if (projRes.ok) setProjects(await projRes.json())
+          }
+          if (data.action?.type === 'create_document') {
+            const docRes = await fetch(`${API}/api/documents/user/${userId}`)
+            if (docRes.ok) setDocuments(await docRes.json())
+          }
         } catch {}
       }
     } catch (error) {
@@ -395,7 +417,7 @@ export default function ChatPage() {
     if (!titleInput.trim() || !conversationId) return
 
     try {
-      const response = await fetch(`http://localhost:3333/api/chat/${conversationId}/title`, {
+      const response = await fetch(`${API}/api/chat/${conversationId}/title`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: titleInput }),
@@ -412,7 +434,7 @@ export default function ChatPage() {
 
   const loadConversation = async (convId: string) => {
     try {
-      const response = await fetch(`http://localhost:3333/api/chat/${convId}`)
+      const response = await fetch(`${API}/api/chat/${convId}`)
       if (response.ok) {
         const data = await response.json()
         setConversationId(convId)
@@ -453,7 +475,7 @@ export default function ChatPage() {
               onClick={async () => {
                   if (!userId) return
                   try {
-                    const response = await fetch('http://localhost:3333/api/chat/create', {
+                    const response = await fetch('${API}/api/chat/create', {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify({ userId, title: 'New Chat' }),
@@ -461,7 +483,7 @@ export default function ChatPage() {
                     if (response.ok) {
                       const data = await response.json()
                       const greeting = `Welcome to AIGINVEST. I'm Diana. Let's build something together.`
-                      await fetch('http://localhost:3333/api/chat/message', {
+                      await fetch('${API}/api/chat/message', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ conversationId: data.id, role: 'assistant', content: greeting }),
@@ -469,7 +491,7 @@ export default function ChatPage() {
                       setConversationId(data.id)
                       setConversationTitle('New Chat')
                       setMessages([{ id: '0', role: 'assistant', content: greeting, timestamp: new Date() }])
-                      const convRes = await fetch(`http://localhost:3333/api/chat/user/${userId}`)
+                      const convRes = await fetch(`${API}/api/chat/user/${userId}`)
                       if (convRes.ok) setConversations(await convRes.json())
                     }
                   } catch {
@@ -498,8 +520,8 @@ export default function ChatPage() {
             </div>
 
             <div style={{ padding: '12px', flex: 1, overflowY: 'auto' }}>
-              <p style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999', marginBottom: '12px' }}>
-                Recent
+              <p style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999', marginBottom: '8px' }}>
+                Chats
               </p>
               {conversations.map((conv) => (
                 <button
@@ -507,8 +529,8 @@ export default function ChatPage() {
                   onClick={() => loadConversation(conv.id)}
                   style={{
                     width: '100%',
-                    padding: '10px 12px',
-                    marginBottom: '8px',
+                    padding: '8px 12px',
+                    marginBottom: '4px',
                     background: conv.id === conversationId ? 'rgba(102, 126, 234, 0.2)' : 'transparent',
                     border: '1px solid ' + (conv.id === conversationId ? 'rgba(102, 126, 234, 0.5)' : 'transparent'),
                     borderRadius: '6px',
@@ -521,20 +543,64 @@ export default function ChatPage() {
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
                   }}
-                  onMouseEnter={(e) => {
-                    if (conv.id !== conversationId) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (conv.id !== conversationId) {
-                      e.currentTarget.style.background = 'transparent'
-                    }
-                  }}
+                  onMouseEnter={(e) => { if (conv.id !== conversationId) e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+                  onMouseLeave={(e) => { if (conv.id !== conversationId) e.currentTarget.style.background = 'transparent' }}
                 >
                   {conv.title}
                 </button>
               ))}
+
+              {projects.length > 0 && (
+                <>
+                  <p style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999', marginTop: '16px', marginBottom: '8px' }}>
+                    Projects
+                  </p>
+                  {projects.map((proj) => (
+                    <div
+                      key={proj.id}
+                      style={{
+                        padding: '8px 12px',
+                        marginBottom: '4px',
+                        borderRadius: '6px',
+                        fontSize: '12px',
+                        color: '#ccc',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                      }}
+                    >
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#667eea', flexShrink: 0 }} />
+                      {proj.name}
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {documents.length > 0 && (
+                <>
+                  <p style={{ fontSize: '11px', textTransform: 'uppercase', color: '#999', marginTop: '16px', marginBottom: '8px' }}>
+                    Documents
+                  </p>
+                  {documents.map((doc) => (
+                    <div
+                      key={doc.id}
+                      style={{
+                        padding: '8px 12px',
+                        marginBottom: '4px',
+                        borderRadius: '6px',
+                        fontSize: '12px',
+                        color: '#ccc',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                      }}
+                    >
+                      <span style={{ fontSize: '10px', opacity: 0.5 }}>📄</span>
+                      {doc.title}
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
 
             <div style={{ padding: '12px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>

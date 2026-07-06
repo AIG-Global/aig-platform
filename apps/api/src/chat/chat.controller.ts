@@ -2,6 +2,8 @@ import { Controller, Post, Get, Patch, Body, Param, Res, HttpCode } from '@nestj
 import type { Response } from 'express'
 import { ChatService } from './chat.service.js'
 import { DianaService } from './diana.service.js'
+import { DocumentService } from './document.service.js'
+import { ProjectService } from '../projects/project.service.js'
 import {
   CreateConversationDto,
   SendMessageDto,
@@ -13,7 +15,9 @@ import {
 export class ChatController {
   constructor(
     private chatService: ChatService,
-    private dianaService: DianaService
+    private dianaService: DianaService,
+    private documentService: DocumentService,
+    private projectService: ProjectService,
   ) {}
 
   /**
@@ -44,32 +48,53 @@ export class ChatController {
   @Post('stream')
   @HttpCode(200)
   async streamResponse(
-    @Body() dto: { conversationId: string; userMessage: string }
-  ): Promise<{ response: string; type: string }> {
+    @Body() dto: { conversationId: string; userMessage: string; userId?: string }
+  ): Promise<{ response: string; type: string; action?: any; actionResult?: any }> {
     try {
-      // Save user message first
+      // Save user message
       await this.chatService.saveMessage({
         conversationId: dto.conversationId,
         role: 'user',
         content: dto.userMessage,
       })
 
-      // Get context-aware response from Diana
-      const response = await this.dianaService.respond(dto.conversationId, dto.userMessage)
+      // Get Diana's response + optional action
+      const result = await this.dianaService.respond(dto.conversationId, dto.userMessage)
+
+      // Execute action if present
+      let actionResult: any = null
+      if (result.action.type === 'create_project' && dto.userId) {
+        actionResult = await this.projectService.createProject({
+          userId: dto.userId,
+          conversationId: dto.conversationId,
+          name: result.action.payload?.name || 'New Project',
+          description: result.action.payload?.description,
+        })
+      } else if (result.action.type === 'create_document' && dto.userId) {
+        actionResult = await this.documentService.createDocument({
+          userId: dto.userId,
+          conversationId: dto.conversationId,
+          title: result.action.payload?.title || 'New Document',
+          content: result.action.payload?.content || '',
+          documentType: 'document',
+        })
+      }
 
       // Save Diana's response
       await this.chatService.saveMessage({
         conversationId: dto.conversationId,
         role: 'assistant',
-        content: response,
+        content: result.response,
       })
 
-      return { response, type: 'complete' }
-    } catch (error) {
       return {
-        response: `I encountered an error: ${error.message}`,
-        type: 'error',
+        response: result.response,
+        type: 'complete',
+        action: result.action.type !== 'none' ? result.action : undefined,
+        actionResult,
       }
+    } catch (error) {
+      return { response: `I encountered an error: ${error.message}`, type: 'error' }
     }
   }
 

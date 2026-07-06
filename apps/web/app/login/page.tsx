@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
+
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -15,7 +17,7 @@ export default function LoginPage() {
     setError('')
 
     try {
-      const res = await fetch('http://localhost:3333/api/auth/login', {
+      const res = await fetch('${API}/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim().toLowerCase() }),
@@ -149,3 +151,4 @@ export default function LoginPage() {
     </html>
   )
 }
+
