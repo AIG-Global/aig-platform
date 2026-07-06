@@ -44,36 +44,43 @@ export class ChatController {
   /**
    * POST /api/chat/greet
    * Generate a contextual greeting for a returning user.
-   * Returns { greeting: string } based on workspace + memory context.
+   * Returns { greeting: string } based on workspace + progress context.
    */
   @Post('greet')
   async greet(@Headers('x-user-id') userId: string): Promise<{ greeting: string }> {
     if (!userId) return { greeting: `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?` }
 
-    // Load most recent workspace
-    const workspace = await this.prisma.workspace.findFirst({
-      where: { ownerId: userId, status: 'active', deletedAt: null },
-      orderBy: { updatedAt: 'desc' },
-      include: {
-        projects: {
-          include: {
-            tasks: { where: { status: 'todo', deletedAt: null }, take: 1, orderBy: { order: 'asc' } },
+    const [workspace, progress] = await Promise.all([
+      this.prisma.workspace.findFirst({
+        where: { ownerId: userId, status: 'active', deletedAt: null },
+        orderBy: { updatedAt: 'desc' },
+        include: {
+          projects: {
+            include: {
+              tasks: { where: { status: 'todo', deletedAt: null }, take: 1, orderBy: { order: 'asc' } },
+            },
+            take: 1,
           },
-          take: 1,
         },
-      },
-    })
+      }),
+      this.prisma.projectTask.count({
+        where: { project: { userId, deletedAt: null }, status: 'done', deletedAt: null },
+      }),
+    ])
 
     // First-time user
     if (!workspace) {
       return { greeting: `Welcome to AIGINVEST. I'm Diana.\n\nWhat would you like to accomplish today?` }
     }
 
-    // Returning user — reference their workspace
+    // Returning user — reference workspace + progress
     const nextTask = workspace.projects[0]?.tasks[0]?.title
     let greeting = `Welcome back.\n\nYour **${workspace.title}** workspace is ready.`
+    if (progress > 0) {
+      greeting += ` You've completed **${progress} task${progress > 1 ? 's' : ''}** so far.`
+    }
     if (nextTask) {
-      greeting += `\n\nYour next task: **${nextTask}**.\n\nShall we continue?`
+      greeting += `\n\nNext up: **${nextTask}**.\n\nShall we continue?`
     } else {
       greeting += `\n\nWhat would you like to work on today?`
     }

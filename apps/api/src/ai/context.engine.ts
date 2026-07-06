@@ -43,10 +43,11 @@ export class ContextEngine {
     userMessage: string,
     userId: string
   ): Promise<LLMMessage[]> {
-    const [history, memories, workspaceContext] = await Promise.all([
+    const [history, memories, workspaceContext, progressContext] = await Promise.all([
       this.getHistory(conversationId),
       this.getMemories(userId),
       this.getWorkspaceContext(userId),
+      this.getProgressContext(userId),
     ])
 
     let systemContent = DIANA_SYSTEM_PROMPT
@@ -57,6 +58,10 @@ export class ContextEngine {
 
     if (workspaceContext) {
       systemContent += `\n\n## Active workspace context:\n${workspaceContext}`
+    }
+
+    if (progressContext) {
+      systemContent += `\n\n## Progress summary:\n${progressContext}`
     }
 
     return [
@@ -100,6 +105,20 @@ export class ContextEngine {
     }
 
     return lines.join('\n')
+  }
+
+  private async getProgressContext(userId: string): Promise<string | null> {
+    const [completed, total] = await Promise.all([
+      this.prisma.projectTask.count({
+        where: { project: { userId, deletedAt: null }, status: 'done', deletedAt: null },
+      }),
+      this.prisma.projectTask.count({
+        where: { project: { userId, deletedAt: null }, deletedAt: null },
+      }),
+    ])
+    if (total === 0) return null
+    const pct = Math.round((completed / total) * 100)
+    return `Tasks: ${completed}/${total} completed (${pct}%)`
   }
 
   private async getHistory(conversationId: string): Promise<LLMMessage[]> {

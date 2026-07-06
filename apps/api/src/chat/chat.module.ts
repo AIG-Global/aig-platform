@@ -10,6 +10,7 @@ import { TaskService } from '../tasks/task.service.js'
 import { AIModule } from '../ai/ai.module.js'
 import { WorkspaceOrchestrator } from '../workspace/workspace.orchestrator.js'
 import { WorkspaceService } from '../workspace/workspace.service.js'
+import { ActivityService } from '../activity/activity.service.js'
 
 @Module({
   imports: [AIModule],
@@ -24,6 +25,7 @@ import { WorkspaceService } from '../workspace/workspace.service.js'
     PrismaService,
     WorkspaceOrchestrator,
     WorkspaceService,
+    ActivityService,
   ],
   exports: [ChatService, DianaService, DocumentService, ProjectService, TaskService, PrismaService],
 })
