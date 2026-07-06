@@ -6,6 +6,7 @@ import { DocumentController } from './document.controller.js'
 import { DocumentService } from './document.service.js'
 import { PrismaService } from '../prisma.service.js'
 import { ProjectService } from '../projects/project.service.js'
+import { TaskService } from '../tasks/task.service.js'
 import { AIModule } from '../ai/ai.module.js'
 
 @Module({
@@ -17,8 +18,9 @@ import { AIModule } from '../ai/ai.module.js'
     DianaService,
     DocumentService,
     ProjectService,
+    TaskService,
     PrismaService,
   ],
-  exports: [ChatService, DianaService, DocumentService, ProjectService, PrismaService],
+  exports: [ChatService, DianaService, DocumentService, ProjectService, TaskService, PrismaService],
 })
 export class ChatModule {}
