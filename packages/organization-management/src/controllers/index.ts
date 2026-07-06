@@ -2,4 +2,4 @@
  * Organization Management Controllers
  */
 
-export * from './organization-management.controller'
+export * from './organization-management.controller.js'

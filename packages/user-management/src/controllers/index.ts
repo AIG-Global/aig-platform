@@ -2,4 +2,4 @@
  * User Management Controllers
  */
 
-export * from './user-management.controller'
+export * from './user-management.controller.js'

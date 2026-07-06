@@ -2,4 +2,4 @@
  * Organization Management Services
  */
 
-export * from './organization-management.service'
+export * from './organization-management.service.js'

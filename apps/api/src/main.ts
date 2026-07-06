@@ -12,16 +12,16 @@ const require = createRequire(import.meta.url)
 
 // Dynamically require Phase 2 modules using absolute paths
 const identityPath = resolve(__dirname, '../../../packages/identity/dist')
-//const userMgmtPath = resolve(__dirname, '../../../packages/user-management/dist')
-//const orgMgmtPath = resolve(__dirname, '../../../packages/organization-management/dist')
+const userMgmtPath = resolve(__dirname, '../../../packages/user-management/dist')
+const orgMgmtPath = resolve(__dirname, '../../../packages/organization-management/dist')
 
 const identityDist = require(identityPath)
-//const userMgmtDist = require(userMgmtPath)
-//const orgMgmtDist = require(orgMgmtPath)
+const userMgmtDist = require(userMgmtPath)
+const orgMgmtDist = require(orgMgmtPath)
 
 const IdentityModule = identityDist.IdentityModule
-//const UserManagementModule = userMgmtDist.UserManagementModule
-//const OrganizationManagementModule = orgMgmtDist.OrganizationManagementModule
+const UserManagementModule = userMgmtDist.UserManagementModule
+const OrganizationManagementModule = orgMgmtDist.OrganizationManagementModule
 
 @Controller()
 class AppController {

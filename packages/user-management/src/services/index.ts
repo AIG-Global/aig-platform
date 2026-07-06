@@ -2,4 +2,4 @@
  * User Management Services
  */
 
-export * from './user-management.service'
+export * from './user-management.service.js'
