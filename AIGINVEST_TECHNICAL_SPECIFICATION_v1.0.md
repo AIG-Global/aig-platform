@@ -1,8 +1,9 @@
 # AIGINVEST Technical Specification v1.0
 
-**Status**: Foundation Architecture  
+**Status**: Active — Governs all engineering  
 **Version**: 1.0  
 **Date**: 2026-07-07  
+**Alignment**: AIGINVEST_OPERATING_DOCTRINE.md  
 **Owner**: Engineering Leadership  
 **Audience**: All developers, AI agents, contributors  
 
@@ -13,7 +14,12 @@
 **North Star Statement**:  
 > AIGINVEST is an AI-native operating platform that organizes people, knowledge, and work around **missions** rather than applications.
 
-This specification defines the engineering foundation that bridges long-term vision with day-to-day implementation. Every component, API, service, and data model derives from this principle.
+**Philosophical Foundation**:  
+This specification implements the four principles from the Operating Doctrine:
+1. **Human First** — Every API endpoint serves a user objective
+2. **AI Second** — Diana is an engine, not the center
+3. **Platform Third** — Every component is reusable
+4. **Ecosystem Fourth** — Every service is extensible
 
 **Core Insight**: The Mission is the highest-level operational object. Everything else—workspaces, projects, tasks, documents, teams—is subordinate infrastructure serving mission execution.
 
