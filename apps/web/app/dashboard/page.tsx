@@ -116,12 +116,39 @@ const PACKAGES: Package[] = [
 export default function DashboardPage() {
   const [selectedPackage, setSelectedPackage] = useState<string | null>('startup')
   const [userName, setUserName] = useState('')
+  const [showUsernameForm, setShowUsernameForm] = useState(false)
+  const [nicknameInput, setNicknameInput] = useState('')
+  const [isLoadingUsername, setIsLoadingUsername] = useState(false)
 
   useEffect(() => {
     // Get user name from localStorage
-    const name = localStorage.getItem('userName') || 'User'
-    setUserName(name)
+    const name = localStorage.getItem('userName')
+    if (name) {
+      setUserName(name)
+    } else {
+      // Show nickname form if user hasn't set one yet
+      setShowUsernameForm(true)
+    }
   }, [])
+
+  const handlePackageSelect = (packageId: string) => {
+    setSelectedPackage(packageId)
+    localStorage.setItem('userPackage', packageId)
+  }
+
+  const handleSaveNickname = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!nicknameInput.trim()) return
+
+    setIsLoadingUsername(true)
+    setTimeout(() => {
+      localStorage.setItem('userName', nicknameInput.trim())
+      setUserName(nicknameInput.trim())
+      setShowUsernameForm(false)
+      setNicknameInput('')
+      setIsLoadingUsername(false)
+    }, 500)
+  }
 
   const handleSignOut = () => {
     localStorage.removeItem('userEmail')
@@ -139,6 +166,56 @@ export default function DashboardPage() {
       className="w-full min-h-screen py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
+        {/* Nickname Selection Form */}
+        {showUsernameForm && (
+          <div
+            style={{
+              backgroundColor: 'rgba(61, 44, 53, 0.7)',
+              borderColor: '#d4af37'
+            }}
+            className="border rounded-xl p-8 mb-12 max-w-md mx-auto"
+          >
+            <h2 className="text-2xl font-bold mb-2">Choose Your Nickname</h2>
+            <p style={{ color: '#e8e8d0' }} className="text-sm mb-6">
+              Your nickname is your public identity on AIGINVEST. Choose something unique that represents you!
+            </p>
+            <form onSubmit={handleSaveNickname} className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  value={nicknameInput}
+                  onChange={(e) => setNicknameInput(e.target.value)}
+                  placeholder="Enter your nickname..."
+                  style={{
+                    backgroundColor: 'rgba(26, 15, 21, 0.8)',
+                    borderColor: '#d4af37'
+                  }}
+                  className="w-full px-4 py-3 border rounded-lg text-[#f5f5dc] placeholder-[#e8e8d0]/50 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+                  maxLength={20}
+                  required
+                />
+                <p style={{ color: '#e8e8d0' }} className="text-xs mt-2">
+                  {nicknameInput.length}/20 characters
+                </p>
+              </div>
+              <button
+                type="submit"
+                disabled={isLoadingUsername || !nicknameInput.trim()}
+                style={{
+                  backgroundColor: '#d4af37',
+                  color: '#1a0f15'
+                }}
+                className="w-full py-3 rounded-lg font-semibold hover:bg-[#e8d4a2] transition disabled:opacity-50"
+              >
+                {isLoadingUsername ? 'Saving...' : 'Set Nickname & Continue'}
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* Header - only show after username is set */}
+        {!showUsernameForm && (
+          <>
         {/* Header */}
         <div className="flex justify-between items-start mb-12">
           <div>
@@ -178,7 +255,7 @@ export default function DashboardPage() {
           {PACKAGES.map((pkg) => (
             <div
               key={pkg.id}
-              onClick={() => setSelectedPackage(pkg.id)}
+              onClick={() => handlePackageSelect(pkg.id)}
               style={{
                 backgroundColor: selectedPackage === pkg.id ? 'rgba(212, 175, 55, 0.15)' : 'rgba(61, 44, 53, 0.5)',
                 borderColor: selectedPackage === pkg.id ? '#d4af37' : '#d4af37',
@@ -372,6 +449,9 @@ export default function DashboardPage() {
             <p className="text-sm font-semibold">Account Settings</p>
           </a>
         </div>
+      </div>
+          </>
+        )}
       </div>
 
       {/* Diana Widget */}

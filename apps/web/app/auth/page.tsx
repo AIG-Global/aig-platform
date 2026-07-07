@@ -46,7 +46,6 @@ export default function AuthPage() {
     setTimeout(() => {
       // Save user data to localStorage
       localStorage.setItem('userEmail', formData.email)
-      localStorage.setItem('userName', formData.name)
       localStorage.setItem('userPackage', 'starter')
       // Redirect to dashboard
       window.location.href = '/dashboard'
