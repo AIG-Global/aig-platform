@@ -193,12 +193,13 @@ This document defines the complete business model of AIGINVEST:
     {
       "benefitId": "mlm_capabilities",
       "name": "MLM/Referral Capabilities",
+      "description": "Unilevel system: unlimited width (recruits), variable depth (commission levels)",
       "values": {
-        "free": "None",
-        "tier_starter": "Personal sales only",
-        "tier_professional": "Up to 5 direct recruits",
-        "tier_business": "Up to 25 direct recruits",
-        "tier_platinum": "Unlimited recruits + leadership bonuses"
+        "free": "None (cannot recruit)",
+        "tier_starter": "Unlimited recruits, 6-level commission depth",
+        "tier_professional": "Unlimited recruits, 7-level commission depth",
+        "tier_business": "Unlimited recruits, 9-level commission depth",
+        "tier_platinum": "Unlimited recruits, 10-level commission depth + leadership bonuses"
       },
       "priority": 100
     },
@@ -295,7 +296,30 @@ This document defines the complete business model of AIGINVEST:
 {
   "compensationPlan": {
     "type": "Unilevel",
-    "levels": 6,
+    "width": "Unlimited (no limit on direct recruits per person)",
+    "depth": "Variable by membership tier (6-10 levels)",
+    "depthByTier": {
+      "free": {
+        "maxLevels": 0,
+        "description": "Cannot recruit or earn commissions"
+      },
+      "tier_starter": {
+        "maxLevels": 6,
+        "description": "6 levels of commission depth"
+      },
+      "tier_professional": {
+        "maxLevels": 7,
+        "description": "7 levels of commission depth"
+      },
+      "tier_business": {
+        "maxLevels": 9,
+        "description": "9 levels of commission depth"
+      },
+      "tier_platinum": {
+        "maxLevels": 10,
+        "description": "10 levels of commission depth (full unilevel)"
+      }
+    },
     "commissionRates": [
       {
         "level": 1,
@@ -331,7 +355,36 @@ This document defines the complete business model of AIGINVEST:
         "level": 6,
         "percentage": 2,
         "description": "Sixth level upline",
-        "minimumQualification": "Active + €25k monthly volume"
+        "minimumQualification": "Active + €25k monthly volume",
+        "applicableToTiers": ["tier_starter", "tier_professional", "tier_business", "tier_platinum"]
+      },
+      {
+        "level": 7,
+        "percentage": 1,
+        "description": "Seventh level upline",
+        "minimumQualification": "Active + €50k monthly volume",
+        "applicableToTiers": ["tier_professional", "tier_business", "tier_platinum"]
+      },
+      {
+        "level": 8,
+        "percentage": 0.5,
+        "description": "Eighth level upline",
+        "minimumQualification": "Active + €100k monthly volume",
+        "applicableToTiers": ["tier_business", "tier_platinum"]
+      },
+      {
+        "level": 9,
+        "percentage": 0.5,
+        "description": "Ninth level upline",
+        "minimumQualification": "Active + €150k monthly volume",
+        "applicableToTiers": ["tier_business", "tier_platinum"]
+      },
+      {
+        "level": 10,
+        "percentage": 0.5,
+        "description": "Tenth level upline",
+        "minimumQualification": "Active + €200k monthly volume",
+        "applicableToTiers": ["tier_platinum"]
       }
     ],
     "bonusDistribution": {
@@ -350,14 +403,32 @@ This document defines the complete business model of AIGINVEST:
 #### Direct Sales Commission
 ```
 When User A (€399 Starter) purchases:
+
+SCENARIO 1 - Sponsor has Starter tier (6-level depth limit):
 ├─ Level 1 (Sponsor): 30% × €399 = €119.70
 ├─ Level 2 (Sponsor's sponsor): 20% × €399 = €79.80
 ├─ Level 3: 15% × €399 = €59.85
 ├─ Level 4: 10% × €399 = €39.90
 ├─ Level 5: 3% × €399 = €11.97
 ├─ Level 6: 2% × €399 = €7.98
+├─ Level 7+: €0 (Starter tier only goes 6 levels deep)
 └─ Total commissions: €319.20 (80% of €399)
     Dev fund: €79.80 (20%)
+
+SCENARIO 2 - Sponsor has Professional tier (7-level depth):
+├─ Levels 1-6: €319.20 (same as above)
+├─ Level 7: 1% × €399 = €3.99
+└─ Total commissions: €323.19
+
+SCENARIO 3 - Sponsor has Platinum tier (10-level depth):
+├─ Levels 1-6: €319.20 (same as above)
+├─ Level 7: 1% × €399 = €3.99
+├─ Level 8: 0.5% × €399 = €1.99
+├─ Level 9: 0.5% × €399 = €1.99
+├─ Level 10: 0.5% × €399 = €1.99
+└─ Total commissions: €329.16 (additional €9.96 from extra depth)
+
+KEY: Higher membership tier = deeper commission reach up the organization
 ```
 
 #### Team Volume Bonus
