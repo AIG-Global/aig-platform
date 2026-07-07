@@ -530,38 +530,378 @@ Volume tier bonuses (additional to direct commission):
 
 ---
 
-## Part 3: AIG Cash Economy
+## Part 3: Dual-Account Financial Model
 
-### 3.1 Currency Definition
+### 3.0 Core Principle: Separation of Holding Value vs. Spending Power
+
+AIGINVEST operates a **two-wallet system** where:
+
+- **Cash Account** = Holding account (real fiat money, 1:1 EUR)
+- **AIG Cash Account** = Spending account (ecosystem token, market value)
+
+**Key Rule:** Fiat currency enters the ecosystem ONLY at membership join. After that, **everything inside AIGINVEST is tokens**. No direct fiat purchases of apps, services, or investments.
+
+### 3.1 Account Structure
+
+Every member has exactly **two accounts**:
+
+```json
+{
+  "accounts": [
+    {
+      "accountId": "cash_account",
+      "name": "Cash Account",
+      "purpose": "Holding account for real money",
+      "currency": "EUR",
+      "exchangeRate": 1.0,
+      "rateType": "Fixed 1:1",
+      "balance": 0,
+      "functions": [
+        "Receive 80% of commissions",
+        "Receive 80% of bonuses",
+        "Receive 80% of rewards",
+        "Receive deposited fiat",
+        "Hold real money value",
+        "Initiate conversion to AIG Cash"
+      ],
+      "cannotDo": [
+        "Buy applications",
+        "Buy services",
+        "Make investments",
+        "Purchase marketplace items",
+        "Fund membership upgrades"
+      ],
+      "canTransferTo": ["aig_cash_account"],
+      "isSpendingAccount": false,
+      "isHoldingAccount": true
+    },
+    {
+      "accountId": "aig_cash_account",
+      "name": "AIG Cash Account",
+      "purpose": "Spending account inside ecosystem",
+      "currency": "AIG$",
+      "exchangeRate": "Market-driven",
+      "rateType": "Variable (member marketplace sets price)",
+      "balance": 0,
+      "functions": [
+        "Receive 20% of commissions",
+        "Receive 20% of bonuses",
+        "Receive 20% of rewards",
+        "Receive converted Cash",
+        "Buy applications",
+        "Buy services",
+        "Make investments",
+        "Purchase marketplace items",
+        "Fund membership upgrades",
+        "Create gift cards",
+        "List for sale on marketplace"
+      ],
+      "cannotDo": [
+        "Be deposited with fiat directly",
+        "Be withdrawn to bank"
+      ],
+      "canTransferTo": ["cash_account (via marketplace)"],
+      "isSpendingAccount": true,
+      "isHoldingAccount": false
+    }
+  ]
+}
+```
+
+### 3.2 Reward Distribution (80/20 Split)
+
+**EVERY commission, bonus, prize, or reward is automatically divided 80/20:**
+
+```
+Event: User purchases €399 Starter package
+
+Level 1 commission (30% × €399 = €119.70):
+├─ 80% → Cash Account: €95.76 (real money value)
+└─ 20% → AIG Cash Account: €23.94 (spending power)
+
+Team volume bonus (5% × €5,000 = €250):
+├─ 80% → Cash Account: €200 (real money value)
+└─ 20% → AIG Cash Account: €50 (spending power)
+
+Achievement bonus (€50):
+├─ 80% → Cash Account: €40 (real money value)
+└─ 20% → AIG Cash Account: €10 (spending power)
+
+Referral bonus (€50):
+├─ 80% → Cash Account: €40 (real money value)
+└─ 20% → AIG Cash Account: €10 (spending power)
+
+Key insight:
+Members get real money safety (Cash Account)
++ ecosystem participation incentive (AIG Cash Account)
+```
+
+### 3.3 Membership Join Flow
+
+```
+New Member
+    ↓
+Choose Tier (€399, €699, €1,099, €2,999)
+    ↓
+Pay with Fiat (Stripe, PayPal, Link.com, crypto, bank transfer)
+    ↓
+✓ Membership activated
+✓ Cash Account created (€0 initially)
+✓ AIG Cash Account created (€0 initially)
+    ↓
+Join complete - ready to earn and spend inside ecosystem
+```
+
+**Important:** The membership payment is fiat-only and doesn't populate either account. It's a one-time onboarding fee.
+
+### 3.4 Money Deposit Flow
+
+```
+Member wants to add real money:
+    ↓
+Deposits fiat (€1,000) via supported method
+    ↓
+€1,000 received in Cash Account
+    ↓
+Member still cannot spend inside ecosystem
+    ↓
+Member converts Cash to AIG Cash
+    ↓
+Now can purchase apps, services, investments
+```
+
+**Flow Diagram:**
+```
+Bank/Card ─→ Deposit ─→ Cash Account ─→ Conversion ─→ AIG Cash Account ─→ Spend
+                              ↑                              ↓
+                              └──────── Marketplace ────────┘
+```
+
+### 3.5 Conversion Mechanism
+
+#### Cash → AIG Cash (User-Initiated Manual Conversion)
+```json
+{
+  "conversionType": "cash_to_aig_cash",
+  "initiatedBy": "member",
+  "source": "Cash Account",
+  "destination": "AIG Cash Account",
+  "exchangeRate": "1:1 (fixed at join)",
+  "example": {
+    "cashInput": 100,
+    "aigcashOutput": 100,
+    "rate": "1.0"
+  },
+  "transactionTime": "Instant",
+  "reversible": false,
+  "minimumAmount": 1,
+  "maximumAmount": "Account balance"
+}
+```
+
+#### AIG Cash → Cash (Marketplace-Driven Exchange)
+```json
+{
+  "conversionType": "aig_cash_to_cash",
+  "mechanism": "Internal peer-to-peer marketplace",
+  "exchangeRate": "Market-driven (member-determined)",
+  "howItWorks": {
+    "step1": "Member lists AIG Cash for sale (selects price per AIG$)",
+    "step2": "Another member sees the offer",
+    "step3": "If interested, buyer accepts the price",
+    "step4": "AIG Cash transfers to buyer",
+    "step5": "Cash transfers to seller",
+    "step6": "Both parties' accounts updated"
+  },
+  "example": {
+    "seller": "User A",
+    "sellerHas": "1,000 AIG$",
+    "sellerPrice": "€0.85 per AIG$",
+    "buyer": "User B",
+    "buyerPays": "€850 from Cash Account",
+    "buyerReceives": "1,000 AIG$ to AIG Cash Account",
+    "effectiveRate": "0.85"
+  },
+  "priceDiscovery": "Market-driven (supply/demand)",
+  "platformRole": "Marketplace infrastructure only (does not set price)",
+  "fee": "2% on seller (€17 of €850 payment)"
+}
+```
+
+---
+
+## Part 3 (Revised): AIG Cash Economy
+
+### 3.6 AIG Cash: Definition & Market Value
 
 ```json
 {
   "aigCash": {
     "symbol": "AIG$",
     "name": "AIG Cash",
-    "baseUnit": 1,
-    "precision": 2,
-    "status": "Internal currency - convertible to fiat",
-    "exchangeRates": {
-      "EUR_to_AIGC": 1.0,
-      "USD_to_AIGC": 1.10,
-      "GBP_to_AIGC": 0.85,
-      "CHF_to_AIGC": 0.92,
-      "CAD_to_AIGC": 1.35,
-      "AUD_to_AIGC": 1.65
-    },
-    "rateUpdateFrequency": "Daily at 00:00 UTC",
-    "sourceRates": "CoinGecko + OpenExchangeRates"
+    "type": "Internal ecosystem token/currency",
+    "origin": "Minted on-demand when members convert Cash → AIG Cash",
+    "value": "Market-driven on internal marketplace",
+    "baseValue": "1:1 to EUR at member's initial conversion",
+    "marketValue": "Determined by member buy/sell orders in marketplace",
+    "volatility": "Member-controlled (reflection of supply/demand)",
+    "examples": {
+      "day1": "All members exchange at 1:1 (high supply of AIG Cash)",
+      "week2": "Demand exceeds supply, market price rises to 1.05 EUR/AIG$",
+      "month3": "Many cashing out, price drops to 0.90 EUR/AIG$",
+      "steady": "Equilibrium around 0.95-1.05 EUR/AIG$"
+    }
   }
 }
 ```
 
-### 3.2 AIG Cash Sources & Uses
+### 3.7 AIG Cash Sources (How to Get Spending Power)
 
-#### Sources (How to Earn)
 ```json
 {
   "sources": [
+    {
+      "sourceId": "source_reward_split",
+      "name": "Reward Distribution Split",
+      "description": "20% of all commissions, bonuses, achievements",
+      "percentage": 20,
+      "automatic": true,
+      "frequency": "Upon earning event",
+      "examples": [
+        "Earn €100 commission → €20 AIG$ automatic",
+        "Earn €50 bonus → €10 AIG$ automatic",
+        "Win €25 game prize → €5 AIG$ automatic"
+      ]
+    },
+    {
+      "sourceId": "source_cash_conversion",
+      "name": "Convert from Cash Account",
+      "description": "User-initiated conversion from holding to spending",
+      "rate": "1:1",
+      "manual": true,
+      "minimumAmount": 1,
+      "maximumAmount": "Account balance",
+      "example": "Member has €500 in Cash, converts €300 → get 300 AIG$"
+    },
+    {
+      "sourceId": "source_marketplace_purchase",
+      "name": "Marketplace Purchase",
+      "description": "Buy AIG$ from another member",
+      "rate": "Market-driven",
+      "peer": true,
+      "exampleRate": "0.85 EUR per AIG$"
+    },
+    {
+      "sourceId": "source_referral",
+      "name": "Referral Bonus",
+      "description": "Friend joins and upgrades",
+      "amount": "50 AIG$ per referral (if upgrade within 30 days)",
+      "automatic": true,
+      "taxable": false
+    }
+  ]
+}
+```
+
+### 3.8 AIG Cash Uses (How to Spend)
+
+```json
+{
+  "uses": [
+    {
+      "useId": "use_app_purchase",
+      "category": "Marketplace",
+      "description": "Buy applications and plugins",
+      "example": "Purchase €49 app using 49 AIG$",
+      "walletDebit": "aig_cash_account",
+      "developerCredit": "cash_account (80%) + aig_cash_account (20%)"
+    },
+    {
+      "useId": "use_skill_purchase",
+      "category": "Marketplace",
+      "description": "Buy skills and templates",
+      "example": "Buy €15 template using 15 AIG$",
+      "walletDebit": "aig_cash_account"
+    },
+    {
+      "useId": "use_service_purchase",
+      "category": "Services",
+      "description": "Purchase AI services, Diana features",
+      "example": "Diana Pro for 1 month: 5 AIG$",
+      "walletDebit": "aig_cash_account"
+    },
+    {
+      "useId": "use_membership_upgrade",
+      "category": "Membership",
+      "description": "Upgrade to higher tier",
+      "example": "Upgrade from Starter (€399) to Professional (€699) using 699 AIG$",
+      "walletDebit": "aig_cash_account"
+    },
+    {
+      "useId": "use_investment",
+      "category": "Investing",
+      "description": "Invest in company funds or dividend funds",
+      "example": "Invest 500 AIG$ in growth fund",
+      "walletDebit": "aig_cash_account",
+      "walletCredit": "investment_account"
+    },
+    {
+      "useId": "use_gift_card",
+      "category": "Transfer",
+      "description": "Create gift card to send to member or non-member",
+      "example": "Create 100 AIG$ gift card",
+      "walletDebit": "aig_cash_account",
+      "recipient": "Any member or email address"
+    },
+    {
+      "useId": "use_marketplace_sell",
+      "category": "Marketplace Exchange",
+      "description": "List AIG$ for sale to other members",
+      "example": "Sell 1,000 AIG$ at 0.90 EUR per AIG$",
+      "walletDebit": "aig_cash_account (transferred to buyer)",
+      "walletCredit": "cash_account (payment received)"
+    }
+  ]
+}
+```
+
+### 3.9 Gift Cards
+
+```json
+{
+  "giftCards": {
+    "currency": "AIG$",
+    "fundingSource": "AIG Cash Account only",
+    "creationFlow": {
+      "step1": "Member selects AIG$ amount",
+      "step2": "Confirms debit from AIG Cash Account",
+      "step3": "Gift card code generated",
+      "step4": "Send to recipient (email or member ID)",
+      "step5": "Recipient redeems into their AIG Cash Account"
+    },
+    "recipientTypes": [
+      "Existing members (sends to member ID)",
+      "Non-members (sends to email, code redeemable after join)"
+    ],
+    "examples": [
+      {
+        "scenario": "Member gifts to friend",
+        "amount": "50 AIG$",
+        "flow": "50 AIG$ debits from sender → Code generated → Friend receives code → Redeems as 50 AIG$ in their account"
+      },
+      {
+        "scenario": "Company gives to employee",
+        "amount": "250 AIG$",
+        "flow": "250 AIG$ debits from company account → Code generated → Employee receives code → Can redeem after creating account"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## Part 4: Account Management Workflows
     {
       "sourceId": "source_direct_topup",
       "name": "Direct Top-Up",
@@ -1322,28 +1662,99 @@ CREATE TABLE subscriptions (
   updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Commission Records
+-- Commission Records: 80/20 Split Tracking
+-- CRITICAL: Every commission is split automatically 80% Cash / 20% AIG Cash
 CREATE TABLE commissions (
   id VARCHAR(36) PRIMARY KEY,
   source_user_id VARCHAR(36) REFERENCES users(id),
   recipient_user_id VARCHAR(36) REFERENCES users(id),
-  level INT (1 to 6),
+  recipient_tier_id VARCHAR(50),
+  commission_level INT,
   percentage DECIMAL(5, 2),
-  amount DECIMAL(12, 2),
-  currency VARCHAR(3),
-  source_type ENUM('purchase', 'bonus', 'achievement'),
+  gross_amount DECIMAL(12, 2),
+  currency_purchased VARCHAR(3),
+  amount_cash_account DECIMAL(12, 2),
+  amount_aigcash_account DECIMAL(12, 2),
+  source_type ENUM('purchase', 'bonus', 'achievement', 'team_volume', 'leadership', 'referral'),
+  source_transaction_id VARCHAR(100),
   status ENUM('pending', 'approved', 'paid', 'disputed'),
-  transaction_id VARCHAR(100),
+  recipient_account_id_cash VARCHAR(36) REFERENCES accounts(id),
+  recipient_account_id_aigcash VARCHAR(36) REFERENCES accounts(id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   approved_at TIMESTAMP,
-  paid_at TIMESTAMP
+  paid_at TIMESTAMP,
+  INDEX (source_user_id, created_at),
+  INDEX (recipient_user_id, created_at),
+  INDEX (status),
+  INDEX (source_type)
 );
 
--- Wallets
+-- Split calculation example:
+-- Purchase amount: €100
+-- Level 1 commission: 30% × €100 = €30 gross
+-- Cash Account credit: 30 × 0.80 = €24.00
+-- AIG Cash Account credit: 30 × 0.20 = €6.00 (as 6 AIG$)
+
+-- Wallets: Two-Account Model (Cash Account + AIG Cash Account)
+-- Every member has exactly 2 accounts (1 EUR holding + multiple AIG$ spending)
+CREATE TABLE accounts (
+  id VARCHAR(36) PRIMARY KEY,
+  user_id VARCHAR(36) NOT NULL REFERENCES users(id),
+  account_type ENUM('cash_account', 'aig_cash_account') NOT NULL,
+  account_name VARCHAR(100),
+  currency VARCHAR(3),
+  balance DECIMAL(18, 8) DEFAULT 0,
+  pending DECIMAL(18, 8) DEFAULT 0,
+  frozen DECIMAL(18, 8) DEFAULT 0,
+  exchange_rate DECIMAL(10, 6),
+  daily_withdrawal_limit DECIMAL(12, 2),
+  monthly_withdrawal_limit DECIMAL(12, 2),
+  last_transaction TIMESTAMP,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY unique_user_account (user_id, account_type),
+  INDEX (user_id, account_type)
+);
+
+-- Account Types Reference:
+-- cash_account: Holding account (EUR, 1:1), receives 80% of all commissions/bonuses
+--   - Cannot be spent directly
+--   - Can be converted to AIG Cash manually
+--   - Can receive fiat deposits
+--   - Primary account for real money safety
+--
+-- aig_cash_account: Spending account (AIG$, market value), receives 20% of commissions/bonuses
+--   - Only account used for ecosystem purchases
+--   - Can be converted to Cash via marketplace
+--   - Market-driven exchange rate
+--   - Primary account for ecosystem participation
+
+-- Account Conversions: Cash ←→ AIG Cash
+CREATE TABLE account_conversions (
+  id VARCHAR(36) PRIMARY KEY,
+  user_id VARCHAR(36) NOT NULL REFERENCES users(id),
+  from_account_id VARCHAR(36) NOT NULL REFERENCES accounts(id),
+  to_account_id VARCHAR(36) NOT NULL REFERENCES accounts(id),
+  from_currency VARCHAR(3),
+  to_currency VARCHAR(3),
+  from_amount DECIMAL(18, 8),
+  to_amount DECIMAL(18, 8),
+  exchange_rate DECIMAL(10, 6),
+  conversion_type ENUM('cash_to_aigcash_manual', 'aigcash_to_cash_marketplace'),
+  transaction_id VARCHAR(100),
+  status ENUM('pending', 'completed', 'failed', 'cancelled'),
+  marketplace_order_id VARCHAR(36),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  completed_at TIMESTAMP,
+  INDEX (user_id, created_at),
+  INDEX (status)
+);
+
+-- Legacy Wallets Table (if needed for backward compatibility)
 CREATE TABLE wallets (
   id VARCHAR(36) PRIMARY KEY,
   user_id VARCHAR(36) REFERENCES users(id),
-  wallet_type ENUM('aig_cash_account', 'aig_cash_bonus', 'aig_cash_gaming', 'aig_cash_dividend'),
+  wallet_type ENUM('aig_cash_bonus', 'aig_cash_gaming', 'aig_cash_dividend'),
   balance DECIMAL(18, 8) DEFAULT 0,
   pending DECIMAL(18, 8) DEFAULT 0,
   frozen DECIMAL(18, 8) DEFAULT 0,
@@ -1353,20 +1764,99 @@ CREATE TABLE wallets (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Transactions
+-- Transactions: Dual-Account Aware
+-- All transactions must specify source and destination accounts
+-- Handles Cash Account (EUR) and AIG Cash Account (AIG$) transfers
 CREATE TABLE transactions (
   id VARCHAR(36) PRIMARY KEY,
   from_user_id VARCHAR(36) REFERENCES users(id),
+  from_account_id VARCHAR(36) REFERENCES accounts(id),
   to_user_id VARCHAR(36) REFERENCES users(id),
-  wallet_type VARCHAR(50),
-  amount DECIMAL(18, 8),
-  currency VARCHAR(10),
-  transaction_type ENUM('topup', 'purchase', 'transfer', 'payout', 'commission', 'bonus'),
-  status ENUM('pending', 'processing', 'completed', 'failed', 'cancelled'),
+  to_account_id VARCHAR(36) REFERENCES accounts(id),
+  from_currency VARCHAR(3),
+  to_currency VARCHAR(3),
+  from_amount DECIMAL(18, 8),
+  to_amount DECIMAL(18, 8),
+  exchange_rate DECIMAL(10, 6),
+  transaction_type ENUM('deposit', 'withdrawal', 'purchase', 'transfer', 'commission_split', 'conversion', 'marketplace_order'),
+  transaction_category ENUM('topup', 'purchase', 'transfer', 'payout', 'commission', 'bonus', 'conversion'),
+  related_transaction_id VARCHAR(36),
+  status ENUM('pending', 'processing', 'completed', 'failed', 'cancelled', 'disputed'),
   metadata JSON,
+  notes VARCHAR(500),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  completed_at TIMESTAMP
+  completed_at TIMESTAMP,
+  INDEX (from_user_id, created_at),
+  INDEX (to_user_id, created_at),
+  INDEX (status),
+  INDEX (transaction_type)
 );
+
+-- Transaction Type Reference:
+-- deposit: Fiat → Cash Account
+-- withdrawal: Cash Account → Bank (Platinum only)
+-- purchase: AIG Cash Account → Seller for apps/services
+-- transfer: Account → Another user's account
+-- commission_split: Auto-split commission to both accounts
+-- conversion: Cash Account ↔ AIG Cash Account
+-- marketplace_order: Peer-to-peer AIG$ ↔ Cash conversion
+
+-- Marketplace Orders: Internal Exchange (AIG$ ↔ Cash)
+-- Members trade AIG$ and Cash with each other at market-determined prices
+CREATE TABLE marketplace_orders (
+  id VARCHAR(36) PRIMARY KEY,
+  seller_user_id VARCHAR(36) NOT NULL REFERENCES users(id),
+  buyer_user_id VARCHAR(36) REFERENCES users(id),
+  seller_account_id VARCHAR(36) NOT NULL REFERENCES accounts(id),
+  buyer_account_id VARCHAR(36) REFERENCES accounts(id),
+  order_type ENUM('buy', 'sell') NOT NULL,
+  selling_currency VARCHAR(3),
+  buying_currency VARCHAR(3),
+  selling_quantity DECIMAL(18, 8) NOT NULL,
+  price_per_unit DECIMAL(10, 6) NOT NULL,
+  total_selling_amount DECIMAL(18, 8) NOT NULL,
+  total_buying_amount DECIMAL(18, 8) NOT NULL,
+  status ENUM('open', 'partially_filled', 'filled', 'cancelled', 'expired'),
+  filled_quantity DECIMAL(18, 8) DEFAULT 0,
+  minimum_order_size DECIMAL(18, 8),
+  expiry_date TIMESTAMP,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  filled_at TIMESTAMP,
+  INDEX (seller_user_id, status),
+  INDEX (status, created_at),
+  INDEX (price_per_unit)
+);
+
+-- Marketplace Transactions: Individual matched trades
+CREATE TABLE marketplace_transactions (
+  id VARCHAR(36) PRIMARY KEY,
+  order_id VARCHAR(36) NOT NULL REFERENCES marketplace_orders(id),
+  seller_user_id VARCHAR(36) NOT NULL REFERENCES users(id),
+  buyer_user_id VARCHAR(36) NOT NULL REFERENCES users(id),
+  seller_account_id VARCHAR(36) NOT NULL REFERENCES accounts(id),
+  buyer_account_id VARCHAR(36) NOT NULL REFERENCES accounts(id),
+  seller_currency VARCHAR(3),
+  buyer_currency VARCHAR(3),
+  seller_amount DECIMAL(18, 8),
+  buyer_amount DECIMAL(18, 8),
+  exchange_rate DECIMAL(10, 6),
+  platform_fee DECIMAL(18, 8),
+  status ENUM('pending', 'completed', 'failed', 'disputed'),
+  matched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  completed_at TIMESTAMP,
+  INDEX (seller_user_id, completed_at),
+  INDEX (buyer_user_id, completed_at),
+  INDEX (status)
+);
+
+-- Key Rules for Marketplace:
+-- 1. Sellers list AIG Cash, buyers purchase with EUR from Cash Account
+-- 2. Exchange rate is market-driven (set by sellers, competed for by buyers)
+-- 3. Platform charges 2% fee on seller side
+-- 4. All trades are instantly settled (no escrow)
+-- 5. Buyers can only buy with Cash Account EUR balance
+-- 6. Sellers can only sell AIG Cash Account balance
+-- 7. Matches occur in price order (lowest asking price first for buyers)
 
 -- Ranks
 CREATE TABLE ranks (
@@ -1472,39 +1962,154 @@ GET /api/v1/commissions/rank/forecast
   Response: {currentRank, nextRank, volumeNeeded, monthsEstimate}
 ```
 
-### 9.3 Wallet APIs
+### 9.3 Account Management APIs (Dual-Account Model)
 
 ```
-GET /api/v1/wallet/balance
-  Returns: All wallet balances
-  Response: {aig_cash_account, aig_cash_bonus, pending, frozen}
+GET /api/v1/accounts
+  Returns: Both user accounts (Cash Account + AIG Cash Account)
+  Response: {
+    accounts: [
+      {
+        accountId: "...",
+        accountType: "cash_account",
+        name: "Cash Account (EUR)",
+        currency: "EUR",
+        balance: 1500.50,
+        pending: 250.00,
+        frozen: 0,
+        exchangeRate: 1.0,
+        dailyWithdrawalLimit: 10000,
+        monthlyWithdrawalLimit: 100000
+      },
+      {
+        accountId: "...",
+        accountType: "aig_cash_account",
+        name: "AIG Cash Account (AIG$)",
+        currency: "AIG$",
+        balance: 750.00,
+        pending: 100.00,
+        frozen: 0,
+        exchangeRate: 0.95,
+        dailyWithdrawalLimit: null,
+        monthlyWithdrawalLimit: null
+      }
+    ]
+  }
 
-POST /api/v1/wallet/topup
-  Params: amount, paymentMethodId, currency
+GET /api/v1/accounts/:accountType/balance
+  Params: accountType (cash_account | aig_cash_account)
+  Returns: Single account balance and limits
+  Response: {accountId, accountType, balance, pending, frozen, limits}
+
+POST /api/v1/accounts/deposit
+  Params: accountType, amount, paymentMethod, currency
+  Description: Deposit fiat into Cash Account (EUR only)
   Returns: Transaction object
-  Events: wallet.topped_up, payment.processed
+  Events: account.deposited, payment.processed
+  Note: Fiat only deposits to Cash Account. Cannot deposit to AIG Cash directly.
 
-POST /api/v1/wallet/transfer
-  Params: toUserId, amount, memo
-  Returns: Transaction object
-  Events: wallet.transferred
+POST /api/v1/accounts/convert
+  Params: fromAccountType, toAccountType, amount
+  Description: Convert between Cash Account ↔ AIG Cash Account
+  Returns: Conversion confirmation
+  Events: account.conversion_initiated, account.conversion_completed
+  Conversions:
+    - Cash → AIG Cash: 1:1 rate (€100 → 100 AIG$)
+    - AIG Cash → Cash: Marketplace only (see marketplace APIs)
 
-GET /api/v1/wallet/transactions
-  Params: startDate, endDate, type, limit
-  Returns: Transaction history with details
-  Response: [transaction objects]
+GET /api/v1/accounts/transactions
+  Params: accountType, startDate, endDate, limit, offset
+  Returns: Transaction history for specific account
+  Response: [transaction objects with detailed split info]
 
-POST /api/v1/wallet/cashout
-  Params: amount, payoutMethod, bankDetails
-  Returns: Payout object
-  Events: payout.requested
-
-GET /api/v1/wallet/cashout/status/:payoutId
-  Returns: Current payout status
-  Response: {status, amount, method, estimatedDelivery}
+GET /api/v1/accounts/conversions
+  Returns: All conversion history (Cash ↔ AIG Cash)
+  Response: [conversion objects with rates and amounts]
 ```
 
-### 9.4 Token APIs
+### 9.4 Commission Distribution API
+
+```
+GET /api/v1/commissions/breakdown
+  Description: See how commissions are split 80/20
+  Response: {
+    grossAmount: 100,
+    cashAccountCredit: 80,
+    aigcashAccountCredit: 20,
+    distribution: {
+      cashAccount: {amount: 80, percentage: 80, currency: "EUR"},
+      aigcashAccount: {amount: 20, percentage: 20, currency: "AIG$"}
+    }
+  }
+
+POST /api/v1/commissions/auto-approve
+  Description: Auto-approve pending commissions to Cash + AIG Cash
+  Returns: Approved commission count
+  Events: commissions.approved, accounts.updated
+```
+
+### 9.5 Marketplace APIs (AIG$ ↔ Cash Exchange)
+
+```
+GET /api/v1/marketplace/orders
+  Params: orderType (buy|sell), status, priceRange, limit
+  Returns: List of open marketplace orders
+  Response: [
+    {
+      orderId: "...",
+      seller: {userId, username},
+      orderType: "sell",
+      sellingCurrency: "AIG$",
+      buyingCurrency: "EUR",
+      sellingQuantity: 1000,
+      pricePerUnit: 0.92,
+      totalValue: 920,
+      status: "open",
+      filledQuantity: 0,
+      createdAt: "2026-07-07T10:00:00Z"
+    }
+  ]
+
+POST /api/v1/marketplace/orders/create
+  Params: orderType, quantity, pricePerUnit, minimumOrderSize
+  Description: Create buy or sell order on marketplace
+  Returns: Order object
+  Events: marketplace.order_created
+  Rules:
+    - Sellers: list AIG Cash from their AIG Cash Account
+    - Buyers: purchase with EUR from their Cash Account
+    - Platform takes 2% fee from seller
+
+POST /api/v1/marketplace/orders/:orderId/cancel
+  Returns: Cancellation confirmation
+  Events: marketplace.order_cancelled
+
+POST /api/v1/marketplace/orders/:orderId/accept
+  Params: acceptQuantity (for partial fill)
+  Description: Match (accept) an existing order
+  Returns: Transaction object
+  Events: marketplace.transaction_completed
+  Note: Instantly transfers AIG$ to buyer, EUR to seller
+
+GET /api/v1/marketplace/price-history
+  Params: currency, days
+  Returns: Historical AIG$ to EUR exchange rates
+  Response: [{timestamp, price, volume, bidAsk}]
+
+GET /api/v1/marketplace/stats
+  Returns: Market statistics
+  Response: {
+    currentPrice: 0.93,
+    24hHigh: 0.95,
+    24hLow: 0.88,
+    24hVolume: 50000,
+    bidPrice: 0.92,
+    askPrice: 0.94,
+    spreadPercentage: 0.22
+  }
+```
+
+### 9.6 Token APIs
 
 ```
 GET /api/v1/tokens/price
@@ -1769,6 +2374,212 @@ Plus quarterly token grant:
 - [ ] Multi-currency support
 - [ ] Regional compliance
 - [ ] Automated payouts
+
+---
+
+## Part 14: Dual-Account Financial Model - Technical Workflows
+
+### 14.1 Core Separation Principle
+
+```
+HOLDING VALUE (Cash Account - EUR)
+├─ Purpose: Real money safety vault
+├─ Currency: EUR (1:1 fixed)
+├─ Interest: Earning source (80% of all rewards)
+├─ Usage: Not spendable directly
+├─ Governance: Protected by KYC/regulatory
+└─ Flow: Bank → Cash Account → Manual conversion → AIG Cash
+
+SPENDING POWER (AIG Cash Account - AIG$)
+├─ Purpose: Ecosystem transaction currency
+├─ Currency: AIG$ (market value)
+├─ Interest: Earning source (20% of all rewards)
+├─ Usage: Only spending account inside AIGINVEST
+├─ Governance: Market-driven exchange rates
+└─ Flow: Purchase → AIG Cash debit → Seller receives cash/aig split
+```
+
+### 14.2 80/20 Distribution Logic
+
+**Every single earning event splits automatically:**
+
+```
+Event: User Purchase or Achievement
+    ↓
+Calculate gross earning
+    ↓
+Apply 80/20 split:
+    ├─ 80% → Cash Account (EUR, real money value)
+    └─ 20% → AIG Cash Account (AIG$, spending power)
+    ↓
+Record commission split in database
+    ↓
+Debit transaction from sources
+    ↓
+Credit both accounts simultaneously
+```
+
+**Implementation rules:**
+- No member can "opt-out" of the split (it's mandatory)
+- Both accounts credit at same timestamp
+- If member has insufficient balance for AIG split, still process cash portion
+- Decimal precision: EUR to 2 places, AIG$ to 8 places
+
+### 14.3 Deposit Flow
+
+```
+New Member Join:
+├─ Pays €399-€2,999 (fiat only)
+├─ Membership activated
+├─ Both accounts created (Cash: €0, AIG$: €0)
+└─ Ready to earn
+
+Member Deposits Fiat Later:
+├─ Chooses amount (€10-€50,000)
+├─ Selects payment method (Stripe, PayPal, Link.com, crypto, bank)
+├─ Funds arrive in Cash Account only
+├─ Now has real money holding value
+└─ Can manually convert to AIG$ for spending
+
+Key: Fiat is gate-kept to Cash Account. Cannot directly buy AIG$.
+```
+
+### 14.4 Conversion Workflows
+
+#### Manual Conversion: Cash → AIG Cash (User-Initiated)
+
+```
+Member Action: "Convert €100 to spending"
+    ↓
+Click "Convert" on Cash Account
+    ↓
+UI shows: "€100 EUR → 100 AIG$ (1:1 rate)"
+    ↓
+Member confirms
+    ↓
+System debits €100 from Cash Account
+    ↓
+System credits 100 AIG$ to AIG Cash Account
+    ↓
+Transaction recorded:
+  - Type: "conversion_cash_to_aigcash"
+  - From: cash_account (EUR)
+  - To: aig_cash_account (AIG$)
+  - Rate: 1.0
+  - Status: completed
+```
+
+#### Marketplace Exchange: AIG Cash → Cash (Peer-to-Peer)
+
+```
+Seller wants real money:
+├─ Lists 1,000 AIG$ at €0.85/AIG$ = €850 total
+├─ Order posts to marketplace
+└─ Status: OPEN, waiting for buyer
+
+Buyer wants spending power:
+├─ Sees sellers' order: "1,000 AIG$ @ €0.85 each"
+├─ Has €850 in Cash Account
+├─ Clicks "BUY"
+└─ System matches order
+
+Settlement (instant):
+├─ Platform takes 2% fee from seller: €17
+├─ Seller receives: €850 - €17 = €833 in Cash Account
+├─ Buyer receives: 1,000 AIG$ in AIG Cash Account
+├─ Marketplace transaction recorded
+└─ Both balances updated in real-time
+```
+
+### 14.5 Purchase Workflows
+
+#### Spending from AIG Cash Account
+
+```
+Member wants to buy app (€49):
+    ↓
+Has balance: 100 AIG$ in AIG Cash Account
+    ↓
+Clicks "Buy" on app
+    ↓
+System debits 49 AIG$ from AIG Cash Account
+    ↓
+Developer receives commission:
+    ├─ 80% of €49 = €39.20 to developer's Cash Account
+    └─ 20% of €49 = €9.80 to developer's AIG Cash Account
+    ↓
+Purchase transaction recorded
+    ↓
+Transaction status: completed
+```
+
+**Key Rule:** Only AIG Cash Account can be used for purchases. If member tries to use Cash Account, redirect to conversion UI.
+
+### 14.6 Reward Distribution
+
+```
+Event: Level 1 commission earned (€119.70)
+    ↓
+Calculate split:
+├─ 80% to Cash Account: €95.76 EUR
+└─ 20% to AIG Cash Account: €23.94 AIG$
+    ↓
+Check accounts:
+├─ Cash Account: automatically credited €95.76
+└─ AIG Cash Account: automatically credited 23.94 AIG$
+    ↓
+Create commission_split transaction record:
+{
+  "commissionId": "comm_xxx",
+  "recipientUserId": "user_yyy",
+  "grossAmount": 119.70,
+  "amountCashAccount": 95.76,
+  "amountAigcashAccount": 23.94,
+  "timestamp": "2026-07-07T10:00:00Z",
+  "status": "completed"
+}
+    ↓
+Events fired:
+├─ commission.split
+├─ account.cash_credited
+├─ account.aigcash_credited
+└─ wallet.updated
+```
+
+### 14.7 Business Intelligence
+
+```
+For Dashboard Display:
+├─ Cash Account Balance: "€1,500.50" (real money, can hold/withdraw)
+├─ AIG Cash Balance: "750.00 AIG$" (spending power, market value varies)
+├─ Market Exchange Rate: "0.95" (current AIG$ to EUR rate)
+├─ Equivalent USD Value of AIG Cash: "750 × 0.95 × 1.10 = $785.25"
+├─ Total Ecosystem Value: "€1,500.50 + (750 × 0.95) = €2,212.50"
+└─ Suggested Action: "Convert €100 to AIG$ for app purchases"
+
+Key Insight:
+Cash Account is "real" money (€1:€1 value)
+AIG Cash value depends on marketplace exchange rate
+Total wealth is real + (AIG × market_rate)
+```
+
+### 14.8 Compliance & Regulatory
+
+```
+Financial Reporting:
+├─ Cash Account earnings: Reported as income (EUR-based)
+├─ AIG Cash earnings: Reported as crypto-equivalent or staking income
+├─ Currency conversion: EUR value = AIG amount × current exchange rate
+├─ Tax implications: Calculate tax based on EUR values at time of receipt
+└─ Audit trail: All 80/20 splits are immutable and tracked
+
+KYC Requirements:
+├─ Cash deposits: KYC Level 1 required (name, email)
+├─ Cash withdrawals: KYC Level 2 required (ID verification)
+├─ AIG Cash conversions: No KYC needed (internal transfer)
+├─ Marketplace trades: KYC Level 1 (profile verification)
+└─ Large trades (>€10k): Manual review required
+```
 
 ---
 
