@@ -12,6 +12,7 @@ import { WorkspaceModule } from './workspace/workspace.module.js'
 import { ActivityModule } from './activity/activity.module.js'
 import { ProgressModule } from './progress/progress.module.js'
 import { MissionModule } from './mission/mission.module.js'
+import { WDMModule } from './wdm/wdm.module.js'
 
 // ESM compatibility
 const __filename = fileURLToPath(import.meta.url)
@@ -46,8 +47,8 @@ class AppController {
   apiInfo() {
     return {
       name: 'AIG Platform API',
-      version: '0.2.0',
-      modules: ['identity', 'chat'],
+      version: '0.3.0',
+      modules: ['identity', 'chat', 'wdm-marketplace', 'auth', 'workspace', 'projects'],
       timestamp: new Date().toISOString(),
     }
   }
@@ -63,6 +64,7 @@ class AppController {
     ActivityModule,
     ProgressModule,
     MissionModule,
+    WDMModule,
     IdentityModule,
     //UserManagementModule,
     //OrganizationManagementModule,
@@ -85,7 +87,7 @@ async function bootstrap() {
   await app.listen(port)
 
   console.log(`🚀 AIG Platform API running on http://localhost:${port}`)
-  console.log(`📚 v0.2.0 - Phase 2 (Identity, User, Organization) services loaded`)
+  console.log(`📚 v0.3.0 - Phase 1 (WDM Marketplace, Identity, Workspace, Projects) services loaded`)
 }
 
 bootstrap()
