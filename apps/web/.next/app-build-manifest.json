@@ -21,15 +21,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/ecosystem/page": [
+    "/chat/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/ecosystem/page.js"
+      "static/chunks/app/chat/page.js"
     ],
-    "/ecosystem/wdm/page": [
+    "/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/ecosystem/wdm/page.js"
+      "static/chunks/app/login/page.js"
     ]
   }
 }
