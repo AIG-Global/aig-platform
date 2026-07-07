@@ -458,7 +458,712 @@ Exchange rate: Self-corrects via supply/demand
 
 ---
 
-## PART 7: Technology Stack
+## PART 7: Investment Services & Equity Access
+
+### Investment Opportunities for Members
+
+AIGINVEST members can invest AIG Cash into multiple asset classes and opportunities:
+
+#### 1. **Tag Markets** (Real-Time Market Trading)
+```
+Access to:
+├─ Commodities (gold, oil, agriculture)
+├─ Forex (currency pairs)
+├─ Indices (stock market indices)
+├─ CFDs (contracts for difference)
+└─ Managed funds
+
+Trading:
+├─ Minimum: 10 AIG$ per position
+├─ Leverage: 1:1 to 1:100 (tiered by membership)
+├─ Hours: 24/5 (Mon-Fri, 23:00 UTC Sun to 22:00 UTC Fri)
+└─ Costs: Spread + commission (transparent pricing)
+
+Available to:
+├─ Starter (€399): Basic markets, 1:10 leverage
+├─ Professional (€699): All markets, 1:25 leverage
+├─ Business (€1,099): All markets, 1:50 leverage
+└─ Platinum (€2,999): All markets, 1:100 leverage
+```
+
+#### 2. **Crypto Exchanges** (Digital Asset Trading)
+```
+Supported Assets:
+├─ Bitcoin (BTC)
+├─ Ethereum (ETH)
+├─ Ripple (XRP)
+├─ Litecoin (LTC)
+├─ Stablecoins (USDT, USDC, DAI)
+└─ 100+ altcoins
+
+Trading Pairs:
+├─ AIG$ ↔ BTC/ETH/etc.
+├─ EUR ↔ BTC/ETH/etc. (via Cash Account)
+└─ Cross-pairs (BTC/ETH, etc.)
+
+Wallet Integration:
+├─ Non-custodial (self-custody with backup)
+├─ Hardware wallet support (Ledger, Trezor)
+├─ Hot wallet for active trading
+└─ Cold storage for long-term hold
+
+Available to:
+├─ Starter: Spot trading only
+├─ Professional: Spot + margin trading (2x)
+├─ Business: Spot + margin (5x) + futures
+└─ Platinum: All features + API access
+```
+
+#### 3. **Long-Term Investment Funds** (Managed Portfolios)
+```
+Fund Types:
+├─ Conservative (60% bonds, 40% dividend stocks)
+│  └─ Annual return: 4-6%
+├─ Balanced (40% bonds, 50% stocks, 10% crypto)
+│  └─ Annual return: 8-10%
+├─ Growth (20% bonds, 60% stocks, 20% crypto)
+│  └─ Annual return: 12-15%
+├─ Aggressive (10% bonds, 40% stocks, 50% crypto)
+│  └─ Annual return: 20-30% (high volatility)
+└─ AI-Curated (Diana selects based on preference)
+   └─ Annual return: Variable
+
+Features:
+├─ Monthly rebalancing
+├─ Automatic dividend reinvestment
+├─ Tax optimization
+├─ Performance tracking
+├─ Tiered fees (0.5%-2% annually by AUM)
+
+Minimum Investment:
+├─ Starter: 100 AIG$ minimum
+├─ Professional: 50 AIG$ minimum
+├─ Business/Platinum: 10 AIG$ minimum
+
+Withdrawal:
+├─ Anytime (no lock-up period)
+├─ Settlement: 2-5 business days
+└─ No penalties or surrender charges
+```
+
+#### 4. **AIGPHONE Ltd - Start-up Equity** (Core Investment Opportunity)
+
+**What is AIGPHONE Ltd?**
+
+AIGPHONE Ltd is the startup company developing:
+- **AIOS** (proprietary operating system)
+- **North Star ONE** (flagship phone running AIOS)
+- **AI hardware acceleration** (custom chip design)
+- **Diana on-device** (private LLM execution)
+
+**Business Model:**
+
+```
+Revenue Sources:
+├─ Device Sales (North Star ONE phones)
+│  └─ Target: 2028-2030 launch, 1M units/year
+├─ Licensing (AIOS to other manufacturers)
+│  └─ Target: €50/unit × 10M units/year
+├─ AI Services (on-device and cloud)
+│  └─ Target: €15/month × 5M subscribers
+└─ Hardware Components (chips, sensors)
+   └─ Target: OEM sales to other phone makers
+
+Projected Financials (Conservative):
+├─ 2026: R&D phase (pre-revenue, -€5M)
+├─ 2027: Prototype + developer edition (-€2M)
+├─ 2028: Commercial launch (€50M revenue)
+├─ 2029: €200M revenue
+├─ 2030: €500M revenue (breakeven)
+└─ 2031+: €1B+ revenue (scale phase)
+```
+
+**How to Invest:**
+
+```
+Investment Structure:
+├─ Equity Rounds: Series A, B, C, D (future IPO)
+├─ Minimum Investment: 1,000 AIG$ (≈€950 at current rate)
+├─ Maximum: Unlimited (accredited tier limits apply)
+├─ Valuation: Transparent, updated quarterly
+└─ Voting Rights: 1 share = 1 vote (democratic cap table)
+
+Payment Method:
+├─ Exclusively AIG Cash (no EUR accepted)
+├─ Funds transferred to AIGPHONE Ltd operating account
+├─ Certificates issued (blockchain-backed)
+└─ Dividend distributions paid in AIG Cash
+
+Return Potential:
+├─ Conservative projection: 5-10x in 5 years
+├─ Moderate projection: 10-25x in 5 years (2028-2033)
+├─ Optimistic projection: 50x+ if IPO succeeds
+└─ Risk: Startup risk (no guarantee of success)
+
+Available to:
+├─ Starter (€399): Qualified investor status required
+├─ Professional/Business/Platinum: Unlimited access
+└─ All tiers: Accredited investor verification (KYC Level 3)
+```
+
+**Governance & Transparency:**
+
+```
+Member Protections:
+├─ Annual financial audits (big 4 accounting firm)
+├─ Quarterly performance reports
+├─ Board observer rights (for investors >10k AIG$)
+├─ Secondary market (trade shares with other members)
+└─ Liquidation preference (1x non-participating)
+
+Cap Table (Post-Series A):
+├─ AIG Members: 30% (collective)
+├─ AIG Founder/Early Team: 25%
+├─ Institutional VCs: 35%
+├─ Employee Options Pool: 10%
+└─ Total: 100%
+
+Exit Scenarios:
+├─ IPO (target: 2030-2032)
+│  └─ Likely: €5-10B valuation
+├─ Acquisition (possible: Apple, Samsung, Google)
+│  └─ Potential: €2-5B price
+├─ Going Private (later stage buyout)
+│  └─ Possible: €1-2B price
+└─ Secondary market buybacks (quarterly)
+```
+
+#### 5. **AIGIO Tokens - Dividend Securities** (Passive Income)
+
+**What are AIGIO Tokens?**
+
+Ownership tokens in AIGINVEST ecosystem with:
+- Base price: €0.90
+- Dynamic pricing: €0.90 × (1 + revenue_millions / 100)
+- Quarterly dividends: 2% of earnings
+- Staking rewards: 5-12% APY by lock-up period
+- Governance voting: 1 token = 1 vote
+
+**Staking Programs:**
+
+```
+3-Month Lock: 5% APY
+├─ Compounds quarterly
+├─ Early withdrawal penalty: 0.5%
+└─ Ideal for: Testing
+
+6-Month Lock: 7% APY
+├─ Compounds quarterly
+├─ Early withdrawal penalty: 1%
+└─ Ideal for: Short-term hold
+
+1-Year Lock: 10% APY
+├─ Compounds quarterly
+├─ Early withdrawal penalty: 2%
+└─ Ideal for: Medium-term
+
+2-Year Lock: 12% APY
+├─ Compounds quarterly
+├─ Early withdrawal penalty: 3%
+└─ Ideal for: Long-term believers
+
+Perpetual Staking (Unlimited):
+├─ 12% APY forever
+├─ No withdrawal capability (locked in)
+├─ Highest security tier
+└─ Ideal for: True believers
+```
+
+**How AIGIO Prices Work:**
+
+```
+Base Price: €0.90
+
+Dynamic Formula:
+Price = €0.90 × (1 + AIGINVEST_Revenue_Millions / 100)
+
+Examples:
+├─ Revenue €0M (startup): Price = €0.90
+├─ Revenue €100M (scale): Price = €1.80
+├─ Revenue €500M (mature): Price = €5.90
+├─ Revenue €1,000M (large): Price = €10.90
+
+Dividend Calculation:
+Quarterly dividend per token = (AIGINVEST_Net_Income / Tokens_Outstanding) × 25%
+
+Example:
+├─ Net income: €100M
+├─ Tokens outstanding: 100M
+├─ Profit per token: €1.00
+├─ Dividend (25%): €0.25 per token per quarter = €1.00 annual
+```
+
+**Available to:**
+- All members (minimum: 1 token)
+- No accredited investor requirement
+- Unlimited staking allowed
+
+---
+
+### Investment Dashboard (UI/UX)
+
+Member view:
+
+```
+Investment Portfolio
+├─ Tag Markets
+│  ├─ Current positions: €50,000 (AIG$)
+│  ├─ Unrealized P&L: +€5,200 (+10.4%)
+│  └─ 30-day return: +2.1%
+├─ Crypto Holdings
+│  ├─ Bitcoin: 0.5 BTC @ €35,000 = €17,500
+│  ├─ Ethereum: 5 ETH @ €2,000 = €10,000
+│  └─ Unrealized: +€3,500 (+11.2%)
+├─ Managed Funds
+│  ├─ Balanced Fund: €25,000 (started 2026-01)
+│  ├─ Unrealized: +€2,100 (+8.4%)
+│  └─ Dividend received: €50 (quarterly)
+├─ AIGPHONE Ltd Equity
+│  ├─ Shares: 50 (from 10,000 AIG$ investment)
+│  ├─ Current valuation: €85,000 (Series A)
+│  ├─ Unrealized gain: +€75,000 (+750%)
+│  └─ Board updates: View latest investor memo
+└─ AIGIO Tokens
+   ├─ Holdings: 500 staked (2-year lock)
+   ├─ Value: €465 (500 × €0.93)
+   ├─ Annual dividend: €31.20 (12% APY)
+   ├─ Next staking reward: 2026-07-15
+   └─ Voting power: 500 tokens in DAO votes
+
+Total Portfolio Value: €192,000 AIG$
+Total Unrealized Gains: +€85,800 (+44.7%)
+Annual Passive Income: €31.20 + dividends
+```
+
+---
+
+### Investment API Endpoints
+
+```
+Markets & Trading
+GET /api/v1/markets/prices
+  Returns: Real-time prices for tag markets
+  Response: {bid, ask, spread, lastTrade, volume}
+
+POST /api/v1/trading/positions
+  Params: symbol, type (buy|sell), amount, leverage
+  Returns: Position confirmation
+  Events: trade.opened, order.filled
+
+GET /api/v1/trading/positions
+  Returns: All open positions with P&L
+  Response: [{symbol, quantity, entryPrice, currentPrice, unrealizedPL}]
+
+Crypto
+GET /api/v1/crypto/exchanges
+  Returns: Available exchanges (Binance, Kraken, etc.)
+  Response: [{name, fees, liquidity}]
+
+POST /api/v1/crypto/orders
+  Params: exchange, pair, type (buy|sell), amount
+  Returns: Order ID and confirmation
+
+GET /api/v1/crypto/wallet
+  Returns: Crypto holdings with values
+
+Investment Funds
+GET /api/v1/funds/available
+  Returns: List of managed investment funds
+  Response: [{name, type, apy, riskLevel, allocation}]
+
+POST /api/v1/funds/invest
+  Params: fundId, amount
+  Returns: Investment confirmation
+
+AIGPHONE Equity
+GET /api/v1/aigphone/equity
+  Returns: Current cap table and share price
+  Response: {sharesHeld, currentValuation, unrealizedGain, boardUpdates}
+
+POST /api/v1/aigphone/invest
+  Params: amount (AIG$), round
+  Returns: Share certificate (blockchain)
+
+AIGIO Tokens
+GET /api/v1/aigio/price
+  Returns: Current AIGIO price with dividend info
+  Response: {price, 24hChange, dividendPerShare, stakingAPY}
+
+POST /api/v1/aigio/stake
+  Params: quantity, lockupMonths
+  Returns: Staking confirmation
+  Events: tokens.staked
+
+GET /api/v1/aigio/dividends
+  Returns: Dividend history and next distribution
+  Response: [dividend records]
+```
+
+---
+
+## PART 8: WDM - World Domination Market (Product Marketplace)
+
+### What is WDM?
+
+**WDM** (World Domination Market) is AIGINVEST's comprehensive e-commerce and services marketplace. Members can browse, purchase, and sell physical products, digital goods, and services using AIG Cash.
+
+### Product Categories
+
+```
+Physical Products
+├─ Electronics (phones, tablets, computers)
+├─ Home & Garden (furniture, appliances)
+├─ Fashion & Accessories (clothing, shoes, jewelry)
+├─ Sports & Outdoors (equipment, gear)
+├─ Health & Wellness (supplements, fitness equipment)
+├─ Beauty & Personal Care (cosmetics, skincare)
+├─ Toys & Games (games, collectibles)
+└─ Other (miscellaneous items)
+
+Digital Goods
+├─ Software & Apps (applications, plugins, extensions)
+├─ E-books & Publications (books, magazines, guides)
+├─ Courses & Training (online courses, tutorials)
+├─ Templates & Designs (UI kits, graphics, themes)
+├─ Music & Audio (songs, albums, sound effects)
+├─ Video Content (movies, tutorials, webcasts)
+├─ Data & Analytics (reports, datasets, research)
+└─ Licenses & Subscriptions (software licenses, premium access)
+
+Services
+├─ Consulting & Advice (expert consultations)
+├─ Design & Creative (graphic design, copywriting, web design)
+├─ Development & Programming (custom code, app development)
+├─ Marketing & Promotion (SEO, social media, advertising)
+├─ Writing & Translation (content writing, translation)
+├─ Virtual Assistance (admin support, scheduling)
+├─ Training & Coaching (personalized training, mentoring)
+└─ Other Services (task-based services)
+
+Investments (Secondary)
+├─ AIGPHONE Ltd Shares (resale of equity stakes)
+├─ AIGIO Tokens (trading of staked tokens)
+├─ Fund Shares (resale of investment fund holdings)
+└─ Crypto Assets (peer-to-peer crypto trading)
+```
+
+### Seller Dashboard
+
+Members can become sellers on WDM:
+
+```
+Seller Activation:
+├─ Any member (all tiers)
+├─ KYC Level 1 required (for withdrawals)
+├─ Seller agreement acceptance
+├─ Bank account verification (for payouts)
+└─ 24-hour activation time
+
+Store Creation:
+├─ Store name (custom URL: wdm.aiginvest.io/store/[name])
+├─ Store description & branding
+├─ Category selection (max 5 primary)
+├─ Payment methods accepted
+├─ Shipping options (if physical goods)
+└─ Return policy
+
+Listing Features:
+├─ Product title (max 200 chars)
+├─ Description (max 5,000 chars)
+├─ Category & tags
+├─ Price (in AIG$)
+├─ Discount options (percentage or fixed)
+├─ Inventory tracking
+├─ Images (up to 20, auto-optimized)
+├─ Video preview (optional)
+└─ Variants (size, color, etc.)
+
+Commission Structure:
+├─ Standard commission: 5% to WDM platform
+├─ Payment processing: 0.5% (Stripe/PayPal)
+├─ Total cost to seller: 5.5%
+├─ Seller receives: 94.5% of sale price
+└─ Settlement: Weekly to AIG Cash Account
+
+Example:
+├─ Product price: 100 AIG$
+├─ Platform commission: 5 AIG$
+├─ Payment fee: 0.5 AIG$
+├─ Seller net: 94.5 AIG$
+```
+
+### Buyer Experience
+
+```
+Browse & Search:
+├─ Category browsing (18 main categories)
+├─ Full-text search (product names, descriptions)
+├─ Filters (price, rating, seller tier, delivery time)
+├─ Sorting (popularity, newest, price, rating)
+├─ Saved items list
+└─ Wish list functionality
+
+Product Details:
+├─ High-quality images (carousel view)
+├─ Video preview (if available)
+├─ Detailed description
+├─ Seller reputation & reviews
+├─ Price & availability
+├─ Shipping information
+├─ Return policy
+├─ Similar products
+└─ Q&A section (ask seller questions)
+
+Checkout Process:
+├─ Review cart
+├─ Select delivery method (instant download, shipping, etc.)
+├─ Shipping address (if applicable)
+├─ Payment (AIG Cash only)
+├─ Order confirmation
+├─ Tracking number (if physical goods)
+└─ Delivery/fulfillment tracking
+
+Protection:
+├─ 30-day money-back guarantee (standard)
+├─ Seller dispute resolution
+├─ Escrow payment holding
+├─ Buyer protection insurance (for orders >1,000 AIG$)
+└─ Fraud protection (chargeback rights)
+
+Rating & Reviews:
+├─ 5-star rating system
+├─ Text review (max 5,000 chars)
+├─ Photo/video in review
+├─ Verified purchase badge
+├─ Seller response section
+├─ Review moderation (spam/abuse removal)
+└─ Review aggregation (average rating, distribution)
+```
+
+### Fulfillment Options
+
+```
+Digital Goods (Instant):
+├─ Immediate delivery upon purchase
+├─ Automatic download link sent
+├─ No shipping required
+├─ Resale/redistribution controls (seller setting)
+└─ License key delivery (if applicable)
+
+Physical Goods (Shipping):
+├─ Integration with major couriers (DHL, FedEx, UPS)
+├─ Domestic & international shipping
+├─ Tracked delivery
+├─ Insurance available (seller option)
+├─ Return shipping label generation
+└─ Real-time tracking updates
+
+Services (Custom):
+├─ Scheduled delivery (Zoom calls, consultations)
+├─ Project-based delivery (Jira, Asana integration)
+├─ Time-based delivery (hourly, daily, weekly)
+├─ Gig-style delivery (task-based)
+└─ Recurring delivery (subscription services)
+
+Print-on-Demand (Future):
+├─ Automatic fulfillment partner integration
+├─ No inventory needed
+├─ Custom products (mugs, t-shirts, posters)
+├─ Product photography (automated)
+└─ Margin-based pricing
+```
+
+### Affiliate Program
+
+Members can earn commissions promoting other sellers' products:
+
+```
+Affiliate Setup:
+├─ Any seller product can be promoted
+├─ Commission rate: 10-25% (seller configurable)
+├─ Affiliate links generated automatically
+├─ Tracking via unique referral codes
+└─ Real-time dashboard
+
+Promotion Tools:
+├─ Product link (short URL)
+├─ Banners & graphics (pre-made templates)
+├─ Email templates (swipe files)
+├─ Social media posts (copywriting suggestions)
+├─ Landing page builder (for campaigns)
+└─ Diana suggestion engine ("promote products similar to X")
+
+Affiliate Dashboard:
+├─ Campaign tracking (impressions, clicks, conversions)
+├─ Commission earned (daily/weekly/monthly)
+├─ Top-performing products
+├─ Payout history
+├─ Payment schedule (weekly to AIG Cash Account)
+└─ Performance analytics
+
+Payment:
+├─ Earned commissions: Direct to AIG Cash Account
+├─ Weekly settlement
+├─ 100% transparent tracking
+└─ No minimum payout threshold
+```
+
+### WDM Analytics & Trending
+
+```
+Seller Metrics:
+├─ Total sales (all-time, monthly, weekly)
+├─ Average order value
+├─ Customer count
+├─ Repeat purchase rate
+├─ Avg rating/reviews
+├─ Response time to inquiries
+├─ Return rate
+└─ Seller tier/badge eligibility
+
+Marketplace Trending:
+├─ Top-selling categories
+├─ New trending products
+├─ Best-performing sellers
+├─ Most-reviewed items
+├─ Highest-rated products
+├─ Most-saved items
+├─ Price trends (category-based)
+└─ Seasonal trends
+
+Seller Tiers & Badges:
+├─ New Seller (first 30 days)
+├─ Rising Star (10+ sales, 4.5+ rating)
+├─ Top Seller (100+ sales, 4.7+ rating)
+├─ Elite Seller (500+ sales, 4.8+ rating)
+├─ Premium Seller (1,000+ sales, 4.9+ rating)
+└─ Verified Expert (domain expertise verified)
+
+Benefits by Tier:
+├─ Featured listing placement (top tier)
+├─ Badge display (seller profile)
+├─ Fee reduction (top tier: 3% instead of 5%)
+├─ Dedicated support access
+├─ Early access to new features
+└─ Exclusive promotions
+```
+
+### WDM API Endpoints
+
+```
+Products
+GET /api/v1/wdm/products
+  Params: category, search, filter, sort, page
+  Returns: [products with details, seller info, ratings]
+
+GET /api/v1/wdm/products/:id
+  Returns: Complete product details + seller + reviews
+
+POST /api/v1/wdm/products
+  Params: title, description, category, price, images
+  Returns: Product listing confirmation
+  Required: Seller status verified
+
+GET /api/v1/wdm/categories
+  Returns: [category list with product count]
+
+Shopping Cart
+GET /api/v1/wdm/cart
+  Returns: Current cart items
+
+POST /api/v1/wdm/cart/items
+  Params: productId, quantity
+  Returns: Updated cart
+
+DELETE /api/v1/wdm/cart/items/:itemId
+  Returns: Updated cart
+
+Orders
+POST /api/v1/wdm/orders
+  Params: cartItems, shippingAddress, paymentMethod
+  Returns: Order confirmation
+  Debits AIG Cash Account
+
+GET /api/v1/wdm/orders
+  Returns: [all orders (buy & sell history)]
+
+GET /api/v1/wdm/orders/:id
+  Returns: Complete order details + tracking
+
+POST /api/v1/wdm/orders/:id/cancel
+  Returns: Cancellation confirmation (if allowed)
+
+Seller Operations
+POST /api/v1/wdm/store
+  Params: storeName, description, categories
+  Returns: Store created
+
+GET /api/v1/wdm/seller/dashboard
+  Returns: {totalSales, avgRating, newOrders, analytics}
+
+POST /api/v1/wdm/seller/analytics
+  Params: dateRange, metric
+  Returns: Analytics data (CSV export)
+
+Reviews
+POST /api/v1/wdm/reviews
+  Params: orderId, rating, text, images
+  Returns: Review posted
+
+GET /api/v1/wdm/products/:id/reviews
+  Returns: [all reviews for product]
+
+Affiliates
+POST /api/v1/wdm/affiliate/link
+  Params: productId
+  Returns: {affiliateLink, trackingCode}
+
+GET /api/v1/wdm/affiliate/dashboard
+  Returns: {commissionsEarned, topProducts, conversions}
+
+GET /api/v1/wdm/affiliate/payouts
+  Returns: [payout history to AIG Cash Account]
+```
+
+### WDM Economics
+
+```
+Total Market Size Projection:
+├─ Year 1 (2026): €5M GMV (Gross Merchandise Value)
+├─ Year 2 (2027): €50M GMV
+├─ Year 3 (2028): €200M GMV
+├─ Year 4 (2029): €500M GMV
+└─ Year 5 (2030): €1B GMV
+
+Revenue Model:
+├─ Platform commission: 5% of GMV
+├─ Payment processing (pass-through): 0.5%
+├─ Featured listings (premium seller): €50/month
+├─ Advertising (display ads): €1,000-50,000/month
+└─ Logistics (if platform offers): 10% of shipping
+
+Platform Revenue (at Year 3):
+├─ Commission (5% × €200M): €10M
+├─ Advertising & premium: €2M
+├─ Total: €12M annual
+└─ Operating expenses: €6M (50% of revenue)
+└─ Net profit margin: 50% on WDM operations
+
+Member Economics:
+├─ Average seller: €10,000 annual sales → €9,450 net (after 5.5% fees)
+├─ Top 1% seller: €1M annual sales → €945,000 net
+├─ Average affiliate: €5,000 annual referrals → €750-1,250 earned (15-25%)
+└─ Buyer: Prices ~10-20% lower than retail competitors
+```
+
+---
+
+## PART 9: Technology Stack
 
 ### Frontend
 - **Framework:** Next.js 14 (React 18, TypeScript)
@@ -493,7 +1198,7 @@ Exchange rate: Self-corrects via supply/demand
 
 ---
 
-## PART 8: Development Roadmap
+## PART 10: Development Roadmap
 
 ### Current Status (v0.2 Released)
 
@@ -565,7 +1270,7 @@ Exchange rate: Self-corrects via supply/demand
 
 ---
 
-## PART 9: Codebase Structure
+## PART 11: Codebase Structure
 
 ### Repository Layout
 
@@ -646,7 +1351,7 @@ aig-platform/
 
 ---
 
-## PART 10: API Reference (Key Endpoints)
+## PART 12: API Reference (Key Endpoints)
 
 ### Authentication
 
@@ -745,7 +1450,7 @@ GET /api/documents/:id/versions
 
 ---
 
-## PART 11: Deployment & Operations
+## PART 13: Deployment & Operations
 
 ### Local Development
 
@@ -798,7 +1503,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3333
 
 ---
 
-## PART 12: Quality Standards
+## PART 14: Quality Standards
 
 ### Before Every Release
 
@@ -822,7 +1527,7 @@ If any "no" → fix before release.
 
 ---
 
-## PART 13: Key Architectural Decisions
+## PART 15: Key Architectural Decisions
 
 ### ADR-001: Email-only authentication (MVP)
 **Decision:** No password required initially. Email = identity.  
@@ -854,7 +1559,7 @@ If any "no" → fix before release.
 
 ---
 
-## PART 14: Three Repositories
+## PART 16: Three Repositories
 
 ### 1. aig-platform (Source Code)
 - Apps: API, Web
@@ -879,7 +1584,7 @@ If any "no" → fix before release.
 
 ---
 
-## PART 15: Timeline 2026-2028
+## PART 17: Timeline 2026-2028
 
 ### Q2 2026 (Current)
 - ✅ v0.1 — Meet Diana
