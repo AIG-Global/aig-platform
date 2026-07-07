@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -8,6 +8,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'luxury-950': '#1a0f15',
+        'luxury-900': '#2a1f28',
+        'luxury-800': '#3d2c35',
+        'luxury-gold': '#d4af37',
+        'luxury-gold-light': '#e8d4a2',
+        'luxury-cream': '#f5f5dc',
+        'luxury-cream-dark': '#e8e8d0',
         slate: {
           900: '#0f172a',
           800: '#1e293b',
@@ -17,17 +24,7 @@ module.exports = {
           400: '#94a3b8',
           300: '#cbd5e1',
         },
-        luxury: {
-          950: '#1a0f15',
-          900: '#2a1f28',
-          800: '#3d2c35',
-          gold: '#d4af37',
-          'gold-light': '#e8d4a2',
-          cream: '#f5f5dc',
-          'cream-dark': '#e8e8d0',
-        },
       },
     },
   },
-  plugins: [],
 }

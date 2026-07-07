@@ -8,7 +8,10 @@ export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-luxury-950 via-luxury-900 to-luxury-950 text-luxury-cream">
+    <div className="min-h-screen bg-gradient-to-br from-luxury-950 via-luxury-900 to-luxury-950 text-luxury-cream" style={{
+      background: 'linear-gradient(to right bottom, #1a0f15, #2a1f28, #1a0f15)',
+      color: '#f5f5dc'
+    }}>
       {/* Navigation */}
       <nav className="fixed w-full top-0 z-50 bg-luxury-950/80 backdrop-blur-md border-b border-luxury-gold/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
