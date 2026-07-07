@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIG Translate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d12; --panel: #12161d; --panel-raised: #1c2129; --line: #262c36;
+  --amber: #e8a33d; --amber-dim: #5c4520; --blue: #5fa8d3; --green: #5fb88a;
+  --red: #d3685f; --text: #e4e7eb; --text-dim: #9099a8; --text-faint: #5a626f;
+  --font-sans: 'IBM Plex Sans', -apple-system, sans-serif; --font-mono: 'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 15px; line-height: 1.5; }
+.mono { font-family: var(--font-mono); }
+a { color: var(--blue); text-decoration: none; }
+input, textarea, select { background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-family: var(--font-sans); font-size: 13.5px; padding: 9px 12px; border-radius: 6px; }
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--amber); }
+label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom: 6px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; font-size: 13px; padding: 10px 18px; border-radius: 6px; border: 1px solid var(--amber); cursor: pointer; background: none; }
+.btn-primary { background: var(--amber); color: #1a1206; }
+.btn-primary:hover { opacity: 0.92; }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-ghost { background: none; color: var(--text); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--text-dim); }
+.btn-block { width: 100%; }
+.btn-sm { font-size: 12px; padding: 7px 12px; }
+
+.shell { max-width: 880px; margin: 0 auto; padding: 0 20px 60px; }
+.topbar { border-bottom: 1px solid var(--line); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 15px; }
+.brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+.btn-key { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-dim); background: var(--panel-raised); border: 1px solid var(--line); padding: 7px 12px; border-radius: 4px; cursor: pointer; }
+
+.onboard-shell { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 60px 24px; }
+.onboard-card { max-width: 460px; width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 32px; }
+.onboard-card h2 { margin: 0 0 8px; font-size: 18px; }
+.onboard-card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.onboard-steps { list-style: none; padding: 0; margin: 18px 0; }
+.onboard-steps li { display: flex; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); }
+.onboard-steps li:first-child { border-top: none; }
+.onboard-step-num { width: 20px; height: 20px; border-radius: 50%; background: var(--amber-dim); color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 700; flex-shrink: 0; }
+.onboard-step-body b { display: block; font-size: 13px; margin-bottom: 2px; }
+.onboard-step-body span { font-size: 12px; color: var(--text-dim); }
+.onboard-error { background: rgba(211,104,95,0.12); border: 1px solid var(--red); color: #f0a39c; font-size: 12px; padding: 9px 12px; border-radius: 4px; margin-bottom: 14px; display: none; }
+.onboard-error.show { display: block; }
+
+.translate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+@media (max-width: 700px) { .translate-grid { grid-template-columns: 1fr; } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.panel-label { font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.4px; }
+#sourceText { width: 100%; min-height: 220px; resize: vertical; border: none; background: none; padding: 0; font-size: 15px; line-height: 1.6; }
+#sourceText:focus { outline: none; }
+.output-area { min-height: 220px; font-size: 15px; line-height: 1.6; color: var(--text); white-space: pre-wrap; }
+.output-placeholder { color: var(--text-faint); }
+.char-count { font-size: 11px; color: var(--text-faint); text-align: right; margin-top: 8px; }
+.detected-lang-pill { font-size: 11px; color: var(--blue); background: rgba(95,168,211,0.12); padding: 3px 9px; border-radius: 10px; }
+.controls-row { display: flex; align-items: center; justify-content: space-between; margin: 16px 0; gap: 10px; flex-wrap: wrap; }
+#targetLanguageSelect { min-width: 200px; }
+.copy-btn-sm { font-size: 11.5px; padding: 5px 10px; }
+.notice-banner { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--red); padding: 11px 14px; margin: 14px 0; font-size: 12.5px; color: var(--text-dim); border-radius: 0 4px 4px 0; display: none; }
+.notice-banner.show { display: block; }
+.footnote { font-size: 11px; color: var(--text-faint); text-align: center; margin-top: 20px; }
+
+.history-item { padding: 10px 0; border-top: 1px solid var(--line); font-size: 12.5px; cursor: pointer; }
+.history-item:hover { color: var(--amber); }
+.history-item .hl { color: var(--text-faint); font-size: 10.5px; }
+</style>
+</head>
+<body>
+
+<div id="appRoot">
+
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span>AIG TRANSLATE</div>
+    <button class="btn-key" id="setKeyBtn">set API key</button>
+  </div>
+
+  <div id="onboardShell" class="onboard-shell">
+    <div class="onboard-card">
+      <h2>Connect your Anthropic API key</h2>
+      <p>AIG Translate calls Claude directly from your browser. No backend, no account — your key stays in this browser's local storage and is sent only to Anthropic.</p>
+      <ul class="onboard-steps">
+        <li><div class="onboard-step-num">1</div><div class="onboard-step-body"><b>Create an Anthropic account</b><span>at <a href="https://console.anthropic.com/" target="_blank" rel="noopener">console.anthropic.com</a></span></div></li>
+        <li><div class="onboard-step-num">2</div><div class="onboard-step-body"><b>Add billing</b><span>The API is pay-as-you-go, separate from any claude.ai subscription.</span></div></li>
+        <li><div class="onboard-step-num">3</div><div class="onboard-step-body"><b>Create a key</b><span>Settings &rarr; API Keys &mdash; starts with <code>sk-ant-</code></span></div></li>
+      </ul>
+      <div class="onboard-error" id="onboardError"></div>
+      <div style="margin-bottom:14px;"><label for="onboardKeyInput">Anthropic API key</label><input type="password" id="onboardKeyInput" class="mono" style="width:100%;" placeholder="sk-ant-..."></div>
+      <button class="btn btn-primary btn-block" id="onboardSaveBtn">Save key and start translating</button>
+    </div>
+  </div>
+
+  <div id="translatorShell" class="shell" style="display:none;">
+
+    <div class="notice-banner" id="globalNotice"></div>
+
+    <div class="controls-row" style="margin-top:20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <label style="margin:0;">Translate to</label>
+        <select id="targetLanguageSelect"></select>
+      </div>
+      <button class="btn btn-primary" id="translateBtn">Translate</button>
+    </div>
+
+    <div class="translate-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-label">Source text</span>
+          <button class="btn btn-ghost copy-btn-sm" id="clearBtn">Clear</button>
+        </div>
+        <textarea id="sourceText" placeholder="Type or paste text in any language…"></textarea>
+        <div class="char-count"><span id="charCount">0</span> characters</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-label">Translation</span>
+          <span class="detected-lang-pill" id="detectedLangPill" style="display:none;"></span>
+        </div>
+        <div class="output-area" id="outputArea"><span class="output-placeholder">Your translation will appear here.</span></div>
+        <div style="margin-top:10px; text-align:right;"><button class="btn btn-ghost copy-btn-sm" id="copyOutputBtn" style="display:none;">Copy</button></div>
+      </div>
+    </div>
+
+    <div class="footnote">AIG Translate talks directly to Anthropic's API using your own key. Claude can make mistakes — double-check anything high-stakes (legal, medical, safety).</div>
+
+    <div id="historyArea" style="margin-top:30px;"></div>
+
+  </div>
+</div>
+
+<script src="core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

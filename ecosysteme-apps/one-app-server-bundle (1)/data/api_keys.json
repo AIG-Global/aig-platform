@@ -1,0 +1,16 @@
+[
+  {
+    "id": "key_nUeAqQi4dFpN",
+    "label": "AIG Webservice (production)",
+    "key": "642895a1873d4c5ed4e0f73c1ab7a2a1d28a1e66ee348855fafa852f57f74f05",
+    "keyPreview": "one_live_69b50a",
+    "scopes": [
+      "analytics:read",
+      "users:read",
+      "events:write"
+    ],
+    "active": true,
+    "createdAt": "2026-05-21T14:58:00.000Z",
+    "lastUsedAt": "2026-06-30T09:50:00.000Z"
+  }
+]

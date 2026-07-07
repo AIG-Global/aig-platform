@@ -1,0 +1,54 @@
+[
+  {
+    "id": "act_0sEVFsgGJ_cv",
+    "adminId": "admin_DUUDXoCoTBli",
+    "action": "upgrade_override",
+    "targetUserId": "user_djb0_4w2VkfD",
+    "details": {
+      "reason": "Manual goodwill upgrade — no network bonus generated",
+      "previousTier": "free",
+      "newTier": "paid",
+      "bonusGenerated": false
+    },
+    "createdAt": "2026-06-16T17:07:00.000Z"
+  },
+  {
+    "id": "act_4WlQ5HUV4hVN",
+    "adminId": "admin_DUUDXoCoTBli",
+    "action": "upgrade_override",
+    "targetUserId": "user_g5zEJePWEW0d",
+    "details": {
+      "reason": "Manual goodwill upgrade — no network bonus generated",
+      "previousTier": "free",
+      "newTier": "paid",
+      "bonusGenerated": false
+    },
+    "createdAt": "2026-04-08T15:51:00.000Z"
+  },
+  {
+    "id": "act_VlaMztJYrDz2",
+    "adminId": "admin_DUUDXoCoTBli",
+    "action": "upgrade_override",
+    "targetUserId": "user_wRHQQZwunM34",
+    "details": {
+      "reason": "Manual goodwill upgrade — no network bonus generated",
+      "previousTier": "free",
+      "newTier": "paid",
+      "bonusGenerated": false
+    },
+    "createdAt": "2026-06-05T18:10:00.000Z"
+  },
+  {
+    "id": "act_dvWOPNCO93UI",
+    "adminId": "admin_DUUDXoCoTBli",
+    "action": "upgrade_override",
+    "targetUserId": "user_FDWf19VmFjre",
+    "details": {
+      "reason": "Manual goodwill upgrade — no network bonus generated",
+      "previousTier": "free",
+      "newTier": "paid",
+      "bonusGenerated": false
+    },
+    "createdAt": "2026-04-11T13:25:00.000Z"
+  }
+]

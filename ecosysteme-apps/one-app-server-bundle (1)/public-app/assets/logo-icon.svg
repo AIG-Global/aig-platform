@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="42%" r="70%">
+      <stop offset="0%" stop-color="#1F1600" />
+      <stop offset="100%" stop-color="#070707" />
+    </radialGradient>
+    <linearGradient id="coreGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE08A" />
+      <stop offset="55%" stop-color="#FFBD00" />
+      <stop offset="100%" stop-color="#C98A00" />
+    </linearGradient>
+    <radialGradient id="coreHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD24D" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#FFD24D" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="240" height="240" rx="48" fill="url(#bgGlow)" />
+
+  <g transform="translate(120,120)">
+    <circle r="70" fill="none" stroke="#FFBD00" stroke-width="9" opacity="0.9" />
+
+    <path d="M 0 -70 A 70 70 0 1 1 -49.5 49.5"
+          fill="none" stroke="#FFE9B0" stroke-width="11" stroke-linecap="round" />
+
+    <circle r="58" fill="url(#coreHalo)" />
+    <circle r="30" fill="url(#coreGold)" />
+  </g>
+</svg>

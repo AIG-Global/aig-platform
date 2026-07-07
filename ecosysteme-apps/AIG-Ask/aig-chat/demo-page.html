@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIG — sample page with AIG Ask widget</title>
+<style>
+  body { margin: 0; background: #0a0d12; color: #e4e7eb; font-family: -apple-system, sans-serif; }
+  .page-wrap { max-width: 720px; margin: 0 auto; padding: 60px 24px 120px; }
+  h1 { font-size: 28px; }
+  p { color: #9099a8; line-height: 1.7; }
+  .demo-note {
+    background: #12161d; border: 1px solid #262c36; border-left: 3px solid #e8a33d;
+    padding: 14px 18px; border-radius: 0 6px 6px 0; font-size: 13px; color: #9099a8; margin: 24px 0;
+  }
+  .demo-note b { color: #e4e7eb; }
+  code { font-family: 'IBM Plex Mono', monospace; background: #1c2129; padding: 2px 6px; border-radius: 4px; font-size: 12.5px; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <h1>This is a sample AIG page</h1>
+  <p>
+    This page represents any normal page on the AIG site — a marketing page,
+    a dashboard, anything. The AIG Ask widget is included with two script
+    tags at the bottom of the page and otherwise needs nothing else: no
+    extra markup, no container div to create yourself.
+  </p>
+
+  <div class="demo-note">
+    <b>This is the integration code, exactly as it appears at the bottom of this file:</b><br><br>
+    <code>&lt;script src="core.js"&gt;&lt;/script&gt;</code><br>
+    <code>&lt;script src="widget.js"&gt;&lt;/script&gt;</code><br><br>
+    Click the floating icon in the bottom-right corner to try it. The widget
+    is currently configured for "own-key" mode — if you haven't set a key
+    in this demo before, it'll ask for one before you can chat (same setup
+    as the standalone AIG Ask page).
+  </div>
+
+  <p>
+    To run this widget in "backend" mode instead (once a real backend
+    exists, so visitors don't need their own API key), add a config block
+    before the two script tags:
+  </p>
+  <pre style="background:#12161d; border:1px solid #262c36; padding:14px 18px; border-radius:6px; font-size:12.5px; overflow-x:auto;"><code>&lt;script&gt;
+  window.AIGAskWidgetConfig = {
+    mode: "backend",
+    backendUrl: "https://your-backend.example.com/api/chat"
+  };
+&lt;/script&gt;
+&lt;script src="core.js"&gt;&lt;/script&gt;
+&lt;script src="widget.js"&gt;&lt;/script&gt;</code></pre>
+  <p>
+    Nothing else about the widget changes — visitors never see a key
+    prompt in that mode, since the backend would hold the shared key
+    instead.
+  </p>
+</div>
+
+<script src="core.js"></script>
+<script src="widget.js"></script>
+</body>
+</html>

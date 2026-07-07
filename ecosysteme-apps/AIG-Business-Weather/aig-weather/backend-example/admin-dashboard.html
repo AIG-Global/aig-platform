@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIG Business Weather — usage dashboard (admin)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  :root {
+    --bg: #0a0d12; --panel: #12161d; --panel-raised: #1c2129; --line: #262c36;
+    --amber: #e8a33d; --text: #e4e7eb; --text-dim: #9099a8; --text-faint: #5a626f;
+    --font-sans: -apple-system, sans-serif; --font-mono: 'IBM Plex Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 14px; }
+  .topbar { border-bottom: 1px solid var(--line); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .brand { font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+  .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+  .shell { max-width: 1200px; margin: 0 auto; padding: 20px 24px 60px; }
+
+  .config-card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 24px; max-width: 480px; margin: 40px auto; }
+  .config-card h2 { margin: 0 0 8px; font-size: 16px; }
+  .config-card p { font-size: 12.5px; color: var(--text-dim); line-height: 1.6; margin: 0 0 16px; }
+  .config-card label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom: 6px; }
+  .config-card input { width: 100%; background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-size: 13px; padding: 9px 12px; border-radius: 5px; margin-bottom: 14px; }
+  .config-card input:focus { outline: none; border-color: var(--amber); }
+  .config-card button { width: 100%; background: var(--amber); color: #1a1206; border: none; font-weight: 600; font-size: 13px; padding: 10px; border-radius: 6px; cursor: pointer; }
+  .config-error { background: rgba(211,104,95,0.12); border: 1px solid #d3685f; color: #f0a39c; font-size: 12px; padding: 9px 12px; border-radius: 4px; margin-bottom: 14px; display: none; }
+  .config-error.show { display: block; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .stat-card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }
+  .stat-label { font-size: 10.5px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-value { font-family: var(--font-mono); font-size: 26px; color: var(--text); margin-top: 6px; }
+
+  #map { height: 560px; border-radius: 8px; border: 1px solid var(--line); }
+  .map-note { font-size: 11.5px; color: var(--text-faint); margin-top: 10px; line-height: 1.6; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+  .btn-key { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-dim); background: var(--panel-raised); border: 1px solid var(--line); padding: 7px 12px; border-radius: 4px; cursor: pointer; }
+  .btn-key:hover { border-color: var(--amber); color: var(--amber); }
+  select { background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-size: 12px; padding: 7px 10px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span>AIG BUSINESS WEATHER — usage dashboard</div>
+  <button class="btn-key" id="disconnectBtn" style="display:none;">disconnect</button>
+</div>
+
+<div class="shell">
+
+  <div class="config-card" id="configCard">
+    <h2>Connect to your backend</h2>
+    <p>This reads only the pre-aggregated, anonymous usage table (<code>/api/usage-map</code>) — never the subscriber list. Your admin token is stored in this browser only.</p>
+    <div class="config-error" id="configError"></div>
+    <label for="backendUrlInput">Backend URL</label>
+    <input type="text" id="backendUrlInput" placeholder="https://your-backend.example.com">
+    <label for="adminTokenInput">Admin token</label>
+    <input type="password" id="adminTokenInput" placeholder="the ADMIN_TOKEN from your backend's .env">
+    <button id="connectBtn">Connect</button>
+  </div>
+
+  <div id="dashboardBody" style="display:none;">
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-label">Active subscribers</div>
+        <div class="stat-value" id="statSubscribers">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Distinct locations (rounded)</div>
+        <div class="stat-value" id="statLocations">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total usage pings (window)</div>
+        <div class="stat-value" id="statPings">—</div>
+      </div>
+    </div>
+
+    <div class="panel-head">
+      <div style="font-size:12px; color:var(--text-dim);">Anonymous usage — dot size/color reflects ping count per ~11km cell, never an individual</div>
+      <select id="windowSelect">
+        <option value="7">Last 7 days</option>
+        <option value="30" selected>Last 30 days</option>
+        <option value="90">Last 90 days</option>
+      </select>
+    </div>
+    <div id="map"></div>
+    <div class="map-note" id="mapErrorNote" style="display:none; color:#f0a39c;"></div>
+    <div class="map-note">
+      Locations are rounded to 1 decimal degree (~11 km) server-side before they're ever stored in the usage
+      table — this dashboard has no way to reverse a dot back to an individual subscriber, because that
+      information was never retained in the first place. Map tiles &copy; <a href="https://www.openstreetmap.org/copyright" style="color:var(--text-dim);">OpenStreetMap</a> contributors.
+    </div>
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const STORAGE_KEY = "aigweather_admin_config_v1";
+  let map = null;
+  let markersLayer = null;
+
+  const el = {
+    configCard: document.getElementById("configCard"),
+    configError: document.getElementById("configError"),
+    backendUrlInput: document.getElementById("backendUrlInput"),
+    adminTokenInput: document.getElementById("adminTokenInput"),
+    connectBtn: document.getElementById("connectBtn"),
+    dashboardBody: document.getElementById("dashboardBody"),
+    disconnectBtn: document.getElementById("disconnectBtn"),
+    statSubscribers: document.getElementById("statSubscribers"),
+    statLocations: document.getElementById("statLocations"),
+    statPings: document.getElementById("statPings"),
+    windowSelect: document.getElementById("windowSelect")
+  };
+
+  function showError(msg) {
+    el.configError.textContent = msg;
+    el.configError.classList.add("show");
+  }
+
+  function getConfig() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
+    catch (e) { return null; }
+  }
+  function saveConfig(cfg) { localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg)); }
+  function clearConfig() { localStorage.removeItem(STORAGE_KEY); }
+
+  async function loadDashboard(cfg, days) {
+    const url = cfg.backendUrl.replace(/\/$/, "") + "/api/usage-map?days=" + (days || 30) + "&token=" + encodeURIComponent(cfg.adminToken);
+    const res = await fetch(url);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || ("HTTP " + res.status));
+    }
+    return res.json();
+  }
+
+  function renderMap(points) {
+    if (!map) {
+      map = L.map("map", { worldCopyJump: true }).setView([20, 0], 2);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors",
+        maxZoom: 18
+      }).addTo(map);
+    }
+    if (markersLayer) markersLayer.remove();
+    markersLayer = L.layerGroup();
+
+    const maxCount = Math.max(1, ...points.map(p => p.count));
+    points.forEach(p => {
+      const radius = 6 + (p.count / maxCount) * 24;
+      const marker = L.circleMarker([p.lat, p.lon], {
+        radius,
+        fillColor: "#e8a33d",
+        fillOpacity: 0.45,
+        color: "#e8a33d",
+        weight: 1,
+        opacity: 0.8
+      }).bindPopup((p.count) + " ping" + (p.count === 1 ? "" : "s") + " from this area (rounded to ~11km)");
+      markersLayer.addLayer(marker);
+    });
+    markersLayer.addTo(map);
+  }
+
+  async function connectAndLoad(cfg) {
+    let data;
+    try {
+      const days = parseInt(el.windowSelect.value, 10);
+      data = await loadDashboard(cfg, days);
+    } catch (e) {
+      // A real failure to reach/authenticate with the backend — this is
+      // the only case that should send the person back to the config
+      // screen, since it means we have no data to show at all.
+      el.configCard.style.display = "block";
+      el.dashboardBody.style.display = "none";
+      showError("Couldn't load dashboard: " + e.message);
+      return;
+    }
+
+    // From here on, we HAVE real data — show it regardless of what
+    // happens next. A map-library problem (CDN blocked by an ad-blocker,
+    // corporate firewall, being offline, etc.) should degrade to "stats
+    // only, map unavailable," never to hiding data we already fetched.
+    el.configCard.style.display = "none";
+    el.dashboardBody.style.display = "block";
+    el.disconnectBtn.style.display = "inline-block";
+    el.statSubscribers.textContent = data.subscriberCount;
+    el.statLocations.textContent = data.points.length;
+    el.statPings.textContent = data.points.reduce((sum, p) => sum + p.count, 0);
+
+    try {
+      if (typeof L === "undefined") throw new Error("Map library did not load");
+      renderMap(data.points);
+      document.getElementById("mapErrorNote").style.display = "none";
+    } catch (e) {
+      document.getElementById("map").style.display = "none";
+      const note = document.getElementById("mapErrorNote");
+      note.textContent = "Map couldn't load (" + e.message + ") — this is usually an ad-blocker or firewall blocking the map tile/library CDN. The stats above are unaffected.";
+      note.style.display = "block";
+    }
+  }
+
+  el.connectBtn.addEventListener("click", () => {
+    const backendUrl = el.backendUrlInput.value.trim();
+    const adminToken = el.adminTokenInput.value.trim();
+    if (!backendUrl || !adminToken) { showError("Enter both the backend URL and the admin token."); return; }
+    const cfg = { backendUrl, adminToken };
+    saveConfig(cfg);
+    connectAndLoad(cfg);
+  });
+
+  el.disconnectBtn.addEventListener("click", () => {
+    clearConfig();
+    el.configCard.style.display = "block";
+    el.dashboardBody.style.display = "none";
+    el.disconnectBtn.style.display = "none";
+    el.backendUrlInput.value = "";
+    el.adminTokenInput.value = "";
+  });
+
+  el.windowSelect.addEventListener("change", () => {
+    const cfg = getConfig();
+    if (cfg) connectAndLoad(cfg);
+  });
+
+  // Auto-connect if we have a saved config from a previous visit.
+  const saved = getConfig();
+  if (saved) {
+    el.backendUrlInput.value = saved.backendUrl;
+    el.adminTokenInput.value = saved.adminToken;
+    connectAndLoad(saved);
+  }
+})();
+</script>
+</body>
+</html>

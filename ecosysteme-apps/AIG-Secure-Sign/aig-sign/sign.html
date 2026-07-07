@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign document — AIG Secure Sign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .sign-shell { max-width: 900px; margin: 0 auto; padding: 24px; }
+  .canvas-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; overflow: auto; }
+  .page-canvas-container { position: relative; margin: 0 auto; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  .page-canvas-container canvas { display: block; width: 100%; }
+  .fillable-field {
+    position: absolute; border: 2px solid var(--amber); background: rgba(232,163,61,0.15); border-radius: 3px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #1a1206; overflow: hidden;
+  }
+  .fillable-field.filled { border-color: var(--green); background: rgba(95,184,138,0.15); }
+  .fillable-field img { max-width: 100%; max-height: 100%; }
+
+  .sig-pad-canvas { border: 1px solid var(--line); border-radius: 6px; background: #fff; touch-action: none; width: 100%; height: 160px; }
+  .sig-pad-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+  .sig-pad-tab { flex: 1; padding: 8px; font-size: 12px; text-align: center; border-radius: 5px; border: 1px solid var(--line); background: var(--panel-raised); color: var(--text-dim); cursor: pointer; }
+  .sig-pad-tab.active { border-color: var(--amber); color: var(--amber); }
+  .sig-typed-input { font-family: 'Brush Script MT', cursive; font-size: 32px; text-align: center; background: #fff; color: #111; border: 1px solid var(--line); border-radius: 6px; padding: 20px; height: 160px; }
+
+  .consent-box { background: var(--panel-raised); border: 1px solid var(--line); border-radius: 6px; padding: 16px; font-size: 12px; color: var(--text-dim); line-height: 1.6; max-height: 220px; overflow-y: auto; margin-bottom: 14px; }
+  .consent-box b { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span>AIG SECURE SIGN</div>
+</div>
+
+<div class="sign-shell">
+
+  <div id="loadingState" style="text-align:center; padding:60px 0; color:var(--text-faint);">Loading document&hellip;</div>
+
+  <div id="errorState" style="display:none;">
+    <div class="notice-banner error show" id="errorMessage"></div>
+  </div>
+
+  <div id="consentState" style="display:none;">
+    <h2 id="consentDocTitle" style="margin-bottom:4px;"></h2>
+    <p style="color:var(--text-dim); font-size:13px;">You've been asked to sign this document. Before continuing, please review the following.</p>
+
+    <div class="consent-box">
+      <b>Consent to use electronic records and signatures.</b><br><br>
+      By clicking "I agree" below, you consent to sign this document electronically and to receive
+      related records electronically. Your electronic signature will be legally attributed to you.
+      You have the right to withdraw this consent and request a paper copy at any time before
+      signing — contact the sender directly to do so. You may also request a paper copy of the
+      signed document after completion. Continuing requires that you can access and retain electronic
+      records in the format provided (a standard PDF); if you're unable to do so, contact the sender
+      for a paper alternative instead.
+    </div>
+
+    <button class="btn btn-primary btn-block" id="agreeConsentBtn">I agree — continue to the document</button>
+  </div>
+
+  <div id="signingState" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+      <h2 id="signingDocTitle" style="margin:0;"></h2>
+      <div id="fieldsRemainingLabel" style="font-size:12px; color:var(--text-faint);"></div>
+    </div>
+    <div class="canvas-wrap">
+      <div class="page-canvas-container" id="pageCanvasContainer">
+        <canvas id="pdfCanvas"></canvas>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-block" id="finishSigningBtn" style="margin-top:16px;" disabled>Complete all fields to finish signing</button>
+  </div>
+
+  <div id="completedState" style="display:none; text-align:center; padding:60px 0;">
+    <div style="font-size:44px; margin-bottom:12px;">✅</div>
+    <h2>Signed successfully</h2>
+    <p style="color:var(--text-dim);">Your signature has been recorded with a timestamped, tamper-evident audit entry.</p>
+  </div>
+
+</div>
+
+<!-- Field fill modal -->
+<div class="modal-backdrop" id="fieldModal">
+  <div class="modal">
+    <button class="modal-close" id="closeFieldModalBtn">&times;</button>
+    <h3 id="fieldModalTitle"></h3>
+
+    <div id="signatureFillArea" style="display:none;">
+      <div class="sig-pad-tabs">
+        <button class="sig-pad-tab active" data-mode="draw">Draw</button>
+        <button class="sig-pad-tab" data-mode="type">Type</button>
+      </div>
+      <canvas class="sig-pad-canvas" id="sigPadCanvas"></canvas>
+      <input type="text" class="sig-typed-input" id="sigTypedInput" style="display:none;" placeholder="Type your name">
+      <button class="btn btn-ghost btn-sm" id="clearSigBtn" style="margin-top:8px;">Clear</button>
+    </div>
+
+    <div id="textFillArea" style="display:none;">
+      <input type="text" id="textFillInput" placeholder="Enter text">
+    </div>
+
+    <div id="checkboxFillArea" style="display:none; text-align:center; padding:20px 0;">
+      <label style="font-size:14px; cursor:pointer;"><input type="checkbox" id="checkboxFillInput" style="width:auto; margin-right:8px;">I agree / confirm</label>
+    </div>
+
+    <div class="modal-actions"><button class="btn btn-primary btn-block" id="saveFieldBtn">Save</button></div>
+  </div>
+</div>
+
+<script src="crypto-utils.js"></script>
+<script src="sign.js"></script>
+</body>
+</html>

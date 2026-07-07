@@ -1,0 +1,1413 @@
+[
+  {
+    "id": "payments_7aXjYSCA8uam",
+    "userId": "user_uIT-5nhxOagr",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5534918958",
+    "providerInvoiceId": "4209972984",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-01-03T07:24:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-01-03T07:24:00.000Z",
+    "confirmedAt": "2026-01-03T07:24:00.000Z"
+  },
+  {
+    "id": "payments_YLnP0Iao8nGj",
+    "userId": "user_oWZM7YIg8S40",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5690459737",
+    "providerInvoiceId": "4486211932",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-10T14:28:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-10T14:28:00.000Z",
+    "confirmedAt": "2026-06-10T14:28:00.000Z"
+  },
+  {
+    "id": "payments_aJRU1VXkNrtY",
+    "userId": "user_Ynrv3Us0vY-x",
+    "packageCode": "PROFESSIONAL",
+    "priceUSD": 2999,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5386845909",
+    "providerInvoiceId": "4633809699",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 2999,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-24T06:26:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-24T06:26:00.000Z",
+    "confirmedAt": "2026-06-24T06:26:00.000Z"
+  },
+  {
+    "id": "payments_YqcTJgxKN-P3",
+    "userId": "user_aJW0MddlYt_U",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5073128093",
+    "providerInvoiceId": "4935504743",
+    "providerInvoiceUrl": null,
+    "payCurrency": "ltc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-12T08:43:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-12T08:43:00.000Z",
+    "confirmedAt": "2026-04-12T08:43:00.000Z"
+  },
+  {
+    "id": "payments_fke4dLjzMBZf",
+    "userId": "user_lLZCeOySDvVz",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5494215899",
+    "providerInvoiceId": "4913824825",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-04T20:39:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-04T20:39:00.000Z",
+    "confirmedAt": "2026-04-04T20:39:00.000Z"
+  },
+  {
+    "id": "payments_CCDWC71rMAlB",
+    "userId": "user_vUFqiTfHngOu",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5064251170",
+    "providerInvoiceId": "4630323319",
+    "providerInvoiceUrl": null,
+    "payCurrency": "ltc",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-29T11:50:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-29T11:50:00.000Z",
+    "confirmedAt": "2026-06-29T11:50:00.000Z"
+  },
+  {
+    "id": "payments_fpOhzp5IZTKM",
+    "userId": "user_58KNBK-PrPV2",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5938305140",
+    "providerInvoiceId": "4105548581",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-01T08:01:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-01T08:01:00.000Z",
+    "confirmedAt": "2026-06-01T08:01:00.000Z"
+  },
+  {
+    "id": "payments_Ocv2MTQeutkI",
+    "userId": "user_UWSYMd2Purjr",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5044094433",
+    "providerInvoiceId": "4505322683",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-21T16:12:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-21T16:12:00.000Z",
+    "confirmedAt": "2026-06-21T16:12:00.000Z"
+  },
+  {
+    "id": "payments_nUwQ-LcxKnjx",
+    "userId": "user_vCrX-VjIMBz1",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5316149882",
+    "providerInvoiceId": "4344976819",
+    "providerInvoiceUrl": null,
+    "payCurrency": "ltc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-24T17:31:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-24T17:31:00.000Z",
+    "confirmedAt": "2026-04-24T17:31:00.000Z"
+  },
+  {
+    "id": "payments_OMzJpbrjPeIw",
+    "userId": "user_bcrXMDRWbvQT",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5679127683",
+    "providerInvoiceId": "4476366796",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-14T17:30:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-14T17:30:00.000Z",
+    "confirmedAt": "2026-06-14T17:30:00.000Z"
+  },
+  {
+    "id": "payments_BUd0JRhfQmyl",
+    "userId": "user_Rx8qVufMNF-4",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5777139889",
+    "providerInvoiceId": "4734301226",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-04T13:03:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-04T13:03:00.000Z",
+    "confirmedAt": "2026-06-04T13:03:00.000Z"
+  },
+  {
+    "id": "payments_gM0i4aS6srcb",
+    "userId": "user_tjKIiowIfJmd",
+    "packageCode": "PROFESSIONAL",
+    "priceUSD": 2999,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5065354237",
+    "providerInvoiceId": "4098191958",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 2999,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-08T16:42:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-08T16:42:00.000Z",
+    "confirmedAt": "2026-06-08T16:42:00.000Z"
+  },
+  {
+    "id": "payments_mqmIB7C7Mlb2",
+    "userId": "user_ZqI29lFHEpT6",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5464324272",
+    "providerInvoiceId": "4449491784",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-05-23T09:53:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-05-23T09:53:00.000Z",
+    "confirmedAt": "2026-05-23T09:53:00.000Z"
+  },
+  {
+    "id": "payments_Hk3jjZ7wXLk_",
+    "userId": "user_JCcOqFFyjaLN",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5240948482",
+    "providerInvoiceId": "4339243775",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-16T14:23:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-16T14:23:00.000Z",
+    "confirmedAt": "2026-06-16T14:23:00.000Z"
+  },
+  {
+    "id": "payments_2n1e8WTfPmI0",
+    "userId": "user_9xy5Gfy9kdZm",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5435530520",
+    "providerInvoiceId": "4961813956",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdc",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-10T12:32:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-10T12:32:00.000Z",
+    "confirmedAt": "2026-06-10T12:32:00.000Z"
+  },
+  {
+    "id": "payments_Yinj7_y_d6JG",
+    "userId": "user_D0bVykCWjkY-",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5366259425",
+    "providerInvoiceId": "4350496181",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-24T07:45:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-24T07:45:00.000Z",
+    "confirmedAt": "2026-06-24T07:45:00.000Z"
+  },
+  {
+    "id": "payments_i-zUrIVLubw1",
+    "userId": "user_SnfjyHrZvdhZ",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5160440224",
+    "providerInvoiceId": "4842518956",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-30T06:38:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-30T06:38:00.000Z",
+    "confirmedAt": "2026-06-30T06:38:00.000Z"
+  },
+  {
+    "id": "payments_2VpsnSsCxalz",
+    "userId": "user_GFxQjLoTRNbE",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5115876226",
+    "providerInvoiceId": "4610402940",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-24T10:55:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-24T10:55:00.000Z",
+    "confirmedAt": "2026-06-24T10:55:00.000Z"
+  },
+  {
+    "id": "payments_sZapjNpAiKvw",
+    "userId": "user_HSDlM0j_Wl8a",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5643746764",
+    "providerInvoiceId": "4774957753",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-22T16:51:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-22T16:51:00.000Z",
+    "confirmedAt": "2026-06-22T16:51:00.000Z"
+  },
+  {
+    "id": "payments_F33lLVl_779E",
+    "userId": "user_3votiU1wn-L5",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5947011674",
+    "providerInvoiceId": "4347478123",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-03-29T12:29:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-03-29T12:29:00.000Z",
+    "confirmedAt": "2026-03-29T12:29:00.000Z"
+  },
+  {
+    "id": "payments_PfmCoKm1QMEY",
+    "userId": "user__e68zfFFi4eO",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5415844095",
+    "providerInvoiceId": "4537174890",
+    "providerInvoiceUrl": null,
+    "payCurrency": "ltc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-19T11:37:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-19T11:37:00.000Z",
+    "confirmedAt": "2026-06-19T11:37:00.000Z"
+  },
+  {
+    "id": "payments_GdceqI2-7qbi",
+    "userId": "user_bs6DhBafDXyB",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5646483673",
+    "providerInvoiceId": "4274326315",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-02-27T12:06:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-02-27T12:06:00.000Z",
+    "confirmedAt": "2026-02-27T12:06:00.000Z"
+  },
+  {
+    "id": "payments_HgtCce4D_ddE",
+    "userId": "user_wrlW2Ssqn9wc",
+    "packageCode": "PROFESSIONAL",
+    "priceUSD": 2999,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5627772018",
+    "providerInvoiceId": "4074081936",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 2999,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-03T12:19:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-03T12:19:00.000Z",
+    "confirmedAt": "2026-06-03T12:19:00.000Z"
+  },
+  {
+    "id": "payments_gKqbqtL4G08B",
+    "userId": "user_vg9HE56f7nGc",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5762794176",
+    "providerInvoiceId": "4009117304",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-22T21:26:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-22T21:26:00.000Z",
+    "confirmedAt": "2026-04-22T21:26:00.000Z"
+  },
+  {
+    "id": "payments_mTQ6r_JcQOQi",
+    "userId": "user_8SNCBP-uuSUK",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5782578288",
+    "providerInvoiceId": "4681808451",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-05-07T22:51:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-05-07T22:51:00.000Z",
+    "confirmedAt": "2026-05-07T22:51:00.000Z"
+  },
+  {
+    "id": "payments_tdXVbNRKNMB4",
+    "userId": "user_9TXCgToOhKAL",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5718766824",
+    "providerInvoiceId": "4656579270",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-18T15:02:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-18T15:02:00.000Z",
+    "confirmedAt": "2026-04-18T15:02:00.000Z"
+  },
+  {
+    "id": "payments_bSIqTuT_K0vE",
+    "userId": "user_5sJo3tE2wei3",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5843608317",
+    "providerInvoiceId": "4782747534",
+    "providerInvoiceUrl": null,
+    "payCurrency": "ltc",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-10T20:39:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-10T20:39:00.000Z",
+    "confirmedAt": "2026-06-10T20:39:00.000Z"
+  },
+  {
+    "id": "payments_aDDyWKk-GGz2",
+    "userId": "user_DMj01TOGzl_9",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5499547002",
+    "providerInvoiceId": "4110096492",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-05-23T08:01:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-05-23T08:01:00.000Z",
+    "confirmedAt": "2026-05-23T08:01:00.000Z"
+  },
+  {
+    "id": "payments_QqZvokKMwGot",
+    "userId": "user_DSXqE0nbLWIh",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5388832369",
+    "providerInvoiceId": "4045788510",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-29T15:05:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-29T15:05:00.000Z",
+    "confirmedAt": "2026-06-29T15:05:00.000Z"
+  },
+  {
+    "id": "payments_47kPx3GEquko",
+    "userId": "user_iOx36wX4k4v5",
+    "packageCode": "PROFESSIONAL",
+    "priceUSD": 2999,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5554535561",
+    "providerInvoiceId": "4811841693",
+    "providerInvoiceUrl": null,
+    "payCurrency": "ltc",
+    "actuallyPaid": 2999,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-18T22:19:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-18T22:19:00.000Z",
+    "confirmedAt": "2026-04-18T22:19:00.000Z"
+  },
+  {
+    "id": "payments__cEW8xnXB6GK",
+    "userId": "user_5Gbv3c2uvtFb",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5957023474",
+    "providerInvoiceId": "4458085551",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-20T06:29:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-20T06:29:00.000Z",
+    "confirmedAt": "2026-06-20T06:29:00.000Z"
+  },
+  {
+    "id": "payments_kgvE80Nlua5g",
+    "userId": "user_mBwkEeDcj2ic",
+    "packageCode": "PROFESSIONAL",
+    "priceUSD": 2999,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5796589630",
+    "providerInvoiceId": "4234383967",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 2999,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-07T10:39:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-07T10:39:00.000Z",
+    "confirmedAt": "2026-06-07T10:39:00.000Z"
+  },
+  {
+    "id": "payments_BBJ9Sa7hvrb3",
+    "userId": "user_QrcyX09gZ0HS",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5602359422",
+    "providerInvoiceId": "4279586929",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-05T13:26:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-05T13:26:00.000Z",
+    "confirmedAt": "2026-06-05T13:26:00.000Z"
+  },
+  {
+    "id": "payments_GV3zoSiLvXnV",
+    "userId": "user_dFP7Cu3Re0xK",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5848908640",
+    "providerInvoiceId": "4131968092",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-03-02T20:20:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-03-02T20:20:00.000Z",
+    "confirmedAt": "2026-03-02T20:20:00.000Z"
+  },
+  {
+    "id": "payments_VaE54hbLGbLu",
+    "userId": "user_2GwwyXxeTLIL",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5354406518",
+    "providerInvoiceId": "4367011957",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-03-10T13:48:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-03-10T13:48:00.000Z",
+    "confirmedAt": "2026-03-10T13:48:00.000Z"
+  },
+  {
+    "id": "payments_7AIrArhzaXna",
+    "userId": "user_hC3gB5nHkcnA",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5798799351",
+    "providerInvoiceId": "4208736259",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-05-21T11:09:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-05-21T11:09:00.000Z",
+    "confirmedAt": "2026-05-21T11:09:00.000Z"
+  },
+  {
+    "id": "payments__b4maJ4SRXpe",
+    "userId": "user_-554B9uXt7dC",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5515610181",
+    "providerInvoiceId": "4408455467",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-22T15:34:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-22T15:34:00.000Z",
+    "confirmedAt": "2026-06-22T15:34:00.000Z"
+  },
+  {
+    "id": "payments___5DrNVSyV1x",
+    "userId": "user_RHuALeZDlGSl",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5662851372",
+    "providerInvoiceId": "4375832407",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-02T16:31:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-02T16:31:00.000Z",
+    "confirmedAt": "2026-06-02T16:31:00.000Z"
+  },
+  {
+    "id": "payments_5nWhMExKwvds",
+    "userId": "user__tFrogrR53FE",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5294198172",
+    "providerInvoiceId": "4712821101",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-05-07T13:55:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-05-07T13:55:00.000Z",
+    "confirmedAt": "2026-05-07T13:55:00.000Z"
+  },
+  {
+    "id": "payments_yVAIw0i_SYiv",
+    "userId": "user_UAlQoiidiKoQ",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5037782708",
+    "providerInvoiceId": "4389755660",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-05-29T11:41:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-05-29T11:41:00.000Z",
+    "confirmedAt": "2026-05-29T11:41:00.000Z"
+  },
+  {
+    "id": "payments_-kPHsX9k3hFd",
+    "userId": "user_QwU-jmlOWuWc",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5084905875",
+    "providerInvoiceId": "4843787138",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-05-26T19:12:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-05-26T19:12:00.000Z",
+    "confirmedAt": "2026-05-26T19:12:00.000Z"
+  },
+  {
+    "id": "payments_h9rF4iy_KAXV",
+    "userId": "user_m2OuMesXWokT",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5481883226",
+    "providerInvoiceId": "4727007741",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-10T20:53:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-10T20:53:00.000Z",
+    "confirmedAt": "2026-06-10T20:53:00.000Z"
+  },
+  {
+    "id": "payments_cKeFkejclI5N",
+    "userId": "user__jQiGEcbf2qD",
+    "packageCode": "PROFESSIONAL",
+    "priceUSD": 2999,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5574199212",
+    "providerInvoiceId": "4932154026",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 2999,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-14T09:21:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-14T09:21:00.000Z",
+    "confirmedAt": "2026-04-14T09:21:00.000Z"
+  },
+  {
+    "id": "payments_w7ErK4qGZ5WS",
+    "userId": "user_sqODAdZ-haE9",
+    "packageCode": "PROFESSIONAL",
+    "priceUSD": 2999,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5055644862",
+    "providerInvoiceId": "4098576289",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdc",
+    "actuallyPaid": 2999,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-05-17T09:33:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-05-17T09:33:00.000Z",
+    "confirmedAt": "2026-05-17T09:33:00.000Z"
+  },
+  {
+    "id": "payments_97eMf2CMlXGW",
+    "userId": "user_l-tv-iP-HQra",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5597174437",
+    "providerInvoiceId": "4417680475",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-26T13:41:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-26T13:41:00.000Z",
+    "confirmedAt": "2026-06-26T13:41:00.000Z"
+  },
+  {
+    "id": "payments_-bfoCG5zzrRN",
+    "userId": "user__r_oPDmBgVdw",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5631668564",
+    "providerInvoiceId": "4816767367",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-29T12:38:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-29T12:38:00.000Z",
+    "confirmedAt": "2026-04-29T12:38:00.000Z"
+  },
+  {
+    "id": "payments_ZZ12kFtrQiiG",
+    "userId": "user_3U0M61i6gR_R",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5145500326",
+    "providerInvoiceId": "4628105345",
+    "providerInvoiceUrl": null,
+    "payCurrency": "ltc",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-06-24T06:45:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-06-24T06:45:00.000Z",
+    "confirmedAt": "2026-06-24T06:45:00.000Z"
+  },
+  {
+    "id": "payments_V_ntumpRY5uC",
+    "userId": "user_sMb_BUMlqrzp",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5834142219",
+    "providerInvoiceId": "4666534544",
+    "providerInvoiceUrl": null,
+    "payCurrency": "ltc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-21T20:32:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-21T20:32:00.000Z",
+    "confirmedAt": "2026-04-21T20:32:00.000Z"
+  },
+  {
+    "id": "payments_BFERaIWc0X_X",
+    "userId": "user_EMC0LMvOShSj",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5803168680",
+    "providerInvoiceId": "4413439827",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 699,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-04-16T10:46:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-04-16T10:46:00.000Z",
+    "confirmedAt": "2026-04-16T10:46:00.000Z"
+  },
+  {
+    "id": "payments_Ai86uR1Mk4dm",
+    "userId": "user_ggMhuJE43Dl-",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5637330543",
+    "providerInvoiceId": "4495707562",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 1099,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-02-25T16:48:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-02-25T16:48:00.000Z",
+    "confirmedAt": "2026-02-25T16:48:00.000Z"
+  },
+  {
+    "id": "payments_N7og355amALX",
+    "userId": "user_i7U_nWk5luMk",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "confirmed",
+    "providerPaymentId": "5348680316",
+    "providerInvoiceId": "4781162227",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 399,
+    "upgradeApplied": true,
+    "rawEvents": [
+      {
+        "receivedAt": "2026-05-28T10:11:00.000Z",
+        "status": "finished",
+        "providerPaymentId": "seed"
+      }
+    ],
+    "createdAt": "2026-05-28T10:11:00.000Z",
+    "confirmedAt": "2026-05-28T10:11:00.000Z"
+  },
+  {
+    "id": "payments_m26zGyEHeMQh",
+    "userId": "user_DoMlG0yifZf_",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "failed",
+    "providerPaymentId": "5253172869",
+    "providerInvoiceId": "4542936860",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-12T07:42:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_F8lqpKaG1rcV",
+    "userId": "user_rutI_HeXiNYV",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "expired",
+    "providerPaymentId": "5509373868",
+    "providerInvoiceId": "4542864960",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-29T21:58:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_MXx25lVOaMiG",
+    "userId": "user_bMouj1KBOBx0",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "expired",
+    "providerPaymentId": "5729893390",
+    "providerInvoiceId": "4868595264",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-30T22:00:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_Yjb4bKG8La6w",
+    "userId": "user_wymUvulC2Gkp",
+    "packageCode": "PROFESSIONAL",
+    "priceUSD": 2999,
+    "provider": "nowpayments",
+    "status": "partially_paid",
+    "providerPaymentId": "5853760718",
+    "providerInvoiceId": "4972464177",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 1200,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-30T17:46:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_nrEZdSuaAyNb",
+    "userId": "user_iaMaZSP23kG0",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "waiting",
+    "providerPaymentId": null,
+    "providerInvoiceId": "4448572031",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-26T10:06:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_KVZL5DqbYdQJ",
+    "userId": "user_9vBmiHwnUBpw",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "failed",
+    "providerPaymentId": "5038840314",
+    "providerInvoiceId": "4095394911",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-12T07:05:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_FOx1wthOiJvY",
+    "userId": "user_MzmOwbO9JS28",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "partially_paid",
+    "providerPaymentId": "5791115238",
+    "providerInvoiceId": "4559248527",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 440,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-25T11:20:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_Fv36IR4Z0XR1",
+    "userId": "user_Y12M_BGpF8RI",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "waiting",
+    "providerPaymentId": null,
+    "providerInvoiceId": "4281439879",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-21T11:08:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_b8scS7mt0sv_",
+    "userId": "user_gB4QWzk0GWvW",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "expired",
+    "providerPaymentId": "5771358262",
+    "providerInvoiceId": "4211373269",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-20T22:54:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_CUpIsYkgTsNq",
+    "userId": "user_yA2AdJtjQuBk",
+    "packageCode": "PROFESSIONAL",
+    "priceUSD": 2999,
+    "provider": "nowpayments",
+    "status": "expired",
+    "providerPaymentId": "5841426888",
+    "providerInvoiceId": "4070093114",
+    "providerInvoiceUrl": null,
+    "payCurrency": "eth",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-11T20:45:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_zQNnFBtdRyv3",
+    "userId": "user_TZihPjELFB1l",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "expired",
+    "providerPaymentId": "5489490649",
+    "providerInvoiceId": "4445154939",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-18T21:01:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_S6ZBGkZTsHKN",
+    "userId": "user_ILKn46UpVASr",
+    "packageCode": "B",
+    "priceUSD": 699,
+    "provider": "nowpayments",
+    "status": "failed",
+    "providerPaymentId": "5045919295",
+    "providerInvoiceId": "4133866985",
+    "providerInvoiceUrl": null,
+    "payCurrency": "usdttrc20",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-21T16:55:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_Y4IFTTnB_VUD",
+    "userId": "user_czfCUCUHCogh",
+    "packageCode": "A",
+    "priceUSD": 399,
+    "provider": "nowpayments",
+    "status": "failed",
+    "providerPaymentId": "5023429341",
+    "providerInvoiceId": "4923741383",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 0,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-30T16:11:00.000Z",
+    "confirmedAt": null
+  },
+  {
+    "id": "payments_loCt4vzUy8ma",
+    "userId": "user_V__JNqoAh5sR",
+    "packageCode": "C",
+    "priceUSD": 1099,
+    "provider": "nowpayments",
+    "status": "partially_paid",
+    "providerPaymentId": "5140433355",
+    "providerInvoiceId": "4756492041",
+    "providerInvoiceUrl": null,
+    "payCurrency": "btc",
+    "actuallyPaid": 440,
+    "upgradeApplied": false,
+    "rawEvents": [],
+    "createdAt": "2026-06-30T15:59:00.000Z",
+    "confirmedAt": null
+  }
+]

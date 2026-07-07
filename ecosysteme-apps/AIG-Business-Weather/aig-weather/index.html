@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIG Business Weather — forecasts &amp; hazard alerts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d12;
+  --panel: #12161d;
+  --panel-raised: #1c2129;
+  --line: #262c36;
+  --amber: #e8a33d;
+  --amber-dim: #5c4520;
+  --blue: #5fa8d3;
+  --green: #5fb88a;
+  --red: #d3685f;
+  --red-bright: #ff5c4d;
+  --violet: #9b8ce0;
+  --text: #e4e7eb;
+  --text-dim: #9099a8;
+  --text-faint: #5a626f;
+  --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; }
+.mono { font-family: var(--font-mono); }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+
+.shell { max-width: 1200px; margin: 0 auto; padding: 0 24px 60px; }
+.topbar {
+  border-bottom: 1px solid var(--line); padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  position: sticky; top: 0; background: rgba(10,13,18,0.95); backdrop-filter: blur(6px); z-index: 50;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
+.brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+.topbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.status-pill { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-dim); }
+.status-led { width: 7px; height: 7px; border-radius: 50%; background: var(--text-faint); }
+.status-led.live { background: var(--green); }
+.status-led.error { background: var(--red); }
+.status-led.warn { background: var(--amber); }
+.btn-key { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-dim); background: var(--panel-raised); border: 1px solid var(--line); padding: 7px 12px; border-radius: 4px; cursor: pointer; }
+.btn-key:hover { border-color: var(--amber); color: var(--amber); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; font-size: 13px; padding: 10px 18px; border-radius: 6px; border: 1px solid var(--amber); cursor: pointer; background: none; }
+.btn-primary { background: var(--amber); color: #1a1206; }
+.btn-primary:hover { opacity: 0.92; }
+.btn-danger { background: var(--red-bright); color: #1a0806; border-color: var(--red-bright); }
+.btn-ghost { background: none; color: var(--text); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--text-dim); }
+.btn-block { width: 100%; }
+.btn-sm { font-size: 12px; padding: 7px 12px; }
+
+.location-banner {
+  margin: 20px 0; padding: 16px 20px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+}
+.location-info { display: flex; align-items: center; gap: 10px; }
+.location-info svg { width: 18px; height: 18px; color: var(--amber); flex-shrink: 0; }
+.location-text { font-size: 13.5px; }
+.location-text .loc-name { font-weight: 600; }
+.location-text .loc-coords { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-faint); }
+.location-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.manual-location-row { display: none; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.manual-location-row.show { display: flex; }
+.manual-location-row input { background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-size: 13px; padding: 8px 12px; border-radius: 5px; width: 160px; }
+.manual-location-row input:focus { outline: none; border-color: var(--amber); }
+
+.notice-banner { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--amber); padding: 12px 16px; margin: 16px 0; font-size: 12.5px; color: var(--text-dim); border-radius: 0 4px 4px 0; display: none; }
+.notice-banner.show { display: block; }
+.notice-banner b { color: var(--text); }
+
+.disclaimer-banner {
+  background: #1a1209; border: 1px solid var(--amber-dim); border-radius: 6px; padding: 12px 16px;
+  font-size: 11.5px; color: var(--text-dim); margin: 16px 0; line-height: 1.6;
+}
+.disclaimer-banner b { color: var(--amber); }
+
+/* ---------- Section framing ---------- */
+.section { margin-top: 28px; }
+.section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+.section-title { font-size: 13px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+.section-title.weather-title { color: var(--blue); }
+.section-title.warning-title { color: var(--red-bright); }
+.section-sub { font-size: 11.5px; color: var(--text-faint); }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 20px; }
+.panel.warning-panel { border-color: rgba(211,104,95,0.4); background: linear-gradient(180deg, rgba(211,104,95,0.06), transparent 40%), var(--panel); }
+
+/* ---------- Current weather ---------- */
+.current-weather { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; position: relative; z-index: 1; }
+
+/* ---------- Graphical weather theming — the current-conditions panel's
+   background and decorative animation change with the actual forecast
+   condition, so a rainy day visually looks rainy, a clear day looks
+   clear, a thunderstorm looks stormy, etc. Pure CSS/SVG, no images. ---------- */
+.wx-theme-panel { position: relative; overflow: hidden; border-radius: 8px; }
+.wx-theme-underlay { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.wx-theme-panel .current-weather,
+.wx-theme-panel .current-meta-grid { position: relative; z-index: 1; }
+
+.wx-theme-clear .wx-theme-underlay { background: radial-gradient(circle at 15% 30%, rgba(232,163,61,0.28), transparent 55%), linear-gradient(160deg, #1a1710, #12161d 65%); }
+.wx-theme-cloudy .wx-theme-underlay { background: linear-gradient(160deg, #232a33, #12161d 70%); }
+.wx-theme-fog .wx-theme-underlay { background: linear-gradient(160deg, #232830, #181c22 70%); }
+.wx-theme-rain .wx-theme-underlay { background: linear-gradient(160deg, #16232e, #12161d 70%); }
+.wx-theme-snow .wx-theme-underlay { background: linear-gradient(160deg, #1b232c, #12161d 70%); }
+.wx-theme-storm .wx-theme-underlay { background: linear-gradient(160deg, #10141a, #0c0e12 70%); }
+
+/* Sun glow + soft rays for clear skies */
+.wx-sun-glow {
+  position: absolute; top: -40px; left: -30px; width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,163,61,0.5), transparent 70%);
+  animation: wxSunPulse 5s infinite ease-in-out;
+}
+@keyframes wxSunPulse { 0%, 100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+
+/* Drifting cloud blobs */
+.wx-cloud { position: absolute; background: rgba(255,255,255,0.06); border-radius: 50%; }
+.wx-cloud.c1 { width: 140px; height: 44px; top: 20px; left: -40px; animation: wxCloudDrift 22s linear infinite; }
+.wx-cloud.c2 { width: 100px; height: 34px; top: 70px; left: -80px; animation: wxCloudDrift 30s linear infinite; animation-delay: -8s; }
+@keyframes wxCloudDrift { from { transform: translateX(-10%); } to { transform: translateX(340px); } }
+
+/* Rain streaks */
+.wx-rain-streak {
+  position: absolute; top: -20%; width: 1.5px; height: 26px; background: linear-gradient(to bottom, transparent, rgba(95,168,211,0.55));
+  animation: wxRainFall linear infinite;
+}
+@keyframes wxRainFall { from { transform: translateY(-10%) translateX(0); } to { transform: translateY(240%) translateX(-18px); } }
+
+/* Snowflakes */
+.wx-snowflake {
+  position: absolute; top: -10%; border-radius: 50%; background: rgba(255,255,255,0.75);
+  animation: wxSnowFall linear infinite;
+}
+@keyframes wxSnowFall {
+  0% { transform: translateY(-10%) translateX(0); }
+  50% { transform: translateY(120%) translateX(10px); }
+  100% { transform: translateY(240%) translateX(-6px); }
+}
+
+/* Lightning flash for thunderstorms */
+.wx-lightning-flash {
+  position: absolute; inset: 0; background: rgba(232,163,61,0.55); opacity: 0;
+  animation: wxFlash 6s infinite;
+}
+@keyframes wxFlash {
+  0%, 92%, 100% { opacity: 0; }
+  93% { opacity: 0.8; }
+  94% { opacity: 0.1; }
+  95% { opacity: 0.6; }
+  96% { opacity: 0; }
+}
+.wx-theme-storm .wx-rain-streak { background: linear-gradient(to bottom, transparent, rgba(155,140,224,0.5)); }
+.current-temp { font-family: var(--font-mono); font-size: 48px; font-weight: 600; color: var(--text); }
+.current-desc { font-size: 14px; color: var(--text-dim); }
+.current-feelslike { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+.current-feelslike b { color: var(--text); font-family: var(--font-mono); }
+.current-feelslike-note { font-size: 11.5px; color: var(--amber); margin-top: 3px; }
+.current-meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 14px; flex: 1; }
+.current-meta-item { display: flex; flex-direction: column; gap: 2px; }
+.current-meta-label { font-size: 10.5px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.5px; }
+.current-meta-value { font-family: var(--font-mono); font-size: 15px; color: var(--text); }
+
+/* ---------- Hourly / daily strips ---------- */
+.forecast-strip { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; margin-top: 16px; }
+.forecast-item { flex-shrink: 0; width: 76px; background: var(--panel-raised); border-radius: 6px; padding: 10px 8px; text-align: center; }
+.forecast-item .fi-label { font-size: 10.5px; color: var(--text-faint); margin-bottom: 6px; }
+.forecast-item .fi-icon { font-size: 20px; margin-bottom: 6px; }
+.forecast-item .fi-temp { font-family: var(--font-mono); font-size: 13px; color: var(--text); }
+.fi-rain-bar-track { width: 6px; height: 34px; background: rgba(255,255,255,0.08); border-radius: 3px; margin: 6px auto 0; display: flex; align-items: flex-end; overflow: hidden; }
+.fi-rain-bar-fill { width: 100%; border-radius: 3px; transition: height 0.2s ease; }
+.forecast-item .fi-precip { font-size: 10px; color: var(--blue); margin-top: 3px; }
+
+/* ---------- Hazard cards ---------- */
+.hazard-list { display: flex; flex-direction: column; gap: 10px; }
+.hazard-card {
+  display: flex; align-items: flex-start; gap: 12px; padding: 14px; border-radius: 6px;
+  background: var(--panel-raised); border-left: 3px solid var(--text-faint);
+}
+.hazard-card.sev-extreme { border-left-color: var(--red-bright); background: rgba(211,104,95,0.1); }
+.hazard-card.sev-severe { border-left-color: var(--red); background: rgba(211,104,95,0.06); }
+.hazard-card.sev-moderate { border-left-color: var(--amber); background: rgba(232,163,61,0.06); }
+.hazard-card.sev-minor { border-left-color: var(--text-faint); }
+.hazard-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.hazard-body { flex: 1; }
+.hazard-title-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.hazard-title { font-size: 13.5px; font-weight: 600; }
+.hazard-badge { font-size: 9.5px; padding: 2px 8px; border-radius: 9px; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 700; flex-shrink: 0; }
+.hazard-badge.sev-extreme { background: var(--red-bright); color: #1a0806; }
+.hazard-badge.sev-severe { background: var(--red); color: #1a0806; }
+.hazard-badge.sev-moderate { background: var(--amber); color: #1a1206; }
+.hazard-badge.sev-minor { background: var(--text-faint); color: #0a0d12; }
+.hazard-meta { font-size: 11.5px; color: var(--text-faint); margin-top: 4px; }
+.hazard-desc { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
+.hazard-source-link { font-size: 11px; margin-top: 6px; display: inline-block; }
+
+.empty-state { color: var(--text-faint); font-size: 12.5px; padding: 30px 0; text-align: center; }
+.loading-state { color: var(--text-faint); font-size: 12.5px; padding: 30px 0; text-align: center; }
+
+/* ---------- Conversational weather-alert cards (distinct from hazards) ---------- */
+.wx-alert-list { display: flex; flex-direction: column; gap: 10px; }
+.wx-alert-card {
+  display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 6px;
+  background: rgba(95,168,211,0.08); border-left: 3px solid var(--blue);
+}
+.wx-alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.wx-alert-title { font-size: 13px; font-weight: 600; color: var(--blue); }
+.wx-alert-message { font-size: 12.5px; color: var(--text-dim); margin-top: 3px; line-height: 1.5; }
+
+/* ---------- Alert toast (foreground push-like alert) ---------- */
+.alert-toast-wrap { position: fixed; top: 20px; right: 20px; z-index: 500; display: flex; flex-direction: column; gap: 10px; max-width: 360px; transition: top 0.15s ease; }
+.alert-toast {
+  background: var(--red-bright); color: #1a0806; padding: 14px 16px; border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5); font-size: 13px; display: flex; gap: 10px; align-items: flex-start;
+  animation: alertSlideIn 0.25s ease;
+}
+@keyframes alertSlideIn { from { transform: translateX(30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.alert-toast b { display: block; margin-bottom: 3px; }
+.alert-toast-close { background: none; border: none; color: #1a0806; cursor: pointer; font-size: 16px; flex-shrink: 0; opacity: 0.7; }
+.alert-toast-close:hover { opacity: 1; }
+.alert-toast.wx-toast { background: var(--blue); color: #0a1f2c; }
+.alert-toast.wx-toast .alert-toast-close { color: #0a1f2c; }
+
+/* ---------- Big severe warning modal — for extreme, imminent hazards ---------- */
+.severe-warning-backdrop {
+  position: fixed; inset: 0; z-index: 900; display: none;
+  align-items: center; justify-content: center; padding: 20px;
+  background: rgba(20,4,2,0.88); backdrop-filter: blur(2px);
+}
+.severe-warning-backdrop.show { display: flex; }
+.severe-warning-modal {
+  background: #1a0806; border: 2px solid var(--red-bright); border-radius: 12px;
+  padding: 32px 28px; max-width: 460px; width: 100%; text-align: center;
+  box-shadow: 0 0 0 6px rgba(255,92,77,0.15), 0 20px 60px rgba(0,0,0,0.6);
+  animation: severeModalIn 0.2s ease;
+}
+@keyframes severeModalIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.severe-warning-icon-box {
+  width: 84px; height: 84px; margin: 0 auto 18px; border-radius: 14px;
+  background: var(--red-bright); display: flex; align-items: center; justify-content: center;
+  animation: severePulse 1.4s infinite ease-in-out;
+  box-shadow: 0 0 0 0 rgba(255,92,77,0.6);
+}
+@keyframes severePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,92,77,0.55); }
+  50% { box-shadow: 0 0 0 14px rgba(255,92,77,0); }
+}
+.severe-warning-exclaim { font-size: 52px; font-weight: 800; color: #1a0806; line-height: 1; font-family: var(--font-sans); }
+.severe-warning-headline { font-size: 22px; font-weight: 800; color: var(--red-bright); letter-spacing: 0.5px; margin-bottom: 6px; }
+.severe-warning-kind { font-size: 13px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 12px; }
+.severe-warning-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
+.severe-warning-meta { font-size: 12px; color: var(--text-dim); margin-bottom: 10px; }
+.severe-warning-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 14px; }
+.severe-warning-link { font-size: 12.5px; display: inline-block; margin-bottom: 18px; }
+.severe-warning-actions { display: flex; justify-content: center; }
+.severe-warning-dismiss {
+  background: var(--red-bright); color: #1a0806; border: none; font-weight: 700; font-size: 14px;
+  padding: 15px 32px; border-radius: 8px; cursor: pointer; width: 100%; min-height: 48px;
+}
+.severe-warning-dismiss:hover { opacity: 0.9; }
+.severe-warning-queue-note { font-size: 11.5px; color: var(--text-faint); margin-top: 12px; }
+
+@media (max-width: 480px) {
+  .severe-warning-modal { padding: 26px 20px; }
+  .severe-warning-icon-box { width: 68px; height: 68px; }
+  .severe-warning-exclaim { font-size: 42px; }
+  .severe-warning-headline { font-size: 18px; }
+}
+
+/* ---------- Settings modal ---------- */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
+.modal-backdrop.open { display: flex; }
+.modal { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 28px; max-width: 480px; width: 100%; position: relative; }
+.modal h3 { margin: 0 0 6px; font-size: 16px; }
+.modal p { font-size: 13px; color: var(--text-dim); margin: 0 0 14px; line-height: 1.6; }
+.modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 18px; }
+.field { margin-bottom: 16px; }
+.field label { font-size: 12px; color: var(--text-dim); display: flex; justify-content: space-between; margin-bottom: 8px; }
+.field input[type="range"] { width: 100%; }
+.modal-actions { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); }
+.toggle-row:first-child { border-top: none; }
+.toggle-row-label { font-size: 13px; }
+.toggle-row-desc { font-size: 11.5px; color: var(--text-faint); margin-top: 2px; }
+
+@media (max-width: 700px) {
+  .shell { padding: 0 14px 60px; }
+  .topbar { padding: 12px 14px; }
+  .current-weather { gap: 16px; }
+  .current-temp { font-size: 36px; }
+  .alert-toast-wrap { left: 14px; right: 14px; max-width: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span>AIG BUSINESS WEATHER</div>
+  <div class="topbar-right">
+    <span class="status-pill"><span class="status-led" id="weatherStatusLed"></span><span id="weatherStatusText">connecting&hellip;</span></span>
+    <span class="status-pill"><span class="status-led" id="hazardStatusLed"></span><span id="hazardStatusText">connecting&hellip;</span></span>
+    <button class="btn-key" id="refreshBtn">refresh</button>
+    <button class="btn-key" id="settingsBtn">alert settings</button>
+  </div>
+</div>
+
+<div class="shell">
+
+  <div class="disclaimer-banner">
+    <b>This supplements, it does not replace, official emergency alerts.</b>
+    Always follow instructions from your local authorities, Wireless Emergency Alerts, NOAA Weather Radio, or
+    equivalent official channels in your country. Data here comes from public sources (Open-Meteo, USGS, GDACS,
+    NWS) and may be delayed, incomplete, or temporarily unavailable.
+  </div>
+
+  <div class="notice-banner" id="noticeBanner"></div>
+
+  <div class="location-banner">
+    <div class="location-info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div class="location-text">
+        <div class="loc-name" id="locationName">Location not set</div>
+        <div class="loc-coords" id="locationCoords">&mdash;</div>
+      </div>
+    </div>
+    <div class="location-actions">
+      <button class="btn btn-primary btn-sm" id="useGpsBtn">Use my GPS location</button>
+      <button class="btn btn-ghost btn-sm" id="manualLocationBtn">Enter manually</button>
+    </div>
+  </div>
+  <div class="manual-location-row" id="manualLocationRow">
+    <input type="text" id="manualLat" placeholder="Latitude (e.g. 51.5074)">
+    <input type="text" id="manualLon" placeholder="Longitude (e.g. -0.1278)">
+    <button class="btn btn-primary btn-sm" id="manualLocationSaveBtn">Set location</button>
+  </div>
+  <p style="font-size:11px; color:var(--text-faint); margin:6px 0 0; line-height:1.6;" id="usagePingDisclosure">
+    If this deployment is connected to a backend, setting a location also sends a one-time, anonymous usage
+    ping (your location rounded to roughly 11 km, with nothing that identifies you or this device) so an
+    admin can see aggregate usage on a map. It's never linked to your push subscription or any identity.
+  </p>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title warning-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+        Active hazard warnings
+      </div>
+      <div class="section-sub" id="hazardRadiusLabel">within 500 km</div>
+    </div>
+    <div class="panel warning-panel">
+      <div class="hazard-list" id="hazardList"><div class="loading-state">Set a location to check for active hazards&hellip;</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title" style="color:var(--blue);">Weather heads-up</div>
+      <div class="section-sub">next 12 hours</div>
+    </div>
+    <div class="panel">
+      <div class="wx-alert-list" id="weatherAlertList"><div class="loading-state">Set a location to check for rain, wind, heat, or cold heads-up&hellip;</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title weather-title">Current conditions</div>
+    </div>
+    <div class="panel" id="currentWeatherPanel">
+      <div id="currentWeatherBody"><div class="loading-state">Set a location to load weather&hellip;</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title weather-title">Next 24 hours</div></div>
+    <div class="panel">
+      <div class="forecast-strip" id="hourlyStrip"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title weather-title">7-day forecast</div></div>
+    <div class="panel">
+      <div class="forecast-strip" id="dailyStrip"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title" style="color:var(--text-dim);">Data sources</div></div>
+    <div class="panel" style="font-size:12px; color:var(--text-dim); line-height:1.8;">
+      <b style="color:var(--text);">Regular weather:</b> <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> (aggregates NOAA GFS, ECMWF, DWD, JMA and other national models) — no key, CC BY 4.0.<br>
+      <b style="color:var(--text);">Earthquakes:</b> <a href="https://earthquake.usgs.gov" target="_blank" rel="noopener">USGS Earthquake Hazards Program</a> — real-time GeoJSON feeds. Tsunami risk shown here is USGS's own flag on qualifying events (M≥~7, shallow, offshore) — for official tsunami bulletins, see <a href="https://www.tsunami.gov" target="_blank" rel="noopener">tsunami.gov</a> (Pacific/Caribbean/Atlantic) or your regional warning center directly.<br>
+      <b style="color:var(--text);">Cyclones, floods, volcanoes, wildfires:</b> <a href="https://www.gdacs.org" target="_blank" rel="noopener">GDACS</a> (UN/EU Joint Research Centre).<br>
+      <b style="color:var(--text);">Severe weather alerts (US locations only):</b> <a href="https://www.weather.gov" target="_blank" rel="noopener">NOAA / National Weather Service</a>.
+    </div>
+  </div>
+
+</div>
+
+<div class="alert-toast-wrap" id="alertToastWrap"></div>
+
+<div class="severe-warning-backdrop" id="severeWarningBackdrop">
+  <div class="severe-warning-modal">
+    <div class="severe-warning-icon-box">
+      <span class="severe-warning-exclaim">!</span>
+    </div>
+    <div class="severe-warning-headline">SEVERE WEATHER WARNING!</div>
+    <div class="severe-warning-kind" id="severeWarningKind"></div>
+    <div class="severe-warning-title" id="severeWarningTitle"></div>
+    <div class="severe-warning-meta" id="severeWarningMeta"></div>
+    <div class="severe-warning-desc" id="severeWarningDesc"></div>
+    <a class="severe-warning-link" id="severeWarningLink" target="_blank" rel="noopener" style="display:none;">Official source &rarr;</a>
+    <div class="severe-warning-actions">
+      <button class="severe-warning-dismiss" id="severeWarningDismissBtn">I understand</button>
+    </div>
+    <div class="severe-warning-queue-note" id="severeWarningQueueNote" style="display:none;"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="settingsModal">
+  <div class="modal">
+    <button class="modal-close" id="closeSettingsBtn">&times;</button>
+    <h3>Alert settings</h3>
+    <p>These control what counts as "nearby" and whether this browser tab can show you an immediate alert. This only works while this page is open — see the notice at the bottom of the page for what real background alerts would require.</p>
+
+    <div class="field">
+      <label><span>Alert radius</span><span class="mono" id="radiusValueLabel">500 km</span></label>
+      <input type="range" id="radiusSlider" min="50" max="2000" step="50" value="500">
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-row-label">Browser notifications</div>
+        <div class="toggle-row-desc">Show a system notification when a new hazard appears nearby, even if this tab isn't focused (still requires the browser to be running).</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="notifPermBtn">Enable</button>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-row-label">Auto-refresh</div>
+        <div class="toggle-row-desc">Check for new hazards and updated weather every 5 minutes while this tab is open.</div>
+      </div>
+      <input type="checkbox" id="autoRefreshToggle" checked style="width:auto;">
+    </div>
+
+    <div class="toggle-row" style="flex-direction:column; align-items:stretch; gap:8px;">
+      <div>
+        <div class="toggle-row-label">Background alerts (needs a deployed backend)</div>
+        <div class="toggle-row-desc" id="pushStatusDesc">Not available yet \u2014 no backend is configured. See backend-example/README.md for what running one requires.</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="enablePushBtn" disabled>Subscribe</button>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="saveSettingsBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

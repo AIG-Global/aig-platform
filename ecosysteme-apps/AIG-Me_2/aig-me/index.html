@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIG Me — personal relationship tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d12;
+  --panel: #12161d;
+  --panel-raised: #1c2129;
+  --line: #262c36;
+  --amber: #e8a33d;
+  --amber-dim: #5c4520;
+  --blue: #5fa8d3;
+  --green: #5fb88a;
+  --red: #d3685f;
+  --violet: #9b8ce0;
+  --text: #e4e7eb;
+  --text-dim: #9099a8;
+  --text-faint: #5a626f;
+  --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: var(--font-sans); font-size: 14px; line-height: 1.5;
+}
+.mono { font-family: var(--font-mono); }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+input, select, textarea {
+  width: 100%; background: var(--panel-raised); border: 1px solid var(--line); color: var(--text);
+  font-family: var(--font-sans); font-size: 13.5px; padding: 9px 12px; border-radius: 4px;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--amber); }
+textarea { resize: vertical; min-height: 64px; }
+label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom: 6px; }
+.field { margin-bottom: 14px; }
+
+/* ---------- Shell ---------- */
+.shell { max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
+.topbar {
+  border-bottom: 1px solid var(--line); padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; background: rgba(10,13,18,0.95); backdrop-filter: blur(6px); z-index: 50;
+}
+.topbar-inner { max-width: 1280px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
+.brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+.topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.btn-key { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-dim); background: var(--panel-raised); border: 1px solid var(--line); padding: 7px 12px; border-radius: 4px; cursor: pointer; }
+.btn-key:hover { border-color: var(--amber); color: var(--amber); }
+.user-pill { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dim); }
+.user-pill .avatar { width: 22px; height: 22px; border-radius: 50%; background: var(--amber-dim); color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font-family: var(--font-sans); font-weight: 600; font-size: 13px; padding: 10px 18px;
+  border-radius: 5px; border: 1px solid var(--amber); cursor: pointer; background: none;
+}
+.btn-primary { background: var(--amber); color: #1a1206; }
+.btn-primary:hover { opacity: 0.92; }
+.btn-ghost { background: none; color: var(--text); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--text-dim); }
+.btn-block { width: 100%; }
+.btn-sm { font-size: 12px; padding: 7px 12px; }
+
+/* ---------- Sections ---------- */
+.section { margin-top: 28px; }
+.section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.section-title { font-size: 12.5px; font-weight: 600; letter-spacing: 0.4px; color: var(--text-dim); text-transform: uppercase; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 20px; }
+
+/* ---------- Upcoming events ---------- */
+.event-row {
+  display: flex; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line);
+}
+.event-row:first-child { border-top: none; }
+.event-countdown {
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--amber);
+  background: rgba(232,163,61,0.12); padding: 6px 10px; border-radius: 4px; min-width: 64px; text-align: center; flex-shrink: 0;
+}
+.event-countdown.today { background: rgba(95,184,138,0.18); color: var(--green); }
+.event-info { flex: 1; }
+.event-title { font-size: 13.5px; font-weight: 500; }
+.event-meta { font-size: 11.5px; color: var(--text-faint); }
+.event-avatar {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--panel-raised); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--text-dim);
+  overflow: hidden;
+}
+.event-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Contact grid ---------- */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.contact-card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px;
+  cursor: pointer; transition: border-color 0.15s ease;
+}
+.contact-card:hover { border-color: var(--amber-dim); }
+.contact-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.contact-avatar {
+  width: 44px; height: 44px; border-radius: 50%; background: var(--panel-raised); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; color: var(--text-dim);
+  overflow: hidden;
+}
+.contact-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.contact-name { font-weight: 600; font-size: 14.5px; }
+.contact-relation { font-size: 11.5px; color: var(--text-faint); }
+.contact-card-body { font-size: 12px; color: var(--text-dim); display: flex; flex-direction: column; gap: 4px; }
+.sentiment-tag {
+  display: inline-flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 9px; border-radius: 12px; margin-top: 8px;
+}
+.sentiment-positive { background: rgba(95,184,138,0.15); color: var(--green); }
+.sentiment-neutral { background: rgba(144,153,168,0.15); color: var(--text-dim); }
+.sentiment-negative { background: rgba(211,104,95,0.15); color: var(--red); }
+.sentiment-unset { background: var(--panel-raised); color: var(--text-faint); }
+
+.empty-state { color: var(--text-faint); font-size: 12.5px; padding: 30px 0; text-align: center; }
+
+/* ---------- Filter chips ---------- */
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.filter-chip {
+  font-size: 12px; padding: 7px 14px; border-radius: 16px; border: 1px solid var(--line);
+  background: none; color: var(--text-dim); cursor: pointer;
+}
+.filter-chip.active { border-color: var(--amber); color: var(--amber); }
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none;
+  align-items: center; justify-content: center; z-index: 200; padding: 20px; overflow-y: auto;
+}
+.modal-backdrop.open { display: flex; }
+.modal { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 28px; max-width: 520px; width: 100%; margin: auto; }
+.modal h3 { margin: 0 0 4px; font-size: 16px; }
+.modal p { font-size: 13px; color: var(--text-dim); margin: 0 0 14px; line-height: 1.6; }
+.modal-actions { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+.modal-close { position: absolute; top: 18px; right: 18px; background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 18px; }
+.modal-close:hover { color: var(--amber); }
+.modal-inner { position: relative; }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+/* ---------- Photo grid ---------- */
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 14px; }
+.photo-thumb {
+  position: relative; aspect-ratio: 1; border-radius: 5px; overflow: hidden; background: var(--panel-raised);
+  border: 1px solid var(--line); cursor: pointer;
+}
+.photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-tag-pill {
+  position: absolute; bottom: 4px; left: 4px; right: 4px; background: rgba(0,0,0,0.6);
+  color: var(--text); font-size: 9.5px; padding: 3px 6px; border-radius: 3px; text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.upload-drop {
+  border: 1px dashed var(--line); border-radius: 6px; padding: 24px; text-align: center;
+  color: var(--text-faint); font-size: 12.5px; cursor: pointer; margin-top: 12px;
+}
+.upload-drop:hover { border-color: var(--amber-dim); color: var(--text-dim); }
+
+/* ---------- Face tagging canvas ---------- */
+.tag-canvas-wrap { position: relative; margin-top: 14px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--panel-raised); }
+.tag-canvas-wrap img { width: 100%; display: block; }
+.tag-box {
+  position: absolute; border: 2px solid var(--amber); border-radius: 3px; cursor: pointer;
+  background: rgba(232,163,61,0.08);
+}
+.tag-box-label {
+  position: absolute; top: -22px; left: -1px; background: var(--amber); color: #1a1206;
+  font-size: 10.5px; font-weight: 600; padding: 2px 6px; border-radius: 3px; white-space: nowrap;
+}
+.tag-hint { font-size: 11.5px; color: var(--text-faint); margin-top: 8px; }
+
+/* ---------- Monitor panel ---------- */
+.monitor-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 14px 0; border-top: 1px solid var(--line);
+}
+.monitor-row:first-child { border-top: none; }
+.monitor-info { flex: 1; }
+.monitor-title { font-size: 13.5px; font-weight: 600; }
+.monitor-desc { font-size: 12px; color: var(--text-dim); margin-top: 3px; line-height: 1.5; }
+
+/* ---------- Mentions ---------- */
+.mention-row {
+  display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); cursor: pointer;
+}
+.mention-row:first-child { border-top: none; }
+.mention-row:hover { background: var(--panel-raised); margin: 0 -20px; padding: 14px 20px; }
+.mention-tone-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.mention-tone-dot.positive { background: var(--green); }
+.mention-tone-dot.neutral { background: var(--text-faint); }
+.mention-tone-dot.negative { background: var(--red); }
+.mention-tone-dot.unset { background: var(--line); }
+.mention-info { flex: 1; }
+.mention-title { font-size: 13.5px; font-weight: 500; }
+.mention-meta { font-size: 11.5px; color: var(--text-faint); margin-top: 3px; }
+.mention-source-tag {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px; background: var(--panel-raised);
+  color: var(--text-dim); margin-left: 8px;
+}
+
+/* ---------- Auth screen (shared pattern) ---------- */
+.auth-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; position: relative; overflow: hidden; }
+.auth-hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.45; }
+.auth-hero-bg svg { width: 100%; height: 100%; display: block; }
+.auth-card { background: rgba(18,22,29,0.92); backdrop-filter: blur(4px); border: 1px solid var(--line); border-radius: 6px; padding: 36px; max-width: 440px; width: 100%; position: relative; z-index: 1; }
+.auth-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; margin-bottom: 6px; }
+.auth-brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+.auth-tagline { font-size: 12.5px; color: var(--text-dim); margin-bottom: 24px; }
+.auth-tabs { display: flex; gap: 4px; margin-bottom: 22px; background: var(--panel-raised); border-radius: 5px; padding: 3px; }
+.auth-tab { flex: 1; text-align: center; padding: 8px; font-size: 12.5px; font-weight: 600; border-radius: 4px; cursor: pointer; color: var(--text-dim); background: none; border: none; }
+.auth-tab.active { background: var(--amber); color: #1a1206; }
+.auth-error { background: rgba(211,104,95,0.12); border: 1px solid var(--red); color: #f0a39c; font-size: 12px; padding: 9px 12px; border-radius: 4px; margin-bottom: 14px; display: none; }
+.auth-error.show { display: block; }
+.terms-checkbox-row { display: flex; align-items: flex-start; gap: 10px; margin: 18px 0; background: var(--panel-raised); border: 1px solid var(--line); border-radius: 5px; padding: 12px; }
+.terms-checkbox-row input { width: auto; margin-top: 2px; flex-shrink: 0; }
+.terms-checkbox-row label { font-size: 12px; color: var(--text-dim); line-height: 1.5; cursor: pointer; }
+.auth-submit-btn { width: 100%; padding: 11px; font-size: 13px; }
+.auth-switch { text-align: center; font-size: 12px; color: var(--text-faint); margin-top: 16px; }
+.auth-switch button { background: none; border: none; color: var(--blue); cursor: pointer; font-size: 12px; text-decoration: underline; padding: 0; }
+.auth-panel { display: none; }
+.auth-panel.active { display: block; }
+
+.privacy-banner {
+  background: #0d1a17; border-bottom: 1px solid #1d5c47; padding: 9px 24px; text-align: center;
+}
+.privacy-banner-inner { max-width: 1280px; margin: 0 auto; font-size: 11.5px; color: var(--text-dim); display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.privacy-banner-inner b { color: var(--green); font-weight: 600; }
+
+@media (max-width: 760px) {
+  .shell { padding: 0 14px 60px; }
+  .topbar { padding: 12px 14px; }
+  .user-pill #meUserEmailText { display: none; }
+  .field-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="auth-shell" id="authShell">
+  <div class="auth-hero-bg" aria-hidden="true">
+    <svg viewBox="0 0 420 420" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="nodeGlow" x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur stdDeviation="2.2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Original procedural circuit-trace face profile: a face silhouette
+           traced as a circuit-board path with branching data lines and
+           glowing junction nodes, dissolving into scattered light particles.
+           Generated programmatically in AIG's own palette -- not derived
+           from or tracing any existing photo or artwork. -->
+      <g filter="url(#nodeGlow)">
+      <polyline points="300.0,20.0 281.0,25.6 260.0,30.0 236.7,40.5 220.0,55.0 203.4,71.6 190.0,90.0 180.6,108.8 175.0,130.0 175.2,146.0 172.0,160.0 162.2,168.2 150.0,175.0 137.7,181.6 120.0,185.0 102.1,195.8 90.0,210.0 79.5,224.7 70.0,240.0 79.2,243.0 95.0,250.0 100.5,256.3 110.0,265.0 105.0,272.5 100.0,280.0 104.2,285.5 115.0,295.0 107.9,301.2 105.0,310.0 113.5,320.6 120.0,330.0 135.3,337.7 150.0,345.0 168.0,346.3 190.0,350.0 210.6,347.9 230.0,345.0 247.2,338.8 260.0,330.0 261.5,312.9 270.0,300.0 277.1,281.3 280.0,260.0 286.4,230.8 290.0,200.0 293.9,169.3 300.0,140.0 300.1,108.6 305.0,80.0 305.7,51.9 300.0,20.0" fill="none" stroke="#e8a33d" stroke-width="1.3" stroke-opacity="0.75" stroke-linejoin="round"/>
+      <line x1="300.0" y1="20.0" x2="323.9" y2="32.1" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.46"/>
+      <line x1="323.9" y1="32.1" x2="352.5" y2="14.1" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.31"/>
+      <line x1="236.7" y1="40.5" x2="280.4" y2="60.1" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.37"/>
+      <line x1="190.0" y1="90.0" x2="230.7" y2="66.6" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.36"/>
+      <line x1="175.2" y1="146.0" x2="202.9" y2="146.3" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.48"/>
+      <line x1="150.0" y1="175.0" x2="189.6" y2="185.8" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.47"/>
+      <line x1="168.0" y1="346.3" x2="207.1" y2="332.3" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.52"/>
+      <line x1="207.1" y1="332.3" x2="247.7" y2="347.8" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.32"/>
+      <line x1="230.0" y1="345.0" x2="276.6" y2="328.0" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.41"/>
+      <line x1="261.5" y1="312.9" x2="293.4" y2="295.7" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.31"/>
+      <line x1="280.0" y1="260.0" x2="303.6" y2="254.0" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.35"/>
+      <line x1="293.9" y1="169.3" x2="343.6" y2="174.5" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.43"/>
+      <line x1="305.0" y1="80.0" x2="350.5" y2="81.8" stroke="#5fa8d3" stroke-width="0.8" stroke-opacity="0.31"/>
+      <circle cx="323.9" cy="32.1" r="3.1" fill="#5fa8d3" opacity="0.81"/>
+      <circle cx="352.5" cy="14.1" r="2.4" fill="#e8a33d" opacity="0.78"/>
+      <circle cx="280.4" cy="60.1" r="3.2" fill="#5fa8d3" opacity="0.65"/>
+      <circle cx="230.7" cy="66.6" r="2.5" fill="#e8a33d" opacity="0.65"/>
+      <circle cx="202.9" cy="146.3" r="2.2" fill="#e8a33d" opacity="0.71"/>
+      <circle cx="189.6" cy="185.8" r="3.4" fill="#e8a33d" opacity="0.78"/>
+      <circle cx="207.1" cy="332.3" r="3.2" fill="#5fa8d3" opacity="0.76"/>
+      <circle cx="247.7" cy="347.8" r="2.1" fill="#e8a33d" opacity="0.69"/>
+      <circle cx="276.6" cy="328.0" r="3.0" fill="#9b8ce0" opacity="0.86"/>
+      <circle cx="293.4" cy="295.7" r="2.3" fill="#9b8ce0" opacity="0.62"/>
+      <circle cx="303.6" cy="254.0" r="2.4" fill="#9b8ce0" opacity="0.69"/>
+      <circle cx="343.6" cy="174.5" r="3.4" fill="#5fa8d3" opacity="0.86"/>
+      <circle cx="350.5" cy="81.8" r="2.4" fill="#e8a33d" opacity="0.79"/>
+      <circle cx="300.0" cy="20.0" r="2.0" fill="#f0c674" opacity="0.81"/>
+      <circle cx="220.0" cy="55.0" r="1.8" fill="#f0c674" opacity="0.78"/>
+      <circle cx="175.0" cy="130.0" r="2.9" fill="#f0c674" opacity="0.89"/>
+      <circle cx="150.0" cy="175.0" r="2.4" fill="#f0c674" opacity="0.75"/>
+      <circle cx="90.0" cy="210.0" r="2.6" fill="#f0c674" opacity="0.75"/>
+      <circle cx="95.0" cy="250.0" r="2.1" fill="#f0c674" opacity="1.0"/>
+      <circle cx="100.0" cy="280.0" r="2.5" fill="#f0c674" opacity="0.87"/>
+      <circle cx="105.0" cy="310.0" r="2.5" fill="#f0c674" opacity="0.95"/>
+      <circle cx="150.0" cy="345.0" r="2.7" fill="#f0c674" opacity="0.77"/>
+      <circle cx="230.0" cy="345.0" r="1.5" fill="#f0c674" opacity="0.79"/>
+      <circle cx="270.0" cy="300.0" r="1.9" fill="#f0c674" opacity="0.76"/>
+      <circle cx="290.0" cy="200.0" r="2.9" fill="#f0c674" opacity="0.96"/>
+      <circle cx="305.0" cy="80.0" r="2.0" fill="#f0c674" opacity="0.9"/>
+      <circle cx="293.2" cy="295.9" r="2.0" fill="#5fa8d3" opacity="0.7"/>
+      <circle cx="206.8" cy="33.5" r="1.5" fill="#9b8ce0" opacity="0.51"/>
+      <circle cx="203.4" cy="267.0" r="2.4" fill="#5fa8d3" opacity="0.36"/>
+      <circle cx="314.4" cy="255.8" r="3.6" fill="#9b8ce0" opacity="0.55"/>
+      <circle cx="372.9" cy="325.9" r="1.3" fill="#5fa8d3" opacity="0.64"/>
+      <circle cx="214.6" cy="112.5" r="4.3" fill="#5fa8d3" opacity="0.7"/>
+      <circle cx="382.9" cy="132.2" r="2.5" fill="#5fa8d3" opacity="0.46"/>
+      <circle cx="394.4" cy="192.7" r="2.0" fill="#e8a33d" opacity="0.53"/>
+      <circle cx="389.3" cy="167.7" r="4.5" fill="#e8a33d" opacity="0.64"/>
+      <circle cx="272.9" cy="38.2" r="1.6" fill="#e8a33d" opacity="0.37"/>
+      <circle cx="308.2" cy="332.7" r="1.4" fill="#e8a33d" opacity="0.66"/>
+      <circle cx="234.5" cy="418.4" r="4.4" fill="#5fa8d3" opacity="0.57"/>
+      <circle cx="324.5" cy="225.5" r="3.3" fill="#5fa8d3" opacity="0.47"/>
+      <circle cx="153.5" cy="182.6" r="4.3" fill="#5fa8d3" opacity="0.54"/>
+      <circle cx="382.8" cy="110.6" r="1.8" fill="#9b8ce0" opacity="0.69"/>
+      <circle cx="393.8" cy="365.6" r="3.3" fill="#e8a33d" opacity="0.61"/>
+      <circle cx="281.8" cy="327.0" r="1.2" fill="#e8a33d" opacity="0.61"/>
+      <circle cx="383.6" cy="349.3" r="1.4" fill="#9b8ce0" opacity="0.64"/>
+      <circle cx="383.4" cy="397.7" r="2.8" fill="#9b8ce0" opacity="0.45"/>
+      <circle cx="158.5" cy="199.6" r="2.1" fill="#5fa8d3" opacity="0.5"/>
+      <circle cx="381.7" cy="177.7" r="3.0" fill="#5fa8d3" opacity="0.3"/>
+      <circle cx="339.0" cy="84.5" r="4.5" fill="#9b8ce0" opacity="0.69"/>
+      <circle cx="315.0" cy="184.0" r="1.6" fill="#5fa8d3" opacity="0.74"/>
+      <circle cx="189.0" cy="92.5" r="3.3" fill="#e8a33d" opacity="0.53"/>
+      <circle cx="362.2" cy="80.0" r="2.6" fill="#e8a33d" opacity="0.69"/>
+      <circle cx="322.0" cy="413.3" r="2.5" fill="#5fa8d3" opacity="0.68"/>
+      <circle cx="221.8" cy="361.9" r="1.8" fill="#9b8ce0" opacity="0.57"/>
+      <circle cx="254.6" cy="177.2" r="2.0" fill="#e8a33d" opacity="0.47"/>
+      <circle cx="374.6" cy="69.9" r="1.9" fill="#e8a33d" opacity="0.54"/>
+      <circle cx="240.3" cy="24.6" r="4.5" fill="#9b8ce0" opacity="0.71"/>
+      <circle cx="199.6" cy="329.3" r="2.6" fill="#9b8ce0" opacity="0.45"/>
+      <circle cx="335.5" cy="65.0" r="4.4" fill="#e8a33d" opacity="0.35"/>
+      <circle cx="137.1" cy="245.4" r="4.0" fill="#5fa8d3" opacity="0.7"/>
+      <circle cx="167.2" cy="403.5" r="1.8" fill="#5fa8d3" opacity="0.41"/>
+      <circle cx="298.5" cy="283.6" r="1.6" fill="#e8a33d" opacity="0.7"/>
+      <circle cx="387.1" cy="103.4" r="3.2" fill="#e8a33d" opacity="0.34"/>
+      <circle cx="245.8" cy="245.1" r="4.3" fill="#5fa8d3" opacity="0.67"/>
+      <circle cx="181.3" cy="300.8" r="2.5" fill="#9b8ce0" opacity="0.64"/>
+      <circle cx="321.5" cy="126.0" r="3.7" fill="#e8a33d" opacity="0.6"/>
+      <circle cx="418.8" cy="30.8" r="2.1" fill="#9b8ce0" opacity="0.37"/>
+      <circle cx="331.1" cy="256.9" r="3.4" fill="#9b8ce0" opacity="0.69"/>
+      <circle cx="122.3" cy="343.2" r="3.4" fill="#5fa8d3" opacity="0.73"/>
+      <circle cx="401.7" cy="56.4" r="1.6" fill="#9b8ce0" opacity="0.64"/>
+      <circle cx="335.3" cy="85.5" r="2.1" fill="#9b8ce0" opacity="0.39"/>
+      <circle cx="147.7" cy="177.9" r="1.2" fill="#5fa8d3" opacity="0.48"/>
+      <circle cx="351.3" cy="267.6" r="3.6" fill="#9b8ce0" opacity="0.59"/>
+      <circle cx="285.5" cy="179.6" r="1.4" fill="#5fa8d3" opacity="0.7"/>
+      <circle cx="384.9" cy="379.7" r="4.0" fill="#5fa8d3" opacity="0.35"/>
+      <circle cx="294.8" cy="62.2" r="2.2" fill="#e8a33d" opacity="0.33"/>
+      <circle cx="389.7" cy="88.2" r="1.5" fill="#e8a33d" opacity="0.56"/>
+      <circle cx="354.0" cy="371.3" r="3.2" fill="#e8a33d" opacity="0.56"/>
+      <circle cx="127.4" cy="309.4" r="4.3" fill="#e8a33d" opacity="0.33"/>
+      <circle cx="360.7" cy="362.9" r="2.1" fill="#9b8ce0" opacity="0.33"/>
+      <circle cx="356.2" cy="45.4" r="4.0" fill="#e8a33d" opacity="0.71"/>
+      <circle cx="186.7" cy="343.0" r="2.2" fill="#5fa8d3" opacity="0.33"/>
+      <circle cx="358.6" cy="95.6" r="1.8" fill="#e8a33d" opacity="0.43"/>
+      <circle cx="203.7" cy="269.4" r="4.4" fill="#5fa8d3" opacity="0.4"/>
+      <circle cx="280.9" cy="394.5" r="4.4" fill="#e8a33d" opacity="0.63"/>
+      <circle cx="173.6" cy="404.3" r="1.6" fill="#9b8ce0" opacity="0.56"/>
+      <circle cx="250.4" cy="306.0" r="3.2" fill="#e8a33d" opacity="0.65"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="auth-card">
+    <div class="auth-brand"><span class="dot"></span>AIG ME</div>
+    <div class="auth-tagline">Your people, your dates, your notes — kept by you, for you. Nothing leaves your browser.</div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign in</button>
+      <button class="auth-tab" data-tab="register">Create account</button>
+    </div>
+
+    <div class="auth-error" id="authError"></div>
+
+    <form class="auth-panel active" id="loginPanel">
+      <div class="field">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary auth-submit-btn">Sign in</button>
+      <div class="auth-switch">No account yet? <button type="button" data-switch="register">Create one</button></div>
+    </form>
+
+    <form class="auth-panel" id="registerPanel">
+      <div class="field">
+        <label for="registerEmail">Email</label>
+        <input type="email" id="registerEmail" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="registerPassword">Password</label>
+        <input type="password" id="registerPassword" autocomplete="new-password" required minlength="8">
+      </div>
+      <div class="field">
+        <label for="registerPasswordConfirm">Confirm password</label>
+        <input type="password" id="registerPasswordConfirm" autocomplete="new-password" required minlength="8">
+      </div>
+
+      <div class="terms-checkbox-row">
+        <input type="checkbox" id="termsCheckbox" required>
+        <label for="termsCheckbox">
+          I understand AIG Me only stores what I enter myself — contacts, dates, notes, and photos
+          I upload and tag by hand. It does not search the internet, identify people automatically
+          in photos, or gather information about anyone without my direct input.
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary auth-submit-btn">Create account</button>
+      <div class="auth-switch">Already have an account? <button type="button" data-switch="login">Sign in</button></div>
+    </form>
+  </div>
+</div>
+
+<div id="appShell" style="display:none;">
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="dot"></span>AIG ME</div>
+    <div class="topbar-actions">
+      <span class="user-pill"><span class="avatar" id="meUserAvatar">?</span><span id="meUserEmailText"></span></span>
+      <button class="btn-key" id="meSignOutBtn">sign out</button>
+    </div>
+  </div>
+</div>
+
+<div class="privacy-banner">
+  <div class="privacy-banner-inner">
+    <b>Everything here is what you typed or uploaded.</b>
+    AIG Me never searches the web, social media, or any database for you or your contacts, and never
+    runs facial recognition. Photo tagging is something you do by hand.
+  </div>
+</div>
+
+<div class="shell">
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Coming up</div>
+      <span class="mono" style="font-size:11px; color:var(--text-faint);" id="upcomingCount">—</span>
+    </div>
+    <div class="panel">
+      <div id="upcomingList"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Your people</div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-ghost btn-sm" id="tagGroupPhotoBtn">Tag a group photo</button>
+        <button class="btn btn-primary btn-sm" id="addContactBtn">+ Add person</button>
+      </div>
+    </div>
+    <div class="filter-row" id="relationFilterRow"></div>
+    <div class="contact-grid" id="contactGrid"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Check what's out there about you</div>
+    </div>
+    <div class="panel">
+      <div id="monitorList"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Mentions you've found — one place to keep them</div>
+      <button class="btn btn-primary btn-sm" id="addMentionBtn">+ Log a mention</button>
+    </div>
+    <p style="font-size:12px; color:var(--text-faint); margin:-4px 0 14px;">
+      This is a log of things you found yourself — through a Google Alert, a manual search, or
+      someone telling you. AIG Me doesn't search for these on its own; it just keeps them organized
+      once you have.
+    </p>
+    <div class="filter-row" id="mentionFilterRow"></div>
+    <div class="panel">
+      <div id="mentionList"></div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /#appShell -->
+
+<!-- Contact detail / edit modal -->
+<div class="modal-backdrop" id="contactModal">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-inner">
+      <button class="modal-close" id="closeContactModalBtn">&times;</button>
+      <h3 id="contactModalTitle">Add person</h3>
+      <p id="contactModalSub" style="display:none;"></p>
+
+      <form id="contactForm">
+        <div class="field-row">
+          <div class="field">
+            <label for="contactName">Name</label>
+            <input type="text" id="contactName" required>
+          </div>
+          <div class="field">
+            <label for="contactRelation">Relationship</label>
+            <select id="contactRelation">
+              <option value="family">Family</option>
+              <option value="friend">Friend</option>
+              <option value="colleague">Colleague</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="contactBirthday">Birthday</label>
+            <input type="date" id="contactBirthday">
+          </div>
+          <div class="field">
+            <label for="contactSpecialDay">Custom date (e.g. anniversary)</label>
+            <input type="date" id="contactSpecialDay">
+          </div>
+        </div>
+        <div class="field">
+          <label for="contactSpecialDayLabel">Custom date label</label>
+          <input type="text" id="contactSpecialDayLabel" placeholder="e.g. Work anniversary, Adoption day">
+        </div>
+
+        <div class="field">
+          <label>Observes (adds the matching holiday to their alerts)</label>
+          <div style="display:flex; gap:14px; flex-wrap:wrap; font-size:12.5px; color:var(--text-dim);">
+            <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" id="obsMothersDay" style="width:auto;"> Mother's Day</label>
+            <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" id="obsFathersDay" style="width:auto;"> Father's Day</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="contactNotes">Notes — yours, private to you</label>
+          <textarea id="contactNotes" placeholder="Anything you want to remember — how you know them, what they're into, how things have been going."></textarea>
+        </div>
+
+        <div class="field">
+          <label>How are things with this person right now? (your own read, not a score)</label>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;" id="sentimentChooser">
+            <button type="button" class="filter-chip" data-sentiment="positive">Going well</button>
+            <button type="button" class="filter-chip" data-sentiment="neutral">Neutral / unsure</button>
+            <button type="button" class="filter-chip" data-sentiment="negative">Strained</button>
+            <button type="button" class="filter-chip active" data-sentiment="">Not set</button>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-ghost" id="deleteContactBtn" style="display:none; border-color:var(--red); color:var(--red);">Delete person</button>
+        </div>
+      </form>
+
+      <div id="contactPhotosSection" style="display:none; margin-top:24px; border-top:1px solid var(--line); padding-top:18px;">
+        <label style="margin-bottom:10px;">Photos of/with this person</label>
+        <div class="photo-grid" id="contactPhotoGrid"></div>
+        <div class="upload-drop" id="contactPhotoUploadZone">Click to add a photo (stored only in your browser)</div>
+        <input type="file" id="contactPhotoInput" accept="image/*" multiple style="display:none;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Group photo tagging modal -->
+<div class="modal-backdrop" id="groupPhotoModal">
+  <div class="modal" style="max-width:720px;">
+    <div class="modal-inner">
+      <button class="modal-close" id="closeGroupPhotoModalBtn">&times;</button>
+      <h3>Tag people in this photo</h3>
+      <p>Draw a box around each person, then label who they are — you decide, nothing is auto-detected.</p>
+      <div class="upload-drop" id="groupPhotoUploadZone">Click to upload a group photo</div>
+      <input type="file" id="groupPhotoInput" accept="image/*" style="display:none;">
+      <div class="tag-canvas-wrap" id="tagCanvasWrap" style="display:none;">
+        <img id="tagCanvasImg" alt="">
+      </div>
+      <div class="tag-hint" id="tagHint" style="display:none;">Drag across the photo to draw a box around a person, then type their name.</div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="saveGroupPhotoBtn" style="display:none;">Save tagged photo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Monitor reminder detail modal -->
+<div class="modal-backdrop" id="monitorModal">
+  <div class="modal">
+    <div class="modal-inner">
+      <button class="modal-close" id="closeMonitorModalBtn">&times;</button>
+      <h3 id="monitorModalTitle"></h3>
+      <p id="monitorModalDesc"></p>
+      <div id="monitorModalLink"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="snoozeMonitorBtn">Remind me again in 90 days</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mention log modal -->
+<div class="modal-backdrop" id="mentionModal">
+  <div class="modal">
+    <div class="modal-inner">
+      <button class="modal-close" id="closeMentionModalBtn">&times;</button>
+      <h3 id="mentionModalTitle">Log a mention</h3>
+      <p>What you found, where, and any notes — this stays private to you.</p>
+
+      <form id="mentionForm">
+        <div class="field-row">
+          <div class="field">
+            <label for="mentionSource">How did you find this?</label>
+            <select id="mentionSource">
+              <option value="google-alert">Google Alert</option>
+              <option value="search">Searched it myself</option>
+              <option value="told">Someone told me</option>
+              <option value="social">Saw it on social media</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="mentionDate">Date found</label>
+            <input type="date" id="mentionDate" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="mentionTitle">What is it? (short description)</label>
+          <input type="text" id="mentionTitle" placeholder="e.g. Mentioned in a local news article about the marathon" required>
+        </div>
+
+        <div class="field">
+          <label for="mentionUrl">Link (optional)</label>
+          <input type="url" id="mentionUrl" placeholder="https://...">
+        </div>
+
+        <div class="field">
+          <label>How does this feel to you?</label>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;" id="mentionToneChooser">
+            <button type="button" class="filter-chip" data-tone="positive">Positive</button>
+            <button type="button" class="filter-chip" data-tone="neutral">Neutral</button>
+            <button type="button" class="filter-chip" data-tone="negative">Concerning</button>
+            <button type="button" class="filter-chip active" data-tone="">Not set</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="mentionNotes">Notes</label>
+          <textarea id="mentionNotes" placeholder="Anything else worth remembering about this."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">Save mention</button>
+          <button type="button" class="btn btn-ghost" id="deleteMentionBtn" style="display:none; border-color:var(--red); color:var(--red);">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const authShell = document.getElementById("authShell");
+  const appShell = document.getElementById("appShell");
+  const authError = document.getElementById("authError");
+
+  function showAuthError(message) { authError.textContent = message; authError.classList.add("show"); }
+  function clearAuthError() { authError.classList.remove("show"); }
+
+  function renderForCurrentUser() {
+    const user = window.AIGMeAuth.getCurrentUser();
+    if (user) {
+      authShell.style.display = "none";
+      appShell.style.display = "block";
+    } else {
+      authShell.style.display = "flex";
+      appShell.style.display = "none";
+    }
+  }
+
+  const tabs = document.querySelectorAll(".auth-tab");
+  const panels = { login: document.getElementById("loginPanel"), register: document.getElementById("registerPanel") };
+  function switchTab(name) {
+    clearAuthError();
+    tabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-tab") === name));
+    Object.keys(panels).forEach(k => panels[k].classList.toggle("active", k === name));
+  }
+  tabs.forEach(t => t.addEventListener("click", () => switchTab(t.getAttribute("data-tab"))));
+  document.querySelectorAll("[data-switch]").forEach(btn => {
+    btn.addEventListener("click", () => switchTab(btn.getAttribute("data-switch")));
+  });
+
+  document.getElementById("loginPanel").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearAuthError();
+    try {
+      await window.AIGMeAuth.login({
+        email: document.getElementById("loginEmail").value,
+        password: document.getElementById("loginPassword").value
+      });
+      location.reload();
+    } catch (err) { showAuthError(err.message); }
+  });
+
+  document.getElementById("registerPanel").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearAuthError();
+    const password = document.getElementById("registerPassword").value;
+    const confirm = document.getElementById("registerPasswordConfirm").value;
+    if (password !== confirm) { showAuthError("Passwords don't match."); return; }
+    try {
+      await window.AIGMeAuth.register({
+        email: document.getElementById("registerEmail").value,
+        password,
+        termsAccepted: document.getElementById("termsCheckbox").checked
+      });
+      location.reload();
+    } catch (err) { showAuthError(err.message); }
+  });
+
+  renderForCurrentUser();
+})();
+</script>
+<script src="app.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var btn = document.getElementById("tagGroupPhotoBtn");
+    if (btn) btn.addEventListener("click", function () {
+      if (window.AIGMeOpenGroupPhoto) window.AIGMeOpenGroupPhoto();
+    });
+  });
+</script>
+</body>
+</html>

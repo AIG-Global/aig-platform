@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WDM marketplace — AIG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .mp-hero { padding: 56px 0 40px; }
+  .filter-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 36px; }
+  .filter-chip {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.4px;
+    padding: 9px 16px; border: 1px solid var(--line); border-radius: 20px;
+    color: var(--bronze); cursor: pointer; background: none; transition: all 0.15s ease;
+  }
+  .filter-chip.active, .filter-chip:hover { border-color: var(--gold); color: var(--gold); }
+
+  .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 44px; }
+  @media (max-width: 940px) { .catalog-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .catalog-grid { grid-template-columns: 1fr; } }
+
+  .item-card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; display: flex; flex-direction: column; }
+  .item-img { height: 180px; background: linear-gradient(135deg, #1a1611, #221c14); display: flex; align-items: center; justify-content: center; color: var(--gold-dim); position: relative; }
+  .item-img svg { width: 44px; height: 44px; }
+  .item-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .item-cat { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 1px; color: var(--gold-dim); text-transform: uppercase; }
+  .item-card h3 { font-family: var(--font-body); font-size: 17px; font-weight: 600; color: var(--parchment); margin: 10px 0 6px; }
+  .item-desc { font-size: 13px; color: var(--bronze); flex: 1; }
+  .item-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; }
+  .item-price { font-family: var(--font-mono); color: var(--gold); font-size: 14px; }
+  .item-btn { font-size: 12.5px; padding: 8px 16px; }
+
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    display: none; align-items: center; justify-content: center; z-index: 500; padding: 24px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius);
+    max-width: 460px; width: 100%; padding: 32px; position: relative;
+  }
+  .modal-close { position: absolute; top: 18px; right: 18px; background: none; border: none; color: var(--bronze); cursor: pointer; }
+  .modal-close:hover { color: var(--gold); }
+  .modal-row { display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .modal-row:first-of-type { border-top: none; }
+  .modal-row .v { font-family: var(--font-mono); color: var(--parchment); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <svg class="seal" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="24" cy="24" r="22" stroke="#D4AF37" stroke-width="1.2"/>
+        <circle cx="24" cy="24" r="16" stroke="#D4AF37" stroke-width="0.6"/>
+        <path d="M24 10 L30 24 L24 38 L18 24 Z" stroke="#D4AF37" stroke-width="1" fill="none"/>
+        <circle cx="24" cy="24" r="2.4" fill="#D4AF37"/>
+      </svg>
+      <span class="brand-name">A<span>I</span>G</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features">Assistant</a>
+      <a href="marketplace.html" class="active">WDM marketplace</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="dashboard.html" class="btn btn-ghost" style="padding:10px 20px;">Sign in</a>
+      <a href="pricing.html" class="btn btn-primary" style="padding:10px 20px;">Get started</a>
+    </div>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="mp-hero">
+  <div class="wrap">
+    <div class="eyebrow">WDM marketplace</div>
+    <h1 style="margin-top:14px; font-size:clamp(32px,5vw,52px);">Curated, vetted, booked through AIG.</h1>
+    <p class="lede" style="margin-top:16px;">Every listing below is paid for directly — by card or account balance — with no commission paid to whoever referred you. Click any item to see how a booking would proceed.</p>
+
+    <div class="filter-row" id="filterRow">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="travel">Travel</button>
+      <button class="filter-chip" data-filter="property">Property</button>
+      <button class="filter-chip" data-filter="company">Company services</button>
+      <button class="filter-chip" data-filter="lifestyle">Lifestyle</button>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight">
+  <div class="wrap">
+    <div class="catalog-grid" id="catalogGrid"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="margin-top:0; border-top:none; padding-top:0;">
+      <span>© 2026 AIG. This is a product prototype.</span>
+      <span class="mono">No investment products. No recruitment commissions.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="eyebrow" id="modalCat">Category</div>
+    <h3 style="margin-top:10px;" id="modalTitle">Item title</h3>
+    <p style="margin-top:8px; font-size:13.5px;" id="modalDesc">Description</p>
+    <div style="margin-top:20px;">
+      <div class="modal-row"><span>Price</span><span class="v" id="modalPrice">€0</span></div>
+      <div class="modal-row"><span>Partner</span><span class="v" id="modalPartner">—</span></div>
+      <div class="modal-row"><span>Typical turnaround</span><span class="v" id="modalTurnaround">—</span></div>
+      <div class="modal-row"><span>Payment</span><span class="v">Account balance or card</span></div>
+    </div>
+    <a href="dashboard.html" class="btn btn-primary btn-block" style="margin-top:24px;">Book through AIG dashboard</a>
+  </div>
+</div>
+
+<script src="js/site.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var ICONS = {
+    travel: '<svg viewBox="0 0 24 24" fill="none" stroke="#8A712A" stroke-width="1.2"><path d="M2 16l8-10 4 5 4-3 4 8"/></svg>',
+    property: '<svg viewBox="0 0 24 24" fill="none" stroke="#8A712A" stroke-width="1.2"><rect x="3" y="9" width="18" height="12"/><path d="M3 9l9-6 9 6"/></svg>',
+    company: '<svg viewBox="0 0 24 24" fill="none" stroke="#8A712A" stroke-width="1.2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>',
+    lifestyle: '<svg viewBox="0 0 24 24" fill="none" stroke="#8A712A" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>'
+  };
+
+  var ITEMS = [
+    { id: 1, cat: "travel", catLabel: "Travel", title: "Private jet charter — Europe", desc: "Mid-size cabin charter, 2-6 passengers, repositioning included.", priceCents: 920000, partner: "Continental Air Partners", turnaround: "24-48 hours" },
+    { id: 2, cat: "travel", catLabel: "Travel", title: "Yacht charter, Mediterranean", desc: "Crewed 24m yacht, weekly charter, Côte d'Azur or Amalfi.", priceCents: 4500000, partner: "Riviera Yacht Collective", turnaround: "2-3 weeks notice" },
+    { id: 3, cat: "property", catLabel: "Property", title: "Provence villa, August", desc: "6-bedroom estate, pool, vineyard views, weekly rental.", priceCents: 3800000, partner: "Maison Privée", turnaround: "Subject to availability" },
+    { id: 4, cat: "property", catLabel: "Property", title: "Dubai Marina apartment search", desc: "Buyer-side representation for marina-view 2-3 bedroom units.", priceCents: 150000, partner: "Marina Realty Partners", turnaround: "2-4 weeks" },
+    { id: 5, cat: "company", catLabel: "Company services", title: "UAE company formation", desc: "Free-zone entity setup, licence filing, registered agent for year one.", priceCents: 450000, partner: "Emirates Formation Group", turnaround: "5-7 business days" },
+    { id: 6, cat: "company", catLabel: "Company services", title: "Offshore banking introduction", desc: "Introduction and account-opening support with a vetted private bank.", priceCents: 90000, partner: "Helvetic Banking Partners", turnaround: "2-3 weeks" },
+    { id: 7, cat: "lifestyle", catLabel: "Lifestyle", title: "Annual concierge membership", desc: "Dedicated concierge for reservations, events, and travel logistics.", priceCents: 240000, partner: "AIG Concierge", turnaround: "Active on purchase" },
+    { id: 8, cat: "lifestyle", catLabel: "Lifestyle", title: "Personal shopping, watches & jewellery", desc: "Sourcing and authentication for collectible pieces.", priceCents: 50000, partner: "Atelier Sourcing Co.", turnaround: "1-2 weeks" },
+    { id: 9, cat: "travel", catLabel: "Travel", title: "Restaurant & event access", desc: "Reservations and access at fully booked venues across major cities.", priceCents: 35000, partner: "AIG Concierge", turnaround: "48-72 hours" }
+  ];
+
+  var grid = document.getElementById("catalogGrid");
+
+  function renderItems(filter) {
+    var filtered = filter === "all" ? ITEMS : ITEMS.filter(function (it) { return it.cat === filter; });
+    grid.innerHTML = filtered.map(function (it) {
+      return (
+        '<div class="item-card">' +
+          '<div class="item-img">' + ICONS[it.cat] + '</div>' +
+          '<div class="item-body">' +
+            '<div class="item-cat">' + it.catLabel + '</div>' +
+            '<h3>' + it.title + '</h3>' +
+            '<p class="item-desc">' + it.desc + '</p>' +
+            '<div class="item-foot">' +
+              '<span class="item-price">' + window.AIG.formatEUR(it.priceCents) + '</span>' +
+              '<button class="btn btn-ghost item-btn" data-item="' + it.id + '">Details</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  renderItems("all");
+
+  document.getElementById("filterRow").addEventListener("click", function (e) {
+    var btn = e.target.closest(".filter-chip");
+    if (!btn) return;
+    document.querySelectorAll(".filter-chip").forEach(function (c) { c.classList.remove("active"); });
+    btn.classList.add("active");
+    renderItems(btn.getAttribute("data-filter"));
+  });
+
+  var backdrop = document.getElementById("modalBackdrop");
+  grid.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-item]");
+    if (!btn) return;
+    var item = ITEMS.filter(function (it) { return it.id === parseInt(btn.getAttribute("data-item"), 10); })[0];
+    if (!item) return;
+    document.getElementById("modalCat").textContent = item.catLabel;
+    document.getElementById("modalTitle").textContent = item.title;
+    document.getElementById("modalDesc").textContent = item.desc;
+    document.getElementById("modalPrice").textContent = window.AIG.formatEUR(item.priceCents);
+    document.getElementById("modalPartner").textContent = item.partner;
+    document.getElementById("modalTurnaround").textContent = item.turnaround;
+    backdrop.classList.add("open");
+  });
+
+  document.getElementById("modalClose").addEventListener("click", function () { backdrop.classList.remove("open"); });
+  backdrop.addEventListener("click", function (e) { if (e.target === backdrop) backdrop.classList.remove("open"); });
+})();
+</script>
+</body>
+</html>

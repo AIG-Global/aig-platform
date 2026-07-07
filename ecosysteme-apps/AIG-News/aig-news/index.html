@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIG News — global headlines, categorized</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d12;
+  --panel: #12161d;
+  --panel-raised: #1c2129;
+  --line: #262c36;
+  --amber: #e8a33d;
+  --amber-dim: #5c4520;
+  --blue: #5fa8d3;
+  --green: #5fb88a;
+  --red: #d3685f;
+  --violet: #9b8ce0;
+  --text: #e4e7eb;
+  --text-dim: #9099a8;
+  --text-faint: #5a626f;
+  --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; }
+.mono { font-family: var(--font-mono); }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+
+.shell { max-width: 1320px; margin: 0 auto; padding: 0 24px 60px; }
+.topbar {
+  border-bottom: 1px solid var(--line); padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; background: rgba(10,13,18,0.95); backdrop-filter: blur(6px); z-index: 50;
+}
+.topbar-inner { max-width: 1320px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
+.brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+.topbar-status { display: flex; align-items: center; gap: 14px; font-size: 11.5px; color: var(--text-dim); flex-wrap: wrap; }
+.status-pill { display: flex; align-items: center; gap: 6px; }
+.status-led { width: 7px; height: 7px; border-radius: 50%; background: var(--text-faint); }
+.status-led.live { background: var(--green); }
+.status-led.partial { background: var(--amber); }
+.status-led.error { background: var(--red); }
+.btn-key { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-dim); background: var(--panel-raised); border: 1px solid var(--line); padding: 7px 12px; border-radius: 4px; cursor: pointer; }
+.btn-key:hover { border-color: var(--amber); color: var(--amber); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; font-size: 13px; padding: 9px 16px; border-radius: 5px; border: 1px solid var(--amber); cursor: pointer; background: none; }
+.btn-primary { background: var(--amber); color: #1a1206; }
+.btn-ghost { background: none; color: var(--text); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--text-dim); }
+
+/* ---------- Notice banner ---------- */
+.notice-banner { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--amber); padding: 12px 16px; margin: 16px 0; font-size: 12.5px; color: var(--text-dim); border-radius: 0 4px 4px 0; display: none; }
+.notice-banner.show { display: block; }
+.notice-banner b { color: var(--text); }
+
+/* ---------- Filters ---------- */
+.filter-section { margin: 20px 0; }
+.filter-label { font-size: 11px; letter-spacing: 1px; color: var(--text-faint); text-transform: uppercase; margin-bottom: 8px; }
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-chip { font-size: 12px; padding: 7px 14px; border-radius: 16px; border: 1px solid var(--line); background: none; color: var(--text-dim); cursor: pointer; }
+.filter-chip.active { border-color: var(--amber); color: var(--amber); }
+.search-row { display: flex; gap: 8px; margin: 16px 0; }
+.search-input { flex: 1; background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-size: 13.5px; padding: 10px 14px; border-radius: 5px; }
+.search-input:focus { outline: none; border-color: var(--amber); }
+
+/* ---------- Article grid ---------- */
+.meta-row { display: flex; align-items: center; justify-content: space-between; margin: 18px 0 12px; flex-wrap: wrap; gap: 10px; }
+.result-count { font-size: 12px; color: var(--text-faint); }
+.sort-select { background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-size: 12px; padding: 7px 10px; border-radius: 4px; }
+
+.article-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.article-card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.15s ease; }
+.article-card:hover { border-color: var(--amber-dim); }
+.article-source-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.article-source { font-size: 11px; font-weight: 600; color: var(--amber); text-transform: uppercase; letter-spacing: 0.4px; }
+.article-region { font-size: 10.5px; color: var(--text-faint); }
+.article-title { font-size: 14.5px; font-weight: 600; line-height: 1.4; color: var(--text); }
+.article-title a { color: inherit; }
+.article-title a:hover { color: var(--amber); }
+.article-desc { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.article-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
+.article-time { font-size: 11px; color: var(--text-faint); }
+.article-topics { display: flex; gap: 5px; flex-wrap: wrap; }
+.topic-tag { font-size: 9.5px; padding: 2px 7px; border-radius: 9px; background: var(--panel-raised); color: var(--text-dim); }
+
+.empty-state { color: var(--text-faint); font-size: 12.5px; padding: 50px 0; text-align: center; grid-column: 1/-1; }
+.loading-state { color: var(--text-faint); font-size: 12.5px; padding: 50px 0; text-align: center; grid-column: 1/-1; }
+
+/* ---------- Video cards ---------- */
+.video-card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; }
+.video-thumb-wrap { position: relative; aspect-ratio: 16/9; background: #000; cursor: pointer; }
+.video-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.video-thumb-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+.video-play-overlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.25); transition: background 0.15s ease;
+}
+.video-thumb-wrap:hover .video-play-overlay { background: rgba(0,0,0,0.1); }
+.video-play-button {
+  width: 52px; height: 52px; border-radius: 50%; background: rgba(232,163,61,0.92);
+  display: flex; align-items: center; justify-content: center;
+}
+.video-play-button svg { width: 20px; height: 20px; fill: #1a1206; margin-left: 2px; }
+.video-body { padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.video-source { font-size: 11px; font-weight: 600; color: var(--amber); text-transform: uppercase; letter-spacing: 0.4px; }
+.video-title { font-size: 13px; font-weight: 600; line-height: 1.4; }
+.video-time { font-size: 11px; color: var(--text-faint); }
+
+/* ---------- Outlet status panel ---------- */
+.outlet-status-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; margin-top: 10px; }
+.outlet-status-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 12px; background: var(--panel-raised); border-radius: 4px; font-size: 11.5px; }
+.outlet-status-name { color: var(--text); }
+.outlet-status-count { font-family: var(--font-mono); color: var(--text-dim); }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 18px 20px; margin-bottom: 20px; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; cursor: pointer; }
+.panel-title { font-size: 12.5px; font-weight: 600; letter-spacing: 0.4px; color: var(--text-dim); text-transform: uppercase; }
+.panel-toggle { font-size: 11px; color: var(--text-faint); }
+
+@media (max-width: 760px) {
+  .shell { padding: 0 14px 60px; }
+  .topbar { padding: 12px 14px; }
+  .article-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="dot"></span>AIG NEWS</div>
+    <div class="topbar-status">
+      <span class="status-pill"><span class="status-led" id="feedStatusLed"></span><span id="feedStatusText">connecting&hellip;</span></span>
+      <button class="btn-key" id="refreshBtn">refresh all</button>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <div class="notice-banner" id="noticeBanner"></div>
+
+  <div class="filter-section" style="margin-top:20px;">
+    <div class="filter-label">Outlet set</div>
+    <div class="filter-row" id="setSwitchRow">
+      <button class="filter-chip active" data-set="world">World &amp; Politics (15 outlets)</button>
+      <button class="filter-chip" data-set="money">Markets, Crypto &amp; Innovation (9 outlets)</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head" id="outletPanelHead">
+      <div class="panel-title" id="outletPanelTitle">Outlets</div>
+      <div class="panel-toggle" id="outletPanelToggle">show status &darr;</div>
+    </div>
+    <div class="outlet-status-grid" id="outletStatusGrid" style="display:none;"></div>
+  </div>
+
+  <div class="search-row">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search headlines (e.g. climate, election, AI)&hellip;">
+  </div>
+
+  <div class="filter-section">
+    <div class="filter-label">Topic</div>
+    <div class="filter-row" id="topicFilterRow"></div>
+  </div>
+
+  <div class="filter-section">
+    <div class="filter-label">Region</div>
+    <div class="filter-row" id="regionFilterRow"></div>
+  </div>
+
+  <div class="filter-section">
+    <div class="filter-label">Source</div>
+    <div class="filter-row" id="sourceFilterRow"></div>
+  </div>
+
+  <div class="meta-row">
+    <div class="result-count" id="resultCount">&mdash;</div>
+    <select class="sort-select" id="sortSelect">
+      <option value="newest">Newest first</option>
+      <option value="source">By source</option>
+    </select>
+  </div>
+
+  <div class="article-grid" id="articleGrid">
+    <div class="loading-state">Loading headlines from 15 outlets&hellip;</div>
+  </div>
+
+  <div class="filter-section" style="margin-top:32px;">
+    <div class="filter-label">Video coverage &mdash; official outlet channels</div>
+  </div>
+  <div class="notice-banner" id="videoNotice" style="margin-top:0;"></div>
+  <div class="article-grid" id="videoGrid"></div>
+
+</div>
+
+<script src="outlets.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

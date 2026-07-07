@@ -1,0 +1,442 @@
+[
+  {
+    "id": "bonus_uRURbTQwb8dt",
+    "userId": "user_uIT-5nhxOagr",
+    "sponsorUserId": null,
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-01-03T07:24:00.000Z"
+  },
+  {
+    "id": "bonus_jMpwpMz0yOhB",
+    "userId": "user_djb0_4w2VkfD",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "admin_override",
+    "bonusGenerated": false,
+    "createdAt": "2026-06-16T17:07:00.000Z"
+  },
+  {
+    "id": "bonus_69Bp749VZtpW",
+    "userId": "user_oWZM7YIg8S40",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-10T14:28:00.000Z"
+  },
+  {
+    "id": "bonus_q2rxblJqe_UY",
+    "userId": "user_Ynrv3Us0vY-x",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-24T06:26:00.000Z"
+  },
+  {
+    "id": "bonus_VYOHyIhnCRuJ",
+    "userId": "user_aJW0MddlYt_U",
+    "sponsorUserId": "user_iaMaZSP23kG0",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-12T08:43:00.000Z"
+  },
+  {
+    "id": "bonus_sLB3VIJzxIH9",
+    "userId": "user_lLZCeOySDvVz",
+    "sponsorUserId": "user_iaMaZSP23kG0",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-04T20:39:00.000Z"
+  },
+  {
+    "id": "bonus_UKhcj5Pzj7-F",
+    "userId": "user_vUFqiTfHngOu",
+    "sponsorUserId": "user_Y12M_BGpF8RI",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-29T11:50:00.000Z"
+  },
+  {
+    "id": "bonus_qhTgbOKEsVwa",
+    "userId": "user_58KNBK-PrPV2",
+    "sponsorUserId": "user_gB4QWzk0GWvW",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-01T08:01:00.000Z"
+  },
+  {
+    "id": "bonus_MhjASzlWQRhk",
+    "userId": "user_UWSYMd2Purjr",
+    "sponsorUserId": "user_V__JNqoAh5sR",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-21T16:12:00.000Z"
+  },
+  {
+    "id": "bonus_Tp4Qp_jz5Muc",
+    "userId": "user_vCrX-VjIMBz1",
+    "sponsorUserId": "user_Y12M_BGpF8RI",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-24T17:31:00.000Z"
+  },
+  {
+    "id": "bonus_2cHJ_5FJxwS2",
+    "userId": "user_bcrXMDRWbvQT",
+    "sponsorUserId": "user_DoMlG0yifZf_",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-14T17:30:00.000Z"
+  },
+  {
+    "id": "bonus_EpmCfhpRxHUi",
+    "userId": "user_Rx8qVufMNF-4",
+    "sponsorUserId": "user_DoMlG0yifZf_",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-04T13:03:00.000Z"
+  },
+  {
+    "id": "bonus_fDAU6fdJrmjw",
+    "userId": "user_tjKIiowIfJmd",
+    "sponsorUserId": "user_excayJw-AbfZ",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-08T16:42:00.000Z"
+  },
+  {
+    "id": "bonus_jmV-_5wabhn6",
+    "userId": "user_ZqI29lFHEpT6",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-05-23T09:53:00.000Z"
+  },
+  {
+    "id": "bonus_KDSClyzMKPYc",
+    "userId": "user_JCcOqFFyjaLN",
+    "sponsorUserId": "user_djb0_4w2VkfD",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-16T14:23:00.000Z"
+  },
+  {
+    "id": "bonus_8yk-iAXWgNVJ",
+    "userId": "user_9xy5Gfy9kdZm",
+    "sponsorUserId": "user_djb0_4w2VkfD",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-10T12:32:00.000Z"
+  },
+  {
+    "id": "bonus_QvtnJYTDYIkT",
+    "userId": "user_D0bVykCWjkY-",
+    "sponsorUserId": "user_yA2AdJtjQuBk",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-24T07:45:00.000Z"
+  },
+  {
+    "id": "bonus_OqNVBVArM_Bl",
+    "userId": "user_SnfjyHrZvdhZ",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-30T06:38:00.000Z"
+  },
+  {
+    "id": "bonus_EYujYYGiRV-a",
+    "userId": "user_GFxQjLoTRNbE",
+    "sponsorUserId": "user_xdmESrpoukA9",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-24T10:55:00.000Z"
+  },
+  {
+    "id": "bonus_EcyX7XMpV_CB",
+    "userId": "user_HSDlM0j_Wl8a",
+    "sponsorUserId": "user_9xy5Gfy9kdZm",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-22T16:51:00.000Z"
+  },
+  {
+    "id": "bonus_lCZ45WF9NI-c",
+    "userId": "user_3votiU1wn-L5",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-03-29T12:29:00.000Z"
+  },
+  {
+    "id": "bonus_MwsWHhDZcbQz",
+    "userId": "user__e68zfFFi4eO",
+    "sponsorUserId": "user_HSDlM0j_Wl8a",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-19T11:37:00.000Z"
+  },
+  {
+    "id": "bonus_CH8RNynQBAz_",
+    "userId": "user_bs6DhBafDXyB",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-02-27T12:06:00.000Z"
+  },
+  {
+    "id": "bonus_VpV43APOG0w1",
+    "userId": "user_wrlW2Ssqn9wc",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-03T12:19:00.000Z"
+  },
+  {
+    "id": "bonus_V5ez8yi4nkm0",
+    "userId": "user_vg9HE56f7nGc",
+    "sponsorUserId": "user_04mAKi7rmaPc",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-22T21:26:00.000Z"
+  },
+  {
+    "id": "bonus_YSjUy-qcNF7J",
+    "userId": "user_8SNCBP-uuSUK",
+    "sponsorUserId": "user_wWS1syMnaAIe",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-05-07T22:51:00.000Z"
+  },
+  {
+    "id": "bonus_wfBmcFfJ2b4J",
+    "userId": "user_9TXCgToOhKAL",
+    "sponsorUserId": "user_HSDlM0j_Wl8a",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-18T15:02:00.000Z"
+  },
+  {
+    "id": "bonus_UQ-jipkmnBsZ",
+    "userId": "user_5sJo3tE2wei3",
+    "sponsorUserId": "user_wyPH-nWf6odc",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-10T20:39:00.000Z"
+  },
+  {
+    "id": "bonus_TJWwbppVtho1",
+    "userId": "user_DMj01TOGzl_9",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-05-23T08:01:00.000Z"
+  },
+  {
+    "id": "bonus_OD0kn8lIthhI",
+    "userId": "user_DSXqE0nbLWIh",
+    "sponsorUserId": "user_tjKIiowIfJmd",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-29T15:05:00.000Z"
+  },
+  {
+    "id": "bonus_J7k3CxzPSoME",
+    "userId": "user_iOx36wX4k4v5",
+    "sponsorUserId": "user_ri6Fir8Du3o_",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-18T22:19:00.000Z"
+  },
+  {
+    "id": "bonus_84OwujdkfVwv",
+    "userId": "user_5Gbv3c2uvtFb",
+    "sponsorUserId": "user_04mAKi7rmaPc",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-20T06:29:00.000Z"
+  },
+  {
+    "id": "bonus_poyFWvVvQw8U",
+    "userId": "user_mBwkEeDcj2ic",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-07T10:39:00.000Z"
+  },
+  {
+    "id": "bonus_PnmsZYETf03F",
+    "userId": "user_g5zEJePWEW0d",
+    "sponsorUserId": "user_n6LCgiJVRIX5",
+    "reason": "admin_override",
+    "bonusGenerated": false,
+    "createdAt": "2026-04-08T15:51:00.000Z"
+  },
+  {
+    "id": "bonus_k0NLWUp30u2S",
+    "userId": "user_QrcyX09gZ0HS",
+    "sponsorUserId": "user_DMj01TOGzl_9",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-05T13:26:00.000Z"
+  },
+  {
+    "id": "bonus_vcTHdKJsUOKt",
+    "userId": "user_dFP7Cu3Re0xK",
+    "sponsorUserId": "user_GFxQjLoTRNbE",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-03-02T20:20:00.000Z"
+  },
+  {
+    "id": "bonus_LBpVkn4XwslZ",
+    "userId": "user_wRHQQZwunM34",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "admin_override",
+    "bonusGenerated": false,
+    "createdAt": "2026-06-05T18:10:00.000Z"
+  },
+  {
+    "id": "bonus_jLt9tK5cd1PA",
+    "userId": "user_2GwwyXxeTLIL",
+    "sponsorUserId": "user_2aOgl6N2bdJa",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-03-10T13:48:00.000Z"
+  },
+  {
+    "id": "bonus_CFBRy2yRKqlf",
+    "userId": "user_hC3gB5nHkcnA",
+    "sponsorUserId": "user_D0bVykCWjkY-",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-05-21T11:09:00.000Z"
+  },
+  {
+    "id": "bonus_GnsTfE1AXNQ-",
+    "userId": "user_-554B9uXt7dC",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-22T15:34:00.000Z"
+  },
+  {
+    "id": "bonus_Nqa0sDo0jMW5",
+    "userId": "user_RHuALeZDlGSl",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-02T16:31:00.000Z"
+  },
+  {
+    "id": "bonus_E64-IW4IVH1R",
+    "userId": "user__tFrogrR53FE",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-05-07T13:55:00.000Z"
+  },
+  {
+    "id": "bonus_o0MtrG4Qi8Ld",
+    "userId": "user_UAlQoiidiKoQ",
+    "sponsorUserId": "user_RHuALeZDlGSl",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-05-29T11:41:00.000Z"
+  },
+  {
+    "id": "bonus_VGYVt_vg-04H",
+    "userId": "user_FDWf19VmFjre",
+    "sponsorUserId": "user_Gqam0LvuIeCl",
+    "reason": "admin_override",
+    "bonusGenerated": false,
+    "createdAt": "2026-04-11T13:25:00.000Z"
+  },
+  {
+    "id": "bonus_wrMROWXomjXH",
+    "userId": "user_QwU-jmlOWuWc",
+    "sponsorUserId": "user_2wZoRlNMyMtn",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-05-26T19:12:00.000Z"
+  },
+  {
+    "id": "bonus_ffqE6xANrSeV",
+    "userId": "user_m2OuMesXWokT",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-10T20:53:00.000Z"
+  },
+  {
+    "id": "bonus_ZKepP02ro--v",
+    "userId": "user__jQiGEcbf2qD",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-14T09:21:00.000Z"
+  },
+  {
+    "id": "bonus_efAIS9yq1DhS",
+    "userId": "user_sqODAdZ-haE9",
+    "sponsorUserId": "user_tJAuv045poG-",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-05-17T09:33:00.000Z"
+  },
+  {
+    "id": "bonus_88FuEqpzD0nq",
+    "userId": "user_l-tv-iP-HQra",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-26T13:41:00.000Z"
+  },
+  {
+    "id": "bonus_OtRIzExHmN8B",
+    "userId": "user__r_oPDmBgVdw",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-29T12:38:00.000Z"
+  },
+  {
+    "id": "bonus_tK-rRTOpxWnx",
+    "userId": "user_3U0M61i6gR_R",
+    "sponsorUserId": "user_lLZCeOySDvVz",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-06-24T06:45:00.000Z"
+  },
+  {
+    "id": "bonus_AKQ1PgddmNo4",
+    "userId": "user_sMb_BUMlqrzp",
+    "sponsorUserId": "user_sfyalpSJGUMC",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-21T20:32:00.000Z"
+  },
+  {
+    "id": "bonus_yU3y4FW0O9DV",
+    "userId": "user_EMC0LMvOShSj",
+    "sponsorUserId": "user_UAlQoiidiKoQ",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-04-16T10:46:00.000Z"
+  },
+  {
+    "id": "bonus_HvbC50JSlC2b",
+    "userId": "user_ggMhuJE43Dl-",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-02-25T16:48:00.000Z"
+  },
+  {
+    "id": "bonus_fH9LZQKiuBvD",
+    "userId": "user_i7U_nWk5luMk",
+    "sponsorUserId": "user_vg9HE56f7nGc",
+    "reason": "paid_upgrade",
+    "bonusGenerated": true,
+    "createdAt": "2026-05-28T10:11:00.000Z"
+  }
+]

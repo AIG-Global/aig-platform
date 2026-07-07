@@ -1,6 +1,8 @@
+import './globals.css'
+
 export const metadata = {
-  title: 'AIGINVEST — Turn every goal into completed work',
-  description: 'Your AI companion for building, learning, and organizing work.',
+  title: 'AIGINVEST — The AI-Powered Business Operating System',
+  description: 'Earn passive income, build your network, and access AI tools all in one unified ecosystem.',
 }
 
 export const viewport = {
@@ -11,22 +13,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <style>{`
-          *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-          html { -webkit-text-size-adjust: 100%; }
-          body { min-height: 100dvh; overflow-x: hidden; }
-          button { font-family: inherit; }
-          input, textarea { font-family: inherit; }
-          @media (max-width: 640px) {
-            .desktop-only { display: none !important; }
-          }
-          @media (min-width: 641px) {
-            .mobile-only { display: none !important; }
-          }
-        `}</style>
-      </head>
+    <html lang="en" suppressHydrationWarning>
       <body>{children}</body>
     </html>
   )

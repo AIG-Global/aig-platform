@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIG Secure Sign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .auth-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .auth-card { max-width: 420px; width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 32px; }
+  .auth-tabs { display: flex; gap: 4px; margin-bottom: 20px; background: var(--panel-raised); border-radius: 5px; padding: 3px; }
+  .auth-tab { flex: 1; text-align: center; padding: 8px; font-size: 12.5px; font-weight: 600; border-radius: 4px; cursor: pointer; color: var(--text-dim); background: none; border: none; }
+  .auth-tab.active { background: var(--amber); color: #1a1206; }
+  .auth-panel { display: none; }
+  .auth-panel.active { display: block; }
+  .auth-switch { text-align: center; font-size: 12px; color: var(--text-faint); margin-top: 14px; }
+  .auth-switch button { background: none; border: none; color: var(--blue); cursor: pointer; font-size: 12px; text-decoration: underline; padding: 0; }
+
+  .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .doc-card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; cursor: pointer; }
+  .doc-card:hover { border-color: var(--amber-dim); }
+  .doc-card-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .doc-card-meta { font-size: 11.5px; color: var(--text-faint); margin-bottom: 10px; }
+  .doc-card-signers { font-size: 11.5px; color: var(--text-dim); }
+
+  .upload-drop { border: 1px dashed var(--line); border-radius: 8px; padding: 40px 20px; text-align: center; color: var(--text-faint); font-size: 13px; cursor: pointer; }
+  .upload-drop:hover { border-color: var(--amber-dim); color: var(--text-dim); }
+
+  /* Editor */
+  .editor-layout { display: grid; grid-template-columns: 220px 1fr 260px; gap: 16px; align-items: start; }
+  @media (max-width: 900px) { .editor-layout { grid-template-columns: 1fr; } }
+  .field-palette { display: flex; flex-direction: column; gap: 8px; }
+  .field-palette-item {
+    background: var(--panel-raised); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px;
+    font-size: 12.5px; cursor: grab; display: flex; align-items: center; gap: 8px; user-select: none;
+  }
+  .field-palette-item:hover { border-color: var(--amber-dim); }
+  .canvas-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; overflow: auto; max-height: 80vh; }
+  .page-canvas-container { position: relative; margin: 0 auto; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  .page-canvas-container canvas { display: block; width: 100%; }
+  .placed-field {
+    position: absolute; border: 2px solid var(--amber); background: rgba(232,163,61,0.12); border-radius: 3px;
+    cursor: move; display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: #1a1206;
+    font-weight: 600; overflow: hidden; padding: 2px;
+  }
+  .placed-field.signer-1 { border-color: var(--blue); background: rgba(95,168,211,0.12); }
+  .placed-field.signer-2 { border-color: var(--violet); background: rgba(155,140,224,0.12); }
+  .placed-field.signer-3 { border-color: var(--green); background: rgba(95,184,138,0.12); }
+  .placed-field .field-remove { position: absolute; top: -8px; right: -8px; width: 16px; height: 16px; background: var(--red-bright); color: #1a0806; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; }
+  .signer-list { display: flex; flex-direction: column; gap: 10px; }
+  .signer-item { background: var(--panel-raised); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+  .signer-item input { margin-bottom: 6px; font-size: 12.5px; padding: 7px 10px; }
+  .signer-color-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+  .signer-color-1 { background: var(--blue); } .signer-color-2 { background: var(--violet); } .signer-color-3 { background: var(--green); }
+
+  .audit-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+  .audit-table th { text-align: left; color: var(--text-faint); font-weight: 600; padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: 10.5px; text-transform: uppercase; }
+  .audit-table td { padding: 8px 10px; border-bottom: 1px solid var(--line); color: var(--text-dim); }
+  .audit-table td.action-cell { color: var(--text); font-weight: 500; }
+  .hash-chip { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); }
+
+  .link-row { display: flex; gap: 8px; align-items: center; background: var(--panel-raised); border-radius: 5px; padding: 8px 10px; margin-top: 6px; }
+  .link-row input { background: none; border: none; font-size: 11.5px; padding: 0; }
+</style>
+</head>
+<body>
+
+<div id="authShell" class="auth-shell">
+  <div class="auth-card">
+    <div class="brand" style="margin-bottom:6px;"><span class="dot"></span>AIG SECURE SIGN</div>
+    <p style="font-size:12.5px; color:var(--text-dim); margin:0 0 20px;">Document signing with a real, verifiable audit trail.</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign in</button>
+      <button class="auth-tab" data-tab="register">Create account</button>
+    </div>
+
+    <div class="notice-banner error" id="authError"></div>
+
+    <form class="auth-panel active" id="loginPanel">
+      <div class="field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" autocomplete="username" required></div>
+      <div class="field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" autocomplete="current-password" required></div>
+      <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+      <div class="auth-switch">No account yet? <button type="button" data-switch="register">Create one</button></div>
+    </form>
+
+    <form class="auth-panel" id="registerPanel">
+      <div class="field"><label for="registerFullName">Full legal name</label><input type="text" id="registerFullName" placeholder="As it should appear on documents" required></div>
+      <div class="field"><label for="registerEmail">Email</label><input type="email" id="registerEmail" autocomplete="username" required></div>
+      <div class="field"><label for="registerPassword">Password</label><input type="password" id="registerPassword" autocomplete="new-password" minlength="8" required></div>
+      <button type="submit" class="btn btn-primary btn-block">Create account</button>
+      <div class="auth-switch">Already have an account? <button type="button" data-switch="login">Sign in</button></div>
+    </form>
+  </div>
+</div>
+
+<div id="appShell" style="display:none;">
+
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span>AIG SECURE SIGN</div>
+    <div class="topbar-right">
+      <button class="btn-key" id="navDashboardBtn">Dashboard</button>
+      <button class="btn-key" id="navIdentityBtn">Identity verification</button>
+      <span class="user-pill"><span class="avatar" id="userAvatar">?</span><span id="userNameText"></span></span>
+      <button class="btn-key" id="signOutBtn">Sign out</button>
+    </div>
+  </div>
+
+  <div class="shell">
+
+    <div class="disclaimer-banner">
+      <b>Read before relying on this for real agreements.</b> This app implements the real technical
+      pattern compliant e-signature platforms use (audit trail, cryptographic tamper-evidence, consent
+      capture) — but whether a given signature is legally enforceable in your jurisdiction is a legal
+      determination, not a software property. It has not been reviewed by a lawyer. See "About
+      compliance" below before using this for anything with real legal consequences.
+    </div>
+
+    <div class="notice-banner" id="globalNotice"></div>
+
+    <!-- ============== DASHBOARD VIEW ============== -->
+    <div id="dashboardView">
+      <div class="section">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+          <div class="section-title" style="margin:0;">Your documents</div>
+          <button class="btn btn-primary btn-sm" id="newDocumentBtn">+ New document</button>
+        </div>
+        <div class="doc-grid" id="docGrid"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">About compliance</div>
+        <div class="panel" style="font-size:12.5px; color:var(--text-dim); line-height:1.8;">
+          <p style="margin-top:0;"><b style="color:var(--text);">ESIGN (US) / UETA:</b> no certification body exists — validity is a legal determination based on intent to sign, consent to electronic records (with required disclosures), and record retention. The real "certification" is a qualified attorney reviewing your actual process.</p>
+          <p><b style="color:var(--text);">eIDAS (EU):</b> this app implements the technical pattern for an <b>Advanced Electronic Signature</b> (unique link to signer, tamper-evident linkage to the document — see the audit trail on any document). A <b>Qualified Electronic Signature</b> — the tier automatically recognized EU-wide — legally requires a certificate from an accredited Qualified Trust Service Provider; that's a vendor integration, not something this code can become on its own.</p>
+          <p style="margin-bottom:0;"><b style="color:var(--text);">GDPR:</b> no universal certification exists. Real compliance is a legal/organizational program — lawful basis, DPAs, a DPIA (especially given identity-document handling), breach procedures — validated by qualified privacy counsel.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== IDENTITY VERIFICATION VIEW ============== -->
+    <div id="identityView" style="display:none;">
+      <div class="section">
+        <div class="section-title">Identity verification</div>
+        <div class="panel">
+          <div id="identityStatusArea"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== EDITOR VIEW ============== -->
+    <div id="editorView" style="display:none;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+        <input type="text" id="docTitleInput" placeholder="Untitled document" style="font-size:18px; font-weight:600; border:none; background:none; padding:4px 0; max-width:400px;">
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost btn-sm" id="backToDashboardBtn">Back</button>
+          <button class="btn btn-primary btn-sm" id="sendDocumentBtn">Send for signature</button>
+        </div>
+      </div>
+
+      <div id="uploadPromptArea">
+        <div class="upload-drop" id="uploadDropZone">
+          <div style="font-size:28px; margin-bottom:8px;">📄</div>
+          Click to upload a PDF, or drag one here
+        </div>
+        <input type="file" id="fileInput" accept="application/pdf" style="display:none;">
+      </div>
+
+      <div id="editorWorkArea" style="display:none;">
+        <div class="editor-layout">
+          <div class="panel">
+            <div class="section-title">Fields</div>
+            <div class="field-palette">
+              <div class="field-palette-item" draggable="true" data-field-type="signature">✍️ Signature</div>
+              <div class="field-palette-item" draggable="true" data-field-type="initial">🔤 Initials</div>
+              <div class="field-palette-item" draggable="true" data-field-type="date">📅 Date signed</div>
+              <div class="field-palette-item" draggable="true" data-field-type="text">📝 Text</div>
+              <div class="field-palette-item" draggable="true" data-field-type="checkbox">☑️ Checkbox</div>
+            </div>
+            <div class="section-title" style="margin-top:20px;">Assign to</div>
+            <div id="assignSignerSelector"></div>
+          </div>
+
+          <div class="canvas-wrap">
+            <div class="page-canvas-container" id="pageCanvasContainer">
+              <canvas id="pdfCanvas"></canvas>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="section-title">Signers</div>
+            <div class="signer-list" id="signerList"></div>
+            <button class="btn btn-ghost btn-sm btn-block" id="addSignerBtn" style="margin-top:10px;">+ Add signer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== DOCUMENT DETAIL / TRACKING VIEW ============== -->
+    <div id="detailView" style="display:none;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+        <div>
+          <div style="font-size:18px; font-weight:600;" id="detailTitle"></div>
+          <span class="status-badge" id="detailStatusBadge"></span>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="detailBackBtn">Back</button>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Signers</div>
+        <div class="panel" id="detailSignersPanel"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Audit trail</div>
+        <div class="panel">
+          <div style="overflow-x:auto;">
+            <table class="audit-table" id="auditTable"></table>
+          </div>
+          <div class="notice-banner" id="chainVerifyNotice" style="margin-top:14px;"></div>
+          <button class="btn btn-ghost btn-sm" id="verifyChainBtn" style="margin-top:10px;">Verify audit trail integrity</button>
+        </div>
+      </div>
+
+      <div class="section" id="certificateLinkSection" style="display:none;">
+        <a class="btn btn-primary" id="viewCertificateLink" target="_blank" rel="noopener">View completion certificate &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Signer link modal -->
+<div class="modal-backdrop" id="signerLinksModal">
+  <div class="modal">
+    <button class="modal-close" id="closeSignerLinksBtn">&times;</button>
+    <h3>Document sent</h3>
+    <p>No email backend is connected in this demo — copy each signer's unique link and send it to them however you like. See the backend example to wire up real email delivery.</p>
+    <div id="signerLinksArea"></div>
+    <div class="modal-actions"><button class="btn btn-primary" id="closeSignerLinksBtn2">Done</button></div>
+  </div>
+</div>
+
+<!-- Identity verification submit modal -->
+<div class="modal-backdrop" id="identitySubmitModal">
+  <div class="modal">
+    <button class="modal-close" id="closeIdentityModalBtn">&times;</button>
+    <h3>Provide identification</h3>
+    <p>Upload two different government-issued ID documents. <b style="color:var(--amber);">Read this first:</b> in this demo, the files themselves are never stored — only a cryptographic hash and basic file info are kept, and the raw file is discarded from memory immediately after hashing. This does not constitute verified identity; see the status message after submitting.</p>
+    <div class="field">
+      <label for="idType1">Document 1 type</label>
+      <select id="idType1"><option value="passport">Passport</option><option value="national_id">National ID card</option><option value="drivers_license">Driver's license</option></select>
+    </div>
+    <div class="field"><input type="file" id="idFile1" accept="image/*,application/pdf"></div>
+    <div class="field">
+      <label for="idType2">Document 2 type (must differ from Document 1)</label>
+      <select id="idType2"><option value="drivers_license">Driver's license</option><option value="passport">Passport</option><option value="national_id">National ID card</option></select>
+    </div>
+    <div class="field"><input type="file" id="idFile2" accept="image/*,application/pdf"></div>
+    <div class="notice-banner error" id="identitySubmitError"></div>
+    <div class="modal-actions"><button class="btn btn-primary btn-block" id="submitIdentityBtn">Submit</button></div>
+  </div>
+</div>
+
+<script src="crypto-utils.js"></script>
+<script src="auth.js"></script>
+<script src="kyc.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

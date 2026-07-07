@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — AIG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .pricing-hero { padding: 64px 0 24px; text-align: center; }
+  .pricing-hero .lede { margin: 18px auto 0; }
+  .pricing-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  @media (max-width: 900px) { .pricing-row { grid-template-columns: 1fr; } }
+  .price-card { border: 1px solid var(--line); padding: 36px 30px; border-radius: var(--radius); display: flex; flex-direction: column; }
+  .price-card.featured { border-color: var(--gold-dim); background: var(--surface-raised); position: relative; }
+  .price-card.featured::before {
+    content: "Most chosen"; position: absolute; top: -1px; right: 24px;
+    background: var(--gold); color: var(--ink); font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 0 0 4px 4px;
+  }
+  .price-amount { font-family: var(--font-display); font-size: 44px; color: var(--parchment); margin: 18px 0 4px; }
+  .price-amount span { font-size: 14px; color: var(--bronze); font-family: var(--font-body); }
+  .price-list { list-style: none; padding: 0; margin: 26px 0; flex: 1; }
+  .price-list li { font-size: 13.5px; color: var(--bronze); padding: 9px 0; border-top: 1px solid var(--line); display: flex; gap: 8px; }
+  .price-list li:first-child { border-top: none; }
+  .price-list li svg { flex-shrink: 0; margin-top: 2px; }
+
+  .faq-row { padding: 26px 0; border-top: 1px solid var(--line); }
+  .faq-row:first-child { border-top: none; }
+  .faq-row h4 { font-family: var(--font-body); font-size: 15.5px; color: var(--parchment); margin-bottom: 8px; }
+  .faq-row p { font-size: 14px; }
+
+  .referral-box {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 44px; background: var(--surface);
+  }
+  @media (max-width: 860px) { .referral-box { grid-template-columns: 1fr; gap: 28px; } }
+  .referral-amount { font-family: var(--font-display); font-size: 56px; color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <svg class="seal" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="24" cy="24" r="22" stroke="#D4AF37" stroke-width="1.2"/>
+        <circle cx="24" cy="24" r="16" stroke="#D4AF37" stroke-width="0.6"/>
+        <path d="M24 10 L30 24 L24 38 L18 24 Z" stroke="#D4AF37" stroke-width="1" fill="none"/>
+        <circle cx="24" cy="24" r="2.4" fill="#D4AF37"/>
+      </svg>
+      <span class="brand-name">A<span>I</span>G</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features">Assistant</a>
+      <a href="marketplace.html">WDM marketplace</a>
+      <a href="pricing.html" class="active">Pricing</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="dashboard.html" class="btn btn-ghost" style="padding:10px 20px;">Sign in</a>
+      <a href="#plans" class="btn btn-primary" style="padding:10px 20px;">Get started</a>
+    </div>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="pricing-hero">
+  <div class="wrap">
+    <div class="eyebrow">Pricing</div>
+    <h1 style="margin-top:14px;">Pay for the assistant. Pay for what you book. That's all.</h1>
+    <p class="lede" style="margin:18px auto 0;">No membership tier changes what you can earn — because using AIG was never a way to earn. It's a way to get things done.</p>
+  </div>
+</section>
+
+<section class="section" id="plans">
+  <div class="wrap">
+    <div class="pricing-row">
+      <div class="card price-card">
+        <span class="pill">Personal</span>
+        <div class="price-amount">€19<span> / month</span></div>
+        <ul class="price-list">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Inbox & message triage</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Calendar & travel awareness</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Meeting capture & relationship memory</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Cancel any time</li>
+        </ul>
+        <a href="dashboard.html" class="btn btn-ghost btn-block">Start Personal</a>
+      </div>
+
+      <div class="card price-card featured">
+        <span class="pill pill-gold">Personal + Marketplace</span>
+        <div class="price-amount">€49<span> / month</span></div>
+        <ul class="price-list">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Everything in Personal</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Full WDM marketplace access</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Account balance, top up by card</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Convert balance to bank, 1:1, any time</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Booking tracking end to end</li>
+        </ul>
+        <a href="dashboard.html" class="btn btn-primary btn-block">Start Personal + Marketplace</a>
+      </div>
+
+      <div class="card price-card">
+        <span class="pill">Business</span>
+        <div class="price-amount">Custom</div>
+        <ul class="price-list">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Multi-seat accounts</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Dedicated marketplace concierge</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Priority booking support</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Annual invoicing available</li>
+        </ul>
+        <a href="#" class="btn btn-ghost btn-block">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section class="section section-border-top">
+  <div class="wrap">
+    <div class="eyebrow">Referrals</div>
+    <h2 style="margin-top:14px; max-width:560px;">One friend, one credit. That's the whole program.</h2>
+    <div class="referral-box" style="margin-top:48px;">
+      <div>
+        <p style="font-size:15px;">Give a friend your code. When they subscribe, you both receive a one-time account credit. There are no levels, no downline, and no ongoing commission for as long as they stay subscribed — the reward is flat and it happens once.</p>
+        <div class="hero-actions" style="margin-top:24px;">
+          <a href="dashboard.html" class="btn btn-ghost">View your referral code</a>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div class="referral-amount">€20</div>
+        <p style="margin-top:6px;">credited to each of you, once, per successful referral</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section class="section section-border-top">
+  <div class="wrap">
+    <div class="eyebrow">Questions</div>
+    <h2 style="margin-top:14px; max-width:560px;">What people ask before signing up.</h2>
+    <div style="margin-top:40px; max-width:760px;">
+      <div class="faq-row">
+        <h4>Is the account balance an investment?</h4>
+        <p>No. It's store credit, the same as a gift card balance. It earns no interest or yield and is not a security. You can convert it back to your bank account 1:1 at any time.</p>
+      </div>
+      <div class="faq-row">
+        <h4>Can I earn money by referring other members?</h4>
+        <p>You can earn a one-time, flat €20 credit per successful referral. There is no multi-level structure, no recruitment commission, and no way to earn from a "downline."</p>
+      </div>
+      <div class="faq-row">
+        <h4>What happens to my balance if I cancel?</h4>
+        <p>It stays yours. Convert it to your bank account or keep it for a future booking — either way, at any time.</p>
+      </div>
+      <div class="faq-row">
+        <h4>How does WDM marketplace pricing work?</h4>
+        <p>Each listing shows its price up front. You pay that price from your account balance or a card, with no markup tied to membership tier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="margin-top:0; border-top:none; padding-top:0;">
+      <span>© 2026 AIG. This is a product prototype.</span>
+      <span class="mono">No investment products. No recruitment commissions.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+</body>
+</html>

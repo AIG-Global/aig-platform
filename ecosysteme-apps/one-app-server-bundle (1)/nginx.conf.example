@@ -1,0 +1,48 @@
+# ============================================================
+# nginx.conf.example — Reverse proxy + TLS termination for the
+# ONE server. Copy to /etc/nginx/sites-available/one-app, edit
+# the domain, symlink into sites-enabled, then run certbot.
+#
+#   sudo cp nginx.conf.example /etc/nginx/sites-available/one-app
+#   sudo ln -s /etc/nginx/sites-available/one-app /etc/nginx/sites-enabled/
+#   sudo nginx -t && sudo systemctl reload nginx
+#   sudo certbot --nginx -d your-domain.example.com
+#
+# Why this matters: iOS will only treat the PWA as a real
+# installable app over HTTPS, and the admin session cookie's
+# Secure flag (enabled when NODE_ENV=production) requires HTTPS
+# too — without this, "Add to Home Screen" still works but some
+# iOS versions degrade the experience, and admin login cookies
+# won't be sent at all.
+# ============================================================
+
+server {
+    listen 80;
+    server_name your-domain.example.com;
+
+    # certbot will add a 443 server block and redirect here automatically;
+    # this bare block lets certbot's HTTP-01 challenge complete on first run.
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    server_name your-domain.example.com;
+
+    # certbot fills these in:
+    # ssl_certificate     /etc/letsencrypt/live/your-domain.example.com/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/your-domain.example.com/privkey.pem;
+
+    client_max_body_size 2m;
+
+    location / {
+        proxy_pass http://127.0.0.1:8090;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

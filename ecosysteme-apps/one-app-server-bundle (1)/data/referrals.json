@@ -1,0 +1,2144 @@
+[
+  {
+    "id": "ref_9zzJyw_YC_jK",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_djb0_4w2VkfD",
+    "inviteCode": "M779AA3C3",
+    "status": "joined_paid",
+    "createdAt": "2026-06-04T20:49:00.000Z",
+    "joinedAt": "2026-06-04T20:49:00.000Z"
+  },
+  {
+    "id": "ref_vumQ3rl9tN9-",
+    "sponsorUserId": "user_djb0_4w2VkfD",
+    "invitedUserId": "user_DoMlG0yifZf_",
+    "inviteCode": "ME677B4E6",
+    "status": "joined_free",
+    "createdAt": "2026-06-17T19:45:00.000Z",
+    "joinedAt": "2026-06-17T19:45:00.000Z"
+  },
+  {
+    "id": "ref_xx45wsVjVHQR",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_oWZM7YIg8S40",
+    "inviteCode": "MA2FD2430",
+    "status": "joined_paid",
+    "createdAt": "2026-02-17T16:21:00.000Z",
+    "joinedAt": "2026-02-17T16:21:00.000Z"
+  },
+  {
+    "id": "ref_9YSVZr7tx4fg",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_rutI_HeXiNYV",
+    "inviteCode": "M52749539",
+    "status": "joined_free",
+    "createdAt": "2026-05-27T12:32:00.000Z",
+    "joinedAt": "2026-05-27T12:32:00.000Z"
+  },
+  {
+    "id": "ref_OIgTRPq6ajcQ",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_Ynrv3Us0vY-x",
+    "inviteCode": "M9376F3EB",
+    "status": "joined_paid",
+    "createdAt": "2026-05-22T20:03:00.000Z",
+    "joinedAt": "2026-05-22T20:03:00.000Z"
+  },
+  {
+    "id": "ref_SRJYPqBUai6w",
+    "sponsorUserId": "user_oWZM7YIg8S40",
+    "invitedUserId": "user_bMouj1KBOBx0",
+    "inviteCode": "MFB3732E5",
+    "status": "joined_free",
+    "createdAt": "2026-04-30T21:48:00.000Z",
+    "joinedAt": "2026-04-30T21:48:00.000Z"
+  },
+  {
+    "id": "ref_KBYpbo3OUICv",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_wymUvulC2Gkp",
+    "inviteCode": "M7D429B98",
+    "status": "joined_free",
+    "createdAt": "2026-05-29T17:56:00.000Z",
+    "joinedAt": "2026-05-29T17:56:00.000Z"
+  },
+  {
+    "id": "ref_GeuqX4aFgrIc",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_iaMaZSP23kG0",
+    "inviteCode": "MDF5AD782",
+    "status": "joined_free",
+    "createdAt": "2026-02-20T11:19:00.000Z",
+    "joinedAt": "2026-02-20T11:19:00.000Z"
+  },
+  {
+    "id": "ref_dKt9OupGpWEp",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_9vBmiHwnUBpw",
+    "inviteCode": "M32D93A4E",
+    "status": "joined_free",
+    "createdAt": "2026-02-21T10:35:00.000Z",
+    "joinedAt": "2026-02-21T10:35:00.000Z"
+  },
+  {
+    "id": "ref_HWDYT1CCXUAE",
+    "sponsorUserId": "user_oWZM7YIg8S40",
+    "invitedUserId": "user_MzmOwbO9JS28",
+    "inviteCode": "M3B5C6B6E",
+    "status": "joined_free",
+    "createdAt": "2026-06-12T15:01:00.000Z",
+    "joinedAt": "2026-06-12T15:01:00.000Z"
+  },
+  {
+    "id": "ref_lTvSj3GhTEeV",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_Y12M_BGpF8RI",
+    "inviteCode": "M0D430225",
+    "status": "joined_free",
+    "createdAt": "2026-02-10T17:28:00.000Z",
+    "joinedAt": "2026-02-10T17:28:00.000Z"
+  },
+  {
+    "id": "ref_XGQ3Fu5oguSv",
+    "sponsorUserId": "user_iaMaZSP23kG0",
+    "invitedUserId": "user_aJW0MddlYt_U",
+    "inviteCode": "M2D411300",
+    "status": "joined_paid",
+    "createdAt": "2026-03-08T17:17:00.000Z",
+    "joinedAt": "2026-03-08T17:17:00.000Z"
+  },
+  {
+    "id": "ref_QIO29TDZOe2p",
+    "sponsorUserId": "user_iaMaZSP23kG0",
+    "invitedUserId": "user_lLZCeOySDvVz",
+    "inviteCode": "M0BD16E67",
+    "status": "joined_paid",
+    "createdAt": "2026-02-08T20:36:00.000Z",
+    "joinedAt": "2026-02-08T20:36:00.000Z"
+  },
+  {
+    "id": "ref_CHOpDWELnzKS",
+    "sponsorUserId": "user_iaMaZSP23kG0",
+    "invitedUserId": "user_gB4QWzk0GWvW",
+    "inviteCode": "M0D430225",
+    "status": "joined_free",
+    "createdAt": "2026-01-09T09:55:00.000Z",
+    "joinedAt": "2026-01-09T09:55:00.000Z"
+  },
+  {
+    "id": "ref_zhRXsD12kzn5",
+    "sponsorUserId": "user_Y12M_BGpF8RI",
+    "invitedUserId": "user_vUFqiTfHngOu",
+    "inviteCode": "M428FDF78",
+    "status": "joined_paid",
+    "createdAt": "2026-06-24T11:56:00.000Z",
+    "joinedAt": "2026-06-24T11:56:00.000Z"
+  },
+  {
+    "id": "ref_WFCekWF_Z0KF",
+    "sponsorUserId": "user_djb0_4w2VkfD",
+    "invitedUserId": "user_yA2AdJtjQuBk",
+    "inviteCode": "M32D93A4E",
+    "status": "joined_free",
+    "createdAt": "2026-06-06T19:14:00.000Z",
+    "joinedAt": "2026-06-06T19:14:00.000Z"
+  },
+  {
+    "id": "ref_W-3O08T5KO-Z",
+    "sponsorUserId": "user_aJW0MddlYt_U",
+    "invitedUserId": "user_TZihPjELFB1l",
+    "inviteCode": "MFA9394F0",
+    "status": "joined_free",
+    "createdAt": "2026-02-27T21:07:00.000Z",
+    "joinedAt": "2026-02-27T21:07:00.000Z"
+  },
+  {
+    "id": "ref_LssmRWBXEGMh",
+    "sponsorUserId": "user_wymUvulC2Gkp",
+    "invitedUserId": "user_ILKn46UpVASr",
+    "inviteCode": "M74D8650A",
+    "status": "joined_free",
+    "createdAt": "2026-02-10T11:32:00.000Z",
+    "joinedAt": "2026-02-10T11:32:00.000Z"
+  },
+  {
+    "id": "ref_sKaXUddtxpG5",
+    "sponsorUserId": "user_gB4QWzk0GWvW",
+    "invitedUserId": "user_58KNBK-PrPV2",
+    "inviteCode": "ME677B4E6",
+    "status": "joined_paid",
+    "createdAt": "2026-05-15T08:46:00.000Z",
+    "joinedAt": "2026-05-15T08:46:00.000Z"
+  },
+  {
+    "id": "ref_i498Efwvht4O",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_czfCUCUHCogh",
+    "inviteCode": "MDD95DFD7",
+    "status": "joined_free",
+    "createdAt": "2026-01-19T13:33:00.000Z",
+    "joinedAt": "2026-01-19T13:33:00.000Z"
+  },
+  {
+    "id": "ref_jxUCJDIxeSJM",
+    "sponsorUserId": "user_TZihPjELFB1l",
+    "invitedUserId": "user_V__JNqoAh5sR",
+    "inviteCode": "MB9F7377E",
+    "status": "joined_free",
+    "createdAt": "2026-03-20T14:57:00.000Z",
+    "joinedAt": "2026-03-20T14:57:00.000Z"
+  },
+  {
+    "id": "ref_Gc09Mor-J0hI",
+    "sponsorUserId": "user_TZihPjELFB1l",
+    "invitedUserId": "user_04mAKi7rmaPc",
+    "inviteCode": "M9850DAAB",
+    "status": "joined_free",
+    "createdAt": "2026-05-06T16:34:00.000Z",
+    "joinedAt": "2026-05-06T16:34:00.000Z"
+  },
+  {
+    "id": "ref_cLAEK8_2BwBv",
+    "sponsorUserId": "user_oWZM7YIg8S40",
+    "invitedUserId": "user_wNskSmoNc_uR",
+    "inviteCode": "M68B3B783",
+    "status": "joined_free",
+    "createdAt": "2026-02-15T21:02:00.000Z",
+    "joinedAt": "2026-02-15T21:02:00.000Z"
+  },
+  {
+    "id": "ref_OIkjL5hsxeso",
+    "sponsorUserId": "user_V__JNqoAh5sR",
+    "invitedUserId": "user_UWSYMd2Purjr",
+    "inviteCode": "M9F442FDC",
+    "status": "joined_paid",
+    "createdAt": "2026-04-16T20:17:00.000Z",
+    "joinedAt": "2026-04-16T20:17:00.000Z"
+  },
+  {
+    "id": "ref_VZEuvUjOYPk4",
+    "sponsorUserId": "user_04mAKi7rmaPc",
+    "invitedUserId": "user_eQM0KqdZiCwl",
+    "inviteCode": "M505DD5B3",
+    "status": "joined_free",
+    "createdAt": "2026-06-05T20:09:00.000Z",
+    "joinedAt": "2026-06-05T20:09:00.000Z"
+  },
+  {
+    "id": "ref_gUtnnUgiB0Lm",
+    "sponsorUserId": "user_Y12M_BGpF8RI",
+    "invitedUserId": "user_vCrX-VjIMBz1",
+    "inviteCode": "M37CB0420",
+    "status": "joined_paid",
+    "createdAt": "2026-04-07T19:21:00.000Z",
+    "joinedAt": "2026-04-07T19:21:00.000Z"
+  },
+  {
+    "id": "ref_eWbQEIjQ4Qn8",
+    "sponsorUserId": "user_58KNBK-PrPV2",
+    "invitedUserId": "user_zRo2W8rKTbz-",
+    "inviteCode": "M62ACB779",
+    "status": "joined_free",
+    "createdAt": "2026-02-13T15:37:00.000Z",
+    "joinedAt": "2026-02-13T15:37:00.000Z"
+  },
+  {
+    "id": "ref_vu49MeJuSWxZ",
+    "sponsorUserId": "user_DoMlG0yifZf_",
+    "invitedUserId": "user_bcrXMDRWbvQT",
+    "inviteCode": "M5898CE48",
+    "status": "joined_paid",
+    "createdAt": "2026-01-18T08:21:00.000Z",
+    "joinedAt": "2026-01-18T08:21:00.000Z"
+  },
+  {
+    "id": "ref_U4PiOZq8aR4_",
+    "sponsorUserId": "user_UWSYMd2Purjr",
+    "invitedUserId": "user_excayJw-AbfZ",
+    "inviteCode": "M1F99C367",
+    "status": "joined_free",
+    "createdAt": "2026-06-02T12:18:00.000Z",
+    "joinedAt": "2026-06-02T12:18:00.000Z"
+  },
+  {
+    "id": "ref_KbJUA9zKE1V7",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_wWS1syMnaAIe",
+    "inviteCode": "M2D411300",
+    "status": "joined_free",
+    "createdAt": "2026-01-13T11:43:00.000Z",
+    "joinedAt": "2026-01-13T11:43:00.000Z"
+  },
+  {
+    "id": "ref_mbYRw3wblrXi",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_C0tGbIeW8g5r",
+    "inviteCode": "ME677B4E6",
+    "status": "joined_free",
+    "createdAt": "2026-01-14T21:19:00.000Z",
+    "joinedAt": "2026-01-14T21:19:00.000Z"
+  },
+  {
+    "id": "ref_Ci64BNkQPXm7",
+    "sponsorUserId": "user_UWSYMd2Purjr",
+    "invitedUserId": "user_T_e1AQnGdT_6",
+    "inviteCode": "MAF6B1BE7",
+    "status": "joined_free",
+    "createdAt": "2026-04-26T18:24:00.000Z",
+    "joinedAt": "2026-04-26T18:24:00.000Z"
+  },
+  {
+    "id": "ref_6O6shjYQXYa4",
+    "sponsorUserId": "user_eQM0KqdZiCwl",
+    "invitedUserId": "user_rkNyFaWEmNEN",
+    "inviteCode": "MDE493B03",
+    "status": "joined_free",
+    "createdAt": "2026-01-15T16:39:00.000Z",
+    "joinedAt": "2026-01-15T16:39:00.000Z"
+  },
+  {
+    "id": "ref_TO7cs7oc9e5D",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_ISI5_WA45ScS",
+    "inviteCode": "MB1870C18",
+    "status": "joined_free",
+    "createdAt": "2026-03-10T17:27:00.000Z",
+    "joinedAt": "2026-03-10T17:27:00.000Z"
+  },
+  {
+    "id": "ref_MRflr-3_6vx6",
+    "sponsorUserId": "user_DoMlG0yifZf_",
+    "invitedUserId": "user_Rx8qVufMNF-4",
+    "inviteCode": "MCDF4DF66",
+    "status": "joined_paid",
+    "createdAt": "2026-01-13T16:57:00.000Z",
+    "joinedAt": "2026-01-13T16:57:00.000Z"
+  },
+  {
+    "id": "ref_Y0pMBEO1Dymr",
+    "sponsorUserId": "user_excayJw-AbfZ",
+    "invitedUserId": "user_tjKIiowIfJmd",
+    "inviteCode": "MAAAE474E",
+    "status": "joined_paid",
+    "createdAt": "2026-06-03T13:21:00.000Z",
+    "joinedAt": "2026-06-03T13:21:00.000Z"
+  },
+  {
+    "id": "ref_yWIqUEdVBV1M",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_ZqI29lFHEpT6",
+    "inviteCode": "M0CC3820B",
+    "status": "joined_paid",
+    "createdAt": "2026-02-17T22:41:00.000Z",
+    "joinedAt": "2026-02-17T22:41:00.000Z"
+  },
+  {
+    "id": "ref_6GVvaVgcfhXe",
+    "sponsorUserId": "user_djb0_4w2VkfD",
+    "invitedUserId": "user_1_40XSOeu6Fy",
+    "inviteCode": "MFD149D7B",
+    "status": "joined_free",
+    "createdAt": "2026-05-02T19:06:00.000Z",
+    "joinedAt": "2026-05-02T19:06:00.000Z"
+  },
+  {
+    "id": "ref_tmJuXVDuTrm2",
+    "sponsorUserId": "user_djb0_4w2VkfD",
+    "invitedUserId": "user_JCcOqFFyjaLN",
+    "inviteCode": "M3F06A222",
+    "status": "joined_paid",
+    "createdAt": "2026-01-29T19:35:00.000Z",
+    "joinedAt": "2026-01-29T19:35:00.000Z"
+  },
+  {
+    "id": "ref_htKuC72sfNo7",
+    "sponsorUserId": "user_rutI_HeXiNYV",
+    "invitedUserId": "user_dcj7docOVm1T",
+    "inviteCode": "M165FCAEF",
+    "status": "joined_free",
+    "createdAt": "2026-04-06T17:14:00.000Z",
+    "joinedAt": "2026-04-06T17:14:00.000Z"
+  },
+  {
+    "id": "ref_5VtbdDQe6ZoH",
+    "sponsorUserId": "user_rutI_HeXiNYV",
+    "invitedUserId": "user_vqJRmQYzO5Xe",
+    "inviteCode": "MBFAB2283",
+    "status": "joined_free",
+    "createdAt": "2026-03-04T10:59:00.000Z",
+    "joinedAt": "2026-03-04T10:59:00.000Z"
+  },
+  {
+    "id": "ref_MDULjKycFTOr",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_3tW_ABddMCbD",
+    "inviteCode": "MFBC68A15",
+    "status": "joined_free",
+    "createdAt": "2026-04-25T07:05:00.000Z",
+    "joinedAt": "2026-04-25T07:05:00.000Z"
+  },
+  {
+    "id": "ref_7hl295rgDO1L",
+    "sponsorUserId": "user_04mAKi7rmaPc",
+    "invitedUserId": "user_tC_lIxu8Juas",
+    "inviteCode": "M165FCAEF",
+    "status": "joined_free",
+    "createdAt": "2026-06-09T07:28:00.000Z",
+    "joinedAt": "2026-06-09T07:28:00.000Z"
+  },
+  {
+    "id": "ref_2UnQajeo2Mxw",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_q0p8AXHpKZ-C",
+    "inviteCode": "MAF8CD7EC",
+    "status": "joined_free",
+    "createdAt": "2026-05-20T07:02:00.000Z",
+    "joinedAt": "2026-05-20T07:02:00.000Z"
+  },
+  {
+    "id": "ref_CUJiMixV0iRw",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_mjX-PinSQkgl",
+    "inviteCode": "ME8841",
+    "status": "joined_free",
+    "createdAt": "2026-05-19T12:48:00.000Z",
+    "joinedAt": "2026-05-19T12:48:00.000Z"
+  },
+  {
+    "id": "ref_PfVV0MZiiV_h",
+    "sponsorUserId": "user_vCrX-VjIMBz1",
+    "invitedUserId": "user_TkDZZGtnfRlc",
+    "inviteCode": "MCDF4DF66",
+    "status": "joined_free",
+    "createdAt": "2026-04-04T07:04:00.000Z",
+    "joinedAt": "2026-04-04T07:04:00.000Z"
+  },
+  {
+    "id": "ref_gyAe_NjBatcM",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_d__eox-3UD8r",
+    "inviteCode": "M3F06A222",
+    "status": "joined_free",
+    "createdAt": "2026-03-29T15:56:00.000Z",
+    "joinedAt": "2026-03-29T15:56:00.000Z"
+  },
+  {
+    "id": "ref_E4XW4St7yZnr",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_ygVdeanD2wYe",
+    "inviteCode": "M5118EEE2",
+    "status": "joined_free",
+    "createdAt": "2026-06-26T13:10:00.000Z",
+    "joinedAt": "2026-06-26T13:10:00.000Z"
+  },
+  {
+    "id": "ref_hDYp5fyCIDM4",
+    "sponsorUserId": "user_djb0_4w2VkfD",
+    "invitedUserId": "user_9xy5Gfy9kdZm",
+    "inviteCode": "M52749539",
+    "status": "joined_paid",
+    "createdAt": "2026-04-22T18:50:00.000Z",
+    "joinedAt": "2026-04-22T18:50:00.000Z"
+  },
+  {
+    "id": "ref_dYYa4w76088s",
+    "sponsorUserId": "user_yA2AdJtjQuBk",
+    "invitedUserId": "user_D0bVykCWjkY-",
+    "inviteCode": "MD24F947A",
+    "status": "joined_paid",
+    "createdAt": "2026-06-05T16:07:00.000Z",
+    "joinedAt": "2026-06-05T16:07:00.000Z"
+  },
+  {
+    "id": "ref_DaoaiHJ4sfbH",
+    "sponsorUserId": "user_vUFqiTfHngOu",
+    "invitedUserId": "user_JKXNopUt6SP6",
+    "inviteCode": "M2DF0D707",
+    "status": "joined_free",
+    "createdAt": "2026-03-26T07:15:00.000Z",
+    "joinedAt": "2026-03-26T07:15:00.000Z"
+  },
+  {
+    "id": "ref_PUxPyQYtVwk3",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_SnfjyHrZvdhZ",
+    "inviteCode": "M68B3B783",
+    "status": "joined_paid",
+    "createdAt": "2026-05-02T07:46:00.000Z",
+    "joinedAt": "2026-05-02T07:46:00.000Z"
+  },
+  {
+    "id": "ref_exXZ2TgyvCwf",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_LodbV4-nM1LZ",
+    "inviteCode": "M32D93A4E",
+    "status": "joined_free",
+    "createdAt": "2026-02-17T22:05:00.000Z",
+    "joinedAt": "2026-02-17T22:05:00.000Z"
+  },
+  {
+    "id": "ref_KfBQ5tP6PNJP",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_xdmESrpoukA9",
+    "inviteCode": "MC83AA354",
+    "status": "joined_free",
+    "createdAt": "2026-01-21T18:21:00.000Z",
+    "joinedAt": "2026-01-21T18:21:00.000Z"
+  },
+  {
+    "id": "ref_EaiY_e9rXv-F",
+    "sponsorUserId": "user_TZihPjELFB1l",
+    "invitedUserId": "user_0DqCarrbx1hU",
+    "inviteCode": "M6BFA5611",
+    "status": "joined_free",
+    "createdAt": "2026-06-23T07:11:00.000Z",
+    "joinedAt": "2026-06-23T07:11:00.000Z"
+  },
+  {
+    "id": "ref_FGqqu3aHFmU7",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_z29FBqjH163W",
+    "inviteCode": "M7D429B98",
+    "status": "joined_free",
+    "createdAt": "2026-03-09T11:56:00.000Z",
+    "joinedAt": "2026-03-09T11:56:00.000Z"
+  },
+  {
+    "id": "ref_wun0eL_aoi7a",
+    "sponsorUserId": "user_Rx8qVufMNF-4",
+    "invitedUserId": "user_tN-ZHbuM-ISW",
+    "inviteCode": "M7C839B51",
+    "status": "joined_free",
+    "createdAt": "2026-01-09T13:21:00.000Z",
+    "joinedAt": "2026-01-09T13:21:00.000Z"
+  },
+  {
+    "id": "ref_-Fat4NRWcjn8",
+    "sponsorUserId": "user_xdmESrpoukA9",
+    "invitedUserId": "user_VciNMAdkCSVf",
+    "inviteCode": "M0A9691B4",
+    "status": "joined_free",
+    "createdAt": "2026-05-02T06:20:00.000Z",
+    "joinedAt": "2026-05-02T06:20:00.000Z"
+  },
+  {
+    "id": "ref_pmhUMGgZkO1F",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_Gqam0LvuIeCl",
+    "inviteCode": "M60DFD569",
+    "status": "joined_free",
+    "createdAt": "2026-05-19T08:27:00.000Z",
+    "joinedAt": "2026-05-19T08:27:00.000Z"
+  },
+  {
+    "id": "ref_wv0maigo0r-R",
+    "sponsorUserId": "user_ygVdeanD2wYe",
+    "invitedUserId": "user_4bYsSdnq1WMO",
+    "inviteCode": "MDB263DE1",
+    "status": "joined_free",
+    "createdAt": "2026-06-09T17:11:00.000Z",
+    "joinedAt": "2026-06-09T17:11:00.000Z"
+  },
+  {
+    "id": "ref_Rz6HsGEFnjH-",
+    "sponsorUserId": "user_xdmESrpoukA9",
+    "invitedUserId": "user_GFxQjLoTRNbE",
+    "inviteCode": "M7B34E5B2",
+    "status": "joined_paid",
+    "createdAt": "2026-06-23T19:28:00.000Z",
+    "joinedAt": "2026-06-23T19:28:00.000Z"
+  },
+  {
+    "id": "ref_adCLi06qwbBa",
+    "sponsorUserId": "user_9xy5Gfy9kdZm",
+    "invitedUserId": "user_HSDlM0j_Wl8a",
+    "inviteCode": "M0CC3820B",
+    "status": "joined_paid",
+    "createdAt": "2026-06-13T12:28:00.000Z",
+    "joinedAt": "2026-06-13T12:28:00.000Z"
+  },
+  {
+    "id": "ref_iR8ef6P9yRbd",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_cKvU7BnzQ7u1",
+    "inviteCode": "MB9A3C4C8",
+    "status": "joined_free",
+    "createdAt": "2026-06-17T15:44:00.000Z",
+    "joinedAt": "2026-06-17T15:44:00.000Z"
+  },
+  {
+    "id": "ref_9n4p2YBAMrmr",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_6VpjV34jDTZn",
+    "inviteCode": "MEA056737",
+    "status": "joined_free",
+    "createdAt": "2026-01-21T12:52:00.000Z",
+    "joinedAt": "2026-01-21T12:52:00.000Z"
+  },
+  {
+    "id": "ref_pDOrA-YInnlJ",
+    "sponsorUserId": "user_ygVdeanD2wYe",
+    "invitedUserId": "user_C5yt3xm57GIY",
+    "inviteCode": "ME62341AD",
+    "status": "joined_free",
+    "createdAt": "2026-02-03T08:05:00.000Z",
+    "joinedAt": "2026-02-03T08:05:00.000Z"
+  },
+  {
+    "id": "ref_4eYHU1GlJCcH",
+    "sponsorUserId": "user_czfCUCUHCogh",
+    "invitedUserId": "user__QVIVVSq009S",
+    "inviteCode": "M8BC14CAA",
+    "status": "joined_free",
+    "createdAt": "2026-03-12T06:15:00.000Z",
+    "joinedAt": "2026-03-12T06:15:00.000Z"
+  },
+  {
+    "id": "ref_XLQuDBRqXyJm",
+    "sponsorUserId": "user_zRo2W8rKTbz-",
+    "invitedUserId": "user_JBQihiN0sXhH",
+    "inviteCode": "MDC6A436F",
+    "status": "joined_free",
+    "createdAt": "2026-04-28T11:39:00.000Z",
+    "joinedAt": "2026-04-28T11:39:00.000Z"
+  },
+  {
+    "id": "ref_6BFTf3c_e9ce",
+    "sponsorUserId": "user_bcrXMDRWbvQT",
+    "invitedUserId": "user__9UAv9LeNEmc",
+    "inviteCode": "MADC7C160",
+    "status": "joined_free",
+    "createdAt": "2026-01-13T20:52:00.000Z",
+    "joinedAt": "2026-01-13T20:52:00.000Z"
+  },
+  {
+    "id": "ref_WTN_R7f9eTjs",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_5l2rbp_Qfxhy",
+    "inviteCode": "MBE22026A",
+    "status": "joined_free",
+    "createdAt": "2026-03-15T16:14:00.000Z",
+    "joinedAt": "2026-03-15T16:14:00.000Z"
+  },
+  {
+    "id": "ref_pUh7Fya-0jkG",
+    "sponsorUserId": "user_C5yt3xm57GIY",
+    "invitedUserId": "user_IdYIFKUqgSoi",
+    "inviteCode": "M4A2F8603",
+    "status": "joined_free",
+    "createdAt": "2026-06-17T20:23:00.000Z",
+    "joinedAt": "2026-06-17T20:23:00.000Z"
+  },
+  {
+    "id": "ref_bGMUnbWP3cMW",
+    "sponsorUserId": "user_mjX-PinSQkgl",
+    "invitedUserId": "user_fXOPPkWo1HVl",
+    "inviteCode": "MBFF4B2FB",
+    "status": "joined_free",
+    "createdAt": "2026-04-27T10:03:00.000Z",
+    "joinedAt": "2026-04-27T10:03:00.000Z"
+  },
+  {
+    "id": "ref_NxUOWMfHuDIl",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_F7qsmv4DSxfn",
+    "inviteCode": "M0D310BC2",
+    "status": "joined_free",
+    "createdAt": "2026-04-11T14:02:00.000Z",
+    "joinedAt": "2026-04-11T14:02:00.000Z"
+  },
+  {
+    "id": "ref_DwWPbHJkNJDT",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_t4vOHmUfmC5r",
+    "inviteCode": "MF95EFAEC",
+    "status": "joined_free",
+    "createdAt": "2026-01-10T22:33:00.000Z",
+    "joinedAt": "2026-01-10T22:33:00.000Z"
+  },
+  {
+    "id": "ref_B2X5iQ8B0iv2",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_iafOJt_i8cDX",
+    "inviteCode": "ME677B4E6",
+    "status": "joined_free",
+    "createdAt": "2026-05-20T07:04:00.000Z",
+    "joinedAt": "2026-05-20T07:04:00.000Z"
+  },
+  {
+    "id": "ref_ke4nd0UO_154",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_mWUINniyquMu",
+    "inviteCode": "MBC9D29D3",
+    "status": "joined_free",
+    "createdAt": "2026-06-17T13:35:00.000Z",
+    "joinedAt": "2026-06-17T13:35:00.000Z"
+  },
+  {
+    "id": "ref_lYIXXpbDPdlG",
+    "sponsorUserId": "user_eQM0KqdZiCwl",
+    "invitedUserId": "user_8d6-CRgDQDkS",
+    "inviteCode": "M2D411300",
+    "status": "joined_free",
+    "createdAt": "2026-04-05T21:57:00.000Z",
+    "joinedAt": "2026-04-05T21:57:00.000Z"
+  },
+  {
+    "id": "ref_Sx9S2R5gc9Ug",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_3votiU1wn-L5",
+    "inviteCode": "MEEB269FF",
+    "status": "joined_paid",
+    "createdAt": "2026-03-26T20:16:00.000Z",
+    "joinedAt": "2026-03-26T20:16:00.000Z"
+  },
+  {
+    "id": "ref_AiDeUTBLrmKj",
+    "sponsorUserId": "user_HSDlM0j_Wl8a",
+    "invitedUserId": "user__e68zfFFi4eO",
+    "inviteCode": "MA5A95A92",
+    "status": "joined_paid",
+    "createdAt": "2026-06-10T20:01:00.000Z",
+    "joinedAt": "2026-06-10T20:01:00.000Z"
+  },
+  {
+    "id": "ref_dvItjZ9NAWUG",
+    "sponsorUserId": "user_d__eox-3UD8r",
+    "invitedUserId": "user_KRoyD4Rk6d7V",
+    "inviteCode": "MADC7C160",
+    "status": "joined_free",
+    "createdAt": "2026-03-05T22:30:00.000Z",
+    "joinedAt": "2026-03-05T22:30:00.000Z"
+  },
+  {
+    "id": "ref_prCmSukcV-rX",
+    "sponsorUserId": "user_ISI5_WA45ScS",
+    "invitedUserId": "user_vLGp2F15MKj-",
+    "inviteCode": "M9B03BD3C",
+    "status": "joined_free",
+    "createdAt": "2026-06-25T21:50:00.000Z",
+    "joinedAt": "2026-06-25T21:50:00.000Z"
+  },
+  {
+    "id": "ref_WGXrW_NmrcWg",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_8bPZKnQr_Txv",
+    "inviteCode": "M32805891",
+    "status": "joined_free",
+    "createdAt": "2026-02-23T15:40:00.000Z",
+    "joinedAt": "2026-02-23T15:40:00.000Z"
+  },
+  {
+    "id": "ref_JGSxXk7wKIPt",
+    "sponsorUserId": "user_VciNMAdkCSVf",
+    "invitedUserId": "user_wyPH-nWf6odc",
+    "inviteCode": "M7938F980",
+    "status": "joined_free",
+    "createdAt": "2026-03-08T12:59:00.000Z",
+    "joinedAt": "2026-03-08T12:59:00.000Z"
+  },
+  {
+    "id": "ref_7OIlIWOWB5B4",
+    "sponsorUserId": "user_5l2rbp_Qfxhy",
+    "invitedUserId": "user_EhUFN1Bw5voY",
+    "inviteCode": "M41C09940",
+    "status": "joined_free",
+    "createdAt": "2026-06-19T21:53:00.000Z",
+    "joinedAt": "2026-06-19T21:53:00.000Z"
+  },
+  {
+    "id": "ref_gt3W3wfQuBvl",
+    "sponsorUserId": "user_EhUFN1Bw5voY",
+    "invitedUserId": "user_vFpQ9XPsVyJT",
+    "inviteCode": "M1A140DB0",
+    "status": "joined_free",
+    "createdAt": "2026-04-17T19:53:00.000Z",
+    "joinedAt": "2026-04-17T19:53:00.000Z"
+  },
+  {
+    "id": "ref_2ZJ15I9EvkjV",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_bs6DhBafDXyB",
+    "inviteCode": "MFD149D7B",
+    "status": "joined_paid",
+    "createdAt": "2026-01-11T21:48:00.000Z",
+    "joinedAt": "2026-01-11T21:48:00.000Z"
+  },
+  {
+    "id": "ref_hdCbiAFN37QK",
+    "sponsorUserId": "user_tC_lIxu8Juas",
+    "invitedUserId": "user_FejfFIocL6xm",
+    "inviteCode": "M55450A83",
+    "status": "joined_free",
+    "createdAt": "2026-01-25T09:05:00.000Z",
+    "joinedAt": "2026-01-25T09:05:00.000Z"
+  },
+  {
+    "id": "ref_5ivbuKSx8aWx",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_wrlW2Ssqn9wc",
+    "inviteCode": "M6D3AA431",
+    "status": "joined_paid",
+    "createdAt": "2026-05-29T11:53:00.000Z",
+    "joinedAt": "2026-05-29T11:53:00.000Z"
+  },
+  {
+    "id": "ref_ajJA9NnsIEgx",
+    "sponsorUserId": "user_V__JNqoAh5sR",
+    "invitedUserId": "user_ybG8OOFNdDdb",
+    "inviteCode": "M10DE261F",
+    "status": "joined_free",
+    "createdAt": "2026-01-14T15:58:00.000Z",
+    "joinedAt": "2026-01-14T15:58:00.000Z"
+  },
+  {
+    "id": "ref_GE-pPR0YDVdd",
+    "sponsorUserId": "user_ygVdeanD2wYe",
+    "invitedUserId": "user_xEuRgw6zO-L5",
+    "inviteCode": "M721072BA",
+    "status": "joined_free",
+    "createdAt": "2026-02-17T11:59:00.000Z",
+    "joinedAt": "2026-02-17T11:59:00.000Z"
+  },
+  {
+    "id": "ref_4Qj_dntxVrhi",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_0H9ZHp3igaIu",
+    "inviteCode": "M41C09940",
+    "status": "joined_free",
+    "createdAt": "2026-06-19T10:29:00.000Z",
+    "joinedAt": "2026-06-19T10:29:00.000Z"
+  },
+  {
+    "id": "ref_eLPZ77uGpqCz",
+    "sponsorUserId": "user_04mAKi7rmaPc",
+    "invitedUserId": "user_vg9HE56f7nGc",
+    "inviteCode": "M428FDF78",
+    "status": "joined_paid",
+    "createdAt": "2026-02-02T22:31:00.000Z",
+    "joinedAt": "2026-02-02T22:31:00.000Z"
+  },
+  {
+    "id": "ref_DE5RkClOgYos",
+    "sponsorUserId": "user_ILKn46UpVASr",
+    "invitedUserId": "user_0gYVo_9LzspP",
+    "inviteCode": "MF3630AF0",
+    "status": "joined_free",
+    "createdAt": "2026-03-14T15:35:00.000Z",
+    "joinedAt": "2026-03-14T15:35:00.000Z"
+  },
+  {
+    "id": "ref_mHCflC8CrGOf",
+    "sponsorUserId": "user_wymUvulC2Gkp",
+    "invitedUserId": "user_xgejomRYOA3V",
+    "inviteCode": "M0D430225",
+    "status": "joined_free",
+    "createdAt": "2026-01-07T12:02:00.000Z",
+    "joinedAt": "2026-01-07T12:02:00.000Z"
+  },
+  {
+    "id": "ref_8wS6rMT4dQ41",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_phAB4NJyh3OJ",
+    "inviteCode": "MBE22026A",
+    "status": "joined_free",
+    "createdAt": "2026-04-12T10:12:00.000Z",
+    "joinedAt": "2026-04-12T10:12:00.000Z"
+  },
+  {
+    "id": "ref_Q7vyDQM1SdGc",
+    "sponsorUserId": "user_wWS1syMnaAIe",
+    "invitedUserId": "user_8SNCBP-uuSUK",
+    "inviteCode": "MF444DE41",
+    "status": "joined_paid",
+    "createdAt": "2026-03-05T17:39:00.000Z",
+    "joinedAt": "2026-03-05T17:39:00.000Z"
+  },
+  {
+    "id": "ref_E3DjT3rPjtAL",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_-YdVrGIXtrC5",
+    "inviteCode": "M110DF226",
+    "status": "joined_free",
+    "createdAt": "2026-04-11T18:51:00.000Z",
+    "joinedAt": "2026-04-11T18:51:00.000Z"
+  },
+  {
+    "id": "ref_AV82UBXR_7pG",
+    "sponsorUserId": "user_ILKn46UpVASr",
+    "invitedUserId": "user_b59_VoXWZwrI",
+    "inviteCode": "MB0A98C26",
+    "status": "joined_free",
+    "createdAt": "2026-03-11T14:52:00.000Z",
+    "joinedAt": "2026-03-11T14:52:00.000Z"
+  },
+  {
+    "id": "ref_zFTrxvzDVrwu",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_baJ38H99t386",
+    "inviteCode": "MF0BBB723",
+    "status": "joined_free",
+    "createdAt": "2026-01-29T11:27:00.000Z",
+    "joinedAt": "2026-01-29T11:27:00.000Z"
+  },
+  {
+    "id": "ref_3afpaRv50NWK",
+    "sponsorUserId": "user_4bYsSdnq1WMO",
+    "invitedUserId": "user_BvRlkabVfVqK",
+    "inviteCode": "M26C2C584",
+    "status": "joined_free",
+    "createdAt": "2026-04-25T13:14:00.000Z",
+    "joinedAt": "2026-04-25T13:14:00.000Z"
+  },
+  {
+    "id": "ref_x54j1ZZv8wHs",
+    "sponsorUserId": "user_HSDlM0j_Wl8a",
+    "invitedUserId": "user_9TXCgToOhKAL",
+    "inviteCode": "M74D8650A",
+    "status": "joined_paid",
+    "createdAt": "2026-04-05T06:45:00.000Z",
+    "joinedAt": "2026-04-05T06:45:00.000Z"
+  },
+  {
+    "id": "ref_mXxwgNi8BT4Q",
+    "sponsorUserId": "user_JKXNopUt6SP6",
+    "invitedUserId": "user_Vu2iGXWPIBI-",
+    "inviteCode": "M22150FCB",
+    "status": "joined_free",
+    "createdAt": "2026-06-12T17:44:00.000Z",
+    "joinedAt": "2026-06-12T17:44:00.000Z"
+  },
+  {
+    "id": "ref_G8ZZHQ7B80GS",
+    "sponsorUserId": "user__e68zfFFi4eO",
+    "invitedUserId": "user_RnsWDkCstQ_4",
+    "inviteCode": "M6BFA5611",
+    "status": "joined_free",
+    "createdAt": "2026-06-11T09:12:00.000Z",
+    "joinedAt": "2026-06-11T09:12:00.000Z"
+  },
+  {
+    "id": "ref_0AmP0sS34Vqe",
+    "sponsorUserId": "user_wyPH-nWf6odc",
+    "invitedUserId": "user_5sJo3tE2wei3",
+    "inviteCode": "M968BA9A2",
+    "status": "joined_paid",
+    "createdAt": "2026-05-31T12:51:00.000Z",
+    "joinedAt": "2026-05-31T12:51:00.000Z"
+  },
+  {
+    "id": "ref_7PZrzspdGhKL",
+    "sponsorUserId": "user_04mAKi7rmaPc",
+    "invitedUserId": "user_4F7irKzfxqEd",
+    "inviteCode": "MAF8CD7EC",
+    "status": "joined_free",
+    "createdAt": "2026-03-28T11:09:00.000Z",
+    "joinedAt": "2026-03-28T11:09:00.000Z"
+  },
+  {
+    "id": "ref_cGQfrF_HS5FX",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_DMj01TOGzl_9",
+    "inviteCode": "MBC617E8A",
+    "status": "joined_paid",
+    "createdAt": "2026-03-07T20:24:00.000Z",
+    "joinedAt": "2026-03-07T20:24:00.000Z"
+  },
+  {
+    "id": "ref_3dqO2WMmIaEZ",
+    "sponsorUserId": "user_5sJo3tE2wei3",
+    "invitedUserId": "user_Q5MXdG3N0laX",
+    "inviteCode": "M26C2C584",
+    "status": "joined_free",
+    "createdAt": "2026-02-18T19:26:00.000Z",
+    "joinedAt": "2026-02-18T19:26:00.000Z"
+  },
+  {
+    "id": "ref_EvY0O1Q0MQFV",
+    "sponsorUserId": "user_JKXNopUt6SP6",
+    "invitedUserId": "user_U0th4CYyk2bz",
+    "inviteCode": "MDC3547E4",
+    "status": "joined_free",
+    "createdAt": "2026-04-19T21:42:00.000Z",
+    "joinedAt": "2026-04-19T21:42:00.000Z"
+  },
+  {
+    "id": "ref_8POWQy4cG-bE",
+    "sponsorUserId": "user_U0th4CYyk2bz",
+    "invitedUserId": "user__iwXNGoBbfzm",
+    "inviteCode": "MA2FD2430",
+    "status": "joined_free",
+    "createdAt": "2026-05-07T17:06:00.000Z",
+    "joinedAt": "2026-05-07T17:06:00.000Z"
+  },
+  {
+    "id": "ref_JWGjDDI--1VJ",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_8RJfYLKNSqt-",
+    "inviteCode": "MF444DE41",
+    "status": "joined_free",
+    "createdAt": "2026-03-30T12:56:00.000Z",
+    "joinedAt": "2026-03-30T12:56:00.000Z"
+  },
+  {
+    "id": "ref_ucB7Q4j0gqfk",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_0C03_zaEr3Fi",
+    "inviteCode": "M708A3366",
+    "status": "joined_free",
+    "createdAt": "2026-05-15T15:20:00.000Z",
+    "joinedAt": "2026-05-15T15:20:00.000Z"
+  },
+  {
+    "id": "ref_oQsUO50FWdGi",
+    "sponsorUserId": "user_GFxQjLoTRNbE",
+    "invitedUserId": "user_WweOifCa16Pf",
+    "inviteCode": "ME62341AD",
+    "status": "joined_free",
+    "createdAt": "2026-02-17T19:41:00.000Z",
+    "joinedAt": "2026-02-17T19:41:00.000Z"
+  },
+  {
+    "id": "ref_HrB6Sc9gP7rB",
+    "sponsorUserId": "user_Ynrv3Us0vY-x",
+    "invitedUserId": "user_aQaMrLdPrW8-",
+    "inviteCode": "M22150FCB",
+    "status": "joined_free",
+    "createdAt": "2026-06-05T09:11:00.000Z",
+    "joinedAt": "2026-06-05T09:11:00.000Z"
+  },
+  {
+    "id": "ref_qraIyfhB4YaX",
+    "sponsorUserId": "user_yA2AdJtjQuBk",
+    "invitedUserId": "user_dlpskVzeBIza",
+    "inviteCode": "M68C0F19C",
+    "status": "joined_free",
+    "createdAt": "2026-01-24T08:51:00.000Z",
+    "joinedAt": "2026-01-24T08:51:00.000Z"
+  },
+  {
+    "id": "ref_e7aFmf6i25Ii",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_ri6Fir8Du3o_",
+    "inviteCode": "MBE239BEA",
+    "status": "joined_free",
+    "createdAt": "2026-05-19T06:10:00.000Z",
+    "joinedAt": "2026-05-19T06:10:00.000Z"
+  },
+  {
+    "id": "ref_LFR0JbuVUJOP",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_ej8QJ0e1iOAv",
+    "inviteCode": "MAAAE474E",
+    "status": "joined_free",
+    "createdAt": "2026-03-31T19:21:00.000Z",
+    "joinedAt": "2026-03-31T19:21:00.000Z"
+  },
+  {
+    "id": "ref_yNtW_QJT4TD3",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_W3eGvEEthL9z",
+    "inviteCode": "M37F18560",
+    "status": "joined_free",
+    "createdAt": "2026-03-25T07:18:00.000Z",
+    "joinedAt": "2026-03-25T07:18:00.000Z"
+  },
+  {
+    "id": "ref_bbHQLWNFPDyV",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_1QopQ2MrmcS0",
+    "inviteCode": "M37CB0420",
+    "status": "joined_free",
+    "createdAt": "2026-02-24T12:43:00.000Z",
+    "joinedAt": "2026-02-24T12:43:00.000Z"
+  },
+  {
+    "id": "ref_08rDJ6nwp_Vl",
+    "sponsorUserId": "user_SnfjyHrZvdhZ",
+    "invitedUserId": "user_lB3gawMwKY_N",
+    "inviteCode": "MFA9394F0",
+    "status": "joined_free",
+    "createdAt": "2026-04-15T13:00:00.000Z",
+    "joinedAt": "2026-04-15T13:00:00.000Z"
+  },
+  {
+    "id": "ref_f0hb3PQNAYUd",
+    "sponsorUserId": "user_tjKIiowIfJmd",
+    "invitedUserId": "user_DSXqE0nbLWIh",
+    "inviteCode": "MEB9B915F",
+    "status": "joined_paid",
+    "createdAt": "2026-05-10T14:49:00.000Z",
+    "joinedAt": "2026-05-10T14:49:00.000Z"
+  },
+  {
+    "id": "ref_fFeH72GSqKL0",
+    "sponsorUserId": "user_9vBmiHwnUBpw",
+    "invitedUserId": "user_bs8BZTi3Ko_u",
+    "inviteCode": "M32D93A4E",
+    "status": "joined_free",
+    "createdAt": "2026-02-23T15:12:00.000Z",
+    "joinedAt": "2026-02-23T15:12:00.000Z"
+  },
+  {
+    "id": "ref_M1Wptml5dzov",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_TIoUOL-MnF9U",
+    "inviteCode": "M81EA3CA5",
+    "status": "joined_free",
+    "createdAt": "2026-03-03T06:41:00.000Z",
+    "joinedAt": "2026-03-03T06:41:00.000Z"
+  },
+  {
+    "id": "ref_vVHb9U2-YbYZ",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_Vxf7Rf4ND_Qo",
+    "inviteCode": "ME66B92E0",
+    "status": "joined_free",
+    "createdAt": "2026-02-27T19:31:00.000Z",
+    "joinedAt": "2026-02-27T19:31:00.000Z"
+  },
+  {
+    "id": "ref_CjX0SwQcqsle",
+    "sponsorUserId": "user_vFpQ9XPsVyJT",
+    "invitedUserId": "user_zR31B7j1XcLu",
+    "inviteCode": "MDF5AD782",
+    "status": "joined_free",
+    "createdAt": "2026-04-10T06:31:00.000Z",
+    "joinedAt": "2026-04-10T06:31:00.000Z"
+  },
+  {
+    "id": "ref_2xUMShTrGziD",
+    "sponsorUserId": "user_ygVdeanD2wYe",
+    "invitedUserId": "user_sPz2Ssig_y1-",
+    "inviteCode": "M5118EEE2",
+    "status": "joined_free",
+    "createdAt": "2026-05-23T16:48:00.000Z",
+    "joinedAt": "2026-05-23T16:48:00.000Z"
+  },
+  {
+    "id": "ref_QfLEC5WVDaew",
+    "sponsorUserId": "user_58KNBK-PrPV2",
+    "invitedUserId": "user_ZohE_Z-GcnK7",
+    "inviteCode": "M2984FECB",
+    "status": "joined_free",
+    "createdAt": "2026-03-15T09:55:00.000Z",
+    "joinedAt": "2026-03-15T09:55:00.000Z"
+  },
+  {
+    "id": "ref_ivigINIiny_E",
+    "sponsorUserId": "user_ri6Fir8Du3o_",
+    "invitedUserId": "user_iOx36wX4k4v5",
+    "inviteCode": "MFB3732E5",
+    "status": "joined_paid",
+    "createdAt": "2026-01-17T13:04:00.000Z",
+    "joinedAt": "2026-01-17T13:04:00.000Z"
+  },
+  {
+    "id": "ref_nIltSqKD0jFd",
+    "sponsorUserId": "user_vg9HE56f7nGc",
+    "invitedUserId": "user_BVUoTa3oFy7o",
+    "inviteCode": "M471EF86D",
+    "status": "joined_free",
+    "createdAt": "2026-05-09T19:44:00.000Z",
+    "joinedAt": "2026-05-09T19:44:00.000Z"
+  },
+  {
+    "id": "ref_PCM3FEzG4m8B",
+    "sponsorUserId": "user_04mAKi7rmaPc",
+    "invitedUserId": "user_5Gbv3c2uvtFb",
+    "inviteCode": "M428FDF78",
+    "status": "joined_paid",
+    "createdAt": "2026-03-20T22:57:00.000Z",
+    "joinedAt": "2026-03-20T22:57:00.000Z"
+  },
+  {
+    "id": "ref_EqYVstHkIu2Q",
+    "sponsorUserId": "user_mjX-PinSQkgl",
+    "invitedUserId": "user_wNImtmj0Zhk0",
+    "inviteCode": "M6D8145F5",
+    "status": "joined_free",
+    "createdAt": "2026-02-20T19:51:00.000Z",
+    "joinedAt": "2026-02-20T19:51:00.000Z"
+  },
+  {
+    "id": "ref_P5JltoaiZclm",
+    "sponsorUserId": "user_BVUoTa3oFy7o",
+    "invitedUserId": "user_sfyalpSJGUMC",
+    "inviteCode": "M7C839B51",
+    "status": "joined_free",
+    "createdAt": "2026-03-22T22:12:00.000Z",
+    "joinedAt": "2026-03-22T22:12:00.000Z"
+  },
+  {
+    "id": "ref_9_l6hH44VSvU",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_bWZc8dp2yGlz",
+    "inviteCode": "ME677B4E6",
+    "status": "joined_free",
+    "createdAt": "2026-06-18T21:36:00.000Z",
+    "joinedAt": "2026-06-18T21:36:00.000Z"
+  },
+  {
+    "id": "ref_7_lscHyYA6eJ",
+    "sponsorUserId": "user__e68zfFFi4eO",
+    "invitedUserId": "user_8vQnXWJ8Nyfh",
+    "inviteCode": "MC499C397",
+    "status": "joined_free",
+    "createdAt": "2026-04-28T09:20:00.000Z",
+    "joinedAt": "2026-04-28T09:20:00.000Z"
+  },
+  {
+    "id": "ref_hWYVjsKs8pNj",
+    "sponsorUserId": "user_wrlW2Ssqn9wc",
+    "invitedUserId": "user_QluISraTcAdn",
+    "inviteCode": "M0830B92B",
+    "status": "joined_free",
+    "createdAt": "2026-04-29T07:10:00.000Z",
+    "joinedAt": "2026-04-29T07:10:00.000Z"
+  },
+  {
+    "id": "ref_Rm703Fcq6Mg-",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_mBwkEeDcj2ic",
+    "inviteCode": "M10DE261F",
+    "status": "joined_paid",
+    "createdAt": "2026-06-01T07:22:00.000Z",
+    "joinedAt": "2026-06-01T07:22:00.000Z"
+  },
+  {
+    "id": "ref_mN-kE5KB6DzX",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_bht-HhF03BGS",
+    "inviteCode": "M4B5F0D5D",
+    "status": "joined_free",
+    "createdAt": "2026-05-26T21:04:00.000Z",
+    "joinedAt": "2026-05-26T21:04:00.000Z"
+  },
+  {
+    "id": "ref_Jqb71fiQv4MX",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_EeDPXIgXeh2Q",
+    "inviteCode": "M74D8650A",
+    "status": "joined_free",
+    "createdAt": "2026-06-05T11:43:00.000Z",
+    "joinedAt": "2026-06-05T11:43:00.000Z"
+  },
+  {
+    "id": "ref__-UZp6h4qvTF",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_ZBlDINkvGFCK",
+    "inviteCode": "ME4B06BE3",
+    "status": "joined_free",
+    "createdAt": "2026-01-18T20:50:00.000Z",
+    "joinedAt": "2026-01-18T20:50:00.000Z"
+  },
+  {
+    "id": "ref_DHY-dEaOjp0K",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_tJAuv045poG-",
+    "inviteCode": "M93B0C1B2",
+    "status": "joined_free",
+    "createdAt": "2026-02-03T19:36:00.000Z",
+    "joinedAt": "2026-02-03T19:36:00.000Z"
+  },
+  {
+    "id": "ref_g-MdAFbE4t1k",
+    "sponsorUserId": "user_dlpskVzeBIza",
+    "invitedUserId": "user_7NSFNlEU067A",
+    "inviteCode": "M2D411300",
+    "status": "joined_free",
+    "createdAt": "2026-04-25T14:18:00.000Z",
+    "joinedAt": "2026-04-25T14:18:00.000Z"
+  },
+  {
+    "id": "ref_XpX1dgVuu33e",
+    "sponsorUserId": "user_iaMaZSP23kG0",
+    "invitedUserId": "user_syg1YRsYkPVQ",
+    "inviteCode": "M4B5F0D5D",
+    "status": "joined_free",
+    "createdAt": "2026-03-31T15:55:00.000Z",
+    "joinedAt": "2026-03-31T15:55:00.000Z"
+  },
+  {
+    "id": "ref_pHtQrHFzjpkf",
+    "sponsorUserId": "user_VciNMAdkCSVf",
+    "invitedUserId": "user_2wZoRlNMyMtn",
+    "inviteCode": "MD3D8E990",
+    "status": "joined_free",
+    "createdAt": "2026-01-19T12:16:00.000Z",
+    "joinedAt": "2026-01-19T12:16:00.000Z"
+  },
+  {
+    "id": "ref_luEB7AMyYBCI",
+    "sponsorUserId": "user_BvRlkabVfVqK",
+    "invitedUserId": "user_tCoa5ndlJYAD",
+    "inviteCode": "M744DAA79",
+    "status": "joined_free",
+    "createdAt": "2026-03-25T22:36:00.000Z",
+    "joinedAt": "2026-03-25T22:36:00.000Z"
+  },
+  {
+    "id": "ref_-WjQBy5z5uZM",
+    "sponsorUserId": "user_ej8QJ0e1iOAv",
+    "invitedUserId": "user_ymP7NkTGh1eQ",
+    "inviteCode": "MA5A95A92",
+    "status": "joined_free",
+    "createdAt": "2026-03-07T20:17:00.000Z",
+    "joinedAt": "2026-03-07T20:17:00.000Z"
+  },
+  {
+    "id": "ref_r_4hEQS07x4q",
+    "sponsorUserId": "user_RnsWDkCstQ_4",
+    "invitedUserId": "user_kjwz_VrQ85WN",
+    "inviteCode": "M6241A867",
+    "status": "joined_free",
+    "createdAt": "2026-05-03T11:33:00.000Z",
+    "joinedAt": "2026-05-03T11:33:00.000Z"
+  },
+  {
+    "id": "ref_dgM9jVcXs4Zn",
+    "sponsorUserId": "user_0H9ZHp3igaIu",
+    "invitedUserId": "user_n6LCgiJVRIX5",
+    "inviteCode": "MAF6B1BE7",
+    "status": "joined_free",
+    "createdAt": "2026-05-21T08:06:00.000Z",
+    "joinedAt": "2026-05-21T08:06:00.000Z"
+  },
+  {
+    "id": "ref_C2kNlLP4b_d4",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_u7p9_Gp8Etr4",
+    "inviteCode": "ME677B4E6",
+    "status": "joined_free",
+    "createdAt": "2026-03-13T11:14:00.000Z",
+    "joinedAt": "2026-03-13T11:14:00.000Z"
+  },
+  {
+    "id": "ref_g3pgKjCzDmgA",
+    "sponsorUserId": "user_yA2AdJtjQuBk",
+    "invitedUserId": "user_TvU3soUaKJ7W",
+    "inviteCode": "M2597DB2C",
+    "status": "joined_free",
+    "createdAt": "2026-04-12T09:42:00.000Z",
+    "joinedAt": "2026-04-12T09:42:00.000Z"
+  },
+  {
+    "id": "ref_RgvKB8QLRfBH",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_rvNprz-p_ED1",
+    "inviteCode": "M68B3B783",
+    "status": "joined_free",
+    "createdAt": "2026-02-13T10:49:00.000Z",
+    "joinedAt": "2026-02-13T10:49:00.000Z"
+  },
+  {
+    "id": "ref_A4d-wAJQ3l2J",
+    "sponsorUserId": "user_DSXqE0nbLWIh",
+    "invitedUserId": "user_gVZhSJ6dGAPs",
+    "inviteCode": "MA2272933",
+    "status": "joined_free",
+    "createdAt": "2026-01-25T06:05:00.000Z",
+    "joinedAt": "2026-01-25T06:05:00.000Z"
+  },
+  {
+    "id": "ref_ER_N1FDic4yN",
+    "sponsorUserId": "user_tjKIiowIfJmd",
+    "invitedUserId": "user_KB0wWXRWXehw",
+    "inviteCode": "M6C546D7D",
+    "status": "joined_free",
+    "createdAt": "2026-03-27T07:15:00.000Z",
+    "joinedAt": "2026-03-27T07:15:00.000Z"
+  },
+  {
+    "id": "ref_EOoJPs_7pvdQ",
+    "sponsorUserId": "user_n6LCgiJVRIX5",
+    "invitedUserId": "user_g5zEJePWEW0d",
+    "inviteCode": "M32D93A4E",
+    "status": "joined_paid",
+    "createdAt": "2026-02-20T22:44:00.000Z",
+    "joinedAt": "2026-02-20T22:44:00.000Z"
+  },
+  {
+    "id": "ref_om9BGNf7qJbW",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_P5TJFPW-7ZxW",
+    "inviteCode": "M7C839B51",
+    "status": "joined_free",
+    "createdAt": "2026-06-16T21:07:00.000Z",
+    "joinedAt": "2026-06-16T21:07:00.000Z"
+  },
+  {
+    "id": "ref_xY1k72TbOlYM",
+    "sponsorUserId": "user_TvU3soUaKJ7W",
+    "invitedUserId": "user_2aOgl6N2bdJa",
+    "inviteCode": "ME62341AD",
+    "status": "joined_free",
+    "createdAt": "2026-05-31T13:06:00.000Z",
+    "joinedAt": "2026-05-31T13:06:00.000Z"
+  },
+  {
+    "id": "ref_PBv6DsbpjzzW",
+    "sponsorUserId": "user_aJW0MddlYt_U",
+    "invitedUserId": "user_kwQ-RqKickxk",
+    "inviteCode": "M0D924D94",
+    "status": "joined_free",
+    "createdAt": "2026-04-03T06:33:00.000Z",
+    "joinedAt": "2026-04-03T06:33:00.000Z"
+  },
+  {
+    "id": "ref_J2E6wa79vOB4",
+    "sponsorUserId": "user_DMj01TOGzl_9",
+    "invitedUserId": "user_QrcyX09gZ0HS",
+    "inviteCode": "ME62341AD",
+    "status": "joined_paid",
+    "createdAt": "2026-05-22T20:00:00.000Z",
+    "joinedAt": "2026-05-22T20:00:00.000Z"
+  },
+  {
+    "id": "ref_GDdrSrsWCEnq",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_lQoYV18q2Vk5",
+    "inviteCode": "M727980AF",
+    "status": "joined_free",
+    "createdAt": "2026-03-06T20:10:00.000Z",
+    "joinedAt": "2026-03-06T20:10:00.000Z"
+  },
+  {
+    "id": "ref_RC3z_7ya8XRI",
+    "sponsorUserId": "user_Y12M_BGpF8RI",
+    "invitedUserId": "user_ffvsIJhhKMAP",
+    "inviteCode": "M7D429B98",
+    "status": "joined_free",
+    "createdAt": "2026-05-04T15:14:00.000Z",
+    "joinedAt": "2026-05-04T15:14:00.000Z"
+  },
+  {
+    "id": "ref_mIKR1nrU9As7",
+    "sponsorUserId": "user_ZohE_Z-GcnK7",
+    "invitedUserId": "user_TwDdYzhxRt8m",
+    "inviteCode": "MBFF4B2FB",
+    "status": "joined_free",
+    "createdAt": "2026-05-27T08:57:00.000Z",
+    "joinedAt": "2026-05-27T08:57:00.000Z"
+  },
+  {
+    "id": "ref_6opzrVVHxssB",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_ZjcFHPH9idy4",
+    "inviteCode": "MCF32275A",
+    "status": "joined_free",
+    "createdAt": "2026-02-09T07:52:00.000Z",
+    "joinedAt": "2026-02-09T07:52:00.000Z"
+  },
+  {
+    "id": "ref_T2NARlRwfO9Y",
+    "sponsorUserId": "user_GFxQjLoTRNbE",
+    "invitedUserId": "user_dFP7Cu3Re0xK",
+    "inviteCode": "MCF32275A",
+    "status": "joined_paid",
+    "createdAt": "2026-01-27T07:05:00.000Z",
+    "joinedAt": "2026-01-27T07:05:00.000Z"
+  },
+  {
+    "id": "ref_6z8JcNX9IxAQ",
+    "sponsorUserId": "user_BvRlkabVfVqK",
+    "invitedUserId": "user_sqG5-H_LFWa_",
+    "inviteCode": "M29450E30",
+    "status": "joined_free",
+    "createdAt": "2026-02-28T07:46:00.000Z",
+    "joinedAt": "2026-02-28T07:46:00.000Z"
+  },
+  {
+    "id": "ref_9Enaozqb_aOr",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_wRHQQZwunM34",
+    "inviteCode": "MD24F947A",
+    "status": "joined_paid",
+    "createdAt": "2026-03-13T22:29:00.000Z",
+    "joinedAt": "2026-03-13T22:29:00.000Z"
+  },
+  {
+    "id": "ref_QV36VxzF7vrH",
+    "sponsorUserId": "user_04mAKi7rmaPc",
+    "invitedUserId": "user_7yypz44Btg8V",
+    "inviteCode": "MF13D316B",
+    "status": "joined_free",
+    "createdAt": "2026-01-12T22:51:00.000Z",
+    "joinedAt": "2026-01-12T22:51:00.000Z"
+  },
+  {
+    "id": "ref_SfS75ZRKEx0y",
+    "sponsorUserId": "user_2aOgl6N2bdJa",
+    "invitedUserId": "user_2GwwyXxeTLIL",
+    "inviteCode": "MDF615C11",
+    "status": "joined_paid",
+    "createdAt": "2026-02-28T19:37:00.000Z",
+    "joinedAt": "2026-02-28T19:37:00.000Z"
+  },
+  {
+    "id": "ref_vbGsI8BWJWfP",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_oMZgfJUpwEH7",
+    "inviteCode": "M52749539",
+    "status": "joined_free",
+    "createdAt": "2026-01-24T22:40:00.000Z",
+    "joinedAt": "2026-01-24T22:40:00.000Z"
+  },
+  {
+    "id": "ref_-c5oZ1SmR1vr",
+    "sponsorUserId": "user_0C03_zaEr3Fi",
+    "invitedUserId": "user_dHJTKbM25sV6",
+    "inviteCode": "M1F60F7F5",
+    "status": "joined_free",
+    "createdAt": "2026-01-20T09:03:00.000Z",
+    "joinedAt": "2026-01-20T09:03:00.000Z"
+  },
+  {
+    "id": "ref_2gIOalrLz3VF",
+    "sponsorUserId": "user_D0bVykCWjkY-",
+    "invitedUserId": "user_hC3gB5nHkcnA",
+    "inviteCode": "M67831C87",
+    "status": "joined_paid",
+    "createdAt": "2026-04-28T22:57:00.000Z",
+    "joinedAt": "2026-04-28T22:57:00.000Z"
+  },
+  {
+    "id": "ref_Bg2Q3x_Zr5mL",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_-554B9uXt7dC",
+    "inviteCode": "MB06F6B4F",
+    "status": "joined_paid",
+    "createdAt": "2026-04-21T20:36:00.000Z",
+    "joinedAt": "2026-04-21T20:36:00.000Z"
+  },
+  {
+    "id": "ref_eyhH3usPgNmZ",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_2riHzzYcDEkv",
+    "inviteCode": "M6241A867",
+    "status": "joined_free",
+    "createdAt": "2026-06-20T15:37:00.000Z",
+    "joinedAt": "2026-06-20T15:37:00.000Z"
+  },
+  {
+    "id": "ref_Z5mC5cW8y0gf",
+    "sponsorUserId": "user_bcrXMDRWbvQT",
+    "invitedUserId": "user_FlWuGB4b440G",
+    "inviteCode": "M72A0ABAE",
+    "status": "joined_free",
+    "createdAt": "2026-04-26T10:53:00.000Z",
+    "joinedAt": "2026-04-26T10:53:00.000Z"
+  },
+  {
+    "id": "ref_IExERZge4FEI",
+    "sponsorUserId": "user__e68zfFFi4eO",
+    "invitedUserId": "user_pI7LXRUU9H-F",
+    "inviteCode": "M7B34E5B2",
+    "status": "joined_free",
+    "createdAt": "2026-05-15T08:46:00.000Z",
+    "joinedAt": "2026-05-15T08:46:00.000Z"
+  },
+  {
+    "id": "ref_SKMXNVCpCAR2",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_RHuALeZDlGSl",
+    "inviteCode": "MCDF4DF66",
+    "status": "joined_paid",
+    "createdAt": "2026-02-13T09:49:00.000Z",
+    "joinedAt": "2026-02-13T09:49:00.000Z"
+  },
+  {
+    "id": "ref_is-xnrFUlRwT",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user__tFrogrR53FE",
+    "inviteCode": "MB294E291",
+    "status": "joined_paid",
+    "createdAt": "2026-03-22T10:03:00.000Z",
+    "joinedAt": "2026-03-22T10:03:00.000Z"
+  },
+  {
+    "id": "ref_hrr50Ipg0tcl",
+    "sponsorUserId": "user_0H9ZHp3igaIu",
+    "invitedUserId": "user_bO03nJgUejEk",
+    "inviteCode": "MF3296C53",
+    "status": "joined_free",
+    "createdAt": "2026-01-25T08:24:00.000Z",
+    "joinedAt": "2026-01-25T08:24:00.000Z"
+  },
+  {
+    "id": "ref_ktNUTlPoVHgI",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_Zw5RbW2tukWn",
+    "inviteCode": "M7D1DBF03",
+    "status": "joined_free",
+    "createdAt": "2026-05-14T17:08:00.000Z",
+    "joinedAt": "2026-05-14T17:08:00.000Z"
+  },
+  {
+    "id": "ref_NpuWolFha8vJ",
+    "sponsorUserId": "user_vCrX-VjIMBz1",
+    "invitedUserId": "user_BSSbhT9ZRQWi",
+    "inviteCode": "MB9A3C4C8",
+    "status": "joined_free",
+    "createdAt": "2026-04-15T19:30:00.000Z",
+    "joinedAt": "2026-04-15T19:30:00.000Z"
+  },
+  {
+    "id": "ref_acS6-BmN1rTq",
+    "sponsorUserId": "user_RHuALeZDlGSl",
+    "invitedUserId": "user_UAlQoiidiKoQ",
+    "inviteCode": "M744DAA79",
+    "status": "joined_paid",
+    "createdAt": "2026-05-14T08:04:00.000Z",
+    "joinedAt": "2026-05-14T08:04:00.000Z"
+  },
+  {
+    "id": "ref_H7bdCedynVBY",
+    "sponsorUserId": "user_tN-ZHbuM-ISW",
+    "invitedUserId": "user_wDSYIKzSO8As",
+    "inviteCode": "MFA9394F0",
+    "status": "joined_free",
+    "createdAt": "2026-04-26T16:17:00.000Z",
+    "joinedAt": "2026-04-26T16:17:00.000Z"
+  },
+  {
+    "id": "ref_lgGj5bW5HJt8",
+    "sponsorUserId": "user_Gqam0LvuIeCl",
+    "invitedUserId": "user_FDWf19VmFjre",
+    "inviteCode": "M1A140DB0",
+    "status": "joined_paid",
+    "createdAt": "2026-04-02T08:25:00.000Z",
+    "joinedAt": "2026-04-02T08:25:00.000Z"
+  },
+  {
+    "id": "ref_5gOxwkKo-g_u",
+    "sponsorUserId": "user_2wZoRlNMyMtn",
+    "invitedUserId": "user_QwU-jmlOWuWc",
+    "inviteCode": "MC83AA354",
+    "status": "joined_paid",
+    "createdAt": "2026-05-02T07:18:00.000Z",
+    "joinedAt": "2026-05-02T07:18:00.000Z"
+  },
+  {
+    "id": "ref_nyGwrNnKhHOx",
+    "sponsorUserId": "user_iafOJt_i8cDX",
+    "invitedUserId": "user_z3Uli_7WhSDs",
+    "inviteCode": "M2DF0D707",
+    "status": "joined_free",
+    "createdAt": "2026-06-08T22:34:00.000Z",
+    "joinedAt": "2026-06-08T22:34:00.000Z"
+  },
+  {
+    "id": "ref_gBy57vrS-UnO",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_m2OuMesXWokT",
+    "inviteCode": "M74106190",
+    "status": "joined_paid",
+    "createdAt": "2026-06-09T16:12:00.000Z",
+    "joinedAt": "2026-06-09T16:12:00.000Z"
+  },
+  {
+    "id": "ref_7ZAvurHXQHpw",
+    "sponsorUserId": "user_MzmOwbO9JS28",
+    "invitedUserId": "user_vwHbCrT8sdxb",
+    "inviteCode": "M10BC04D8",
+    "status": "joined_free",
+    "createdAt": "2026-03-07T16:25:00.000Z",
+    "joinedAt": "2026-03-07T16:25:00.000Z"
+  },
+  {
+    "id": "ref_ZfIkF9C_UEnd",
+    "sponsorUserId": "user_wyPH-nWf6odc",
+    "invitedUserId": "user_F_Mn4H7lIHzb",
+    "inviteCode": "M2DF0D707",
+    "status": "joined_free",
+    "createdAt": "2026-06-08T16:10:00.000Z",
+    "joinedAt": "2026-06-08T16:10:00.000Z"
+  },
+  {
+    "id": "ref_0Mq6OvgT38Fz",
+    "sponsorUserId": "user_UAlQoiidiKoQ",
+    "invitedUserId": "user_812g-SjGy18u",
+    "inviteCode": "M0830B92B",
+    "status": "joined_free",
+    "createdAt": "2026-02-26T06:24:00.000Z",
+    "joinedAt": "2026-02-26T06:24:00.000Z"
+  },
+  {
+    "id": "ref_T0Tq-Cpff98r",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_rGPdaUYZEOfs",
+    "inviteCode": "M7C471597",
+    "status": "joined_free",
+    "createdAt": "2026-06-02T21:01:00.000Z",
+    "joinedAt": "2026-06-02T21:01:00.000Z"
+  },
+  {
+    "id": "ref_idNFs7iwBx4H",
+    "sponsorUserId": "user_W3eGvEEthL9z",
+    "invitedUserId": "user_IZSm2JzZeQxu",
+    "inviteCode": "M9850DAAB",
+    "status": "joined_free",
+    "createdAt": "2026-03-11T16:20:00.000Z",
+    "joinedAt": "2026-03-11T16:20:00.000Z"
+  },
+  {
+    "id": "ref_8SCdQi6ZXD8P",
+    "sponsorUserId": "user_ri6Fir8Du3o_",
+    "invitedUserId": "user_qJwOGJmSXupm",
+    "inviteCode": "MDE08B76B",
+    "status": "joined_free",
+    "createdAt": "2026-03-13T13:19:00.000Z",
+    "joinedAt": "2026-03-13T13:19:00.000Z"
+  },
+  {
+    "id": "ref_jxuDuAVtqrJ2",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user__jQiGEcbf2qD",
+    "inviteCode": "MA57507E9",
+    "status": "joined_paid",
+    "createdAt": "2026-02-05T13:11:00.000Z",
+    "joinedAt": "2026-02-05T13:11:00.000Z"
+  },
+  {
+    "id": "ref_B16x8gpIKBVn",
+    "sponsorUserId": "user_z3Uli_7WhSDs",
+    "invitedUserId": "user_N08pYfZq5qOd",
+    "inviteCode": "MFB3732E5",
+    "status": "joined_free",
+    "createdAt": "2026-04-04T16:31:00.000Z",
+    "joinedAt": "2026-04-04T16:31:00.000Z"
+  },
+  {
+    "id": "ref_UwDUW-iQ_cOJ",
+    "sponsorUserId": "user_tJAuv045poG-",
+    "invitedUserId": "user_sqODAdZ-haE9",
+    "inviteCode": "MDE08B76B",
+    "status": "joined_paid",
+    "createdAt": "2026-04-25T09:29:00.000Z",
+    "joinedAt": "2026-04-25T09:29:00.000Z"
+  },
+  {
+    "id": "ref_ALn8y930Hkck",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_l-tv-iP-HQra",
+    "inviteCode": "MA955AEFC",
+    "status": "joined_paid",
+    "createdAt": "2026-05-11T13:46:00.000Z",
+    "joinedAt": "2026-05-11T13:46:00.000Z"
+  },
+  {
+    "id": "ref_cYuDySLXLKXB",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_toXYVRKUXjBy",
+    "inviteCode": "MF95EFAEC",
+    "status": "joined_free",
+    "createdAt": "2026-04-07T09:55:00.000Z",
+    "joinedAt": "2026-04-07T09:55:00.000Z"
+  },
+  {
+    "id": "ref_wAQt81_87n0m",
+    "sponsorUserId": "user_tJAuv045poG-",
+    "invitedUserId": "user_le4VMgWvhx73",
+    "inviteCode": "M2D411300",
+    "status": "joined_free",
+    "createdAt": "2026-01-06T18:27:00.000Z",
+    "joinedAt": "2026-01-06T18:27:00.000Z"
+  },
+  {
+    "id": "ref_g00Nt4ABA8qp",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_43ih8ehAktWQ",
+    "inviteCode": "MCB02CCBF",
+    "status": "joined_free",
+    "createdAt": "2026-03-28T20:13:00.000Z",
+    "joinedAt": "2026-03-28T20:13:00.000Z"
+  },
+  {
+    "id": "ref_X9wGd2nkiip1",
+    "sponsorUserId": "user_0DqCarrbx1hU",
+    "invitedUserId": "user_3E9GbhLwVf8-",
+    "inviteCode": "M3117EABF",
+    "status": "joined_free",
+    "createdAt": "2026-04-17T17:52:00.000Z",
+    "joinedAt": "2026-04-17T17:52:00.000Z"
+  },
+  {
+    "id": "ref_QsTf09OGQdwa",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user__B903qI-EmjY",
+    "inviteCode": "ME8841",
+    "status": "joined_free",
+    "createdAt": "2026-03-08T07:04:00.000Z",
+    "joinedAt": "2026-03-08T07:04:00.000Z"
+  },
+  {
+    "id": "ref_l6jfLvmlKnwy",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user__r_oPDmBgVdw",
+    "inviteCode": "M1A140DB0",
+    "status": "joined_paid",
+    "createdAt": "2026-02-07T15:16:00.000Z",
+    "joinedAt": "2026-02-07T15:16:00.000Z"
+  },
+  {
+    "id": "ref_LvupyfEASvQn",
+    "sponsorUserId": "user_TwDdYzhxRt8m",
+    "invitedUserId": "user_QKL8ajU1I1lt",
+    "inviteCode": "M74106190",
+    "status": "joined_free",
+    "createdAt": "2026-06-11T11:14:00.000Z",
+    "joinedAt": "2026-06-11T11:14:00.000Z"
+  },
+  {
+    "id": "ref_AW0AVyikzUaG",
+    "sponsorUserId": "user_lLZCeOySDvVz",
+    "invitedUserId": "user_3U0M61i6gR_R",
+    "inviteCode": "MDC992585",
+    "status": "joined_paid",
+    "createdAt": "2026-01-26T10:23:00.000Z",
+    "joinedAt": "2026-01-26T10:23:00.000Z"
+  },
+  {
+    "id": "ref_VRMRFKXbvkv5",
+    "sponsorUserId": "user_tC_lIxu8Juas",
+    "invitedUserId": "user_4i5jFBSI8qe8",
+    "inviteCode": "M32805891",
+    "status": "joined_free",
+    "createdAt": "2026-06-06T15:23:00.000Z",
+    "joinedAt": "2026-06-06T15:23:00.000Z"
+  },
+  {
+    "id": "ref_jwcBDbPZWeuD",
+    "sponsorUserId": "user_sfyalpSJGUMC",
+    "invitedUserId": "user_sMb_BUMlqrzp",
+    "inviteCode": "M779AA3C3",
+    "status": "joined_paid",
+    "createdAt": "2026-04-18T06:08:00.000Z",
+    "joinedAt": "2026-04-18T06:08:00.000Z"
+  },
+  {
+    "id": "ref_gIWT6jnte_R1",
+    "sponsorUserId": "user_UAlQoiidiKoQ",
+    "invitedUserId": "user_EMC0LMvOShSj",
+    "inviteCode": "M6C546D7D",
+    "status": "joined_paid",
+    "createdAt": "2026-04-11T15:48:00.000Z",
+    "joinedAt": "2026-04-11T15:48:00.000Z"
+  },
+  {
+    "id": "ref_35VsEYSawoUm",
+    "sponsorUserId": "user_RHuALeZDlGSl",
+    "invitedUserId": "user_Pec_DQWxY73t",
+    "inviteCode": "MA4A16F62",
+    "status": "joined_free",
+    "createdAt": "2026-06-10T06:43:00.000Z",
+    "joinedAt": "2026-06-10T06:43:00.000Z"
+  },
+  {
+    "id": "ref_4fsrWAfiMIAp",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_ggMhuJE43Dl-",
+    "inviteCode": "M1E1DCE54",
+    "status": "joined_paid",
+    "createdAt": "2026-02-11T11:09:00.000Z",
+    "joinedAt": "2026-02-11T11:09:00.000Z"
+  },
+  {
+    "id": "ref_qgXAT8i6BKJj",
+    "sponsorUserId": "user_QKL8ajU1I1lt",
+    "invitedUserId": "user_g62bBtAEof6L",
+    "inviteCode": "M9306543B",
+    "status": "joined_free",
+    "createdAt": "2026-03-28T10:38:00.000Z",
+    "joinedAt": "2026-03-28T10:38:00.000Z"
+  },
+  {
+    "id": "ref_MaBOrG7Q9Dl-",
+    "sponsorUserId": "user_Ynrv3Us0vY-x",
+    "invitedUserId": "user_mUYB8N7b8SuR",
+    "inviteCode": "M0BD16E67",
+    "status": "joined_free",
+    "createdAt": "2026-02-12T06:14:00.000Z",
+    "joinedAt": "2026-02-12T06:14:00.000Z"
+  },
+  {
+    "id": "ref_ASAX7gDgzNE_",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_Ebw2BfG_RKCW",
+    "inviteCode": "MD0168017",
+    "status": "joined_free",
+    "createdAt": "2026-03-25T16:40:00.000Z",
+    "joinedAt": "2026-03-25T16:40:00.000Z"
+  },
+  {
+    "id": "ref_i-WQ7sim8pSn",
+    "sponsorUserId": "user_IdYIFKUqgSoi",
+    "invitedUserId": "user__fe3jjRMGyQg",
+    "inviteCode": "M36AAE7A8",
+    "status": "joined_free",
+    "createdAt": "2026-02-19T13:23:00.000Z",
+    "joinedAt": "2026-02-19T13:23:00.000Z"
+  },
+  {
+    "id": "ref_l2JrriXSN6np",
+    "sponsorUserId": "user_KB0wWXRWXehw",
+    "invitedUserId": "user_ArGx_189TAxZ",
+    "inviteCode": "M2984FECB",
+    "status": "joined_free",
+    "createdAt": "2026-06-12T08:06:00.000Z",
+    "joinedAt": "2026-06-12T08:06:00.000Z"
+  },
+  {
+    "id": "ref_-IBZpNzbDuc9",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_D-N6FktltKLm",
+    "inviteCode": "MF3296C53",
+    "status": "joined_free",
+    "createdAt": "2026-03-06T19:08:00.000Z",
+    "joinedAt": "2026-03-06T19:08:00.000Z"
+  },
+  {
+    "id": "ref_LcB2oKD_-vKW",
+    "sponsorUserId": "user_D0bVykCWjkY-",
+    "invitedUserId": "user_VXEY9NyUDNEG",
+    "inviteCode": "ME8841",
+    "status": "joined_free",
+    "createdAt": "2026-03-02T14:13:00.000Z",
+    "joinedAt": "2026-03-02T14:13:00.000Z"
+  },
+  {
+    "id": "ref_exoHfr1SFjEB",
+    "sponsorUserId": "user_F_Mn4H7lIHzb",
+    "invitedUserId": "user_e5SmPI0U4ShH",
+    "inviteCode": "M7E1997DD",
+    "status": "joined_free",
+    "createdAt": "2026-03-21T07:07:00.000Z",
+    "joinedAt": "2026-03-21T07:07:00.000Z"
+  },
+  {
+    "id": "ref_ouZDnlxx2UBW",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_-Mg-2u_uzeyH",
+    "inviteCode": "ME098AD48",
+    "status": "joined_free",
+    "createdAt": "2026-03-17T14:42:00.000Z",
+    "joinedAt": "2026-03-17T14:42:00.000Z"
+  },
+  {
+    "id": "ref_2xNf2jfHZwJM",
+    "sponsorUserId": "user_le4VMgWvhx73",
+    "invitedUserId": "user_A4sGGO-p6fpX",
+    "inviteCode": "MAF8CD7EC",
+    "status": "joined_free",
+    "createdAt": "2026-02-20T17:43:00.000Z",
+    "joinedAt": "2026-02-20T17:43:00.000Z"
+  },
+  {
+    "id": "ref_G8eSCi8qK_QR",
+    "sponsorUserId": "user_Rx8qVufMNF-4",
+    "invitedUserId": "user_RBtO3eSdhjy4",
+    "inviteCode": "MA4A16F62",
+    "status": "joined_free",
+    "createdAt": "2026-06-10T22:55:00.000Z",
+    "joinedAt": "2026-06-10T22:55:00.000Z"
+  },
+  {
+    "id": "ref_d7G2HKtEjzr1",
+    "sponsorUserId": "user_ZjcFHPH9idy4",
+    "invitedUserId": "user_Gb6q2DOpvzPU",
+    "inviteCode": "MF6E0A390",
+    "status": "joined_free",
+    "createdAt": "2026-06-11T09:41:00.000Z",
+    "joinedAt": "2026-06-11T09:41:00.000Z"
+  },
+  {
+    "id": "ref_no44O7U-qd5B",
+    "sponsorUserId": "user_-554B9uXt7dC",
+    "invitedUserId": "user_TeLAlK1nQPZO",
+    "inviteCode": "M91F3943F",
+    "status": "joined_free",
+    "createdAt": "2026-03-19T15:25:00.000Z",
+    "joinedAt": "2026-03-19T15:25:00.000Z"
+  },
+  {
+    "id": "ref_TqJCd9OUHy7V",
+    "sponsorUserId": "user_uIT-5nhxOagr",
+    "invitedUserId": "user_uFT9lTubIBQV",
+    "inviteCode": "M72A0ABAE",
+    "status": "joined_free",
+    "createdAt": "2026-06-01T12:00:00.000Z",
+    "joinedAt": "2026-06-01T12:00:00.000Z"
+  },
+  {
+    "id": "ref_wwglbUL5MwsW",
+    "sponsorUserId": "user_vg9HE56f7nGc",
+    "invitedUserId": "user_i7U_nWk5luMk",
+    "inviteCode": "M36AAE7A8",
+    "status": "joined_paid",
+    "createdAt": "2026-05-28T15:55:00.000Z",
+    "joinedAt": "2026-05-28T15:55:00.000Z"
+  },
+  {
+    "id": "ref_kj41wPiALbwr",
+    "sponsorUserId": "user_KB0wWXRWXehw",
+    "invitedUserId": null,
+    "inviteCode": "MCF32275A",
+    "status": "pending",
+    "createdAt": "2026-06-30T11:38:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_pMuKeiJOmOe6",
+    "sponsorUserId": "user_VciNMAdkCSVf",
+    "invitedUserId": null,
+    "inviteCode": "M7DBF76AA",
+    "status": "pending",
+    "createdAt": "2026-06-27T18:13:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_GsTkfaMSyGHd",
+    "sponsorUserId": "user_5Gbv3c2uvtFb",
+    "invitedUserId": null,
+    "inviteCode": "M8AD73C6E",
+    "status": "pending",
+    "createdAt": "2026-06-15T09:03:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_uMn8TTWDH1Q_",
+    "sponsorUserId": "user_JKXNopUt6SP6",
+    "invitedUserId": null,
+    "inviteCode": "MA955AEFC",
+    "status": "pending",
+    "createdAt": "2026-06-29T20:17:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_U8vj9vFcSjXA",
+    "sponsorUserId": "user_wDSYIKzSO8As",
+    "invitedUserId": null,
+    "inviteCode": "M8287D9BC",
+    "status": "pending",
+    "createdAt": "2026-06-23T13:29:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_S7-O7LoVkBCd",
+    "sponsorUserId": "user_iOx36wX4k4v5",
+    "invitedUserId": null,
+    "inviteCode": "M6483F20D",
+    "status": "pending",
+    "createdAt": "2026-06-08T22:59:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_fs0Wr-SomoYf",
+    "sponsorUserId": "user_5Gbv3c2uvtFb",
+    "invitedUserId": null,
+    "inviteCode": "M9A6AE512",
+    "status": "pending",
+    "createdAt": "2026-06-10T12:57:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_lmbf0PB8c5Zo",
+    "sponsorUserId": "user_sqODAdZ-haE9",
+    "invitedUserId": null,
+    "inviteCode": "MFBC68A15",
+    "status": "pending",
+    "createdAt": "2026-06-22T22:44:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_0TgQuG_4sQ5R",
+    "sponsorUserId": "user_tCoa5ndlJYAD",
+    "invitedUserId": null,
+    "inviteCode": "MDD95DFD7",
+    "status": "pending",
+    "createdAt": "2026-06-11T18:49:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_z-wiLkntZcDB",
+    "sponsorUserId": "user_TkDZZGtnfRlc",
+    "invitedUserId": null,
+    "inviteCode": "MF95EFAEC",
+    "status": "pending",
+    "createdAt": "2026-06-14T11:00:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_3JAtu1xdrfGx",
+    "sponsorUserId": "user_ArGx_189TAxZ",
+    "invitedUserId": null,
+    "inviteCode": "M235AE81B",
+    "status": "pending",
+    "createdAt": "2026-06-14T14:24:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_Qbvwj3ocKvHN",
+    "sponsorUserId": "user_SnfjyHrZvdhZ",
+    "invitedUserId": null,
+    "inviteCode": "MBC9D29D3",
+    "status": "pending",
+    "createdAt": "2026-06-16T09:01:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_xAPojTnYHf47",
+    "sponsorUserId": "user_QKL8ajU1I1lt",
+    "invitedUserId": null,
+    "inviteCode": "MDE08B76B",
+    "status": "pending",
+    "createdAt": "2026-06-07T19:13:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_QCZtp4F6uwPV",
+    "sponsorUserId": "user_gB4QWzk0GWvW",
+    "invitedUserId": null,
+    "inviteCode": "MA2FD2430",
+    "status": "pending",
+    "createdAt": "2026-06-14T08:27:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_IlsgonFApy3s",
+    "sponsorUserId": "user_bWZc8dp2yGlz",
+    "invitedUserId": null,
+    "inviteCode": "MA57507E9",
+    "status": "pending",
+    "createdAt": "2026-06-01T15:23:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_h-HtmwpgjVZH",
+    "sponsorUserId": "user_sqG5-H_LFWa_",
+    "invitedUserId": null,
+    "inviteCode": "M052D339C",
+    "status": "pending",
+    "createdAt": "2026-06-17T20:45:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_1lyVtfIITKGg",
+    "sponsorUserId": "user_2wZoRlNMyMtn",
+    "invitedUserId": null,
+    "inviteCode": "M165FCAEF",
+    "status": "pending",
+    "createdAt": "2026-06-11T16:52:00.000Z",
+    "joinedAt": null
+  },
+  {
+    "id": "ref_xlNKGrO3wAoL",
+    "sponsorUserId": "user_3U0M61i6gR_R",
+    "invitedUserId": null,
+    "inviteCode": "M744DAA79",
+    "status": "pending",
+    "createdAt": "2026-06-06T21:48:00.000Z",
+    "joinedAt": null
+  }
+]

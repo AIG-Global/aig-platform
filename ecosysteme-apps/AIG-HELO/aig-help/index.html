@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AIG HELO — emergency numbers &amp; embassy finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d12;
+  --panel: #12161d;
+  --panel-raised: #1c2129;
+  --line: #262c36;
+  --amber: #e8a33d;
+  --amber-dim: #5c4520;
+  --blue: #5fa8d3;
+  --green: #5fb88a;
+  --red: #d3685f;
+  --red-bright: #ff5c4d;
+  --text: #e4e7eb;
+  --text-dim: #9099a8;
+  --text-faint: #5a626f;
+  --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 15px; line-height: 1.5; }
+.mono { font-family: var(--font-mono); }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+
+.shell { max-width: 640px; margin: 0 auto; padding: 0 18px 60px; }
+.topbar { border-bottom: 1px solid var(--line); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 15px; }
+.brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red-bright); }
+.btn-key { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); background: var(--panel-raised); border: 1px solid var(--line); padding: 7px 11px; border-radius: 4px; cursor: pointer; }
+.btn-key:hover { border-color: var(--amber); color: var(--amber); }
+
+.disclaimer-banner {
+  background: #1a1209; border: 1px solid var(--amber-dim); border-radius: 6px; padding: 11px 14px;
+  font-size: 11.5px; color: var(--text-dim); margin: 16px 0; line-height: 1.6;
+}
+.disclaimer-banner b { color: var(--amber); }
+
+.notice-banner { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--amber); padding: 11px 14px; margin: 14px 0; font-size: 12.5px; color: var(--text-dim); border-radius: 0 4px 4px 0; display: none; }
+.notice-banner.show { display: block; }
+.notice-banner b { color: var(--text); }
+
+/* ---------- Location status ---------- */
+.location-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 16px 0; }
+.location-row { display: flex; align-items: center; gap: 10px; }
+.location-row svg { width: 18px; height: 18px; color: var(--amber); flex-shrink: 0; }
+.location-text b { display: block; font-size: 15px; }
+.location-text span { font-size: 11.5px; color: var(--text-faint); }
+.location-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.btn-sm { font-size: 12px; padding: 8px 13px; border-radius: 5px; border: 1px solid var(--line); background: var(--panel-raised); color: var(--text); cursor: pointer; }
+.btn-sm:hover { border-color: var(--amber); }
+.country-select-row { display: none; margin-top: 12px; }
+.country-select-row.show { display: block; }
+.country-select-row select { width: 100%; background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-size: 13.5px; padding: 10px 12px; border-radius: 5px; }
+
+/* ---------- Big emergency call button ---------- */
+.emergency-section { margin: 18px 0; }
+.emergency-label { font-size: 11.5px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
+.emergency-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.emergency-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--red-bright); color: #1a0806; border: none; border-radius: 12px;
+  padding: 20px 22px; text-decoration: none; cursor: pointer; min-height: 64px;
+}
+.emergency-btn:hover { opacity: 0.92; }
+.emergency-btn-label { font-size: 15px; font-weight: 700; }
+.emergency-notes { font-size: 12px; color: var(--text-faint); margin-top: 6px; padding: 0 2px; line-height: 1.5; }
+.emergency-btn-number { font-family: var(--font-mono); font-size: 26px; font-weight: 800; }
+.emergency-btn.secondary { background: var(--panel-raised); color: var(--text); border: 1px solid var(--line); }
+.emergency-btn.secondary .emergency-btn-number { color: var(--amber); }
+.emergency-empty { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; text-align: center; color: var(--text-dim); font-size: 13px; }
+.emergency-empty a { display: inline-block; margin-top: 8px; }
+
+/* ---------- Sections ---------- */
+.section { margin: 24px 0; }
+.section-title { font-size: 12.5px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+
+.action-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 13px 0; border-top: 1px solid var(--line);
+}
+.action-row:first-child { border-top: none; }
+.action-row-text b { display: block; font-size: 13.5px; }
+.action-row-text span { font-size: 11.5px; color: var(--text-faint); }
+.action-btn {
+  font-size: 12.5px; font-weight: 600; padding: 9px 16px; border-radius: 6px; border: 1px solid var(--amber);
+  background: var(--amber); color: #1a1206; cursor: pointer; flex-shrink: 0; white-space: nowrap;
+}
+.action-btn:hover { opacity: 0.9; }
+.action-btn.ghost { background: none; color: var(--text); border-color: var(--line); }
+
+.home-country-row { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; }
+.home-country-row select { flex: 1; background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-size: 13.5px; padding: 10px 12px; border-radius: 5px; }
+
+.reference-note { font-size: 11.5px; color: var(--text-faint); margin-top: 10px; line-height: 1.6; }
+
+.copy-feedback { font-size: 11.5px; color: var(--green); margin-top: 8px; display: none; }
+.copy-feedback.show { display: block; }
+
+@media (max-width: 420px) {
+  .emergency-btn-number { font-size: 22px; }
+}
+
+/* ---------- Nationality onboarding modal ---------- */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 400; display: none; align-items: center; justify-content: center;
+  padding: 20px; background: rgba(0,0,0,0.75);
+}
+.modal-backdrop.show { display: flex; }
+.modal {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 28px 24px;
+  max-width: 400px; width: 100%; text-align: center;
+}
+.modal-icon { font-size: 40px; margin-bottom: 8px; }
+.modal h3 { margin: 0 0 8px; font-size: 18px; }
+.modal p { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin: 0 0 18px; text-align: left; }
+.modal label { display: block; font-size: 11.5px; color: var(--text-dim); text-align: left; margin-bottom: 6px; }
+.modal select { width: 100%; background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-size: 14px; padding: 11px 12px; border-radius: 6px; }
+.modal-actions { margin-top: 16px; }
+.btn-primary-full {
+  width: 100%; background: var(--amber); color: #1a1206; border: none; font-weight: 700; font-size: 14px;
+  padding: 13px; border-radius: 8px; cursor: pointer; min-height: 48px;
+}
+.btn-primary-full:hover { opacity: 0.92; }
+.modal-skip {
+  display: block; width: 100%; background: none; border: none; color: var(--text-faint);
+  font-size: 12px; margin-top: 14px; cursor: pointer; text-decoration: underline; padding: 6px;
+}
+.modal-skip:hover { color: var(--text-dim); }
+</style>
+</head>
+<body>
+
+<div class="modal-backdrop" id="onboardModal">
+  <div class="modal">
+    <div class="modal-icon">🛂</div>
+    <h3>Welcome to AIG HELO</h3>
+    <p>Wherever your travels take you, this keeps your own country's embassy and the local police &amp; security
+    numbers one tap away. Let's start with your nationality, so your embassy is ready before you need it.</p>
+    <label for="onboardNationalitySelect">Your nationality</label>
+    <select id="onboardNationalitySelect"><option value="">Select your country&hellip;</option></select>
+    <div class="modal-actions">
+      <button class="btn-primary-full" id="onboardContinueBtn">Continue</button>
+    </div>
+    <button class="modal-skip" id="onboardSkipBtn">Skip for now &mdash; I need emergency numbers right away</button>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span>AIG HELO</div>
+  <button class="btn-key" id="refreshLocationBtn">refresh location</button>
+</div>
+
+<div class="shell">
+
+  <div class="disclaimer-banner">
+    <b>Always call local emergency services first if you're in danger.</b>
+    This app helps you find the right number quickly — it doesn't call anyone for you automatically,
+    isn't a substitute for local emergency services, and its numbers may occasionally be outdated.
+    When in doubt, verify locally (hotel staff, a local resident, or the reference link below).
+  </div>
+
+  <div class="notice-banner" id="noticeBanner"></div>
+
+  <div class="location-card">
+    <div class="location-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div class="location-text">
+        <b id="currentCountryName">Detecting your location&hellip;</b>
+        <span id="currentLocationDetail">&mdash;</span>
+      </div>
+    </div>
+    <div class="location-actions">
+      <button class="btn-sm" id="retryGpsBtn">Try GPS again</button>
+      <button class="btn-sm" id="manualCountryToggleBtn">Set country manually</button>
+    </div>
+    <div class="country-select-row" id="countrySelectRow">
+      <select id="manualCountrySelect"><option value="">Select a country&hellip;</option></select>
+    </div>
+  </div>
+
+  <div class="emergency-section">
+    <div class="emergency-label">Police &amp; security numbers &mdash; tap to call</div>
+    <div class="emergency-grid" id="emergencyGrid">
+      <div class="emergency-empty">Detecting your location to show local emergency numbers&hellip;</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Your embassy</div>
+    <div class="panel">
+      <div id="nationalityUnsetRow">
+        <div class="home-country-row">
+          <select id="homeCountrySelect"><option value="">Your nationality&hellip;</option></select>
+        </div>
+      </div>
+      <div id="nationalitySetRow" style="display:none;">
+        <div class="location-row" style="margin-bottom:10px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--blue);"><path d="M4 22h16M4 22V9l8-6 8 6v13M9 22V15h6v7"/></svg>
+          <div class="location-text">
+            <b id="nationalityName">&mdash;</b>
+            <span>Your nationality</span>
+          </div>
+        </div>
+        <button class="btn-sm" id="changeNationalityBtn">Change</button>
+      </div>
+      <div id="embassyLinkArea"></div>
+      <div class="reference-note">
+        This links to your own country's official embassy/consular locator &mdash; not a static address
+        list, since embassies do move and close. Bookmark this app before you travel; some of these
+        sites may be slow or hard to search in an actual emergency, which is exactly why the police &amp;
+        security numbers above come first and never depend on this being set.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Quick actions</div>
+    <div class="panel">
+      <div class="action-row">
+        <div class="action-row-text">
+          <b>Share my location</b>
+          <span>Copies a Google Maps link to your current GPS position</span>
+        </div>
+        <button class="action-btn" id="shareLocationBtn">Copy link</button>
+      </div>
+      <div class="action-row">
+        <div class="action-row-text">
+          <b>Check current numbers</b>
+          <span>Open the live reference list for every country</span>
+        </div>
+        <a class="action-btn ghost" id="referenceLink" href="#" target="_blank" rel="noopener">Open</a>
+      </div>
+    </div>
+    <div class="copy-feedback" id="copyFeedback">Location link copied.</div>
+  </div>
+
+</div>
+
+<script src="data.js"></script>
+<script src="countries.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
