@@ -200,7 +200,8 @@ User sees Diana typing...
 │  │  ├─ Dual-Account Wallet                                    │ │
 │  │  ├─ MLM Commission Engine                                  │ │
 │  │  ├─ WDM Marketplace                                        │ │
-│  │  └─ Investment Services                                    │ │
+│  │  ├─ Investment Services                                    │ │
+│  │  └─ AIG Academy (Learning & Certification)                 │ │
 │  └────────────────────────────────────────────────────────────┘ │
 │                          ↕ (Beam Me Up)                         │
 │  ┌────────────────────────────────────────────────────────────┐ │
@@ -284,6 +285,7 @@ The primary web application (Next.js 14 + React 18)
 - Documents — Generated documents with versioning
 - Tasks — Task management and tracking
 - Workspace — Team collaboration features
+- Academy — Learning platform, courses, certifications, achievements
 - Marketplace — Skills, templates, third-party integrations (future)
 - Payments — Billing and subscription management (future)
 
@@ -294,6 +296,7 @@ The primary web application (Next.js 14 + React 18)
 /projects       — Project management
 /documents      — Document library
 /workspace      — Team collaboration
+/academy        — Learning center, courses, certificates
 /marketplace    — Skills and integrations
 ```
 

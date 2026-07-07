@@ -56,12 +56,42 @@ Experiences & Events:
 └─ Memberships & Subscriptions (community access, premium content)
 ```
 
-### 1.2 Seller Tiers & Network Commission (Member-Selected)
+### 1.2 Vendor Fees & Requirements
+
+```
+VENDOR JOINING FEE: €7,500 (ONE-TIME)
+├─ Network Commission: €6,000 (80%)
+│  ├─ Distributed to uplines (6-10 levels depending on tier)
+│  └─ Immediate bonus for sponsor & upline tree
+├─ Management & Development Fund: €1,500 (20%)
+│  └─ Platform operations, customer support, development
+└─ Unlocks: Vendor status, product listing, seller dashboard
+
+VENDOR ANNUAL FEE: €750/YEAR
+├─ Renewal: Every 12 months from joining date
+├─ Network Commission: €600 (80%)
+│  ├─ Distributed to uplines annually
+│  └─ Recurring benefit for network
+├─ Management & Development Fund: €150 (20%)
+│  └─ Recurring operational costs
+└─ Benefits: Vendor status continuation, seller support
+
+EXAMPLE: New Vendor Joins
+├─ Pays €7,500 joining fee
+├─ Sponsor receives: €7,500 × 30% (level 1) = €2,250
+├─ Level 2 upline receives: €7,500 × 20% = €1,500
+├─ Level 3 upline receives: €7,500 × 15% = €1,125
+├─ Levels 4-6: €7,500 × 10%, 3%, 2% respectively
+└─ Management fund: €1,500 (retained by AIGINVEST)
+```
+
+### 1.3 Seller Tiers & Network Commission (Member-Selected)
 
 ```
 MEMBER SELLER RIGHTS:
 ├─ Only members with appropriate tier can sell
 ├─ Verification required: Email, phone, identity
+├─ Vendor fee required: €7,500 joining + €750/year
 └─ Commission structure: Member-selected (10-70% of product value)
 
 SELLER STATUS LEVELS:
@@ -339,6 +369,17 @@ model WDMSellerProfile {
   reviewCount     Int       @default(0)
   salesCount      Int       @default(0)
   
+  // Vendor fees & status
+  vendorStatus    String    @default("inactive") // inactive, active, suspended
+  joiningFeePaid  Boolean   @default(false)
+  joiningFeeAmount_eur Decimal @db.Decimal(10, 2) @default(7500)
+  joiningFeeDate  DateTime?
+  
+  // Annual renewal
+  annualFeeAmount_eur Decimal @db.Decimal(10, 2) @default(750)
+  lastAnnualFeeDate DateTime?
+  nextAnnualFeeDate DateTime?
+  
   // Contact
   email           String
   phone           String?
@@ -361,6 +402,29 @@ model WDMSellerProfile {
   affiliateLinks  WDMAffiliateLink[]
   
   @@map("wdm_seller_profiles")
+}
+
+model WDMVendorFeeTransaction {
+  id              String    @id @default(cuid())
+  sellerProfileId String
+  
+  // Fee details
+  type            String    // joining_fee, annual_fee
+  amount_eur      Decimal   @db.Decimal(10, 2)
+  
+  // Split breakdown
+  networkCommission_eur Decimal @db.Decimal(10, 2) // 80%
+  managementFund_eur Decimal   @db.Decimal(10, 2) // 20%
+  
+  // Status
+  status          String    @default("pending") // pending, paid, failed, refunded
+  paymentDate     DateTime?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([sellerProfileId])
+  @@map("wdm_vendor_fee_transactions")
 }
 
 model WDMAffiliateLink {

@@ -84,6 +84,21 @@ This document defines the complete business model of AIGINVEST:
       "targetUser": "Executive/Investor",
       "sortOrder": 5,
       "tags": ["elite", "network_eligible", "recruiting", "resale", "executive"]
+    },
+    {
+      "id": "tier_vendor",
+      "name": "Vendor",
+      "price": 7500,
+      "joiningFee": 7500,
+      "annualFee": 750,
+      "currency": "EUR",
+      "billingCycle": "annual",
+      "description": "All Platinum features + WDM marketplace selling",
+      "targetUser": "Seller/Entrepreneur",
+      "sortOrder": 6,
+      "tags": ["elite", "network_eligible", "recruiting", "resale", "executive", "vendor", "seller", "marketplace"],
+      "inheritsFrom": "tier_platinum",
+      "additionalCapabilities": ["marketplace_vendor", "product_management", "order_fulfillment", "sales_analytics", "promotions", "support_management"]
     }
   ]
 }
@@ -223,9 +238,126 @@ This document defines the complete business model of AIGINVEST:
         "tier_starter": "No",
         "tier_professional": "No",
         "tier_business": "Limited",
-        "tier_platinum": "Full"
+        "tier_platinum": "Full",
+        "tier_vendor": "Full"
       },
       "priority": 120
+    },
+    {
+      "benefitId": "marketplace_vendor",
+      "name": "WDM Marketplace Vendor",
+      "description": "Create and manage product listings in WDM marketplace",
+      "values": {
+        "free": "No",
+        "tier_starter": "No",
+        "tier_professional": "No",
+        "tier_business": "No",
+        "tier_platinum": "No",
+        "tier_vendor": "Yes"
+      },
+      "priority": 125
+    },
+    {
+      "benefitId": "vendor_profile",
+      "name": "Vendor Profile",
+      "description": "Customizable seller storefront and business profile",
+      "values": {
+        "free": "N/A",
+        "tier_starter": "N/A",
+        "tier_professional": "N/A",
+        "tier_business": "N/A",
+        "tier_platinum": "N/A",
+        "tier_vendor": "Full customization"
+      },
+      "priority": 126
+    },
+    {
+      "benefitId": "product_management",
+      "name": "Product Management",
+      "description": "Add, edit, organize products with inventory tracking",
+      "values": {
+        "free": "N/A",
+        "tier_starter": "N/A",
+        "tier_professional": "N/A",
+        "tier_business": "N/A",
+        "tier_platinum": "N/A",
+        "tier_vendor": "Unlimited products"
+      },
+      "priority": 127
+    },
+    {
+      "benefitId": "order_fulfillment",
+      "name": "Order Management",
+      "description": "Receive and process orders, shipping labels, tracking",
+      "values": {
+        "free": "N/A",
+        "tier_starter": "N/A",
+        "tier_professional": "N/A",
+        "tier_business": "N/A",
+        "tier_platinum": "N/A",
+        "tier_vendor": "Full order management"
+      },
+      "priority": 128
+    },
+    {
+      "benefitId": "sales_analytics",
+      "name": "Sales Analytics Dashboard",
+      "description": "Detailed sales metrics, reports, and performance tracking",
+      "values": {
+        "free": "N/A",
+        "tier_starter": "N/A",
+        "tier_professional": "N/A",
+        "tier_business": "N/A",
+        "tier_platinum": "N/A",
+        "tier_vendor": "Real-time analytics"
+      },
+      "priority": 129
+    },
+    {
+      "benefitId": "promotions",
+      "name": "Promotions & Campaigns",
+      "description": "Create discount campaigns, promotional offers, and flash sales",
+      "values": {
+        "free": "N/A",
+        "tier_starter": "N/A",
+        "tier_professional": "N/A",
+        "tier_business": "N/A",
+        "tier_platinum": "N/A",
+        "tier_vendor": "Unlimited campaigns"
+      },
+      "priority": 130
+    },
+    {
+      "benefitId": "buyer_communication",
+      "name": "Buyer Communication",
+      "description": "Built-in messaging, customer support, and dispute resolution",
+      "values": {
+        "free": "N/A",
+        "tier_starter": "N/A",
+        "tier_professional": "N/A",
+        "tier_business": "N/A",
+        "tier_platinum": "N/A",
+        "tier_vendor": "Full messaging & support"
+      },
+      "priority": 131
+    },
+    {
+      "benefitId": "vendor_fees",
+      "name": "Vendor Fees",
+      "description": "One-time joining fee and annual renewal",
+      "values": {
+        "free": "N/A",
+        "tier_starter": "N/A",
+        "tier_professional": "N/A",
+        "tier_business": "N/A",
+        "tier_platinum": "N/A",
+        "tier_vendor": "€7,500 joining + €750/year"
+      },
+      "feeSplit": {
+        "networkShare": 0.80,
+        "managementFund": 0.20
+      },
+      "priority": 132
     }
   ]
 }
@@ -281,9 +413,295 @@ This document defines the complete business model of AIGINVEST:
       "hardware": ["north_star_one", "apple_watch", "android_watch"],
       "monthlyApiCalls": "Unlimited",
       "dedicatedInfrastructure": true
+    },
+    "tier_vendor": {
+      "inheritsFrom": "tier_platinum",
+      "platforms": ["web", "ios", "android", "desktop", "hardware"],
+      "features": ["everything", "white_label", "custom_branding", "marketplace_vendor", "vendor_analytics"],
+      "storageQuota": "Unlimited",
+      "offlineCapability": "Full (persistent)",
+      "voiceControl": "Full voice interface (all languages)",
+      "hardware": ["north_star_one", "apple_watch", "android_watch"],
+      "monthlyApiCalls": "Unlimited",
+      "dedicatedInfrastructure": true,
+      "vendorCapabilities": {
+        "productListing": "Unlimited",
+        "salesAnalytics": "Real-time",
+        "orderManagement": "Full",
+        "customerSupport": "Priority + messaging",
+        "promotions": "Unlimited campaigns",
+        "networkCommission": "Member-selected (10-70%)"
+      }
     }
   }
 }
+```
+
+---
+
+## Part 1.4: Dual-Account Wallet System
+
+### 1.4.1 The Two Accounts
+
+Every AIGINVEST member has EXACTLY 2 accounts in their wallet:
+
+```
+Account 1: CASH ACCOUNT (Real Money - EUR)
+├─ Currency: EUR
+├─ Purpose: Deposit/withdraw real funds
+├─ Usage: Pay for memberships, marketplace purchases (buyer side)
+├─ Exchange Rate: 1.0 (fixed, no conversion risk)
+├─ Key Properties:
+│  ├─ Source of truth for funds owed to member
+│  ├─ Connected to bank account & payment providers
+│  ├─ Subject to KYC/AML compliance
+│  └─ Withdrawable to personal bank account
+└─ Balance: Real EUR holdings
+
+Account 2: AIG CASH ACCOUNT (Internal Currency - AIG$)
+├─ Currency: AIG$ (internal utility token)
+├─ Purpose: Spend within ecosystem
+├─ Usage: Marketplace purchases, apps, competitions, rewards, investments
+├─ Exchange Rate: Market-driven (varies daily)
+├─ Key Properties:
+│  ├─ NOT directly withdrawable as EUR
+│  ├─ Created only by one-way conversion from Cash Account
+│  ├─ Circulates within ecosystem
+│  ├─ Earnable through sales, commissions, rewards
+│  └─ Convertible back to EUR ONLY through internal marketplace
+└─ Balance: AIG$ holdings (internal currency)
+```
+
+### 1.4.2 The Asymmetric Conversion Model
+
+**Key Rule: One-Way Conversion Only**
+
+```
+ALLOWED:
+Cash Account (EUR) → AIG Cash Account (AIG$)
+├─ User initiates manual conversion
+├─ Select amount in EUR
+├─ Receive equivalent in AIG$ at market rate
+├─ Transaction settles immediately
+├─ Example: €100 EUR → 105 AIG$ (if rate is 1.05)
+
+NOT ALLOWED:
+AIG Cash Account (AIG$) → Cash Account (EUR) - NEVER DIRECT
+├─ No direct conversion back
+├─ No "cash-out" feature
+├─ Prevents currency leakage
+├─ Forces internal circulation
+
+REVERSE CONVERSION (Via Marketplace):
+AIG Cash Account (AIG$) → Cash Account (EUR) - ONLY VIA MARKETPLACE
+├─ Member lists AIG$ for sale on exchange
+├─ Other members buy with EUR Cash Account
+├─ Marketplace matches buy/sell orders at market rates
+├─ Platform takes 2% fee on seller side
+├─ Settlement: EUR to buyer's Cash Account, AIG$ to seller's account
+├─ Example: Member sells 100 AIG$ at 0.95 rate
+│  ├─ Receives: €95 to their Cash Account
+│  ├─ Platform fee: €2 (2% of €100)
+│  ├─ Net proceeds: €93
+│  └─ AIG$ removed from circulation
+```
+
+### 1.4.3 Why This Design Creates a True Internal Economy
+
+```
+TRADITIONAL CURRENCY CONVERTERS (❌ Not AIGINVEST):
+├─ Bidirectional: User can convert in either direction
+├─ Result: Currency immediately exits ecosystem
+├─ Example: EUR → AIG$ → EUR (person back out day 1)
+├─ Problem: No internal circulation, no ecosystem economy
+
+AIGINVEST MODEL (✅ True Internal Economy):
+├─ Unidirectional entry: EUR → AIG$ only
+├─ Circular exit: AIG$ → EUR only through marketplace
+├─ Result: Money must circulate internally first
+├─ Why it works:
+│  ├─ Members convert EUR → AIG$ to spend internally
+│  ├─ They buy products, services, apps, investments
+│  ├─ Sellers receive AIG$ from sales
+│  ├─ Sellers who want EUR must SELL those AIG$ to someone else
+│  ├─ Creates an active internal exchange market
+│  ├─ Encourages holding AIG$ (speculation possible)
+│  └─ Entire ecosystem benefits from circulation
+```
+
+### 1.4.4 Account Mechanics & Operations
+
+```
+DEPOSIT (EUR → Cash Account):
+├─ User initiates deposit
+├─ Payment methods:
+│  ├─ Bank transfer (SEPA, ACH, etc.)
+│  ├─ Credit/debit card (via Stripe, PayPal, etc.)
+│  ├─ Cryptocurrency (optional, future)
+│  └─ Digital wallet providers
+├─ Processing time: 1-5 business days (varies by method)
+├─ KYC/AML verification required
+├─ Account updated after settlement
+└─ Receipt generated
+
+MANUAL CONVERSION (Cash Account → AIG Cash Account):
+├─ User goes to Wallet → Convert
+├─ Selects amount in EUR
+├─ Current exchange rate displayed
+├─ Confirms conversion
+├─ Immediately settled:
+│  ├─ EUR debited from Cash Account
+│  └─ AIG$ credited to AIG Cash Account
+├─ Transaction history recorded
+└─ Example: €50 EUR @ 1.10 rate = 55 AIG$
+
+MARKETPLACE EXCHANGE (AIG$ → EUR via peer-to-peer):
+├─ Seller lists AIG$ for sale
+│  ├─ Sets asking price (EUR per AIG$)
+│  ├─ Can be 0.90, 0.95, 1.00, etc.
+│  └─ AIG$ held in escrow temporarily
+├─ Buyers browse orders
+│  ├─ See all available rates
+│  ├─ Choose best price
+│  └─ Must have Cash Account EUR balance
+├─ Order matched
+│  ├─ Buyer pays EUR from Cash Account
+│  ├─ Seller receives AIG$ removed + EUR added to Cash Account
+│  ├─ Platform charges 2% fee on seller side
+│  └─ Settlement instant
+└─ Result: EUR leaves Cash Account, AIG$ leaves ecosystem
+
+COMMISSIONS & REWARDS (Automatic allocation):
+├─ 80% goes to Cash Account (EUR real money)
+├─ 20% goes to AIG Cash Account (internal currency)
+├─ Example: €100 commission
+│  ├─ €80 → Cash Account (real money)
+│  ├─ €20 equiv. → AIG Cash Account (~21-22 AIG$ at typical rates)
+│  └─ Member now has both to allocate as needed
+└─ Encourages AIG$ spending while protecting real funds
+
+WITHDRAWAL (Cash Account → Bank):
+├─ User initiates withdrawal
+├─ Specifies bank account & amount
+├─ Minimum withdrawal: €25 (typical)
+├─ Processing:
+│  ├─ EUR debited from Cash Account
+│  ├─ Sent to bank (2-5 business days)
+│  ├─ Bank processing fees may apply
+│  └─ Settlement confirmed
+├─ Verification: ID check required (AML)
+└─ Frequency: Weekly batches or on-demand (depending on tier)
+
+BALANCE DISPLAY (Member Dashboard):
+┌─────────────────────────────────────┐
+│  💰 Cash Account (EUR)              │
+│  Balance: €1,250.00                 │
+│  ├─ Available: €1,250.00            │
+│  ├─ Pending: €0                     │
+│  └─ [Deposit] [Withdraw]            │
+│                                     │
+│  💵 AIG Cash Account (AIG$)         │
+│  Balance: 2,840 AIG$                │
+│  ├─ Available: 2,840 AIG$           │
+│  ├─ In Escrow: 0 AIG$               │
+│  ├─ Current Rate: 1 AIG$ = €0.96    │
+│  ├─ Equiv. Value: €2,726.40 EUR     │
+│  └─ [Convert From EUR] [Sell]       │
+│                                     │
+│  Total Wallet Value: €3,976.40      │
+│  (€1,250.00 + €2,726.40)            │
+└─────────────────────────────────────┘
+```
+
+### 1.4.5 Exchange Rate Dynamics
+
+```
+CASH ACCOUNT (EUR):
+├─ Exchange rate: FIXED at 1.0
+├─ No volatility
+├─ No slippage
+└─ Always predictable
+
+AIG CASH ACCOUNT (AIG$):
+├─ Exchange rate: MARKET-DRIVEN
+├─ Determined by supply/demand on marketplace
+├─ Factors affecting rate:
+│  ├─ Ecosystem health (more users = higher demand)
+│  ├─ Commission distributions (increases supply)
+│  ├─ Marketplace activity (increases demand)
+│  ├─ Speculative trading (volatility)
+│  └─ Staking/incentives (can increase holding)
+├─ Example rates over time:
+│  ├─ Day 1: 1 AIG$ = €1.00 (launch)
+│  ├─ Month 1: 1 AIG$ = €1.05 (positive sentiment)
+│  ├─ Month 3: 1 AIG$ = €0.98 (high commission dump)
+│  ├─ Month 6: 1 AIG$ = €1.12 (strong ecosystem)
+│  └─ Month 12: 1 AIG$ = €1.25 (assumed growth)
+└─ Members see real-time rate updates
+
+MARKET IMPLICATIONS:
+├─ Members decide when to sell AIG$ (market timing)
+├─ Early believers hold longer (speculation)
+├─ High commissions might depress price initially
+├─ Strong ecosystem growth appreciates price
+├─ Creates natural incentive for long-term holding
+└─ Platform benefits regardless (commission distribution unchanged)
+```
+
+### 1.4.6 Use Cases
+
+```
+SCENARIO 1: New Member Joining
+├─ Pays €399 for Starter tier via Cash Account
+├─ Receives €319.20 commission immediately
+│  ├─ €255.36 (80%) → Cash Account
+│  └─ €63.84 (20%) → AIG Cash Account (~66 AIG$ @ 1.0 rate)
+├─ Total Cash Account: €319.20 - €399 = -€79.80 (owes or negative)
+│  (Assuming they had €320 deposited)
+├─ OR total Cash Account: €395.20 (if €395 deposited first, then paid €399 from commission)
+├─ Actually better to think: They have €255.36 in Cash Account + ~66 AIG$ in AIG Cash
+├─ Their total value: ~€321.36
+└─ Can buy products with either account
+
+SCENARIO 2: Member Makes 10 Sales @ €100, 30% commission each
+├─ Total commission earned: €300
+├─ Split: €240 (80%) + €60 (20%)
+├─ Allocated:
+│  ├─ €240 → Cash Account (real money)
+│  └─ ~63 AIG$ → AIG Cash Account (€60 equiv. @ rate ~0.95)
+├─ Member now has extra €240 in real money
+├─ Can withdraw to bank if needed
+├─ Or convert more EUR if they want to spend inside ecosystem
+└─ AIG$ stays in ecosystem
+
+SCENARIO 3: Member Wants to "Cash Out" AIG$
+├─ Has 5,000 AIG$ from sales/commissions
+├─ Current rate: 1 AIG$ = €0.92
+├─ Lists 5,000 AIG$ for sale at 0.92 rate
+├─ Waits for buyer (another member wanting AIG$)
+├─ Buyer with EUR Cash Account buys 5,000 AIG$
+│  ├─ Buyer pays: €4,600 from Cash Account
+│  └─ Seller receives: €4,600 to Cash Account
+├─ Platform fee (2%): €92 deducted from seller amount
+│  ├─ Seller actually receives: €4,508
+│  └─ Platform keeps: €92
+├─ AIG$ removed from circulation, EUR re-enters marketplace
+└─ Seller now has EUR to withdraw to bank
+
+SCENARIO 4: Ecosystem Health → Price Appreciation
+├─ Q1: Member holds 1,000 AIG$ @ 1.0 rate = €1,000 value
+├─ Q2: Ecosystem grows, rate increases to 1.05
+│  ├─ Same 1,000 AIG$ now = €1,050 value
+│  ├─ Unrealized gain: €50
+│  └─ Member could sell for €1,050 - €21 (2% fee) = €1,029
+├─ Q3: Rate dips to 1.02
+│  ├─ 1,000 AIG$ = €1,020 value
+│  └─ Hodlers weather the storm
+├─ Year-end: Rate appreciates to 1.15
+│  ├─ 1,000 AIG$ = €1,150 value
+│  ├─ Seller takes 29% gain
+│  └─ Platform wins because more ecosystem activity occurred
+└─ Long-term believers are rewarded
 ```
 
 ---
@@ -318,6 +736,11 @@ This document defines the complete business model of AIGINVEST:
       "tier_platinum": {
         "maxLevels": 10,
         "description": "10 levels of commission depth (full unilevel)"
+      },
+      "tier_vendor": {
+        "maxLevels": 10,
+        "inheritsFrom": "tier_platinum",
+        "description": "10 levels of commission depth (full unilevel) + vendor fees generate network commissions"
       }
     },
     "commissionRates": [
