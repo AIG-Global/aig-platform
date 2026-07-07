@@ -207,7 +207,7 @@ export default function WDMPage() {
 
                 {/* Price and Commission */}
                 <div className="flex justify-between items-center mb-4">
-                  <p style={{ color: '#f5f5dc' }} className="text-2xl font-bold">€{product.price.toLocaleString()}</p>
+                  <p style={{ color: '#f5f5dc' }} className="text-2xl font-bold">€{product.price}</p>
                   <div className="flex items-center gap-1">
                     <Zap size={16} style={{ color: '#d4af37' }} />
                     <p style={{ color: '#d4af37' }} className="font-semibold">{product.commission}</p>
@@ -280,7 +280,7 @@ export default function WDMPage() {
 
                   {/* Price and Action */}
                   <div className="flex justify-between items-center mb-6">
-                    <p style={{ color: '#f5f5dc' }} className="text-4xl font-bold">€{selectedProduct.price.toLocaleString()}</p>
+                    <p style={{ color: '#f5f5dc' }} className="text-4xl font-bold">€{selectedProduct.price}</p>
                   </div>
 
                   <button
@@ -294,7 +294,7 @@ export default function WDMPage() {
                     }}
                     className="w-full py-3 rounded-lg font-bold hover:bg-[#e8d4a2] transition text-lg"
                   >
-                    Add to Cart - €{selectedProduct.price.toLocaleString()}
+                    Add to Cart - €{selectedProduct.price}
                   </button>
                 </div>
               </div>
@@ -318,15 +318,7 @@ export default function WDMPage() {
               <div>
                 <p style={{ color: '#d4af37' }} className="text-sm mb-2">Total Purchases</p>
                 <p style={{ color: '#f5f5dc' }} className="text-4xl font-bold">
-                  €{cart.reduce((sum, id) => sum + (PRODUCTS.find(p => p.id === id)?.price || 0), 0).toLocaleString()}
-                </p>
-              </div>
-              <div>
-                <p style={{ color: '#d4af37' }} className="text-sm mb-2">Average Commission</p>
-                <p style={{ color: '#f5f5dc' }} className="text-4xl font-bold">{(totalCommission / cart.length).toFixed(1)}%</p>
-              </div>
-            </div>
-
+                  €{cart.reduce((sum, id) => sum + (PRODUCTS.find(p => p.id === id)?.price || 0), 0)}
             <button
               style={{
                 backgroundColor: '#d4af37',
