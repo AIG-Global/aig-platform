@@ -201,7 +201,7 @@ export default function DianaWidget() {
               className="w-14 h-14"
             />
           </button>
-        )}}
+        )}
       </div>
     </>
   )
