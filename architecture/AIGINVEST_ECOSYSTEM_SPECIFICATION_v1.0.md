@@ -533,72 +533,407 @@ Use Case:       Contracts, agreements, compliance documentation, business record
 
 ## Part 4: Partner Program (Affiliate/Referral)
 
-### 4.1 Affiliate Commission Structure
+### 4.1 Affiliate Commission Structure by Tier
 
-**PROFESSIONAL & VENDOR TIERS (10 Levels Deep):**
+**STARTER TIER (6 Levels Deep) - INFERRED STRUCTURE**
 ```
-Level 1: 26%
-Level 2: [PENDING - interpolation needed]
-Level 3: [PENDING - interpolation needed]
-Level 4: [PENDING - interpolation needed]
-Level 5: [PENDING - interpolation needed]
-Level 6: [PENDING - interpolation needed]
-Level 7: 1%
-Level 8: 1%
-Level 9: 1%
-Level 10: 1%
+Level 1: 15%
+Level 2: 10%
+Level 3: 7%
+Level 4: 4%
+Level 5: 2%
+Level 6: 1%
 
-Total: 26% + [?] + 4% = [?]
-```
+Total Distribution: 39%
 
-**OTHER TIERS (To be confirmed):**
-```
-Starter (assumed):
-├─ Level 1: [TBD]
-├─ Level 2: [TBD]
-├─ ... (how many levels?)
-└─ Network depth: [TBD]
+Applied to:
+├─ Direct referral commissions
+├─ WDM marketplace sales (if applicable)
+├─ Membership referrals
+└─ Eligible product/service sales
 
-Business (assumed):
-├─ Level 1: [TBD]
-├─ Level 2: [TBD]
-├─ ... (how many levels?)
-└─ Network depth: [TBD]
-
-Enterprise (assumed):
-├─ Level 1: [TBD]
-├─ Level 2: [TBD]
-├─ ... (how many levels?)
-└─ Network depth: [TBD]
+STATUS: [Needs founder confirmation]
 ```
 
-**APPLICATION:**
+**PROFESSIONAL TIER (10 Levels Deep) - CONFIRMED STRUCTURE**
 ```
+Level 1: 26%  ✅ CONFIRMED
+Level 2: 16%  [INFERRED - needs confirmation]
+Level 3: 10%  [INFERRED - needs confirmation]
+Level 4: 6%   [INFERRED - needs confirmation]
+Level 5: 3%   [INFERRED - needs confirmation]
+Level 6: 2%   [INFERRED - needs confirmation]
+Level 7: 1%   ✅ CONFIRMED
+Level 8: 1%   ✅ CONFIRMED
+Level 9: 1%   ✅ CONFIRMED
+Level 10: 1%  ✅ CONFIRMED
+
+Total Distribution: 67%
+
 Applied to:
 ├─ Direct referral commissions
 ├─ WDM marketplace sales
 ├─ Membership referrals
 └─ Eligible product/service sales
 
-Distribution (80/20 Split):
-├─ 80% → Cash Account (EUR)
-├─ 20% → AIG Cash Account (AIG$)
-└─ Applied to all eligible earnings
+STATUS: L1, L7-L10 confirmed. L2-L6 awaiting confirmation.
 ```
 
-**PENDING CLARIFICATION:**
+**BUSINESS TIER (10 Levels Deep) - INFERRED STRUCTURE**
 ```
-Levels 2-6 for Professional/Vendor:
-├─ Suggested structure (to verify):
-│  ├─ Level 2: 16%
-│  ├─ Level 3: 12%
-│  ├─ Level 4: 8%
-│  ├─ Level 5: 4%
-│  └─ Level 6: 2%
-├─ OR
-├─ Alternative structure: [provide exact percentages]
-└─ Confirmation needed from founder
+(Assumed: Same as Professional tier)
+Level 1: 26%
+Level 2: 16%
+Level 3: 10%
+Level 4: 6%
+Level 5: 3%
+Level 6: 2%
+Levels 7-10: 1% each
+
+Total Distribution: 67%
+
+STATUS: [Needs founder confirmation - assume same as Professional?]
 ```
+
+**ENTERPRISE TIER (10+ Levels Deep) - INFERRED STRUCTURE**
+```
+(Assumed: Same as Professional tier, potentially unlimited depth)
+Level 1: 26%
+Level 2: 16%
+Level 3: 10%
+Level 4: 6%
+Level 5: 3%
+Level 6: 2%
+Levels 7-10: 1% each
+Level 11+: [Unlimited? Or capped at 10?]
+
+Total Distribution: 67%+ (or unlimited if more levels)
+
+STATUS: [Needs founder confirmation]
+```
+
+### 4.2 Affiliate Earnings Distribution (80/20 Split)
+
+**Applied to ALL tiers equally:**
+```
+Commission Earned: €100
+
+Distribution:
+├─ 80% → Cash Account (EUR): €80 (immediate, guaranteed)
+├─ 20% → AIG Cash Account (AIG$): €20 (ecosystem tokens)
+└─ Total: €100
+
+This applies to:
+├─ All referral commissions
+├─ All affiliate earnings
+├─ All network payouts
+└─ ALL income-generating activities (except membership fees)
+
+The 80% goes directly to Cash Account (withdrawable)
+The 20% goes to AIG Cash Account (ecosystem use or peer-trade to EUR)
+```
+
+---
+
+## Part 5: Earning Caps & Limits
+
+### 5.1 Monthly Earning Caps by Tier
+
+**PENDING CONFIRMATION:**
+```
+Starter   - Monthly cap: €___ | Annual cap: €___
+Professional - Monthly cap: €___ | Annual cap: €___
+Business - Monthly cap: €___ | Annual cap: €___
+Enterprise - Monthly cap: €___ or UNLIMITED? | Annual: ?
+
+Questions:
+├─ Are caps per member or per team?
+├─ Do caps reset monthly or are they rolling 30-day?
+├─ Different caps for commissions vs rewards vs WDM?
+└─ Are caps per tier or globally by activity type?
+```
+
+---
+
+## Part 6: Investment Products
+
+### 6.1 Available Investment Options
+
+**PENDING CONFIRMATION:**
+```
+Available investment products:
+□ Crypto market access
+  ├─ Minimum: €___
+  ├─ Maximum: €___
+  ├─ Lock period: N/A (liquid)
+  ├─ Expected ROI: Market-dependent
+  ├─ Eligible tiers: [which tiers?]
+  └─ Currency: EUR or AIG$ or both?
+
+□ Tagmarkets.com investments
+  ├─ Minimum: €___
+  ├─ Maximum: €___
+  ├─ Lock period: Variable (product-dependent)
+  ├─ Expected ROI: [range?]
+  ├─ Eligible tiers: [which tiers?]
+  └─ Currency: EUR or AIG$ or both?
+
+□ AIG Phone LTD shares (pre-launch)
+  ├─ Minimum: €___
+  ├─ Maximum: €___
+  ├─ Lock period: Until IPO? Specific years?
+  ├─ Expected ROI: [estimate?]
+  ├─ Eligible tiers: [which tiers?]
+  └─ Currency: EUR or AIG$ or both?
+
+□ Professionally Managed Funds
+  ├─ 3-Year Cycle
+  │  ├─ Minimum: €___
+  │  ├─ Maximum: €___
+  │  ├─ Expected ROI: ___% annually
+  │  └─ Early withdrawal: [allowed? Penalty?]
+  ├─ 5-Year Cycle
+  │  ├─ Minimum: €___
+  │  ├─ Maximum: €___
+  │  ├─ Expected ROI: ___% annually
+  │  └─ Early withdrawal: [allowed? Penalty?]
+  ├─ 7-Year Cycle
+  │  ├─ Minimum: €___
+  │  ├─ Maximum: €___
+  │  ├─ Expected ROI: ___% annually
+  │  └─ Early withdrawal: [allowed? Penalty?]
+  └─ 10-Year Cycle
+     ├─ Minimum: €___
+     ├─ Maximum: €___
+     ├─ Expected ROI: ___% annually
+     └─ Early withdrawal: [allowed? Penalty?]
+```
+
+---
+
+## Part 7: Currency Exchange & Internal Trading
+
+### 7.1 EUR to AIG$ Conversion Rules
+
+**PENDING CONFIRMATION:**
+```
+EUR → AIG$ Conversion:
+├─ Method: Direct conversion (click button in app)
+├─ Conversion fee: ___% (e.g., 2-3%?)
+├─ Starting exchange rate: 1 EUR = ___ AIG$
+├─ Rate adjustment: Market-based? Admin-set? Formula?
+├─ Processing time: Instant? 24 hours?
+└─ Limits:
+   ├─ Per transaction: €___ maximum or unlimited?
+   ├─ Daily limit: €___ maximum or unlimited?
+   ├─ Monthly limit: €___ maximum or unlimited?
+   └─ Annual limit: €___ maximum or unlimited?
+```
+
+### 7.2 AIG$ to EUR Conversion (Peer Trading Platform)
+
+**PENDING CONFIRMATION:**
+```
+AIG$ → EUR Conversion:
+├─ Method: Internal peer-to-peer trading platform
+├─ How it works:
+│  ├─ Member lists AIG$ for sale at desired rate
+│  ├─ Other members buy from marketplace
+│  ├─ Rate determined by supply/demand
+│  └─ Platform facilitates transaction
+├─ Platform fee: ___% of transaction or flat €___?
+├─ Processing time: Instant? 24-48 hours?
+└─ Limits:
+   ├─ Per transaction: AIG$ ___ maximum or unlimited?
+   ├─ Daily limit: AIG$ ___ maximum or unlimited?
+   ├─ Monthly limit: AIG$ ___ maximum or unlimited?
+   └─ Annual limit: AIG$ ___ maximum or unlimited?
+```
+
+---
+
+## Part 8: WDM Marketplace Commission Details
+
+### 8.1 Vendor Commission Rates by Category
+
+**PENDING CONFIRMATION:**
+```
+Typical vendor commission structures:
+
+Luxury Goods (vehicles, jewelry, watches):
+├─ Commission %: ___% (e.g., 5-8%)
+└─ Example: €100,000 luxury car → €5,000-8,000 commission to network
+
+Business Services (consulting, legal, accounting):
+├─ Commission %: ___% (e.g., 10-20%)
+└─ Example: €10,000 consulting contract → €1,000-2,000 commission to network
+
+Investment Products:
+├─ Commission %: ___% (e.g., 2-5%)
+└─ Example: €50,000 investment → €1,000-2,500 commission to network
+
+AI Software & Tools:
+├─ Commission %: ___% (e.g., 15-30%)
+└─ Example: €1,000 software subscription → €150-300 commission to network
+
+Travel & Experiences:
+├─ Commission %: ___% (e.g., 8-15%)
+└─ Example: €5,000 travel package → €400-750 commission to network
+
+Real Estate:
+├─ Commission %: ___% (e.g., 1-3%)
+└─ Example: €500,000 property → €5,000-15,000 commission to network
+```
+
+### 8.2 Seller Requirements
+
+**PENDING CONFIRMATION:**
+```
+Minimum tier to sell on WDM:
+├─ Option 1: Professional tier and above
+├─ Option 2: Business tier and above
+├─ Option 3: Enterprise only
+└─ Confirmation needed
+
+Category restrictions (higher tier required):
+├─ Luxury vehicles: [Starter? Professional? Business?]
+├─ Real estate: [Starter? Professional? Business?]
+├─ Investment products: [Starter? Professional? Business?]
+└─ Other categories: [any tier restrictions?]
+
+Vendor verification requirements:
+├─ Business registration proof?
+├─ Tax ID verification?
+├─ Insurance proof?
+├─ Product quality checks?
+└─ Other: ___________
+```
+
+---
+
+## Part 9: MoneyGames Rewards Structure
+
+### 9.1 Monthly Prize Pool Allocation
+
+**PENDING CONFIRMATION:**
+```
+Monthly Prize Pool: €___ total in AIG$ tokens
+
+Distribution (suggested structure):
+├─ 1st place: €___ (or ___% of pool)
+├─ 2nd place: €___ (or ___% of pool)
+├─ 3rd place: €___ (or ___% of pool)
+├─ 4-10 places: €___ each (or tiered?)
+├─ 11-100 places: €___ each (or no rewards?)
+└─ Total distributed: [should equal monthly pool]
+
+Tier eligibility:
+├─ All tiers can compete?
+├─ Or Professional+ only?
+├─ Or Business+ only?
+└─ Confirmation needed
+
+Annual grand prize (optional):
+├─ Top performer of year wins: €___?
+├─ Special recognition: [what?]
+└─ Year-round leaderboard: Separate from monthly?
+```
+
+---
+
+## Part 10: Payment Integration Status
+
+### 10.1 Link.com Integration
+
+**PENDING CONFIRMATION:**
+```
+Link.com Status: [Live? Pending? Planned?]
+
+Primary use:
+├─ Deposits (EUR → Cash Account)?
+├─ Withdrawals (Cash Account → EUR)?
+├─ Both?
+└─ Other?
+
+Fee structure:
+├─ Per-transaction fee: ___% or €___?
+├─ Fixed monthly fee: €___?
+├─ No fee (covered by AIG)?
+└─ Variable by transaction size?
+
+Geographic coverage:
+├─ All countries: Yes/No
+├─ EU only: Yes/No
+├─ Specific countries excluded: [list]
+└─ Expansion timeline: [when?]
+
+Volume limits:
+├─ Per transaction: €___ or unlimited?
+├─ Per day: €___ or unlimited?
+├─ Per month: €___ or unlimited?
+└─ Per year: €___ or unlimited?
+```
+
+---
+
+## Part 11: Implementation Roadmap - Updated
+
+### 11.1 Critical Path Dependencies
+
+```
+BLOCKING ITEMS (Need founder confirmation to proceed):
+
+Phase 0 (Specification Lock):
+├─ ✅ Membership tiers & pricing (LOCKED)
+├─ ✅ Two-account system (LOCKED)
+├─ ✅ 80/20 earnings split (LOCKED)
+├─ ✅ All 10 AIG apps (LOCKED)
+├─ ✅ WDM marketplace philosophy (LOCKED)
+├─ ⏳ Commission structure:
+│  ├─ Levels 2-6 for Professional/Vendor
+│  ├─ Starter tier structure
+│  ├─ Business tier structure
+│  └─ Enterprise tier structure
+├─ ⏳ Earning caps (monthly/annual by tier)
+├─ ⏳ Investment products (if any)
+├─ ⏳ MoneyGames prize pool structure
+├─ ⏳ Currency exchange rules & limits
+├─ ⏳ WDM category commission rates
+└─ ⏳ Link.com integration status
+
+Phase 1 (Foundation - Week 1-2) - BLOCKED UNTIL ABOVE CONFIRMED:
+├─ Two-account system implementation
+├─ Membership tier system
+├─ 80/20 distribution engine
+├─ Payment integration
+├─ Basic UI & onboarding
+└─ Test harness for business logic
+```
+
+---
+
+**STATUS SUMMARY:**
+
+✅ **LOCKED:**
+- Membership pricing (€399, €699, €1,099, €2,999)
+- Two-account architecture
+- 80/20 earning split
+- AIG Apps (all 10 with full descriptions)
+- WDM marketplace principles
+- 100% commission redistribution
+- Professional/Vendor commission L1 & L7-L10
+
+⏳ **PENDING FOUNDER CONFIRMATION:**
+- Commission L2-L6 (Professional/Vendor)
+- Starter/Business/Enterprise commission structures
+- Earning caps
+- Investment products
+- MoneyGames rewards
+- Currency exchange rules
+- WDM category rates
+- Link.com integration
+
+**Next action:** Provide remaining values to complete the specification lock.
 
 ---
 
