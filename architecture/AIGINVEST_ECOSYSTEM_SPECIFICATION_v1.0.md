@@ -535,28 +535,69 @@ Use Case:       Contracts, agreements, compliance documentation, business record
 
 ### 4.1 Affiliate Commission Structure
 
-**PENDING FROM FOUNDER:**
+**PROFESSIONAL & VENDOR TIERS (10 Levels Deep):**
 ```
-Current assumption (to be verified/confirmed):
+Level 1: 26%
+Level 2: [PENDING - interpolation needed]
+Level 3: [PENDING - interpolation needed]
+Level 4: [PENDING - interpolation needed]
+Level 5: [PENDING - interpolation needed]
+Level 6: [PENDING - interpolation needed]
+Level 7: 1%
+Level 8: 1%
+Level 9: 1%
+Level 10: 1%
 
-Level 1: 30%
-Level 2: 20%
-Level 3: 15%
-Level 4: 10%
-Level 5: 3%
-Level 6: 2%
-Level 7+: Variable
+Total: 26% + [?] + 4% = [?]
+```
 
+**OTHER TIERS (To be confirmed):**
+```
+Starter (assumed):
+├─ Level 1: [TBD]
+├─ Level 2: [TBD]
+├─ ... (how many levels?)
+└─ Network depth: [TBD]
+
+Business (assumed):
+├─ Level 1: [TBD]
+├─ Level 2: [TBD]
+├─ ... (how many levels?)
+└─ Network depth: [TBD]
+
+Enterprise (assumed):
+├─ Level 1: [TBD]
+├─ Level 2: [TBD]
+├─ ... (how many levels?)
+└─ Network depth: [TBD]
+```
+
+**APPLICATION:**
+```
 Applied to:
 ├─ Direct referral commissions
 ├─ WDM marketplace sales
 ├─ Membership referrals
 └─ Eligible product/service sales
 
-Distribution:
+Distribution (80/20 Split):
 ├─ 80% → Cash Account (EUR)
 ├─ 20% → AIG Cash Account (AIG$)
 └─ Applied to all eligible earnings
+```
+
+**PENDING CLARIFICATION:**
+```
+Levels 2-6 for Professional/Vendor:
+├─ Suggested structure (to verify):
+│  ├─ Level 2: 16%
+│  ├─ Level 3: 12%
+│  ├─ Level 4: 8%
+│  ├─ Level 5: 4%
+│  └─ Level 6: 2%
+├─ OR
+├─ Alternative structure: [provide exact percentages]
+└─ Confirmation needed from founder
 ```
 
 ---
