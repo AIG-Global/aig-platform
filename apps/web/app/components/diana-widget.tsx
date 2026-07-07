@@ -97,14 +97,16 @@ export default function DianaWidget() {
             {/* Header */}
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <img
-                  src="/avatars/diana/diana-avatar.svg"
-                  alt="Diana"
-                  className="w-10 h-10 rounded-full"
-                />
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white/30 bg-white/10">
+                  <img
+                    src="/avatars/diana/diana-avatar.svg"
+                    alt="Diana"
+                    className="w-full h-full"
+                  />
+                </div>
                 <div>
-                  <h3 className="font-bold">Diana</h3>
-                  <p className="text-xs text-blue-100">Online</p>
+                  <h3 className="font-bold text-lg">Diana</h3>
+                  <p className="text-xs text-blue-100">AI Assistant • Online</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -129,8 +131,15 @@ export default function DianaWidget() {
               {messages.map(msg => (
                 <div
                   key={msg.id}
-                  className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} gap-2`}
                 >
+                  {msg.sender === 'diana' && (
+                    <img
+                      src="/avatars/diana/diana-avatar.svg"
+                      alt="Diana"
+                      className="w-7 h-7 rounded-full flex-shrink-0"
+                    />
+                  )}
                   <div
                     className={`max-w-xs px-4 py-2 rounded-lg text-sm ${
                       msg.sender === 'user'
@@ -143,7 +152,12 @@ export default function DianaWidget() {
                 </div>
               ))}
               {isLoading && (
-                <div className="flex justify-start">
+                <div className="flex justify-start gap-2">
+                  <img
+                    src="/avatars/diana/diana-avatar.svg"
+                    alt="Diana"
+                    className="w-7 h-7 rounded-full flex-shrink-0"
+                  />
                   <div className="bg-slate-200 dark:bg-slate-700 px-4 py-2 rounded-lg">
                     <div className="flex gap-1">
                       <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
@@ -178,10 +192,14 @@ export default function DianaWidget() {
         ) : (
           <button
             onClick={() => setIsOpen(true)}
-            className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full shadow-lg flex items-center justify-center transition transform hover:scale-110"
+            className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full shadow-2xl flex items-center justify-center transition transform hover:scale-110 overflow-hidden border-2 border-blue-400/50 hover:border-blue-300"
             title="Chat with Diana"
           >
-            <MessageCircle size={28} />
+            <img
+              src="/avatars/diana/diana-avatar.svg"
+              alt="Diana"
+              className="w-14 h-14"
+            />
           </button>
         )}
       </div>

@@ -205,7 +205,22 @@ export default function LandingPage() {
       {/* Diana AI Section */}
       <section id="diana" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+          {/* Diana Avatar - Large Showcase */}
+          <div className="order-2 md:order-1">
+            <div className="bg-gradient-to-br from-blue-600/30 to-purple-600/30 rounded-3xl p-12 border border-slate-700/50 backdrop-blur-xl flex items-center justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+                <img
+                  src="/avatars/diana/diana-avatar.svg"
+                  alt="Diana AI Assistant"
+                  className="w-72 h-72 drop-shadow-2xl relative z-10"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Diana Info */}
+          <div className="order-1 md:order-2">
             <h2 className="text-4xl font-bold mb-6">
               Meet
               <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -213,7 +228,7 @@ export default function LandingPage() {
               </span>
             </h2>
             <p className="text-lg text-slate-300 mb-6">
-              Your intelligent business companion with access to 10 AI-powered applications. No registration needed—just click the Diana button in the corner to chat!
+              Your intelligent business companion with access to 10 AI-powered applications. Diana is available on every page—no registration needed. Just click the Diana button to chat!
             </p>
             <ul className="space-y-3 mb-8">
               {[
@@ -252,47 +267,36 @@ export default function LandingPage() {
               </Link>
             </div>
           </div>
+        </div>
 
-          <div className="grid grid-cols-2 gap-8">
-            {/* Diana Avatar */}
-            <div className="col-span-2 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-3xl p-12 border border-slate-700/50 backdrop-blur-xl flex items-center justify-center">
+        {/* Diana Chat Preview */}
+        <div className="mt-16 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-3xl p-8 border border-slate-700/50 backdrop-blur-xl">
+          <div className="bg-slate-900/80 rounded-2xl p-6 space-y-4 max-w-2xl mx-auto">
+            <div className="flex items-start gap-3">
               <img
                 src="/avatars/diana/diana-avatar.svg"
-                alt="Diana AI Assistant"
-                className="w-64 h-64 drop-shadow-2xl"
+                alt="Diana"
+                className="w-10 h-10 rounded-full flex-shrink-0"
               />
+              <div className="space-y-2">
+                <p className="text-sm font-semibold">Diana</p>
+                <p className="text-sm text-slate-300">What would you like to know about the AIG ecosystem today?</p>
+              </div>
             </div>
-
-            {/* Chat Interface Preview */}
-            <div className="col-span-2 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-3xl p-6 border border-slate-700/50 backdrop-blur-xl">
-              <div className="bg-slate-900/80 rounded-2xl p-4 space-y-4">
-                <div className="flex items-start gap-3">
-                  <img
-                    src="/avatars/diana/diana-avatar.svg"
-                    alt="Diana"
-                    className="w-8 h-8 rounded-full flex-shrink-0"
-                  />
-                  <div className="space-y-2">
-                    <p className="text-sm font-semibold">Diana</p>
-                    <p className="text-sm text-slate-300">What would you like to know about the AIG ecosystem today?</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 justify-end">
-                  <div className="space-y-2 text-right">
-                    <p className="text-sm text-slate-300 bg-blue-600/30 px-3 py-2 rounded-lg">Tell me about earning potential</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <img
-                    src="/avatars/diana/diana-avatar.svg"
-                    alt="Diana"
-                    className="w-8 h-8 rounded-full flex-shrink-0"
-                  />
-                  <div className="space-y-2">
-                    <p className="text-sm font-semibold">Diana</p>
-                    <p className="text-sm text-slate-300">With our dual-account system, you earn 80% EUR Cash (fiat-backed) and 20% AIG$ tokens. Professional tier members have unlimited earning potential!</p>
-                  </div>
-                </div>
+            <div className="flex items-start gap-3 justify-end">
+              <div className="space-y-2 text-right max-w-xs">
+                <p className="text-sm text-slate-300 bg-blue-600/40 px-4 py-2 rounded-lg">Tell me about earning potential</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <img
+                src="/avatars/diana/diana-avatar.svg"
+                alt="Diana"
+                className="w-10 h-10 rounded-full flex-shrink-0"
+              />
+              <div className="space-y-2">
+                <p className="text-sm font-semibold">Diana</p>
+                <p className="text-sm text-slate-300">With our dual-account system, you earn 80% EUR Cash (fiat-backed) and 20% AIG$ tokens. Professional tier members have unlimited earning potential!</p>
               </div>
             </div>
           </div>
