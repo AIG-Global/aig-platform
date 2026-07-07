@@ -445,7 +445,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-4 gap-6">
             {[
               {
-                name: 'Free',
+                name: 'Remittance',
                 price: '€0',
                 period: 'forever',
                 earningCap: '€100/month',
@@ -463,22 +463,22 @@ export default function LandingPage() {
                 highlighted: false
               },
               {
-                name: 'Professional',
-                price: '€699',
+                name: 'Start-Up',
+                price: '€999',
                 period: '/month',
-                earningCap: 'Unlimited',
-                description: 'Serious income',
-                features: ['Unlimited earnings', '10-level affiliate program', 'All apps (9)', 'Market intelligence', 'Preferred seller status'],
-                highlighted: true
+                earningCap: '€5000/month',
+                description: 'Scale your growth',
+                features: ['Unlimited earning potential', '10-level affiliate program', 'All apps (9)', 'Market intelligence', 'Preferred seller status'],
+                highlighted: false
               },
               {
-                name: 'Enterprise',
+                name: 'Professional',
                 price: '€2,999',
                 period: '/month',
                 earningCap: 'Unlimited',
                 description: 'Maximum growth',
                 features: ['All current & future apps', 'Organization support', 'Custom AI training', 'VIP features', '24/7 support', 'Strategic partnerships'],
-                highlighted: false
+                highlighted: true
               }
             ].map((tier, i) => (
               <div
@@ -527,7 +527,7 @@ export default function LandingPage() {
                   }}
                   className="w-full py-3 rounded-lg font-bold transition transform hover:scale-105"
                 >
-                  {tier.name === 'Free' ? 'Get Started' : 'Upgrade'}
+                  {tier.name === 'Remittance' ? 'Get Started' : 'Upgrade'}
                 </button>
               </div>
             ))}
