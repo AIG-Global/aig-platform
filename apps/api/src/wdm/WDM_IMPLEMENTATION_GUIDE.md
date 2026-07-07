@@ -56,47 +56,42 @@ Experiences & Events:
 └─ Memberships & Subscriptions (community access, premium content)
 ```
 
-### 1.2 Seller Tiers (5 Levels)
+### 1.2 Seller Tiers & Network Commission (Member-Selected)
 
 ```
-Tier 1: New Seller
-├─ Requirements: Email verified, basic profile
-├─ Capacity: 0-10 products
-├─ Commission: 5% platform fee
-├─ Rating: No requirements
-├─ Badge: "New" (green badge)
+MEMBER SELLER RIGHTS:
+├─ Only members with appropriate tier can sell
+├─ Verification required: Email, phone, identity
+└─ Commission structure: Member-selected (10-70% of product value)
 
-Tier 2: Active Seller
-├─ Requirements: 11+ products, 4.0+ rating, 50+ sales
-├─ Capacity: 11-100 products
-├─ Commission: 4% platform fee
-├─ Rating: Maintain 4.0+
-├─ Badge: "Active" (blue badge)
-├─ Perks: Featured in category, priority support
+SELLER STATUS LEVELS:
+├─ New Seller (0-10 products)
+│  └─ Badge: Green "New Seller"
+├─ Active Seller (11-100 products, 4.0+ rating, 50+ sales)
+│  └─ Badge: Blue "Active Seller"
+├─ Pro Seller (101-500 products, 4.5+ rating, 500+ sales)
+│  └─ Badge: Gold "Pro Seller"
+├─ Platinum Seller (500+ products, 4.7+ rating, 2000+ sales)
+│  └─ Badge: Platinum "Platinum Seller"
+└─ Enterprise Seller (custom, 4.8+ rating, high volume)
+   └─ Badge: Custom "Enterprise Seller"
 
-Tier 3: Pro Seller
-├─ Requirements: 101+ products, 4.5+ rating, 500+ sales
-├─ Capacity: 101-500 products
-├─ Commission: 3% platform fee
-├─ Rating: Maintain 4.5+
-├─ Badge: "Pro" (gold badge)
-├─ Perks: Top placement, custom storefront, analytics
+NETWORK COMMISSION STRUCTURE (NEW):
+├─ Member selects commission: 10-70% of product value
+├─ Commission split:
+│  ├─ 80% → Network Bonuses (distributed to upline via MLM)
+│  └─ 20% → Management Pool (AIGINVEST operations)
+└─ Example: €100 product with 30% commission
+   ├─ Product price: €100
+   ├─ Network commission: €30 (member selected)
+   ├─ Network bonuses: €24 (80% of €30) → uplines
+   ├─ Management pool: €6 (20% of €30) → operations
+   └─ Seller receives: €70
 
-Tier 4: Platinum Seller
-├─ Requirements: 500+ products, 4.7+ rating, 2000+ sales
-├─ Capacity: 500+ products
-├─ Commission: 2% platform fee
-├─ Rating: Maintain 4.7+
-├─ Badge: "Platinum" (platinum badge)
-├─ Perks: API access, white-label options, dedicated account manager
-
-Tier 5: Enterprise Seller
-├─ Requirements: Custom (negotiated with AIGINVEST)
-├─ Capacity: Unlimited
-├─ Commission: 1-2% (custom)
-├─ Rating: 4.8+
-├─ Badge: "Enterprise" (custom badge)
-├─ Perks: Full integration, custom terms, priority support 24/7
+MEMBER BENEFITS FROM SALES:
+├─ Direct seller revenue (product price - commission)
+├─ Network bonuses from upline commissions
+└─ Network builds faster when commission is higher (attracts network-minded sellers)
 ```
 
 ### 1.3 Key Features
@@ -517,65 +512,150 @@ PUT     /wdm/disputes/{id}/resolve         - Resolve dispute (admin)
 
 ---
 
-## PART 4: COMMISSION & PAYOUT LOGIC
+## PART 4: NETWORK COMMISSION & PAYOUT LOGIC
 
-### 4.1 Commission Breakdown (Per Order Item)
-
-```
-Example: €100 product sold, New Seller tier
-
-Gross: €100.00
-├─ Seller Amount: €95.00 (5% platform fee deducted)
-├─ Platform Fee: €5.00
-└─ Affiliate Commission (if applicable): €5.00 (5% of seller amount)
-
-Seller Payout: €90.00 (€95 - €5 affiliate if applicable)
-AIGINVEST Platform: €5.00
-Affiliate: €5.00 (if affiliate code used)
-```
-
-### 4.2 Tier-Based Commission Rates
+### 4.1 Network Commission Model (Member-Selected: 10-70%)
 
 ```
-New Seller:     5% platform fee → Seller gets 95%
-Active Seller:  4% platform fee → Seller gets 96%
-Pro Seller:     3% platform fee → Seller gets 97%
-Platinum:       2% platform fee → Seller gets 98%
-Enterprise:     1-2% (custom)   → Seller gets 98-99%
+Example: €100 product sold with 30% network commission (member selected)
 
-Affiliate Commission: 5% of seller amount (all tiers)
+Product Price: €100.00
+├─ Network Commission: €30.00 (member selected 30%)
+│  ├─ Network Bonuses: €24.00 (80% of €30) → MLM uplines
+│  └─ Management Pool: €6.00 (20% of €30) → AIGINVEST operations
+└─ Seller Receives: €70.00
+
+Example 2: €100 product with 50% commission (higher for network builders)
+
+Product Price: €100.00
+├─ Network Commission: €50.00 (member selected 50%)
+│  ├─ Network Bonuses: €40.00 (80% of €50) → MLM uplines
+│  └─ Management Pool: €10.00 (20% of €50) → AIGINVEST operations
+└─ Seller Receives: €50.00
+
+Example 3: €100 product with 10% commission (minimum, buyer-friendly)
+
+Product Price: €100.00
+├─ Network Commission: €10.00 (member selected 10%)
+│  ├─ Network Bonuses: €8.00 (80% of €10) → MLM uplines
+│  └─ Management Pool: €2.00 (20% of €10) → AIGINVEST operations
+└─ Seller Receives: €90.00
 ```
 
-### 4.3 Payout Schedule
+### 4.2 Network Bonus Distribution (MLM Structure)
 
 ```
-Pending: Order received, no payment yet
-Processing: Payment received, awaiting settlement (24-48 hours)
-Completed: Funds transferred to seller's account
-Refunded: Refund processed (7-10 business days)
+Network Bonuses (80% of commission) distributed to seller's uplines:
+├─ Level 1 (direct sponsor): 30% of network bonus
+├─ Level 2: 20% of network bonus
+├─ Level 3: 15% of network bonus
+├─ Level 4: 10% of network bonus
+├─ Level 5: 3% of network bonus
+├─ Level 6: 2% of network bonus
+└─ Levels 7-10 (if tier allows): 0% (reserved for higher tier packages/investments)
 
-Seller payout frequency: Weekly (Mondays)
-Minimum payout: €25
-Maximum hold period: 30 days after delivery
+Example: €100 product with 30% commission
+├─ Network commission: €30
+├─ Network bonuses pool: €24 (80%)
+│  ├─ Level 1: €24 × 30% = €7.20
+│  ├─ Level 2: €24 × 20% = €4.80
+│  ├─ Level 3: €24 × 15% = €3.60
+│  ├─ Level 4: €24 × 10% = €2.40
+│  ├─ Level 5: €24 × 3% = €0.72
+│  └─ Level 6: €24 × 2% = €0.48
+└─ Management pool: €6 (20%)
+
+Tier-based commission depth:
+├─ Free tier: 0 levels (no network commissions)
+├─ Starter (€399/mo): 6 levels
+├─ Professional (€699/mo): 7 levels
+├─ Business (€1,099/mo): 9 levels
+└─ Platinum (€2,999/mo): 10 levels
+```
+
+### 4.3 Payout Schedule & Process
+
+```
+Order Lifecycle:
+├─ Order placed: Commission calculated immediately
+├─ Payment processing: 24-48 hours (funds held in escrow)
+├─ Seller ships/delivers: Commission bonds released
+├─ Buyer confirms delivery: 7-day hold period (protection)
+├─ After 7 days: Funds fully released to seller
+└─ Weekly payout: Every Monday to seller's account
+
+Payout Details:
+├─ Minimum payout threshold: €25
+├─ Maximum hold period: 30 days from delivery
+├─ Payout method: Bank transfer, PayPal, or crypto wallet
+├─ Fee: €0 (AIGINVEST absorbs payout fees)
+└─ Frequency: Weekly (automatic)
+
+Seller receives:
+├─ Product price - network commission
+├─ Example: €100 product with 30% commission
+└─ Seller receives: €70.00 (paid weekly)
 ```
 
 ---
 
-## PART 5: SEARCH & FILTERING
+## PART 5: MEMBERSHIP COMMISSION STRUCTURE
 
-### 5.1 Search Filters
+**Same 80/20 split applies to ALL membership purchases:**
+
+```
+Starter Tier (€399/month):
+├─ Network Commission: €319.20 (80% of €399)
+│  ├─ Level 1: €95.76 (30% of €319.20)
+│  ├─ Level 2: €63.84 (20% of €319.20)
+│  ├─ Level 3: €47.88 (15% of €319.20)
+│  ├─ Level 4: €31.92 (10% of €319.20)
+│  ├─ Level 5: €9.58 (3% of €319.20)
+│  └─ Level 6: €6.38 (2% of €319.20)
+└─ Management Pool: €79.80 (20% of €399)
+
+Professional Tier (€699/month):
+├─ Network Commission: €559.20 (80% of €699)
+│  ├─ Distributed to 7 levels
+│  └─ Total upline bonuses: €559.20
+└─ Management Pool: €139.80 (20% of €699)
+
+Business Tier (€1,099/month):
+├─ Network Commission: €879.20 (80% of €1,099)
+│  ├─ Distributed to 9 levels
+│  └─ Total upline bonuses: €879.20
+└─ Management Pool: €219.80 (20% of €1,099)
+
+Platinum Tier (€2,999/month):
+├─ Network Commission: €2,399.20 (80% of €2,999)
+│  ├─ Distributed to 10 levels
+│  └─ Total upline bonuses: €2,399.20
+└─ Management Pool: €599.80 (20% of €2,999)
+
+KEY: Entire network earns when members join at higher tiers
+├─ Uplines benefit immediately (80% of tier price)
+├─ Management can operate platform (20% of tier price)
+└─ Both aligned for platform success
+```
+
+---
+
+## PART 6: SEARCH & FILTERING
+
+### 6.1 Search Filters
 
 ```
 Category filter     - 18 categories
 Price range        - Min/Max EUR
 Seller tier        - New/Active/Pro/Platinum/Enterprise
+Network commission  - 10-70% selection visible
 Rating             - 1-5 stars minimum
 Shipping time      - 1-3 days, 4-7 days, 2+ weeks
 Delivery type      - Digital only, Physical only, All
 New/Featured       - Recently added, Featured products
 ```
 
-### 5.2 Search Algorithm
+### 6.2 Search Algorithm
 
 ```
 1. Full-text search on: title, description, tags
@@ -583,13 +663,14 @@ New/Featured       - Recently added, Featured products
 3. Sort by: relevance, newest, price (low-high/high-low), rating, sales
 4. Pagination: 20 items per page
 5. Suggest related products
+6. Show network commission % to help buyers choose network-friendly sellers
 ```
 
 ---
 
-## PART 6: SELLER VERIFICATION & TRUST
+## PART 7: SELLER VERIFICATION & TRUST
 
-### 6.1 Verification Steps
+### 7.1 Verification Steps
 
 ```
 Step 1: Email verification
@@ -601,7 +682,7 @@ Step 5: Identity verification (ID/Passport scan)
 Badge awarded: "Verified" badge on seller profile
 ```
 
-### 6.2 Rating & Review System
+### 7.2 Rating & Review System
 
 ```
 Buyer can rate 1-5 stars after:
@@ -617,7 +698,7 @@ Review includes:
 Fake review detection: Flag suspicious patterns
 ```
 
-### 6.3 Seller Trust Score
+### 7.3 Seller Trust Score
 
 ```
 Factors:
@@ -633,14 +714,14 @@ Automatic tier demotion if score drops below tier threshold
 
 ---
 
-## PART 7: PAYMENT & SECURITY
+## PART 8: PAYMENT & SECURITY
 
-### 7.1 Payment Processing
+### 8.1 Payment Processing
 
 ```
 Buyer Payment Flow:
 1. Add products to cart
-2. Review order
+2. Review order (includes network commission %)
 3. Pay (AIGINVEST wallet EUR or credit card)
 4. Order confirmed, seller notified
 5. Seller ships/delivers
@@ -650,10 +731,11 @@ Buyer Payment Flow:
 Digital Products:
 1. Payment completes
 2. Download link sent immediately
-3. No 7-day hold
+3. Network commission applied immediately
+4. No 7-day hold
 ```
 
-### 7.2 Escrow Protection
+### 8.2 Escrow Protection
 
 ```
 Buyer pays into escrow
@@ -661,10 +743,10 @@ Buyer pays into escrow
 ├─ If dispute filed: Held pending resolution
 └─ If refund requested: Money returned to buyer
 
-Reduces fraud risk for both parties
+Network commission paid immediately regardless of hold period
 ```
 
-### 7.3 Anti-Fraud Measures
+### 8.3 Anti-Fraud Measures
 
 ```
 - Email verification required
@@ -677,10 +759,11 @@ Reduces fraud risk for both parties
 
 ---
 
-## PART 8: IMPLEMENTATION TIMELINE
+## PART 9: IMPLEMENTATION TIMELINE
 
 **Week 3 (Sprint 1):**
 - [ ] Create 10 Prisma models (categories, products, orders, etc.)
+- [ ] Add networkCommissionPercent field to WDMProduct
 - [ ] Set up WDM NestJS module structure
 - [ ] Implement product CRUD endpoints (create, read, update, delete)
 - [ ] Implement category browsing endpoints
@@ -688,7 +771,7 @@ Reduces fraud risk for both parties
 
 **Week 4 (Sprint 2):**
 - [ ] Implement order creation & management
-- [ ] Build payout logic (commission calculations)
+- [ ] Build commission calculation engine (80/20 split, MLM distribution)
 - [ ] Implement seller tier system
 - [ ] Create affiliate link management
 - [ ] Build review/rating system
@@ -700,16 +783,17 @@ Reduces fraud risk for both parties
 - [ ] Analytics & reporting
 - [ ] Mobile-friendly product browsing
 - [ ] Integration with existing wallet system
+- [ ] Member earnings dashboard showing all commission streams
 
 ---
 
-## PART 9: SUCCESS METRICS
+## PART 10: SUCCESS METRICS
 
 **By Week 4 End (MVP Launch):**
 - ✅ 18 categories available
 - ✅ 50+ test products seeded
 - ✅ Basic buy/sell flow working
-- ✅ Commission calculations accurate
+- ✅ Commission calculations accurate (80/20 split)
 - ✅ 20+ API endpoints functional
 - ✅ Seller verification flow complete
 - ✅ Review system working
