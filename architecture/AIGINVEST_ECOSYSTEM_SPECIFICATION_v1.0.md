@@ -639,18 +639,37 @@ The 20% goes to AIG Cash Account (ecosystem use or peer-trade to EUR)
 
 ### 5.1 Monthly Earning Caps by Tier
 
-**PENDING CONFIRMATION:**
+**PARTIALLY CONFIRMED:**
 ```
-Starter   - Monthly cap: €___ | Annual cap: €___
-Professional - Monthly cap: €___ | Annual cap: €___
-Business - Monthly cap: €___ | Annual cap: €___
-Enterprise - Monthly cap: €___ or UNLIMITED? | Annual: ?
+Free (No Membership)
+├─ Monthly cap: €100      ✅ CONFIRMED
+└─ Annual cap: €1,200     ✅ CONFIRMED
 
-Questions:
-├─ Are caps per member or per team?
-├─ Do caps reset monthly or are they rolling 30-day?
-├─ Different caps for commissions vs rewards vs WDM?
-└─ Are caps per tier or globally by activity type?
+Starter (€399/month)
+├─ Monthly cap: €___      ⏳ NEEDS CONFIRMATION
+└─ Annual cap: €___       ⏳ (calculate from monthly)
+
+Professional (€699/month)
+├─ Monthly cap: UNLIMITED ✅ CONFIRMED
+└─ Annual cap: UNLIMITED  ✅ CONFIRMED
+
+Vendor (Commission-Only Track)
+├─ Monthly cap: UNLIMITED ✅ CONFIRMED
+└─ Annual cap: UNLIMITED  ✅ CONFIRMED
+
+Business (€1,099/month)
+├─ Monthly cap: €___      ⏳ NEEDS CONFIRMATION (same as Professional?)
+└─ Annual cap: €___       ⏳ (calculate from monthly)
+
+Enterprise (€2,999/month)
+├─ Monthly cap: €___      ⏳ NEEDS CONFIRMATION (UNLIMITED? Higher than Professional?)
+└─ Annual cap: €___       ⏳ (calculate from monthly)
+
+Notes:
+├─ Free tier cap applies to unpaid members (no active membership)
+├─ Professional & Vendor: UNLIMITED earnings (no cap)
+├─ Other tiers: [Awaiting confirmation]
+└─ All caps reset on calendar month boundary
 ```
 
 ---
