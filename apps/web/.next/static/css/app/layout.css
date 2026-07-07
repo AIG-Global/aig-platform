@@ -944,6 +944,41 @@
       }
     }
   }
+  .hover\:border-\[\#d4af37\] {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #d4af37;
+      }
+    }
+  }
+  .hover\:border-\[\#e8d4a2\] {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #e8d4a2;
+      }
+    }
+  }
+  .hover\:bg-\[\#d4af371a\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #d4af371a;
+      }
+    }
+  }
+  .hover\:bg-\[\#d4af3720\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #d4af3720;
+      }
+    }
+  }
+  .hover\:bg-\[\#e8d4a2\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #e8d4a2;
+      }
+    }
+  }
   .hover\:bg-blue-700 {
     &:hover {
       @media (hover: hover) {
@@ -958,6 +993,20 @@
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-slate-800) 70%, transparent);
         }
+      }
+    }
+  }
+  .hover\:text-\[\#d4af37\] {
+    &:hover {
+      @media (hover: hover) {
+        color: #d4af37;
+      }
+    }
+  }
+  .hover\:text-\[\#e8d4a2\] {
+    &:hover {
+      @media (hover: hover) {
+        color: #e8d4a2;
       }
     }
   }
