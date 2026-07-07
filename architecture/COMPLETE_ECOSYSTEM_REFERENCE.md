@@ -1013,6 +1013,359 @@ Price Chart (Last 7 days)
 
 ---
 
+### Complete Transaction Audit Trail
+
+Every financial movement is recorded with full details, providing complete transparency and auditability:
+
+#### Transaction Record Fields
+
+```
+Every transaction captures:
+
+├─ Transaction ID: Unique UUID (immutable)
+├─ Timestamp: ISO 8601 UTC (immutable)
+├─ Source Account: From (user + account type)
+├─ Destination Account: To (user + account type)
+├─ Amount: Quantity moved
+├─ Currency: EUR or AIG$
+├─ Exchange Rate: If conversion (e.g., 1.00 for Cash→AIG$, market rate for marketplace)
+├─ Fee (if applicable): Platform/payment processor fee
+├─ Net Amount: Amount after fees
+├─ Transaction Type: (see list below)
+├─ Status: pending | completed | failed | reversed
+├─ Reference ID: External reference (if applicable)
+├─ Memo/Description: User-provided context
+├─ IP Address: Source IP for security
+├─ Device: Device type/ID (web, mobile, etc.)
+├─ User Agent: Browser/app info
+├─ Approval Status: auto | manual_approved | manual_rejected
+├─ Approved By: User ID (if manual)
+├─ Metadata: JSON blob for future extensibility
+└─ Created At: When record was created
+
+Example Transaction:
+{
+  "id": "txn_abc123def456",
+  "timestamp": "2026-07-07T14:32:15Z",
+  "sourceAccount": {
+    "userId": "user_123",
+    "accountType": "cash_account",
+    "balanceBefore": 1500.00,
+    "balanceAfter": 1400.00
+  },
+  "destinationAccount": {
+    "userId": "user_456",
+    "accountType": "aig_cash_account",
+    "balanceBefore": 2500.00,
+    "balanceAfter": 2600.00
+  },
+  "amount": 100.00,
+  "currency": "EUR",
+  "exchangeRate": 1.00,
+  "fee": 0.00,
+  "netAmount": 100.00,
+  "transactionType": "marketplace_purchase",
+  "status": "completed",
+  "referenceId": "marketplace_order_xyz789",
+  "memo": "Payment for premium software",
+  "ipAddress": "192.168.1.100",
+  "device": "web",
+  "approvalStatus": "auto",
+  "approvedBy": null,
+  "metadata": {
+    "marketplace_item_id": "item_999",
+    "seller_id": "user_456"
+  }
+}
+```
+
+#### All Transaction Types
+
+```
+Deposits & Withdrawals:
+├─ deposit_bank_transfer (EUR → Cash Account)
+├─ deposit_credit_card (EUR → Cash Account)
+├─ deposit_crypto (Crypto → Cash Account, value in EUR)
+├─ withdrawal_bank_transfer (Cash Account → EUR, external bank)
+├─ withdrawal_crypto (EUR value → external crypto wallet)
+└─ withdrawal_cancelled (Withdrawal rejected/cancelled)
+
+Conversions:
+├─ conversion_cash_to_aigcash (Cash → AIG$, 1:1 fixed)
+├─ conversion_aigcash_to_cash (AIG$ → EUR, marketplace executed)
+└─ conversion_error_reversal (Failed conversion reversed)
+
+Commissions:
+├─ commission_direct_sale (Direct commission paid, auto 80/20 split)
+├─ commission_mlm_level_1 to _10 (MLM commission by level, auto 80/20)
+├─ commission_team_volume (Team volume bonus, auto 80/20)
+├─ commission_leadership_bonus (Leadership bonus, auto 80/20)
+├─ commission_achievement_reward (Achievement/game prize, auto 80/20)
+├─ commission_adjustment (Manual correction by admin)
+└─ commission_reversal (Commission reversed)
+
+Transfers:
+├─ transfer_sent (Send AIG$ to another member)
+├─ transfer_received (Receive AIG$ from another member)
+├─ transfer_failed (Transfer failed, reversed)
+└─ transfer_cancelled (Sender cancelled transfer)
+
+Marketplace:
+├─ marketplace_purchase (Buy on marketplace, AIG$ → seller)
+├─ marketplace_sale (Sell on marketplace, AIG$ ← buyer)
+├─ marketplace_aig_to_eur (Convert AIG$ to EUR via marketplace)
+├─ marketplace_eur_to_aig (Convert EUR to AIG$ via marketplace)
+├─ marketplace_fee (Platform fee deducted from seller)
+└─ marketplace_order_refunded (Buyer refund issued)
+
+Gift Cards:
+├─ giftcard_purchased (Create gift card with AIG$)
+├─ giftcard_redeemed (Recipient claims gift card value)
+└─ giftcard_expired (Unused gift card expired)
+
+Purchases:
+├─ purchase_application (Buy application, AIG$ spent)
+├─ purchase_service (Buy service/subscription, AIG$ spent)
+├─ purchase_membership_upgrade (Upgrade membership tier, AIG$ spent)
+├─ purchase_investment (Invest in fund/crypto/stock, AIG$ spent)
+└─ purchase_other (Other purchase type)
+
+Investments:
+├─ investment_aigphone_buy (Purchase AIGPHONE equity)
+├─ investment_aigphone_sell (Sell AIGPHONE shares)
+├─ investment_fund_buy (Invest in fund)
+├─ investment_fund_dividend (Receive fund dividend)
+├─ investment_aigio_buy (Purchase AIGIO tokens)
+├─ investment_aigio_stake (Lock up AIGIO for staking)
+├─ investment_aigio_unstake (Unlock staked AIGIO)
+├─ investment_aigio_dividend (Receive AIGIO dividend)
+└─ investment_return (ROI/return distributed)
+
+Administrative:
+├─ admin_adjustment (Manual balance adjustment)
+├─ admin_reversal (Admin reversed transaction)
+├─ admin_manual_transfer (Admin initiated transfer)
+└─ admin_dispute_resolution (Dispute resolved, funds adjusted)
+
+System:
+├─ system_fee_monthly (Monthly platform fee)
+├─ system_promotional_credit (Promotional credit issued)
+├─ system_bonus_distribution (Automatic bonus payout)
+└─ system_correction (System correction applied)
+```
+
+#### Transaction History Display
+
+```
+Member Dashboard - Transaction History
+
+Show Last 50 Transactions (Paginated, 100 per page download)
+
+Date/Time              Type                Amount    Currency  Status    Account
+─────────────────────────────────────────────────────────────────────────────────
+2026-07-07 14:32:15   Marketplace Sale    +€100     AIG$      ✓ Done    AIG Cash
+2026-07-07 12:15:40   Commission Paid     +€40      EUR       ✓ Done    Cash
+                      (MLM Level 2)       +€10      AIG$
+2026-07-06 18:50:22   Transfer Sent       -€500     AIG$      ✓ Done    AIG Cash
+                      to John Smith
+2026-07-05 09:22:10   Conversion          -€100     EUR       ✓ Done    Cash → AIG$
+                      (1:1 rate)          +€100     AIG$
+2026-07-04 16:45:33   Deposit             +€1,000   EUR       ✓ Done    Cash
+                      (Bank Transfer)
+2026-07-03 11:20:15   Purchase            -€50      AIG$      ✓ Done    AIG Cash
+                      (Software License)
+2026-07-02 07:55:44   Investment          -€500     AIG$      ✓ Done    AIG Cash
+                      (Balanced Fund)
+2026-06-30 20:10:30   Gift Card           -€25      AIG$      ✓ Done    AIG Cash
+                      Sent to Mom (external)
+
+[Filter by type] [Search by date] [Export as CSV] [View Details]
+```
+
+#### Transaction Details View
+
+```
+Transaction ID: txn_abc123def456
+Reference ID: marketplace_order_xyz789
+
+┌─────────────────────────────────────────────┐
+│ Transaction Details                          │
+├─────────────────────────────────────────────┤
+│                                             │
+│ Type:           Marketplace Purchase        │
+│ Date/Time:      2026-07-07 14:32:15 UTC    │
+│ Status:         Completed ✓                │
+│                                             │
+│ From Account:   AIG Cash Account            │
+│ To Account:     Seller's AIG Cash Account   │
+│                                             │
+│ Amount:         100 AIG$                    │
+│ Fee:            0 AIG$ (buyer fee-free)    │
+│ Net Paid:       100 AIG$                    │
+│                                             │
+│ Source IP:      192.168.1.100               │
+│ Device:         Web Browser                 │
+│ User Agent:     Chrome/126.0                │
+│                                             │
+│ Approval:       Auto-approved               │
+│ Approved At:    2026-07-07 14:32:16 UTC    │
+│                                             │
+│ Item:           Premium AI Assistant        │
+│ Seller:         TechVendor Inc              │
+│ Seller Rating:  4.9/5.0 (1,247 reviews)    │
+│                                             │
+│ Actions: [Report] [Dispute] [View Seller]   │
+│                                             │
+└─────────────────────────────────────────────┘
+```
+
+#### Database Schema (audit_transactions table)
+
+```sql
+audit_transactions
+├── id (UUID, primary key)
+├── transaction_id (VARCHAR unique, indexed)
+├── timestamp (TIMESTAMP UTC, indexed)
+├── source_user_id (UUID, indexed)
+├── source_account_type (ENUM: cash_account | aig_cash_account)
+├── source_balance_before (DECIMAL)
+├── source_balance_after (DECIMAL)
+├── destination_user_id (UUID, indexed)
+├── destination_account_type (ENUM: cash_account | aig_cash_account)
+├── destination_balance_before (DECIMAL)
+├── destination_balance_after (DECIMAL)
+├── amount (DECIMAL, indexed)
+├── currency (VARCHAR: EUR | AIG$)
+├── exchange_rate (DECIMAL)
+├── fee (DECIMAL)
+├── net_amount (DECIMAL)
+├── transaction_type (VARCHAR, indexed)
+├── status (ENUM: pending | completed | failed | reversed, indexed)
+├── reference_id (VARCHAR, indexed)
+├── memo (TEXT)
+├── ip_address (VARCHAR)
+├── device_type (VARCHAR)
+├── user_agent (TEXT)
+├── approval_status (ENUM: auto | manual_approved | manual_rejected)
+├── approved_by (UUID)
+├── approved_at (TIMESTAMP UTC)
+├── metadata (JSON)
+├── created_at (TIMESTAMP UTC, indexed)
+├── updated_at (TIMESTAMP UTC)
+└── deleted_at (TIMESTAMP UTC, soft delete)
+
+Indexes:
+├─ (transaction_id) - UNIQUE, for lookups
+├─ (source_user_id, timestamp) - For member history
+├─ (destination_user_id, timestamp) - For member history
+├─ (transaction_type, timestamp) - For reports
+├─ (status, timestamp) - For pending transaction queries
+└─ (timestamp DESC) - For dashboard queries
+```
+
+#### Transaction History APIs
+
+```
+Transaction History
+GET /api/v1/transactions
+  Params: limit=50, offset=0, filter (optional)
+  Returns: [transactions paginated]
+  Response: {
+    transactions: [...],
+    total: 1,247,
+    limit: 50,
+    offset: 0
+  }
+
+GET /api/v1/transactions/{transactionId}
+  Returns: Complete transaction details
+  Response: {full transaction record}
+
+GET /api/v1/transactions?filter=type:commission
+  Params: filter (complex filter)
+  Examples:
+    ?filter=type:commission
+    ?filter=status:pending
+    ?filter=date_from:2026-07-01&date_to:2026-07-31
+    ?filter=type:commission,status:completed
+  Returns: [filtered transactions]
+
+GET /api/v1/transactions/export
+  Params: format (csv|json), date_from, date_to
+  Returns: File download (CSV or JSON)
+  Columns (CSV): TransactionID, Date, Type, Amount, Currency, 
+                 Status, Reference, Source, Destination
+
+Transaction Search
+GET /api/v1/transactions/search
+  Params: q (search query), type (optional)
+  Searchable fields: memo, reference_id, device_type, ip_address
+  Returns: [matching transactions]
+
+Balance History
+GET /api/v1/accounts/{accountType}/balance_history
+  Params: date_from, date_to
+  Returns: Daily balance snapshots
+  Response: [{date, opening_balance, closing_balance, transactions}]
+
+Reports
+GET /api/v1/reports/transaction_summary
+  Params: period (day|week|month|year)
+  Returns: {
+    period: "2026-07",
+    deposits: €5,000,
+    withdrawals: €2,500,
+    conversions: €1,200,
+    commissions: €800,
+    marketplace: €300,
+    net_change: +€1,300
+  }
+
+GET /api/v1/reports/transaction_breakdown
+  Returns: Breakdown by transaction type
+  Response: {
+    by_type: [{type, count, total_amount}],
+    by_status: [{status, count, total_amount}],
+    by_currency: [{currency, count, total_amount}]
+  }
+```
+
+#### Audit Trail Guarantees
+
+```
+Immutability:
+├─ Once created, transactions cannot be modified
+├─ Corrections done via new reversal transaction
+├─ Original transaction remains visible
+├─ Complete history preserved forever
+
+Completeness:
+├─ Every financial movement recorded
+├─ No transactions off-books
+├─ All fees visible
+├─ All exchanges logged
+
+Compliance:
+├─ GDPR compliant (data retention policies)
+├─ AML/KYC compliant (suspicious activity flagged)
+├─ Tax compliant (transaction data exportable for tax reporting)
+├─ Audit compliant (full audit trail for external auditors)
+
+Access Control:
+├─ Members see only their own transactions
+├─ Admins can see all transactions (with audit logging)
+├─ Support can see customer transactions (with manager approval)
+├─ Compliance team can access for investigations
+
+Export & Reporting:
+├─ CSV export for accounting software
+├─ PDF statement generation
+├─ Tax reporting summaries (by country)
+├─ Custom date range queries
+```
+
+---
+
 ## PART 7: Investment Services & Equity Access
 
 ### Investment Opportunities for Members
