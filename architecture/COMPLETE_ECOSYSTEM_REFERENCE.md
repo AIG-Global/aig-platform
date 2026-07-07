@@ -21,6 +21,233 @@ All three are coordinated by **Diana**, an AI assistant integrated everywhere.
 
 ---
 
+## PART 1.5: Core Entities & Terminology
+
+### Key Definitions
+
+Understanding the AIGINVEST ecosystem requires clarity on four core entities:
+
+---
+
+#### **AIGINVEST** – The Company & Ecosystem
+
+**What it is:**
+- The parent company and technology platform
+- Complete membership ecosystem (web-based, initially)
+- All-in-one financial and services platform
+- Built on Next.js (frontend) + NestJS (backend)
+- Global reach, multi-currency support (EUR primary)
+
+**What it does:**
+- Membership management (5 tiers: Free, Starter, Professional, Business, Platinum)
+- Dual-account wallet (Cash EUR + AIG Cash)
+- MLM commission engine (unilevel, 6-10 levels by tier)
+- Marketplace (WDM - World Domination Market, 18 categories)
+- Investment services (Tag Markets, Crypto, Funds, AIGPHONE equity, AIGIO tokens)
+- AI assistant integration (Diana)
+- User authentication & security
+
+**Who owns it:**
+- AIG Global team (founders + early investors)
+- Members collectively own 30% of AIGPHONE Ltd (the device company)
+
+**Where to access:**
+- Web: www.aiginvest.io (or similar domain)
+- Future: AIOS devices (2028+)
+
+---
+
+#### **North Star ONE** – The AI Smartphone
+
+**What it is:**
+- A premium AI smartphone (flagship device)
+- Developed by AIGPHONE Ltd (startup, partially funded by AIGINVEST members)
+- Target release: 2028
+- Custom hardware: proprietary AI accelerator chip
+- Custom OS: AIOS (see below)
+
+**What makes it unique:**
+- Runs AIOS (custom operating system)
+- Diana AI runs on-device (not just cloud)
+- Privacy-first architecture (local processing)
+- Synchronization with AIGINVEST account via "Beam Me Up"
+- Custom hardware acceleration for LLM inference
+- Designed to be the "ultimate personal AI assistant"
+
+**Who is building it:**
+- AIGPHONE Ltd (the startup company)
+- 30% owned by AIGINVEST members collectively
+- 25% owned by founders/early team
+- 35% owned by institutional VCs
+- 10% allocated for employee options
+
+**When is it launching:**
+- 2026: R&D phase (complete)
+- 2027: Prototype + developer edition (beta testing)
+- 2028: Commercial launch (public availability)
+- Target: 1M+ units/year by 2030
+
+**How much will it cost:**
+- Not yet announced (likely €800-1,200 range, speculation)
+- AIGINVEST members get early access + discounts (25-50% off)
+- Financing available through AIGINVEST platform
+
+---
+
+#### **AIOS** – The Operating System
+
+**What it is:**
+- Custom operating system for North Star ONE phone
+- Built on open-source foundations (Sailfish OS base)
+- Privacy-first, AI-native architecture
+- Developed by AIGPHONE Ltd engineering team
+- Future: May be licensed to other manufacturers
+
+**Key features:**
+- **Diana integration:** On-device LLM execution (not reliant on cloud)
+- **Privacy:** Local data processing, optional cloud sync
+- **AI acceleration:** Hardware accelerator chip support
+- **Beam Me Up:** Sync protocol with AIGINVEST account
+- **App ecosystem:** Native AIOS apps + access to AIGINVEST services
+- **Voice control:** Natural language interface
+- **Offline capable:** Works without internet connection
+
+**Technical details:**
+- Language: C/C++ (kernel + core services)
+- SDK: Available for developer community
+- Licensing: Proprietary (but may open-source components)
+- Hardware: Optimized for custom AI accelerator chip
+- Release: Developer edition 2027, Commercial 2028
+
+**Future licensing:**
+- AIGPHONE Ltd can license AIOS to other phone manufacturers
+- Projected revenue: €50/unit × 10M units/year
+- Would make AIOS a major revenue source post-2030
+
+---
+
+#### **Diana** – The AI Companion
+
+**What it is:**
+- AI assistant/personality available everywhere
+- NOT a traditional chatbot (highly context-aware, multi-modal)
+- Runs on: AIGINVEST web platform, AIOS devices, potentially other services
+- Personality: Direct, helpful, action-oriented
+
+**Where Diana appears:**
+- **AIGINVEST web:** Chat interface (Diana helps with platform features, advice, task automation)
+- **North Star ONE phone:** Default AI assistant (always available, on-device)
+- **AIOS devices:** Core OS feature (handles system tasks, voice commands)
+- **Future:** May be available on other platforms/devices
+
+**What Diana can do:**
+- Answer questions (knowledge base + real-time information)
+- Help manage AIGINVEST account (create projects, documents, tasks)
+- Provide investment advice (not personal financial advice, educational)
+- Assist with marketplace (product recommendations, seller support)
+- Control AIOS phone functions (voice commands, automation)
+- Execute tools (create documents, set reminders, manage calendar)
+- Learn from conversation history (context engine)
+- Remember facts about the user (memory engine)
+
+**How Diana works:**
+```
+Diana Architecture:
+User Input
+    ↓
+Context Engine (last 20 messages + memories + system prompt)
+    ↓
+Memory Engine (extract facts, save to database)
+    ↓
+Tool Runner (intent detection, decide what action to take)
+    ↓
+Provider Router (select best LLM: OpenAI/Anthropic/Ollama/Local)
+    ↓
+LLM Generation (word-by-word streaming via SSE)
+    ↓
+Tool Executor (actually run the tools, update database)
+    ↓
+SSE Events (stream response to user in real-time)
+    ↓
+User sees Diana typing...
+```
+
+**Personality traits:**
+- Direct (not overly polite, gets to the point)
+- Helpful (genuinely tries to solve problems)
+- Action-oriented (does things, not just talks)
+- Curious (asks clarifying questions)
+- Transparent (explains reasoning)
+- Boundary-aware (knows what it can/can't do)
+
+**Available in:**
+- ✅ AIGINVEST web platform (v0.2 released)
+- ✅ AIOS phone (on-device version, 2028)
+- 🔵 Future: Other partner platforms
+
+---
+
+### Entity Relationships
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    AIGINVEST ECOSYSTEM                          │
+│                                                                 │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │  AIGINVEST Platform (Web)                                  │ │
+│  │  ├─ Diana AI Assistant (cloud-based)                       │ │
+│  │  ├─ Membership Management                                  │ │
+│  │  ├─ Dual-Account Wallet                                    │ │
+│  │  ├─ MLM Commission Engine                                  │ │
+│  │  ├─ WDM Marketplace                                        │ │
+│  │  └─ Investment Services                                    │ │
+│  └────────────────────────────────────────────────────────────┘ │
+│                          ↕ (Beam Me Up)                         │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │  AIOS (Operating System)                                   │ │
+│  │  ├─ Diana AI Assistant (on-device)                         │ │
+│  │  ├─ Hardware Acceleration                                  │ │
+│  │  ├─ Privacy-First Architecture                             │ │
+│  │  ├─ Voice Control                                          │ │
+│  │  └─ Sync with AIGINVEST Account                            │ │
+│  └────────────────────────────────────────────────────────────┘ │
+│                          ↕                                       │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │  North Star ONE (Smartphone Device)                        │ │
+│  │  ├─ Runs AIOS                                              │ │
+│  │  ├─ Custom AI Accelerator Chip                             │ │
+│  │  ├─ Diana runs locally (on-device LLM)                     │ │
+│  │  ├─ Members get 25-50% discount + early access            │ │
+│  │  └─ Sync with AIGINVEST account                            │ │
+│  └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+Ownership Structure:
+├─ AIGINVEST company (AIG Global)
+│  └─ Owns & operates: AIGINVEST platform + Diana (web)
+├─ AIGPHONE Ltd (startup)
+│  ├─ 30% owned by AIGINVEST members (collective)
+│  ├─ 25% owned by founders/team
+│  ├─ 35% owned by institutional VCs
+│  ├─ 10% allocated for employee options
+│  └─ Builds & launches: North Star ONE + AIOS
+
+Revenue Model:
+├─ AIGINVEST platform
+│  ├─ Membership fees (€399-€2,999/month by tier)
+│  ├─ WDM marketplace commissions (5% + 0.5% processing)
+│  ├─ Investment service fees (0.5%-2% annually)
+│  └─ Advertising/premium features
+├─ AIGPHONE Ltd
+│  ├─ Device sales (North Star ONE)
+│  ├─ Licensing AIOS (€50/unit to other manufacturers)
+│  ├─ AI services subscriptions (€15/month)
+│  └─ Hardware components (OEM sales)
+```
+
+---
+
 ## PART 2: Core Components (Four Elements)
 
 ### 🤖 **Diana: The AI Assistant**
