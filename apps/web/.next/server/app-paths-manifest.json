@@ -1,5 +1,6 @@
 {
+  "/ecosystem/wdm/page": "app/ecosystem/wdm/page.js",
   "/ecosystem/page": "app/ecosystem/page.js",
   "/page": "app/page.js",
-  "/ecosystem/wdm/page": "app/ecosystem/wdm/page.js"
+  "/not-found": "app/not-found.js"
 }

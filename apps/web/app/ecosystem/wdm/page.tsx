@@ -308,7 +308,7 @@ export default function WDMPage() {
             backgroundColor: 'rgba(212, 175, 55, 0.1)',
             borderColor: '#d4af37',
             borderWidth: '2px'
-          }} className="rounded-lg p-8 text-center">
+          }} className="rounded-lg p-8 text-center mb-16">
             <h3 style={{ color: '#f5f5dc' }} className="text-2xl font-bold mb-4">Your Cart Summary</h3>
             <div className="grid md:grid-cols-3 gap-6 mb-8">
               <div>
@@ -319,6 +319,14 @@ export default function WDMPage() {
                 <p style={{ color: '#d4af37' }} className="text-sm mb-2">Total Purchases</p>
                 <p style={{ color: '#f5f5dc' }} className="text-4xl font-bold">
                   €{cart.reduce((sum, id) => sum + (PRODUCTS.find(p => p.id === id)?.price || 0), 0)}
+                </p>
+              </div>
+              <div>
+                <p style={{ color: '#d4af37' }} className="text-sm mb-2">Average Commission</p>
+                <p style={{ color: '#f5f5dc' }} className="text-4xl font-bold">{(totalCommission / cart.length).toFixed(1)}%</p>
+              </div>
+            </div>
+
             <button
               style={{
                 backgroundColor: '#d4af37',
