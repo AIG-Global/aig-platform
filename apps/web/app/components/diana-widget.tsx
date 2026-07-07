@@ -93,11 +93,11 @@ export default function DianaWidget() {
       {/* Diana Chat Widget */}
       <div className="fixed bottom-6 right-6 z-40">
         {isOpen ? (
-          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-96 h-96 flex flex-col border border-slate-200 dark:border-slate-700">
+          <div className="bg-luxury-cream dark:bg-luxury-900 rounded-2xl shadow-2xl w-96 h-96 flex flex-col border border-luxury-gold/30">
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
+            <div className="bg-gradient-to-r from-luxury-gold to-luxury-gold-light text-luxury-950 p-4 rounded-t-2xl flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white/30 bg-white/10">
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-luxury-950/30 bg-luxury-950/10">
                   <img
                     src="/avatars/diana/diana-avatar.svg"
                     alt="Diana"
@@ -106,20 +106,20 @@ export default function DianaWidget() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg">Diana</h3>
-                  <p className="text-xs text-blue-100">AI Assistant • Online</p>
+                  <p className="text-xs text-luxury-950/70">AI Assistant • Online</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsMuted(!isMuted)}
-                  className="p-1 hover:bg-white/20 rounded-lg transition"
+                  className="p-1 hover:bg-luxury-950/20 rounded-lg transition"
                   title={isMuted ? 'Unmute' : 'Mute'}
                 >
                   {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1 hover:bg-white/20 rounded-lg transition"
+                  className="p-1 hover:bg-luxury-950/20 rounded-lg transition"
                 >
                   <X size={18} />
                 </button>
@@ -127,7 +127,7 @@ export default function DianaWidget() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50 dark:bg-slate-800">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-luxury-cream dark:bg-luxury-900">
               {messages.map(msg => (
                 <div
                   key={msg.id}
@@ -143,8 +143,8 @@ export default function DianaWidget() {
                   <div
                     className={`max-w-xs px-4 py-2 rounded-lg text-sm ${
                       msg.sender === 'user'
-                        ? 'bg-blue-600 text-white rounded-br-none'
-                        : 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white rounded-bl-none'
+                        ? 'bg-luxury-gold text-luxury-950 rounded-br-none font-medium'
+                        : 'bg-luxury-800 dark:bg-luxury-800 text-luxury-cream rounded-bl-none'
                     }`}
                   >
                     {msg.text}
@@ -158,11 +158,11 @@ export default function DianaWidget() {
                     alt="Diana"
                     className="w-7 h-7 rounded-full flex-shrink-0"
                   />
-                  <div className="bg-slate-200 dark:bg-slate-700 px-4 py-2 rounded-lg">
+                  <div className="bg-luxury-800 dark:bg-luxury-800 px-4 py-2 rounded-lg">
                     <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce animation-delay-100"></div>
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce animation-delay-200"></div>
+                      <div className="w-2 h-2 bg-luxury-gold rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-luxury-gold rounded-full animate-bounce animation-delay-100"></div>
+                      <div className="w-2 h-2 bg-luxury-gold rounded-full animate-bounce animation-delay-200"></div>
                     </div>
                   </div>
                 </div>
@@ -171,19 +171,19 @@ export default function DianaWidget() {
             </div>
 
             {/* Input */}
-            <div className="border-t border-slate-200 dark:border-slate-700 p-3 flex gap-2 bg-white dark:bg-slate-900 rounded-b-2xl">
+            <div className="border-t border-luxury-gold/30 p-3 flex gap-2 bg-luxury-cream dark:bg-luxury-900 rounded-b-2xl">
               <input
                 type="text"
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyPress={e => e.key === 'Enter' && handleSend()}
                 placeholder="Ask Diana..."
-                className="flex-1 px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-3 py-2 bg-luxury-cream-dark dark:bg-luxury-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-luxury-gold dark:text-luxury-cream"
               />
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isLoading}
-                className="p-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg transition"
+                className="p-2 bg-luxury-gold hover:bg-luxury-gold-light disabled:bg-gray-400 text-luxury-950 rounded-lg transition font-bold"
               >
                 <Send size={16} />
               </button>
@@ -192,7 +192,7 @@ export default function DianaWidget() {
         ) : (
           <button
             onClick={() => setIsOpen(true)}
-            className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full shadow-2xl flex items-center justify-center transition transform hover:scale-110 overflow-hidden border-2 border-blue-400/50 hover:border-blue-300"
+            className="w-16 h-16 bg-gradient-to-br from-luxury-gold to-luxury-gold-light hover:from-luxury-gold-light hover:to-luxury-gold text-luxury-950 rounded-full shadow-2xl flex items-center justify-center transition transform hover:scale-110 overflow-hidden border-2 border-luxury-gold/60 hover:border-luxury-gold"
             title="Chat with Diana"
           >
             <img
@@ -201,7 +201,7 @@ export default function DianaWidget() {
               className="w-14 h-14"
             />
           </button>
-        )}
+        )}}
       </div>
     </>
   )
