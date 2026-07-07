@@ -20,101 +20,46 @@ const PACKAGES: Package[] = [
     id: 'remittance',
     name: 'Remittance',
     monthlyPrice: 0,
-    description: 'Start exploring the ecosystem',
+    description: 'Flexible start',
     earningCap: '€100/month',
-    apps: [
-      'AIG Ask (Limited)',
-      'MoneyGames',
-      'Basic News Feed'
-    ],
-    bonusFeatures: [
-      'Basic account access',
-      'Limited WDM access'
-    ]
+    apps: ['App Store', 'Investment Hub', 'Analytics'],
+    bonusFeatures: ['Email support', 'Basic commissions'],
+    highlight: false
   },
   {
     id: 'starter',
     name: 'Starter',
     monthlyPrice: 399,
-    description: 'Begin your journey',
+    description: 'Growing your business',
     earningCap: '€500/month',
-    apps: [
-      'AIG Ask',
-      'AIG Translate (28 languages)',
-      'AIG Record',
-      'Investor Alerts',
-      'MoneyGames',
-      'AIG News',
-      'AIG Me'
-    ],
-    bonusFeatures: [
-      'Full WDM marketplace access',
-      'Affiliate program (5 levels)',
-      'Commission earnings',
-      'Monthly competitions'
-    ]
+    apps: ['App Store', 'Investment Hub', 'Analytics', 'Premium Tools', 'Team Collaboration', 'Advanced Reporting', 'Mobile App'],
+    bonusFeatures: ['Priority support', 'Advanced commissions', 'Team management'],
+    highlight: false
   },
   {
     id: 'startup',
     name: 'Start-Up',
     monthlyPrice: 999,
-    description: 'Scale your growth',
+    description: 'Established business',
     earningCap: '€5,000/month',
-    apps: [
-      'AIG Ask',
-      'AIG Translate',
-      'AIG Record',
-      'Investor Alerts',
-      'MoneyGames',
-      'AIG News',
-      'AIG Me',
-      'Business Weather',
-      'AIG HELO'
-    ],
-    bonusFeatures: [
-      'Unlimited earning potential (up to cap)',
-      '10-level affiliate program',
-      'Preferred seller status',
-      'Market intelligence tools',
-      'Priority support',
-      'Investment products access'
-    ],
+    apps: ['App Store', 'Investment Hub', 'Analytics', 'Premium Tools', 'Team Collaboration', 'Advanced Reporting', 'Mobile App', 'VIP Concierge', 'API Access'],
+    bonusFeatures: ['24/7 priority support', 'Enhanced commissions', 'Advanced analytics', 'Custom integrations'],
     highlight: true
   },
   {
     id: 'professional',
     name: 'Professional',
     monthlyPrice: 2999,
-    description: 'Maximum growth',
-    earningCap: 'Unlimited',
-    apps: [
-      'AIG Ask',
-      'AIG Translate',
-      'AIG Record',
-      'Investor Alerts',
-      'MoneyGames',
-      'AIG News',
-      'AIG Me',
-      'Business Weather',
-      'AIG HELO',
-      'Secure Sign',
-      'Future AI Apps (Early Access)'
-    ],
-    bonusFeatures: [
-      'Unlimited earning potential',
-      'Custom AI training',
-      'Organization support',
-      'VIP features',
-      '24/7 concierge support',
-      'Strategic partnerships',
-      'Custom integrations',
-      'All future apps included'
-    ]
+    description: 'Enterprise solutions',
+    earningCap: 'unlimited',
+    apps: ['App Store', 'Investment Hub', 'Analytics', 'Premium Tools', 'Team Collaboration', 'Advanced Reporting', 'Mobile App', 'VIP Concierge', 'API Access', 'White Label', 'Enterprise Features'],
+    bonusFeatures: ['Dedicated account manager', 'Unlimited commissions', 'Real-time analytics', 'Custom development', 'Priority feature requests'],
+    highlight: false
   }
 ]
 
 export default function DashboardPage() {
-  const [selectedPackage, setSelectedPackage] = useState<string | null>('startup')
+  const [selectedPackage, setSelectedPackage] = useState('startup')
   const [userName, setUserName] = useState('')
   const [showUsernameForm, setShowUsernameForm] = useState(false)
   const [nicknameInput, setNicknameInput] = useState('')
@@ -126,38 +71,56 @@ export default function DashboardPage() {
   const [userEmail, setUserEmail] = useState('')
 
   useEffect(() => {
-    // Get user name from localStorage
-    const name = localStorage.getItem('userName')
     const email = localStorage.getItem('userEmail')
+    const savedName = localStorage.getItem('userName')
+    const savedPackage = localStorage.getItem('userPackage')
+    const savedCode = localStorage.getItem('userInvitationCode')
+
     setUserEmail(email || '')
     
-    if (name) {
-      setUserName(name)
-    } else {
-      // Show nickname form if user hasn't set one yet
-      setShowUsernameForm(true)
-    }
+    // Check if this is the demo account (mikko.antila@me.com)
+    const isDemoAccount = email === 'mikko.antila@me.com'
 
-    // Generate or retrieve invitation code
-    const savedCode = localStorage.getItem('userInvitationCode')
-    if (savedCode) {
-      setInvitationCode(savedCode)
-    } else {
-      const newCode = Math.random().toString(36).substring(2, 10).toUpperCase()
-      localStorage.setItem('userInvitationCode', newCode)
-      setInvitationCode(newCode)
-    }
-
-    // Load account details - for demo account (Triskelion)
-    if (email === 'mikko.antila@me.com') {
+    // For demo account, set default package to Professional if no saved package
+    if (isDemoAccount) {
+      if (!savedPackage) {
+        setSelectedPackage('professional')
+        localStorage.setItem('userPackage', 'professional')
+      } else {
+        setSelectedPackage(savedPackage)
+      }
+      
+      // Set demo account details
       setCashBalance(15000)
       setGiftCerts({ professional: 25, starter: 25 })
+      localStorage.setItem('userCash', '15000')
+      localStorage.setItem('userGiftCerts', JSON.stringify({ professional: 25, starter: 25 }))
     } else {
-      // Load from localStorage or set defaults
+      // Regular users
+      if (savedPackage) {
+        setSelectedPackage(savedPackage)
+      }
+      
+      // Try to load from localStorage for other users
       const savedCash = localStorage.getItem('userCash')
       const savedGiftCerts = localStorage.getItem('userGiftCerts')
-      if (savedCash) setCashBalance(parseFloat(savedCash))
+      if (savedCash) setCashBalance(parseInt(savedCash))
       if (savedGiftCerts) setGiftCerts(JSON.parse(savedGiftCerts))
+    }
+    
+    if (!savedName) {
+      setShowUsernameForm(true)
+    } else {
+      setUserName(savedName)
+    }
+
+    // Generate invitation code if not exists
+    if (!savedCode) {
+      const newCode = Math.random().toString(36).substring(2, 10).toUpperCase()
+      setInvitationCode(newCode)
+      localStorage.setItem('userInvitationCode', newCode)
+    } else {
+      setInvitationCode(savedCode)
     }
   }, [])
 
@@ -210,23 +173,22 @@ export default function DashboardPage() {
               backgroundColor: 'rgba(61, 44, 53, 0.7)',
               borderColor: '#d4af37'
             }}
-            className="border rounded-xl p-8 mb-12 max-w-md mx-auto"
+            className="border rounded-lg p-8 mb-12 max-w-md mx-auto"
           >
-            <h2 className="text-2xl font-bold mb-2">Choose Your Nickname</h2>
-            <p style={{ color: '#e8e8d0' }} className="text-sm mb-6">
-              Your nickname is your public identity on AIGINVEST. Choose something unique that represents you!
-            </p>
-            <form onSubmit={handleSaveNickname} className="space-y-4">
-              <div>
+            <h2 className="text-2xl font-bold mb-6" style={{ color: '#d4af37' }}>
+              Welcome! Let's Set Your Nickname
+            </h2>
+            <form onSubmit={handleSaveNickname}>
+              <div className="mb-4">
+                <label className="block text-sm mb-2" style={{ color: '#e8e8d0' }}>
+                  Choose a Nickname
+                </label>
                 <input
                   type="text"
                   value={nicknameInput}
                   onChange={(e) => setNicknameInput(e.target.value)}
-                  placeholder="Enter your nickname..."
-                  style={{
-                    backgroundColor: 'rgba(26, 15, 21, 0.8)',
-                    borderColor: '#d4af37'
-                  }}
+                  placeholder="e.g., Mikko"
+                  style={{ backgroundColor: 'rgba(26, 15, 21, 0.8)' }}
                   className="w-full px-4 py-3 border rounded-lg text-[#f5f5dc] placeholder-[#e8e8d0]/50 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
                   maxLength={20}
                   required
@@ -250,29 +212,29 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* Header - only show after username is set */}
+        {/* Main Content - Only show after username is set */}
         {!showUsernameForm && (
           <>
             {/* Header */}
             <div className="flex justify-between items-start mb-12">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Welcome, {userName}! 👋</h1>
-            <p style={{ color: '#e8e8d0' }} className="text-lg">
-              Select the perfect plan and get immediate access to premium apps
-            </p>
-          </div>
-          <button
-            onClick={handleSignOut}
-            style={{
-              borderColor: '#d4af37',
-              color: '#d4af37'
-            }}
-            className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-[#d4af37]/10 transition"
-          >
-            <LogOut size={18} />
-            Sign Out
-          </button>
-        </div>
+              <div>
+                <h1 className="text-4xl font-bold mb-2">Welcome, {userName}! 👋</h1>
+                <p style={{ color: '#e8e8d0' }} className="text-lg">
+                  Select the perfect plan and get immediate access to premium apps
+                </p>
+              </div>
+              <button
+                onClick={handleSignOut}
+                style={{
+                  borderColor: '#d4af37',
+                  color: '#d4af37'
+                }}
+                className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-[#d4af37]/10 transition"
+              >
+                <LogOut size={18} />
+                Sign Out
+              </button>
+            </div>
 
             {/* Account Balance & Gift Certificates */}
             {(cashBalance > 0 || giftCerts.professional > 0 || giftCerts.starter > 0) && (
@@ -360,159 +322,143 @@ export default function DashboardPage() {
                 </p>
               </div>
             )}
-          className="border rounded-lg p-6 mb-12"
-        >
-          <h3 style={{ color: '#d4af37' }} className="font-bold text-lg mb-3">
-            📨 Invite Others to AIGINVEST
-          </h3>
-          <p style={{ color: '#e8e8d0' }} className="text-sm mb-4">
-            Share your unique invitation code with friends and family. They can use it to join and start their journey with AIGINVEST.
-          </p>
-          <div className="flex items-center gap-3 flex-wrap">
+
+            {/* Invitation Code Section */}
             <div
               style={{
-                backgroundColor: 'rgba(26, 15, 21, 0.8)',
+                backgroundColor: 'rgba(212, 175, 55, 0.1)',
                 borderColor: '#d4af37'
               }}
-              className="border rounded-lg px-6 py-3 flex items-center gap-4"
+              className="border rounded-lg p-6 mb-12"
             >
-              <code style={{ color: '#d4af37' }} className="text-xl font-bold tracking-wider">
-                {invitationCode}
-              </code>
-              <button
-                onClick={handleCopyCode}
-                style={{
-                  backgroundColor: copiedCode ? '#10b981' : '#d4af37',
-                  color: '#1a0f15'
-                }}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition hover:opacity-90"
-              >
-                <Copy size={16} />
-                {copiedCode ? 'Copied!' : 'Copy'}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Packages Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {PACKAGES.map((pkg) => (
-            <div
-              key={pkg.id}
-              onClick={() => handlePackageSelect(pkg.id)}
-              style={{
-                backgroundColor: selectedPackage === pkg.id ? 'rgba(212, 175, 55, 0.15)' : 'rgba(61, 44, 53, 0.5)',
-                borderColor: selectedPackage === pkg.id ? '#d4af37' : '#d4af37',
-                borderWidth: selectedPackage === pkg.id ? '2px' : '1px'
-              }}
-              className="rounded-xl p-6 cursor-pointer transition hover:border-[#e8d4a2] relative"
-            >
-              {pkg.highlight && (
+              <h3 style={{ color: '#d4af37' }} className="font-bold text-lg mb-3">
+                📨 Invite Others to AIGINVEST
+              </h3>
+              <p style={{ color: '#e8e8d0' }} className="text-sm mb-4">
+                Share your unique invitation code with friends and family. They can use it to join and start their journey with AIGINVEST.
+              </p>
+              <div className="flex items-center gap-3 flex-wrap">
                 <div
-                  style={{ backgroundColor: '#d4af37', color: '#1a0f15' }}
-                  className="absolute top-0 right-0 px-3 py-1 rounded-bl-lg rounded-tr-xl text-xs font-bold flex items-center gap-1"
-                >
-                  <Star size={14} />
-                  POPULAR
-                </div>
-              )}
-
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-2xl font-bold mb-1">{pkg.name}</h3>
-                  <p style={{ color: '#e8e8d0' }} className="text-sm">
-                    {pkg.description}
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex items-baseline gap-2">
-                    {pkg.monthlyPrice > 0 ? (
-                      <>
-                        <span className="text-3xl font-bold">€{pkg.monthlyPrice}</span>
-                        <span style={{ color: '#e8e8d0' }} className="text-sm">/month</span>
-                      </>
-                    ) : (
-                      <span className="text-3xl font-bold">Free</span>
-                    )}
-                  </div>
-                  <p
-                    style={{ backgroundColor: '#d4af37', color: '#1a0f15' }}
-                    className="text-xs font-semibold mt-2 px-2 py-1 rounded inline-block"
-                  >
-                    Cap: {pkg.earningCap}
-                  </p>
-                </div>
-
-                <div>
-                  <p style={{ color: '#e8e8d0' }} className="text-xs uppercase tracking-wide font-semibold mb-3">
-                    Apps Included ({pkg.apps.length})
-                  </p>
-                  <div className="space-y-2">
-                    {pkg.apps.map((app, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <Check size={16} style={{ color: '#d4af37' }} className="flex-shrink-0 mt-0.5" />
-                        <span className="text-sm">{app}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <button
                   style={{
-                    backgroundColor: selectedPackage === pkg.id ? '#d4af37' : 'transparent',
-                    color: selectedPackage === pkg.id ? '#1a0f15' : '#d4af37',
+                    backgroundColor: 'rgba(26, 15, 21, 0.8)',
                     borderColor: '#d4af37'
                   }}
-                  className="w-full py-2 rounded-lg font-semibold border transition hover:bg-[#d4af37]/20"
+                  className="border rounded-lg px-6 py-3 flex items-center gap-4"
                 >
-                  {pkg.monthlyPrice === 0 ? 'Start Free' : 'Select Plan'}
-                </button>
+                  <code style={{ color: '#d4af37' }} className="text-xl font-bold tracking-wider">
+                    {invitationCode}
+                  </code>
+                  <button
+                    onClick={handleCopyCode}
+                    style={{
+                      backgroundColor: copiedCode ? '#10b981' : '#d4af37',
+                      color: '#1a0f15'
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition hover:opacity-90"
+                  >
+                    <Copy size={16} />
+                    {copiedCode ? 'Copied!' : 'Copy'}
+                  </button>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
 
-        {/* Detailed Comparison */}
-        {selectedPackage && (
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold mb-6">
-              {PACKAGES.find((p) => p.id === selectedPackage)?.name} - Complete Features
-            </h2>
+            {/* Packages Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {PACKAGES.map((pkg) => (
+                <div
+                  key={pkg.id}
+                  onClick={() => handlePackageSelect(pkg.id)}
+                  style={{
+                    backgroundColor: selectedPackage === pkg.id ? 'rgba(212, 175, 55, 0.15)' : 'rgba(61, 44, 53, 0.5)',
+                    borderColor: selectedPackage === pkg.id ? '#d4af37' : '#d4af37',
+                    borderWidth: selectedPackage === pkg.id ? '2px' : '1px'
+                  }}
+                  className="rounded-xl p-6 cursor-pointer transition hover:border-[#e8d4a2] relative"
+                >
+                  {pkg.highlight && (
+                    <div
+                      style={{ backgroundColor: '#d4af37', color: '#1a0f15' }}
+                      className="absolute top-0 right-0 px-3 py-1 rounded-bl-lg rounded-tr-xl text-xs font-bold flex items-center gap-1"
+                    >
+                      <Star size={14} />
+                      POPULAR
+                    </div>
+                  )}
 
-            <div
-              style={{
-                backgroundColor: 'rgba(61, 44, 53, 0.5)',
-                borderColor: '#d4af37'
-              }}
-              className="border rounded-xl p-8"
-            >
-              <div className="space-y-6">
-                <div>
-                  <h3 style={{ color: '#d4af37' }} className="text-lg font-bold mb-3">
-                    📱 Available Apps
-                  </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {PACKAGES.find((p) => p.id === selectedPackage)?.apps.map((app, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <Zap size={16} style={{ color: '#d4af37' }} className="flex-shrink-0 mt-1" />
-                        <span>{app}</span>
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-2xl font-bold mb-1">{pkg.name}</h3>
+                      <p style={{ color: '#e8e8d0' }} className="text-sm">
+                        {pkg.description}
+                      </p>
+                    </div>
+
+                    <div>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-3xl font-bold">€{pkg.monthlyPrice}</span>
+                        <span style={{ color: '#e8e8d0' }} className="text-sm">/month</span>
                       </div>
-                    ))}
+                      <p style={{ color: '#d4af37' }} className="text-xs mt-1">
+                        Earning cap: {typeof pkg.earningCap === 'string' ? pkg.earningCap : 'Unlimited'}
+                      </p>
+                    </div>
+
+                    <div
+                      style={{ backgroundColor: 'rgba(212, 175, 55, 0.1)', borderColor: '#d4af37' }}
+                      className="border rounded p-3"
+                    >
+                      <p style={{ color: '#d4af37' }} className="text-xs font-semibold mb-2">
+                        ✓ Includes {pkg.apps.length} apps
+                      </p>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
 
-                <div>
-                  <h3 style={{ color: '#d4af37' }} className="text-lg font-bold mb-3">
-                    🎁 Bonus Features
-                  </h3>
-                  <div className="space-y-2">
-                    {PACKAGES.find((p) => p.id === selectedPackage)?.bonusFeatures.map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <Check size={16} style={{ color: '#d4af37' }} className="flex-shrink-0 mt-1" />
-                        <span>{feature}</span>
-                      </div>
-                    ))}
+            {/* Package Details */}
+            {selectedPackage && (
+              <div
+                style={{
+                  backgroundColor: 'rgba(61, 44, 53, 0.7)',
+                  borderColor: '#d4af37'
+                }}
+                className="border rounded-lg p-8 mb-12"
+              >
+                <h2 className="text-3xl font-bold mb-6">
+                  {PACKAGES.find((p) => p.id === selectedPackage)?.name} Package Details
+                </h2>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Features */}
+                  <div>
+                    <h3 style={{ color: '#d4af37' }} className="text-xl font-bold mb-4">
+                      Available Apps
+                    </h3>
+                    <ul className="space-y-2">
+                      {PACKAGES.find((p) => p.id === selectedPackage)?.apps.map((app, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <Check size={18} style={{ color: '#10b981' }} />
+                          <span>{app}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Bonus Features */}
+                  <div>
+                    <h3 style={{ color: '#d4af37' }} className="text-xl font-bold mb-4">
+                      Bonus Features
+                    </h3>
+                    <ul className="space-y-2">
+                      {PACKAGES.find((p) => p.id === selectedPackage)?.bonusFeatures.map((feature, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <Zap size={18} style={{ color: '#fbbf24' }} />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
@@ -527,73 +473,70 @@ export default function DashboardPage() {
                   <ChevronRight size={18} />
                 </button>
               </div>
-            </div>
-          </div>
-        )}
+            )}
 
-        {/* Quick Links */}
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link
-            href="/ecosystem"
-            style={{
-              backgroundColor: 'rgba(212, 175, 55, 0.1)',
-              borderColor: '#d4af37',
-              color: '#f5f5dc'
-            }}
-            className="border rounded-lg p-4 text-center hover:bg-[#d4af37]/20 transition"
-          >
-            <div style={{ color: '#d4af37' }} className="text-2xl mb-2">
-              🚀
-            </div>
-            <p className="text-sm font-semibold">Explore Ecosystem</p>
-          </Link>
+            {/* Quick Links */}
+            <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Link
+                href="/ecosystem"
+                style={{
+                  backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                  borderColor: '#d4af37',
+                  color: '#f5f5dc'
+                }}
+                className="border rounded-lg p-4 text-center hover:bg-[#d4af37]/20 transition"
+              >
+                <div style={{ color: '#d4af37' }} className="text-2xl mb-2">
+                  🚀
+                </div>
+                <p className="text-sm font-semibold">Explore Ecosystem</p>
+              </Link>
 
-          <Link
-            href="/ecosystem/wdm"
-            style={{
-              backgroundColor: 'rgba(212, 175, 55, 0.1)',
-              borderColor: '#d4af37',
-              color: '#f5f5dc'
-            }}
-            className="border rounded-lg p-4 text-center hover:bg-[#d4af37]/20 transition"
-          >
-            <div style={{ color: '#d4af37' }} className="text-2xl mb-2">
-              🛍️
-            </div>
-            <p className="text-sm font-semibold">Go to WDM</p>
-          </Link>
+              <Link
+                href="/ecosystem/wdm"
+                style={{
+                  backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                  borderColor: '#d4af37',
+                  color: '#f5f5dc'
+                }}
+                className="border rounded-lg p-4 text-center hover:bg-[#d4af37]/20 transition"
+              >
+                <div style={{ color: '#d4af37' }} className="text-2xl mb-2">
+                  🛍️
+                </div>
+                <p className="text-sm font-semibold">Go to WDM</p>
+              </Link>
 
-          <a
-            href="#"
-            style={{
-              backgroundColor: 'rgba(212, 175, 55, 0.1)',
-              borderColor: '#d4af37',
-              color: '#f5f5dc'
-            }}
-            className="border rounded-lg p-4 text-center hover:bg-[#d4af37]/20 transition"
-          >
-            <div style={{ color: '#d4af37' }} className="text-2xl mb-2">
-              💬
-            </div>
-            <p className="text-sm font-semibold">Contact Support</p>
-          </a>
+              <a
+                href="#"
+                style={{
+                  backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                  borderColor: '#d4af37',
+                  color: '#f5f5dc'
+                }}
+                className="border rounded-lg p-4 text-center hover:bg-[#d4af37]/20 transition"
+              >
+                <div style={{ color: '#d4af37' }} className="text-2xl mb-2">
+                  💬
+                </div>
+                <p className="text-sm font-semibold">Contact Support</p>
+              </a>
 
-          <a
-            href="#"
-            style={{
-              backgroundColor: 'rgba(212, 175, 55, 0.1)',
-              borderColor: '#d4af37',
-              color: '#f5f5dc'
-            }}
-            className="border rounded-lg p-4 text-center hover:bg-[#d4af37]/20 transition"
-          >
-            <div style={{ color: '#d4af37' }} className="text-2xl mb-2">
-              ⚙️
+              <a
+                href="#"
+                style={{
+                  backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                  borderColor: '#d4af37',
+                  color: '#f5f5dc'
+                }}
+                className="border rounded-lg p-4 text-center hover:bg-[#d4af37]/20 transition"
+              >
+                <div style={{ color: '#d4af37' }} className="text-2xl mb-2">
+                  ⚙️
+                </div>
+                <p className="text-sm font-semibold">Account Settings</p>
+              </a>
             </div>
-            <p className="text-sm font-semibold">Account Settings</p>
-          </a>
-        </div>
-      </div>
           </>
         )}
       </div>
