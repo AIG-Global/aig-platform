@@ -41,11 +41,11 @@ export default function LandingPage() {
               <a href="#features" style={{ color: '#f5f5dc' }} className="hover:text-[#d4af37] transition">Features</a>
               <a href="#diana" style={{ color: '#f5f5dc' }} className="hover:text-[#d4af37] transition">Diana AI</a>
               <a href="#ecosystem" style={{ color: '#f5f5dc' }} className="hover:text-[#d4af37] transition">Ecosystem</a>
-              <Link href="/login" style={{
+              <Link href="/ecosystem" style={{
                 backgroundColor: '#d4af37',
                 color: '#1a0f15'
               }} className="px-6 py-2 rounded-lg font-semibold transition hover:bg-[#e8d4a2]">
-                Sign In
+                Explore Apps
               </Link>
             </div>
 
@@ -67,11 +67,11 @@ export default function LandingPage() {
               <a href="#features" style={{ color: '#f5f5dc' }} className="block py-2 hover:text-[#d4af37]">Features</a>
               <a href="#diana" style={{ color: '#f5f5dc' }} className="block py-2 hover:text-[#d4af37]">Diana AI</a>
               <a href="#ecosystem" style={{ color: '#f5f5dc' }} className="block py-2 hover:text-[#d4af37]">Ecosystem</a>
-              <Link href="/login" style={{
+              <Link href="/ecosystem" style={{
                 backgroundColor: '#d4af37',
                 color: '#1a0f15'
               }} className="block mt-4 px-6 py-2 text-center rounded-lg font-semibold">
-                Sign In
+                Explore Apps
               </Link>
             </div>
           )}
@@ -191,7 +191,7 @@ export default function LandingPage() {
               <p style={{ color: '#e8e8d0' }} className="mb-4">
                 EUR Cash Account (1:1 fiat) + AIG$ Tokens (ecosystem). Earn commissions split 80/20 automatically.
               </p>
-              <Link href="#ecosystem" style={{ color: '#d4af37' }} className="hover:text-[#e8d4a2] font-semibold flex items-center gap-2">
+              <Link href="/ecosystem" style={{ color: '#d4af37' }} className="hover:text-[#e8d4a2] font-semibold flex items-center gap-2">
                 Explore <ArrowRight size={16} />
               </Link>
             </div>
@@ -212,7 +212,7 @@ export default function LandingPage() {
               <p style={{ color: '#e8e8d0' }} className="mb-4">
                 Luxury marketplace with 100% commission redistribution. Buy premium goods, earn commissions from your network.
               </p>
-              <Link href="#ecosystem" style={{ color: '#d4af37' }} className="hover:text-[#e8d4a2] font-semibold flex items-center gap-2">
+              <Link href="/ecosystem/wdm" style={{ color: '#d4af37' }} className="hover:text-[#e8d4a2] font-semibold flex items-center gap-2">
                 Shop Now <ArrowRight size={16} />
               </Link>
             </div>
