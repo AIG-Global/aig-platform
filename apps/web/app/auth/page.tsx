@@ -9,6 +9,7 @@ export default function AuthPage() {
   const [formData, setFormData] = useState({
     email: '',
     name: '',
+    password: '',
     invitationCode: '',
     verificationCode: ''
   })
@@ -18,11 +19,24 @@ export default function AuthPage() {
   const handleSignInWithEmail = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    // Simulate email verification
-    setTimeout(() => {
-      setVerificationSent(true)
-      setIsLoading(false)
-    }, 1000)
+    
+    // Check for demo account
+    if (formData.email === 'mikko.antila@me.com' && formData.password === 'Energia1') {
+      // Direct login for demo account
+      setTimeout(() => {
+        localStorage.setItem('userEmail', formData.email)
+        localStorage.setItem('userName', 'Triskelion')
+        localStorage.setItem('userPackage', 'professional')
+        window.location.href = '/dashboard'
+        setIsLoading(false)
+      }, 1000)
+    } else {
+      // Regular email verification flow
+      setTimeout(() => {
+        setVerificationSent(true)
+        setIsLoading(false)
+      }, 1000)
+    }
   }
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -183,6 +197,29 @@ export default function AuthPage() {
                 </div>
               </div>
 
+              <div>
+                <label style={{ color: '#f5f5dc' }} className="block text-sm font-semibold mb-2">
+                  Password
+                </label>
+                <div
+                  style={{
+                    backgroundColor: 'rgba(61, 44, 53, 0.5)',
+                    borderColor: '#d4af37'
+                  }}
+                  className="relative border rounded-lg"
+                >
+                  <Key size={18} style={{ color: '#d4af37' }} className="absolute left-3 top-3" />
+                  <input
+                    type="password"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    placeholder="••••••••"
+                    className="w-full pl-10 pr-4 py-2 bg-transparent text-[#f5f5dc] placeholder-[#e8e8d0]/50 focus:outline-none"
+                    required
+                  />
+                </div>
+              </div>
+
               <button
                 type="submit"
                 disabled={isLoading}
@@ -192,7 +229,7 @@ export default function AuthPage() {
                 }}
                 className="w-full py-3 rounded-lg font-semibold hover:bg-[#e8d4a2] transition disabled:opacity-50"
               >
-                {isLoading ? 'Sending Code...' : 'Send Verification Code'}
+                {isLoading ? 'Signing In...' : 'Sign In'}
               </button>
             </form>
           ) : (
