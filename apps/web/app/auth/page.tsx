@@ -22,10 +22,9 @@ export default function AuthPage() {
     
     // Check for demo account
     if (formData.email === 'mikko.antila@me.com' && formData.password === 'Energia1') {
-      // Direct login for demo account
+      // Direct login for demo account (without pre-setting username)
       setTimeout(() => {
         localStorage.setItem('userEmail', formData.email)
-        localStorage.setItem('userName', 'Triskelion')
         localStorage.setItem('userPackage', 'professional')
         window.location.href = '/dashboard'
         setIsLoading(false)

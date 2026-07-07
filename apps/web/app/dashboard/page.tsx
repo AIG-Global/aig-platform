@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { LogOut, ChevronRight, Check, Lock, Star, Zap, Copy } from 'lucide-react'
+import { LogOut, ChevronRight, Check, Lock, Star, Zap, Copy, Gift } from 'lucide-react'
 
 interface Package {
   id: string
@@ -121,10 +121,16 @@ export default function DashboardPage() {
   const [isLoadingUsername, setIsLoadingUsername] = useState(false)
   const [invitationCode, setInvitationCode] = useState('')
   const [copiedCode, setCopiedCode] = useState(false)
+  const [cashBalance, setCashBalance] = useState(0)
+  const [giftCerts, setGiftCerts] = useState({ professional: 0, starter: 0 })
+  const [userEmail, setUserEmail] = useState('')
 
   useEffect(() => {
     // Get user name from localStorage
     const name = localStorage.getItem('userName')
+    const email = localStorage.getItem('userEmail')
+    setUserEmail(email || '')
+    
     if (name) {
       setUserName(name)
     } else {
@@ -140,6 +146,18 @@ export default function DashboardPage() {
       const newCode = Math.random().toString(36).substring(2, 10).toUpperCase()
       localStorage.setItem('userInvitationCode', newCode)
       setInvitationCode(newCode)
+    }
+
+    // Load account details - for demo account (Triskelion)
+    if (email === 'mikko.antila@me.com') {
+      setCashBalance(15000)
+      setGiftCerts({ professional: 25, starter: 25 })
+    } else {
+      // Load from localStorage or set defaults
+      const savedCash = localStorage.getItem('userCash')
+      const savedGiftCerts = localStorage.getItem('userGiftCerts')
+      if (savedCash) setCashBalance(parseFloat(savedCash))
+      if (savedGiftCerts) setGiftCerts(JSON.parse(savedGiftCerts))
     }
   }, [])
 
@@ -256,25 +274,92 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* Info Box */}
-        <div
-          style={{
-            backgroundColor: 'rgba(212, 175, 55, 0.1)',
-            borderColor: '#d4af37'
-          }}
-          className="border rounded-lg p-4 mb-12"
-        >
-          <p style={{ color: '#e8d4a2' }} className="text-sm">
-            💡 <strong>No membership fees.</strong> You only pay for the apps you use. Bigger packages include bonus apps and higher earning capabilities.
-          </p>
-        </div>
+            {/* Account Balance & Gift Certificates */}
+            {(cashBalance > 0 || giftCerts.professional > 0 || giftCerts.starter > 0) && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                {/* Cash Balance */}
+                <div
+                  style={{
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderColor: '#10b981'
+                  }}
+                  className="border rounded-lg p-6"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 style={{ color: '#10b981' }} className="font-bold">
+                      Cash Balance
+                    </h3>
+                    <span style={{ color: '#10b981' }} className="text-2xl">💰</span>
+                  </div>
+                  <p className="text-3xl font-bold mb-1">€{cashBalance.toLocaleString()}</p>
+                  <p style={{ color: '#e8e8d0' }} className="text-xs">
+                    Available for investments
+                  </p>
+                </div>
 
-        {/* Invitation Code Section */}
-        <div
-          style={{
-            backgroundColor: 'rgba(212, 175, 55, 0.1)',
-            borderColor: '#d4af37'
-          }}
+                {/* Professional Gift Certs */}
+                {giftCerts.professional > 0 && (
+                  <div
+                    style={{
+                      backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                      borderColor: '#d4af37'
+                    }}
+                    className="border rounded-lg p-6"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 style={{ color: '#d4af37' }} className="font-bold">
+                        Professional Certs
+                      </h3>
+                      <Gift size={20} style={{ color: '#d4af37' }} />
+                    </div>
+                    <p className="text-3xl font-bold mb-1">{giftCerts.professional}</p>
+                    <p style={{ color: '#e8e8d0' }} className="text-xs">
+                      €2,999/month package
+                    </p>
+                  </div>
+                )}
+
+                {/* Starter Gift Certs */}
+                {giftCerts.starter > 0 && (
+                  <div
+                    style={{
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      borderColor: '#3b82f6'
+                    }}
+                    className="border rounded-lg p-6"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 style={{ color: '#3b82f6' }} className="font-bold">
+                        Starter Certs
+                      </h3>
+                      <Gift size={20} style={{ color: '#3b82f6' }} />
+                    </div>
+                    <p className="text-3xl font-bold mb-1">{giftCerts.starter}</p>
+                    <p style={{ color: '#e8e8d0' }} className="text-xs">
+                      €399/month package
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Gift Certificate Info */}
+            {(giftCerts.professional > 0 || giftCerts.starter > 0) && (
+              <div
+                style={{
+                  backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                  borderColor: '#a855f7'
+                }}
+                className="border rounded-lg p-4 mb-12"
+              >
+                <p style={{ color: '#a855f7' }} className="text-sm font-semibold mb-2">
+                  ℹ️ About Gift Certificates
+                </p>
+                <p style={{ color: '#e8e8d0' }} className="text-sm">
+                  Gift certificates are complimentary packages to share with others. <strong>Note:</strong> Gift certificates do not generate commissions—they are meant to help others get started with AIGINVEST. Only direct subscriptions and affiliate sales generate commissions.
+                </p>
+              </div>
+            )}
           className="border rounded-lg p-6 mb-12"
         >
           <h3 style={{ color: '#d4af37' }} className="font-bold text-lg mb-3">
