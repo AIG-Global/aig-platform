@@ -1,4 +1,5 @@
 import './globals.css'
+import DianaWidget from './components/diana-widget'
 
 export const metadata = {
   title: 'AIGINVEST — The AI-Powered Business Operating System',
@@ -14,7 +15,10 @@ export const viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        {children}
+        <DianaWidget />
+      </body>
     </html>
   )
 }

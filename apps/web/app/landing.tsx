@@ -213,7 +213,7 @@ export default function LandingPage() {
               </span>
             </h2>
             <p className="text-lg text-slate-300 mb-6">
-              Your intelligent business companion with access to 10 AI-powered applications:
+              Your intelligent business companion with access to 10 AI-powered applications. No registration needed—just click the Diana button in the corner to chat!
             </p>
             <ul className="space-y-3 mb-8">
               {[
@@ -234,33 +234,64 @@ export default function LandingPage() {
                 </li>
               ))}
             </ul>
-            <Link
-              href="/login"
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg font-bold inline-flex items-center gap-2 transition transform hover:scale-105"
-            >
-              Start Chatting with Diana <ArrowRight size={20} />
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={() => {
+                  const button = document.querySelector('[title="Chat with Diana"]') as HTMLButtonElement
+                  button?.click()
+                }}
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg font-bold inline-flex items-center gap-2 transition transform hover:scale-105"
+              >
+                Start Chatting with Diana <ArrowRight size={20} />
+              </button>
+              <Link
+                href="/login"
+                className="px-8 py-4 border border-slate-600 hover:border-blue-400 rounded-lg font-bold text-lg transition hover:bg-slate-800/50 inline-flex items-center justify-center"
+              >
+                Create Account
+              </Link>
+            </div>
           </div>
 
-          <div className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-3xl p-8 border border-slate-700/50 backdrop-blur-xl">
-            <div className="bg-slate-900/80 rounded-2xl p-6 space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-blue-500 flex-shrink-0"></div>
-                <div className="space-y-2">
-                  <p className="text-sm font-semibold">Diana</p>
-                  <p className="text-sm text-slate-300">What would you like to know about the AIG ecosystem today?</p>
+          <div className="grid grid-cols-2 gap-8">
+            {/* Diana Avatar */}
+            <div className="col-span-2 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-3xl p-12 border border-slate-700/50 backdrop-blur-xl flex items-center justify-center">
+              <img
+                src="/avatars/diana/diana-avatar.svg"
+                alt="Diana AI Assistant"
+                className="w-64 h-64 drop-shadow-2xl"
+              />
+            </div>
+
+            {/* Chat Interface Preview */}
+            <div className="col-span-2 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-3xl p-6 border border-slate-700/50 backdrop-blur-xl">
+              <div className="bg-slate-900/80 rounded-2xl p-4 space-y-4">
+                <div className="flex items-start gap-3">
+                  <img
+                    src="/avatars/diana/diana-avatar.svg"
+                    alt="Diana"
+                    className="w-8 h-8 rounded-full flex-shrink-0"
+                  />
+                  <div className="space-y-2">
+                    <p className="text-sm font-semibold">Diana</p>
+                    <p className="text-sm text-slate-300">What would you like to know about the AIG ecosystem today?</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-3 justify-end">
-                <div className="space-y-2 text-right">
-                  <p className="text-sm text-slate-300">Tell me about earning potential in the Professional tier</p>
+                <div className="flex items-start gap-3 justify-end">
+                  <div className="space-y-2 text-right">
+                    <p className="text-sm text-slate-300 bg-blue-600/30 px-3 py-2 rounded-lg">Tell me about earning potential</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-purple-500 flex-shrink-0"></div>
-                <div className="space-y-2">
-                  <p className="text-sm font-semibold">Diana</p>
-                  <p className="text-sm text-slate-300">Professional tier members enjoy unlimited earning potential with a 26% commission on Level 1 referrals, extending through 10 levels down to 1%...</p>
+                <div className="flex items-start gap-3">
+                  <img
+                    src="/avatars/diana/diana-avatar.svg"
+                    alt="Diana"
+                    className="w-8 h-8 rounded-full flex-shrink-0"
+                  />
+                  <div className="space-y-2">
+                    <p className="text-sm font-semibold">Diana</p>
+                    <p className="text-sm text-slate-300">With our dual-account system, you earn 80% EUR Cash (fiat-backed) and 20% AIG$ tokens. Professional tier members have unlimited earning potential!</p>
+                  </div>
                 </div>
               </div>
             </div>
