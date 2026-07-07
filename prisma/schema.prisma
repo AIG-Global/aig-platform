@@ -1,5 +1,8 @@
-// Prisma schema for AIGINVEST Alpha 0.1 - Meet Diana
-// Workstream: Database persistence for Diana conversations, memories, and projects
+// AIGINVEST Ecosystem - Complete Prisma Schema
+// Version: 1.0
+// Purpose: Single source of truth for all AIG data models
+// Generated: 2026-07-07
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,515 +13,1152 @@ datasource db {
 }
 
 // ============================================================================
-// USER MODEL - Track user identity and Diana preferences
+// AUTHENTICATION & USERS
 // ============================================================================
+
 model User {
-  id                String          @id @default(cuid())
-  email             String          @unique
-  displayName       String?
-  avatarUrl         String?
+  id                    String      @id @default(cuid())
+  email                 String      @unique
+  password_hash         String
+  first_name            String?
+  last_name             String?
+  avatar_url            String?
+  bio                   String?
+  phone_number          String?
+  date_of_birth         DateTime?
+  nationality           String?
   
-  // Diana preferences
-  dianaTone         String          @default("professional") // 'professional' | 'casual' | 'mentor'
-  dianaLanguage     String          @default("en")
-  notificationsOn   Boolean         @default(true)
+  // Account status
+  status                UserStatus  @default(ACTIVE)
+  email_verified        Boolean     @default(false)
+  email_verified_at     DateTime?
+  last_login            DateTime?
+  created_at            DateTime    @default(now())
+  updated_at            DateTime    @updatedAt
+  deleted_at            DateTime?
   
-  // Account metadata
-  lastLoginAt       DateTime?
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-  deletedAt         DateTime?
-
+  // Foreign keys
+  primary_org_id        String?
+  primary_org           Organization? @relation("users_primary_org", fields: [primary_org_id], references: [id])
+  
   // Relations
-  workspaces        Workspace[]
-  conversations     Conversation[]
-  projects          Project[]
-  documents         Document[]
-  dianaMemories     DianaMemory[]
-  activities        Activity[]
+  accounts              Account[]
+  memberships           Membership[]
+  employees             Employee[]
+  addresses             Address[]
+  auth_tokens           AuthToken[]
+  refresh_tokens        RefreshToken[]
+  diana_conversations   DianConversation[]
+  diana_personal_memory DianaPersonalMemory[]
+  diana_documents       DianaDocument[]
+  commissions           Commission[]
+  investments           Investment[]
+  wallet_transactions   WalletTransaction[]
   
-  // Phase 1 relationships
-  organizations     Organization[] @relation("OrganizationMembers")
-  ownedMissions     Mission[]      @relation("MissionOwner")
-  teams             Team[]         @relation("TeamMembers")
+  @@index([email])
+  @@index([primary_org_id])
+}
 
-  @@map("users")
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  BANNED
+  DELETED
+}
+
+model AuthToken {
+  id          String   @id @default(cuid())
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  token       String   @unique
+  type        TokenType
+  expires_at  DateTime
+  created_at  DateTime @default(now())
+  
+  @@index([user_id])
+  @@index([token])
+}
+
+model RefreshToken {
+  id          String   @id @default(cuid())
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  token       String   @unique
+  expires_at  DateTime
+  revoked_at  DateTime?
+  created_at  DateTime @default(now())
+  
+  @@index([user_id])
+}
+
+enum TokenType {
+  ACCESS
+  REFRESH
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
 }
 
 // ============================================================================
-// WORKSPACE MODEL - Primary domain object. Everything belongs to a workspace.
-// ============================================================================
-model Workspace {
-  id          String    @id @default(cuid())
-  ownerId     String
-  missionId   String?   @unique  // Optional: workspace for a mission
-  
-  // Workspace identity
-  title       String
-  description String?   @db.Text
-  goal        String?   @db.Text   // Original natural-language goal that created this
-  type        String    @default("general") // 'startup' | 'software' | 'personal' | 'learning' | 'general'
-  status      String    @default("active")  // 'active' | 'archived'
-  color       String    @default("blue")
-  emoji       String    @default("🚀")
-
-  // Relations
-  owner         User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  mission       Mission?       @relation(fields: [missionId], references: [id])
-  projects      Project[]
-  documents     Document[]
-  conversations Conversation[]
-  memories      DianaMemory[]
-
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
-
-  @@index([ownerId])
-  @@index([missionId])
-  @@map("workspaces")
-}
-
-// ============================================================================
-// CONVERSATION MODEL - Chat threads with Diana
-// ============================================================================
-model Conversation {
-  id                String            @id @default(cuid())
-  userId            String
-  workspaceId       String?           // Optional: conversations belong to a workspace
-  title             String            @default("New Chat")
-  
-  // Context for Diana memory
-  context           String?           @db.Text // Summary of conversation purpose
-  memoryNotes       String?           @db.Text // Key facts Diana should remember
-  
-  // Metadata
-  messageCount      Int               @default(0)
-  isArchived        Boolean           @default(false)
-  
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  deletedAt         DateTime?
-
-  // Relations
-  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
-  messages          Message[]
-  documents         Document[]
-  projects          Project[]
-
-  @@index([userId])
-  @@index([workspaceId])
-  @@index([createdAt])
-  @@map("conversations")
-}
-
-// ============================================================================
-// MESSAGE MODEL - Individual messages with metadata for streaming
-// ============================================================================
-model Message {
-  id                String            @id @default(cuid())
-  conversationId    String
-  
-  // Message content and role
-  role              String            @default("user") // 'user' | 'assistant'
-  content           String            @db.Text
-  
-  // Streaming and processing metadata
-  isStreaming       Boolean           @default(false)
-  streamStatus      String?           // 'pending' | 'complete' | 'error'
-  tokens            Int?              // Token count for cost tracking
-  
-  // Message classification for Diana intelligence
-  intent            String?           // 'question' | 'request' | 'clarification' | 'feedback'
-  isActionable      Boolean           @default(false)
-  
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  deletedAt         DateTime?
-
-  // Relations
-  conversation      Conversation      @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-
-  @@index([conversationId])
-  @@index([createdAt])
-  @@map("messages")
-}
-
-// ============================================================================
-// PROJECT MODEL - Projects created from Diana conversations (AIG-003)
-// ============================================================================
-model Project {
-  id                String            @id @default(cuid())
-  userId            String
-  workspaceId       String?           // Optional: projects belong to a workspace
-  conversationId    String?
-  missionId         String?           // Phase 1: projects can belong to a mission
-  
-  // Project details
-  name              String
-  description       String?           @db.Text
-  status            String            @default("active") // 'active' | 'paused' | 'completed'
-  color             String            @default("blue")
-  
-  // Project organization
-  tags              String[]          @default([])
-  isPublic          Boolean           @default(false)
-  
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  deletedAt         DateTime?
-
-  // Relations
-  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
-  conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: SetNull)
-  mission           Mission?          @relation("MissionProjects", fields: [missionId], references: [id], onDelete: SetNull)
-  tasks             ProjectTask[]
-
-  documents         Document[]
-
-  @@index([userId])
-  @@index([workspaceId])
-  @@index([conversationId])
-  @@index([missionId])
-  @@map("projects")
-}
-
-// ============================================================================
-// PROJECT TASK MODEL - Tasks within projects (for Diana to organize work)
-// ============================================================================
-model ProjectTask {
-  id                String            @id @default(cuid())
-  projectId         String
-  missionId         String?           // Phase 1: tasks can belong to a mission
-  milestoneId       String?           // Phase 1: tasks can belong to a milestone
-  
-  // Task details
-  title             String
-  description       String?           @db.Text
-  status            String            @default("todo") // 'todo' | 'in_progress' | 'done' | 'blocked'
-  priority          String            @default("medium") // 'low' | 'medium' | 'high' | 'critical'
-  
-  // Task metadata
-  order             Int               @default(0)
-  dueDate           DateTime?
-  
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  deletedAt         DateTime?
-
-  // Relations
-  project           Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  mission           Mission?          @relation("MissionTasks", fields: [missionId], references: [id], onDelete: SetNull)
-  milestone         Milestone?        @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
-
-  @@index([projectId])
-  @@index([missionId])
-  @@index([milestoneId])
-  @@map("project_tasks")
-}
-
-// ============================================================================
-// DOCUMENT MODEL - Artifacts generated from conversations
-// ============================================================================
-model Document {
-  id                String            @id @default(cuid())
-  userId            String
-  workspaceId       String?           // Optional: documents belong to a workspace
-  conversationId    String?
-  projectId         String?
-  missionId         String?           // Phase 1: documents can belong to a mission
-  
-  // Document metadata
-  title             String
-  content           String            @db.Text
-  documentType      String            @default("document") // 'document' | 'specification' | 'plan' | 'notes'
-  
-  // Organization
-  tags              String[]          @default([])
-  isStarred         Boolean           @default(false)
-  
-  // Export metadata
-  lastExportedAt    DateTime?
-  exportFormats     String[]          @default([]) // 'pdf' | 'markdown' | 'html'
-  
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  deletedAt         DateTime?
-
-  // Relations
-  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
-  conversation      Conversation?     @relation(fields: [conversationId], references: [id], onDelete: SetNull)
-  project           Project?          @relation(fields: [projectId], references: [id], onDelete: SetNull)
-  mission           Mission?          @relation("MissionDocuments", fields: [missionId], references: [id], onDelete: SetNull)
-
-  @@index([userId])
-  @@index([workspaceId])
-  @@index([conversationId])
-  @@index([projectId])
-  @@index([missionId])
-  @@map("documents")
-}
-
-// ============================================================================
-// DIANA MEMORY MODEL - Long-term context for Diana across conversations
-// ============================================================================
-model DianaMemory {
-  id                String            @id @default(cuid())
-  userId            String?
-  workspaceId       String?           // Optional: memories scoped to a workspace
-  missionId         String?           @unique // Phase 1: memories scoped to a mission (one-to-one)
-  
-  // Memory classification
-  category          String            // 'user_preference' | 'working_style' | 'project_context' | 'technical_constraint' | 'mission_context'
-  key               String            // Unique identifier for this memory
-  value             String            @db.Text // The actual memory content
-  
-  // Importance scoring
-  confidence        Int               @default(100) // 0-100 scale
-  lastReferencedAt  DateTime?
-  referenceCount    Int               @default(0)
-  
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  expiresAt         DateTime?         // Optional: memory expires after time
-
-  // Relations
-  user              User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace         Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
-  mission           Mission?          @relation("MissionMemory", fields: [missionId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, category, key])
-  @@index([userId])
-  @@index([missionId])
-  @@index([category])
-  @@map("diana_memories")
-}
-
-// ============================================================================
-// ACTIVITY MODEL - Timeline of everything Diana helps accomplish
-// ============================================================================
-model Activity {
-  id          String    @id @default(cuid())
-  userId      String
-  workspaceId String?
-
-  // What happened
-  type        String    // 'workspace_created' | 'document_created' | 'task_completed' | 'task_created' | 'document_edited' | 'goal_set'
-  title       String    // Human-readable summary: "Workspace 'AI Company' created"
-  description String?   // Optional detail
-
-  // Link back to the affected resource
-  resourceId   String?  // ID of workspace/document/task
-  resourceType String?  // 'workspace' | 'document' | 'task'
-
-  createdAt   DateTime  @default(now())
-
-  // Relations
-  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([workspaceId])
-  @@index([createdAt])
-  @@map("activities")
-}
-
-// ============================================================================
-// PHASE 1: MISSION-CENTRIC ARCHITECTURE
+// ORGANIZATION & HIERARCHY
 // ============================================================================
 
-// ============================================================================
-// ORGANIZATION MODEL - Multi-tenant container for missions and teams
-// ============================================================================
 model Organization {
-  id              String    @id @default(cuid())
-  name            String
-  slug            String    @unique
-  description     String?   @db.Text
+  id                String          @id @default(cuid())
+  name              String
+  slug              String          @unique
+  description       String?
+  logo_url          String?
+  website           String?
+  industry          String?
+  company_size      String?
+  vat_id            String?
+  registration_num  String?
   
-  // Org metadata
-  subscriptionTier String   @default("free") // 'free' | 'starter' | 'pro' | 'enterprise'
+  // Business info
+  founded_at        DateTime?
+  status            OrgStatus       @default(ACTIVE)
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
   
   // Relations
-  members         User[]    @relation("OrganizationMembers")
-  missions        Mission[]
-  teams           Team[]
-  
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  createdBy       String
+  users             User[]          @relation("users_primary_org")
+  departments       Department[]
+  teams             Team[]
+  employees         Employee[]
+  memberships       Membership[]
+  addresses         Address[]
+  wallets           Wallet[]
+  ai_instances      AIInstance[]
   
   @@index([slug])
-  @@map("organizations")
-}
-
-// ============================================================================
-// MISSION MODEL - The operational center of AIGINVEST
-// ============================================================================
-model Mission {
-  id                  String          @id @default(cuid())
-  organizationId      String
-  ownerId             String
-  
-  // Mission identity
-  title               String
-  description         String?         @db.Text
-  objective           String          @db.Text
-  successCriteria     String          @db.Text // JSON array of criteria
-  
-  // Status and priority
-  status              String          @default("planning") // planning | active | paused | completed | archived
-  priority            String          @default("high") // critical | high | medium | low
-  
-  // Timeline
-  deadline            DateTime?
-  startDate           DateTime?
-  completedDate       DateTime?
-  
-  // Associated resources
-  workspaceId         String?         @unique // Optional: link to workspace
-  
-  // Relations
-  organization        Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  owner               User           @relation("MissionOwner", fields: [ownerId], references: [id])
-  workspace           Workspace?
-  
-  projects            Project[]       @relation("MissionProjects")
-  tasks               ProjectTask[]   @relation("MissionTasks")
-  documents           Document[]      @relation("MissionDocuments")
-  milestones          Milestone[]
-  
-  progress            MissionProgress?
-  memory              DianaMemory?    @relation("MissionMemory")
-  
-  createdAt           DateTime        @default(now())
-  updatedAt           DateTime        @updatedAt
-  
-  @@index([organizationId])
-  @@index([ownerId])
   @@index([status])
-  @@map("missions")
 }
 
-// ============================================================================
-// MILESTONE MODEL - Planned checkpoint within a mission
-// ============================================================================
-model Milestone {
-  id              String    @id @default(cuid())
-  missionId       String
+enum OrgStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  DELETED
+}
+
+model Department {
+  id          String      @id @default(cuid())
+  org_id      String
+  org         Organization @relation(fields: [org_id], references: [id], onDelete: Cascade)
+  name        String
+  slug        String
+  description String?
   
-  title           String
-  description     String?   @db.Text
+  // Hierarchy
+  parent_id   String?
+  parent      Department? @relation("parent_children", fields: [parent_id], references: [id], onDelete: SetNull)
+  children    Department[] @relation("parent_children")
   
-  targetDate      DateTime
-  completedDate   DateTime?
-  
-  successCriteria String?   @db.Text
-  status          String    @default("planned") // planned | active | completed | missed
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
   
   // Relations
-  mission         Mission   @relation(fields: [missionId], references: [id], onDelete: Cascade)
-  tasks           ProjectTask[]
+  teams       Team[]
+  employees   Employee[]
+  ai_instances AIInstance[]
   
-  createdAt       DateTime  @default(now())
-  
-  @@index([missionId])
-  @@map("milestones")
+  @@unique([org_id, slug])
+  @@index([org_id])
+  @@index([parent_id])
 }
 
-// ============================================================================
-// MISSION PROGRESS MODEL - Tangible advancement tracking
-// ============================================================================
-model MissionProgress {
-  id                      String    @id @default(cuid())
-  missionId               String    @unique
-  
-  percentComplete         Int       @default(0)
-  tasksTotal              Int       @default(0)
-  tasksCompleted          Int       @default(0)
-  tasksBlocked            Int       @default(0)
-  
-  milestonesReached       Int       @default(0)
-  milestonesTotalPlanned  Int       @default(0)
-  
-  score                   Int       @default(0)
-  trend                   String    @default("stable") // accelerating | stable | decelerating
-  
-  estimatedCompletion     DateTime?
-  
-  updatedAt               DateTime  @updatedAt
-  
-  // Relations
-  mission                 Mission   @relation(fields: [missionId], references: [id], onDelete: Cascade)
-  
-  @@map("mission_progress")
-}
-
-// ============================================================================
-// TEAM MODEL - Collaborative unit within organization
-// ============================================================================
 model Team {
-  id              String    @id @default(cuid())
-  organizationId  String
-  name            String
-  description     String?   @db.Text
+  id          String      @id @default(cuid())
+  org_id      String
+  org         Organization @relation(fields: [org_id], references: [id], onDelete: Cascade)
+  dept_id     String?
+  dept        Department? @relation(fields: [dept_id], references: [id], onDelete: SetNull)
+  
+  name        String
+  slug        String
+  description String?
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
   
   // Relations
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  members         User[]       @relation("TeamMembers")
+  employees   Employee[]
   
-  createdAt       DateTime  @default(now())
+  @@unique([org_id, slug])
+  @@index([org_id])
+  @@index([dept_id])
+}
+
+model Employee {
+  id          String      @id @default(cuid())
+  user_id     String
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  org_id      String
+  org         Organization @relation(fields: [org_id], references: [id], onDelete: Cascade)
+  team_id     String?
+  team        Team?       @relation(fields: [team_id], references: [id], onDelete: SetNull)
+  dept_id     String?
+  dept        Department? @relation(fields: [dept_id], references: [id], onDelete: SetNull)
   
-  @@index([organizationId])
-  @@map("teams")
+  title       String
+  role        EmployeeRole
+  status      EmployeeStatus @default(ACTIVE)
+  joined_at   DateTime    @default(now())
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  @@unique([user_id, org_id])
+  @@index([user_id])
+  @@index([org_id])
+  @@index([team_id])
+}
+
+enum EmployeeRole {
+  ADMIN
+  MANAGER
+  EMPLOYEE
+  CONTRACTOR
+  VIEWER
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  INACTIVE
+  ON_LEAVE
+  TERMINATED
 }
 
 // ============================================================================
-// EVENT MODEL - Immutable event log for event sourcing
+// MEMBERSHIP & SUBSCRIPTIONS
 // ============================================================================
+
+model Membership {
+  id          String      @id @default(cuid())
+  user_id     String
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  org_id      String?
+  org         Organization? @relation(fields: [org_id], references: [id], onDelete: SetNull)
+  
+  tier        MembershipTier
+  status      SubscriptionStatus @default(ACTIVE)
+  
+  // Billing
+  billing_cycle BillingCycle
+  price_eur   Int           // Stored in cents (€1.00 = 100)
+  next_billing DateTime
+  auto_renew  Boolean     @default(true)
+  
+  // Period
+  started_at  DateTime    @default(now())
+  expires_at  DateTime?
+  renewed_at  DateTime?
+  cancelled_at DateTime?
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  // Relations
+  app_subscriptions AppSubscription[]
+  
+  @@unique([user_id])
+  @@index([tier])
+  @@index([status])
+}
+
+enum MembershipTier {
+  FREE
+  STARTER
+  PROFESSIONAL
+  BUSINESS
+  ENTERPRISE
+}
+
+enum BillingCycle {
+  MONTHLY
+  ANNUAL
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+  EXPIRED
+  PENDING
+}
+
+// ============================================================================
+// APPS & FEATURES
+// ============================================================================
+
+model AIApp {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  slug        String      @unique
+  description String
+  icon_url    String?
+  color       String?
+  
+  // Version & status
+  version     String      @default("1.0.0")
+  status      AppStatus   @default(ACTIVE)
+  
+  // Availability
+  min_tier    MembershipTier
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  // Relations
+  subscriptions AppSubscription[]
+  features    AppFeature[]
+  
+  @@index([min_tier])
+}
+
+enum AppStatus {
+  ACTIVE
+  BETA
+  DEPRECATED
+  DISABLED
+}
+
+model AppFeature {
+  id          String      @id @default(cuid())
+  app_id      String
+  app         AIApp       @relation(fields: [app_id], references: [id], onDelete: Cascade)
+  
+  name        String
+  description String?
+  
+  @@index([app_id])
+}
+
+model AppSubscription {
+  id          String      @id @default(cuid())
+  membership_id String
+  membership  Membership  @relation(fields: [membership_id], references: [id], onDelete: Cascade)
+  app_id      String
+  app         AIApp       @relation(fields: [app_id], references: [id], onDelete: Cascade)
+  
+  status      SubStatus   @default(ACTIVE)
+  subscribed_at DateTime   @default(now())
+  unsubscribed_at DateTime?
+  
+  @@unique([membership_id, app_id])
+  @@index([membership_id])
+  @@index([app_id])
+}
+
+enum SubStatus {
+  ACTIVE
+  INACTIVE
+  CANCELLED
+}
+
+// ============================================================================
+// ACCOUNTS & WALLETS (TWO-ACCOUNT SYSTEM)
+// ============================================================================
+
+model Account {
+  id          String      @id @default(cuid())
+  user_id     String
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  
+  type        AccountType
+  status      AccountStatus @default(ACTIVE)
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  // Relations
+  wallets     Wallet[]
+  
+  @@unique([user_id, type])
+  @@index([user_id])
+}
+
+enum AccountType {
+  CASH_ACCOUNT          // EUR-based, fiat
+  AIG_CASH_ACCOUNT      // Ecosystem tokens (AIG$)
+}
+
+enum AccountStatus {
+  ACTIVE
+  FROZEN
+  SUSPENDED
+  CLOSED
+}
+
+model Wallet {
+  id          String      @id @default(cuid())
+  account_id  String
+  account     Account     @relation(fields: [account_id], references: [id], onDelete: Cascade)
+  org_id      String?
+  org         Organization? @relation(fields: [org_id], references: [id], onDelete: SetNull)
+  
+  balance     BigInt      @default(0)  // In cents (EUR) or satoshis (AIG$)
+  currency    Currency
+  
+  last_updated DateTime   @updatedAt
+  
+  // Relations
+  transactions WalletTransaction[]
+  
+  @@unique([account_id])
+  @@index([org_id])
+}
+
+enum Currency {
+  EUR
+  AIG
+}
+
+model WalletTransaction {
+  id          String      @id @default(cuid())
+  user_id     String
+  user        User        @relation(fields: [user_id], references: [id])
+  wallet_id   String
+  wallet      Wallet      @relation(fields: [wallet_id], references: [id], onDelete: Cascade)
+  
+  type        TransactionType
+  amount      BigInt        // In cents (EUR) or satoshis (AIG$)
+  currency    Currency
+  balance_after BigInt
+  
+  description String?
+  reference   String?       // Commission ID, Investment ID, etc.
+  
+  status      TransactionStatus @default(COMPLETED)
+  created_at  DateTime    @default(now())
+  
+  @@index([user_id])
+  @@index([wallet_id])
+  @@index([created_at])
+}
+
+enum TransactionType {
+  DEPOSIT           // Money in
+  WITHDRAWAL        // Money out
+  COMMISSION        // Earned commission
+  MEMBERSHIP_FEE    // Paid membership
+  INVESTMENT        // Investment purchase
+  RETURN            // Investment return
+  CONVERSION        // EUR <-> AIG$
+  CORRECTION        // Admin correction
+  BONUS             // Reward/bonus
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REVERSED
+}
+
+// ============================================================================
+// COMMISSIONS & EARNINGS
+// ============================================================================
+
+model Commission {
+  id          String      @id @default(cuid())
+  user_id     String
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  
+  source_type CommissionSource
+  source_id   String        // Referral ID, Order ID, etc.
+  
+  tier        Int           // 1-10 (affiliate level)
+  level_percent Float        // e.g., 26.0 for L1
+  
+  amount_eur  BigInt        // In cents
+  status      CommissionStatus @default(PENDING)
+  
+  earned_at   DateTime    @default(now())
+  paid_at     DateTime?
+  created_at  DateTime    @default(now())
+  
+  // Relations
+  payout      CommissionPayout?
+  
+  @@index([user_id])
+  @@index([source_type, source_id])
+  @@index([status])
+  @@index([tier])
+}
+
+enum CommissionSource {
+  REFERRAL        // Direct member referral
+  WDM_ORDER       // Marketplace order
+  INVESTMENT      // Investment product commission
+  MEMBERSHIP      // Membership referral
+}
+
+enum CommissionStatus {
+  PENDING
+  APPROVED
+  PAID
+  CANCELLED
+  DISPUTED
+}
+
+model CommissionPayout {
+  id          String      @id @default(cuid())
+  commission_id String
+  commission  Commission  @relation(fields: [commission_id], references: [id], onDelete: Cascade)
+  
+  payout_period DateTime
+  amount_eur  BigInt        // 80% to EUR Cash Account
+  amount_aig  BigInt        // 20% to AIG$ Account
+  
+  status      PayoutStatus @default(PENDING)
+  paid_at     DateTime?
+  created_at  DateTime    @default(now())
+  
+  @@unique([commission_id])
+  @@index([payout_period])
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+model CommissionRule {
+  id          String      @id @default(cuid())
+  tier        MembershipTier
+  level       Int           // 1-10 (affiliate level)
+  percent     Float
+  created_at  DateTime    @default(now())
+  
+  @@unique([tier, level])
+  @@index([tier])
+}
+
+// ============================================================================
+// INVESTMENTS & PORTFOLIO
+// ============================================================================
+
+model Investment {
+  id          String      @id @default(cuid())
+  user_id     String
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  
+  product_type InvestmentProduct
+  amount_eur  BigInt        // In cents
+  currency_used Currency
+  
+  lock_period Int?          // Months (null = liquid)
+  expected_roi Float?
+  
+  started_at  DateTime    @default(now())
+  maturity_at DateTime?
+  returned_at DateTime?
+  
+  status      InvestmentStatus @default(ACTIVE)
+  created_at  DateTime    @default(now())
+  
+  // Relations
+  returns     InvestmentReturn[]
+  
+  @@index([user_id])
+  @@index([product_type])
+  @@index([status])
+  @@index([maturity_at])
+}
+
+enum InvestmentProduct {
+  CRYPTO_MARKET
+  TAGMARKETS
+  AIG_PHONE_SHARES
+  MANAGED_3Y
+  MANAGED_5Y
+  MANAGED_7Y
+  MANAGED_10Y
+}
+
+enum InvestmentStatus {
+  ACTIVE
+  MATURE
+  RETURNED
+  CANCELLED
+  LIQUIDATED
+}
+
+model InvestmentReturn {
+  id          String      @id @default(cuid())
+  investment_id String
+  investment  Investment  @relation(fields: [investment_id], references: [id], onDelete: Cascade)
+  
+  amount_eur  BigInt        // In cents
+  amount_eur_80pct BigInt   // 80% to EUR Cash Account
+  amount_aig_20pct BigInt   // 20% to AIG$ Account
+  
+  return_date DateTime    @default(now())
+  created_at  DateTime    @default(now())
+  
+  @@index([investment_id])
+}
+
+// ============================================================================
+// WDM MARKETPLACE
+// ============================================================================
+
+model WDMProduct {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String
+  description String?
+  price_eur   BigInt        // In cents
+  
+  category    WDMCategory
+  
+  seller_id   String        // Seller profile (external or User ID)
+  status      ProductStatus @default(ACTIVE)
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  // Relations
+  orders      WDMOrder[]
+  reviews     WDMReview[]
+  
+  @@index([category])
+  @@index([seller_id])
+  @@index([status])
+}
+
+enum WDMCategory {
+  LUXURY_VEHICLES
+  ELECTRONICS
+  TRAVEL
+  REAL_ESTATE
+  BUSINESS_SERVICES
+  INVESTMENTS
+  SOFTWARE_TOOLS
+  EXPERIENCES
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  DELISTED
+  ARCHIVED
+}
+
+model WDMOrder {
+  id          String      @id @default(cuid())
+  product_id  String
+  product     WDMProduct  @relation(fields: [product_id], references: [id])
+  
+  buyer_id    String        // Could be User ID or external
+  quantity    Int
+  price_eur   BigInt        // In cents
+  commission_percent Float
+  commission_eur BigInt    // Total commission to redistribute
+  
+  status      OrderStatus @default(PENDING)
+  created_at  DateTime    @default(now())
+  completed_at DateTime?
+  
+  // Relations
+  items       WDMOrderItem[]
+  reviews     WDMReview[]
+  commission_redistribution WDMCommissionRedistribution[]
+  
+  @@index([product_id])
+  @@index([buyer_id])
+  @@index([status])
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+model WDMOrderItem {
+  id          String      @id @default(cuid())
+  order_id    String
+  order       WDMOrder    @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  
+  product_id  String
+  quantity    Int
+  unit_price  BigInt      // In cents
+  total_price BigInt      // In cents
+  
+  @@index([order_id])
+}
+
+model WDMReview {
+  id          String      @id @default(cuid())
+  product_id  String
+  product     WDMProduct  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  order_id    String
+  order       WDMOrder    @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  
+  rating      Int           // 1-5
+  title       String
+  comment     String?
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  @@index([product_id])
+}
+
+model WDMCommissionRedistribution {
+  id          String      @id @default(cuid())
+  order_id    String
+  order       WDMOrder    @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  
+  affiliate_id String      // Member who gets commission
+  level       Int           // 1-10
+  amount_eur  BigInt        // In cents
+  
+  status      PayoutStatus @default(PENDING)
+  created_at  DateTime    @default(now())
+  
+  @@index([order_id])
+  @@index([affiliate_id])
+}
+
+// ============================================================================
+// AI & DIANA
+// ============================================================================
+
+model AIInstance {
+  id          String      @id @default(cuid())
+  org_id      String?
+  org         Organization? @relation(fields: [org_id], references: [id], onDelete: Cascade)
+  dept_id     String?
+  dept        Department? @relation(fields: [dept_id], references: [id], onDelete: SetNull)
+  
+  name        String
+  description String?
+  ai_type     AIType
+  
+  status      AIStatus    @default(ACTIVE)
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  // Relations
+  conversations DianConversation[]
+  memory      DianaCompanyMemory[]
+  
+  @@index([org_id])
+  @@index([dept_id])
+}
+
+enum AIType {
+  MASTER_AI          // Organization-level
+  DEPARTMENT_AI      // Department-level
+  AUTONOMOUS_BOT     // Automated tasks
+  USER_ASSISTANT     // Personal Diana
+}
+
+enum AIStatus {
+  ACTIVE
+  TRAINING
+  INACTIVE
+  ARCHIVED
+}
+
+model DianConversation {
+  id          String      @id @default(cuid())
+  user_id     String
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  ai_instance_id String?
+  ai_instance AIInstance? @relation(fields: [ai_instance_id], references: [id], onDelete: SetNull)
+  
+  title       String?
+  is_archived Boolean     @default(false)
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  // Relations
+  messages    DianaMessage[]
+  
+  @@index([user_id])
+  @@index([ai_instance_id])
+}
+
+model DianaMessage {
+  id          String      @id @default(cuid())
+  conversation_id String
+  conversation DianConversation @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
+  
+  role        MessageRole
+  content     String
+  
+  metadata    Json?
+  created_at  DateTime    @default(now())
+  
+  @@index([conversation_id])
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+}
+
+model DianaPersonalMemory {
+  id          String      @id @default(cuid())
+  user_id     String
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  conversation_id String?
+  
+  key_topics  String[]
+  summary     String?
+  embedding   String?     // Vector stored as JSON for search
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  @@index([user_id])
+}
+
+model DianaCompanyMemory {
+  id          String      @id @default(cuid())
+  ai_instance_id String
+  ai_instance AIInstance @relation(fields: [ai_instance_id], references: [id], onDelete: Cascade)
+  
+  document_name String
+  document_content String
+  category    String?
+  access_level AccessLevel
+  
+  embedding   String?     // Vector stored as JSON
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  @@index([ai_instance_id])
+  @@index([category])
+}
+
+enum AccessLevel {
+  PUBLIC
+  INTERNAL
+  RESTRICTED
+}
+
+model DianaDocument {
+  id          String      @id @default(cuid())
+  user_id     String
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  org_id      String?
+  
+  filename    String
+  file_path   String
+  content_type String
+  extracted_text String?
+  embedding   String?     // Vector stored as JSON
+  
+  uploaded_at DateTime    @default(now())
+  
+  @@index([user_id])
+  @@index([org_id])
+}
+
+model DianaPlatformMemory {
+  id          String      @id @default(cuid())
+  topic       String
+  content     String
+  category    String?
+  priority    Int         @default(0)
+  
+  embedding   String?     // Vector stored as JSON
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  @@index([category])
+  @@index([priority])
+}
+
+// ============================================================================
+// EVENTS (EVENT-DRIVEN ARCHITECTURE)
+// ============================================================================
+
 model Event {
-  id              String    @id @default(cuid())
-  type            String    // mission.created | task.completed | etc
-  aggregateId     String    // Which entity does this concern?
-  aggregateType   String    // 'Mission' | 'Task' | 'Document'
+  id          String      @id @default(cuid())
+  event_type  String
+  aggregate_id String
+  aggregate_type String
   
-  data            String    @db.Text // JSON data for this event
-  metadata        String?   @db.Text // JSON metadata (userId, timestamp, causedBy, etc)
+  payload     Json
+  metadata    Json?
   
-  version         Int       @default(1)
+  created_at  DateTime    @default(now())
   
-  createdAt       DateTime  @default(now())
+  @@index([event_type])
+  @@index([aggregate_type])
+  @@index([created_at])
+}
+
+model EventSubscription {
+  id          String      @id @default(cuid())
+  event_type  String
+  handler     String        // Service/handler name
   
-  @@index([aggregateId])
-  @@index([type])
-  @@index([createdAt])
-  @@map("events")
+  is_active   Boolean     @default(true)
+  created_at  DateTime    @default(now())
+  
+  @@unique([event_type, handler])
+}
+
+model EventLog {
+  id          String      @id @default(cuid())
+  event_id    String
+  
+  handler     String
+  status      EventLogStatus
+  error_msg   String?
+  
+  processed_at DateTime   @default(now())
+  
+  @@index([event_id])
+  @@index([status])
+}
+
+enum EventLogStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  RETRY
+}
+
+model DeadLetterEvent {
+  id          String      @id @default(cuid())
+  event_id    String
+  
+  event_type  String
+  payload     Json
+  
+  error_msg   String?
+  retry_count Int         @default(0)
+  
+  created_at  DateTime    @default(now())
+  
+  @@index([event_type])
 }
 
 // ============================================================================
-// WEBHOOK SUBSCRIPTION MODEL - Extensions and integrations
+// COMPETITION & GROWTH
 // ============================================================================
-model WebhookSubscription {
-  id              String    @id @default(cuid())
-  organizationId  String
+
+model Competition {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  comp_type   CompetitionType
   
-  event           String    // task.completed | mission.created | etc
-  url             String
-  secret          String    // For HMAC signature verification
+  start_date  DateTime
+  end_date    DateTime
   
-  isActive        Boolean   @default(true)
-  retryCount      Int       @default(0)
+  status      CompetitionStatus @default(ACTIVE)
   
-  createdAt       DateTime  @default(now())
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
   
-  @@index([organizationId])
-  @@index([event])
-  @@map("webhook_subscriptions")
+  // Relations
+  entries     CompetitionEntry[]
+  leaderboards Leaderboard[]
+  
+  @@index([comp_type])
+  @@index([status])
+}
+
+enum CompetitionType {
+  MONTHLY_TIER_RISE
+  FAST_TRACKER
+  QUARTERLY_RANKING
+  ANNUAL_AWARDS
+}
+
+enum CompetitionStatus {
+  UPCOMING
+  ACTIVE
+  CLOSED
+  ARCHIVED
+}
+
+model CompetitionEntry {
+  id          String      @id @default(cuid())
+  competition_id String
+  competition Competition @relation(fields: [competition_id], references: [id], onDelete: Cascade)
+  
+  user_id     String
+  score       Int
+  
+  entered_at  DateTime    @default(now())
+  
+  @@unique([competition_id, user_id])
+  @@index([competition_id])
+}
+
+model Leaderboard {
+  id          String      @id @default(cuid())
+  competition_id String
+  competition Competition @relation(fields: [competition_id], references: [id], onDelete: Cascade)
+  
+  rank        Int
+  user_id     String
+  score       Int
+  
+  updated_at  DateTime    @updatedAt
+  
+  @@unique([competition_id, rank])
+  @@index([competition_id])
+}
+
+model Analytics {
+  id          String      @id @default(cuid())
+  user_id     String?
+  org_id      String?
+  
+  metric_type String
+  metric_value Float
+  
+  period_date DateTime
+  created_at  DateTime    @default(now())
+  
+  @@index([user_id])
+  @@index([org_id])
+  @@index([metric_type])
 }
 
 // ============================================================================
-// UPDATE USER MODEL - Add organization membership
+// MODULAR SYSTEM
 // ============================================================================
-// Note: User model already defined above. Add these relations:
+
+model Module {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  version     String
+  
+  status      ModuleStatus @default(DEVELOPMENT)
+  description String?
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  // Relations
+  config      ModuleConfig?
+  
+  @@index([status])
+}
+
+enum ModuleStatus {
+  DEVELOPMENT
+  RELEASE
+  ADOPTION
+  OPERATION
+  UPGRADE
+  DISABLE
+  SUNSET
+}
+
+model ModuleConfig {
+  id          String      @id @default(cuid())
+  module_id   String
+  module      Module      @relation(fields: [module_id], references: [id], onDelete: Cascade)
+  
+  config_key  String
+  config_value String
+  
+  @@unique([module_id, config_key])
+  @@index([module_id])
+}
+
+// ============================================================================
+// PERMISSIONS & ROLES
+// ============================================================================
+
+model Role {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  description String?
+  
+  created_at  DateTime    @default(now())
+  
+  // Relations
+  permissions RolePermission[]
+  
+  @@index([name])
+}
+
+model Permission {
+  id          String      @id @default(cuid())
+  resource    String
+  action      String
+  description String?
+  
+  @@unique([resource, action])
+}
+
+model RolePermission {
+  id          String      @id @default(cuid())
+  role_id     String
+  role        Role        @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  permission_id String
+  permission  Permission  @relation("permission", fields: [permission_id], references: [id], onDelete: Cascade)
+  
+  @@unique([role_id, permission_id])
+  @@index([role_id])
+}
+
+// ============================================================================
+// ADDRESSES & CONTACT
+// ============================================================================
+
+model Address {
+  id          String      @id @default(cuid())
+  user_id     String?
+  user        User?       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  org_id      String?
+  org         Organization? @relation(fields: [org_id], references: [id], onDelete: Cascade)
+  
+  address_type AddressType
+  street      String
+  city        String
+  region      String
+  postal_code String
+  country     String
+  
+  is_default  Boolean     @default(false)
+  created_at  DateTime    @default(now())
+  
+  @@index([user_id])
+  @@index([org_id])
+}
+
+enum AddressType {
+  HOME
+  WORK
+  BILLING
+  SHIPPING
+}
+
+// ============================================================================
+// EXCHANGE RATE & CURRENCY
+// ============================================================================
+
+model ExchangeRate {
+  id          String      @id @default(cuid())
+  from_currency Currency
+  to_currency Currency
+  rate        Float
+  
+  valid_from  DateTime    @default(now())
+  valid_to    DateTime?
+  
+  @@unique([from_currency, to_currency, valid_from])
+  @@index([valid_from])
+}

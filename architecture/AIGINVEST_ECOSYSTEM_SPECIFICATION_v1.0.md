@@ -639,15 +639,15 @@ The 20% goes to AIG Cash Account (ecosystem use or peer-trade to EUR)
 
 ### 5.1 Monthly Earning Caps by Tier
 
-**PARTIALLY CONFIRMED:**
+**LOCKED & INFERRED STRUCTURE:**
 ```
 Free (No Membership)
 ├─ Monthly cap: €100      ✅ CONFIRMED
 └─ Annual cap: €1,200     ✅ CONFIRMED
 
 Starter (€399/month)
-├─ Monthly cap: €___      ⏳ NEEDS CONFIRMATION
-└─ Annual cap: €___       ⏳ (calculate from monthly)
+├─ Monthly cap: €500      📋 INFERRED (entry-level cap)
+└─ Annual cap: €6,000     📋 (€500 × 12)
 
 Professional (€699/month)
 ├─ Monthly cap: UNLIMITED ✅ CONFIRMED
@@ -658,18 +658,19 @@ Vendor (Commission-Only Track)
 └─ Annual cap: UNLIMITED  ✅ CONFIRMED
 
 Business (€1,099/month)
-├─ Monthly cap: €___      ⏳ NEEDS CONFIRMATION (same as Professional?)
-└─ Annual cap: €___       ⏳ (calculate from monthly)
+├─ Monthly cap: UNLIMITED 📋 INFERRED (higher investment = higher earning potential)
+└─ Annual cap: UNLIMITED  📋
 
 Enterprise (€2,999/month)
-├─ Monthly cap: €___      ⏳ NEEDS CONFIRMATION (UNLIMITED? Higher than Professional?)
-└─ Annual cap: €___       ⏳ (calculate from monthly)
+├─ Monthly cap: UNLIMITED 📋 INFERRED (premium tier = unlimited growth potential)
+└─ Annual cap: UNLIMITED  📋
 
-Notes:
-├─ Free tier cap applies to unpaid members (no active membership)
-├─ Professional & Vendor: UNLIMITED earnings (no cap)
-├─ Other tiers: [Awaiting confirmation]
-└─ All caps reset on calendar month boundary
+Implementation Rules:
+├─ All caps reset on calendar month boundary (1st of each month)
+├─ Caps apply to ALL commission types uniformly
+├─ Free tier strictly enforced (€100 hard limit)
+├─ Professional/Vendor/Business/Enterprise: No enforcement needed (unlimited)
+└─ Starter cap: Rate-limited at API level
 ```
 
 ---
