@@ -53,6 +53,27 @@ export default function AuthPage() {
     }, 1500)
   }
 
+  const handleInvitationCodeJoin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    
+    // In a real app, validate the invitation code against the backend
+    // For now, any non-empty code is accepted
+    if (formData.invitationCode.trim()) {
+      setTimeout(() => {
+        // Save user data to localStorage
+        localStorage.setItem('userEmail', formData.email)
+        localStorage.setItem('userPackage', 'starter')
+        localStorage.setItem('invitedBy', formData.invitationCode)
+        // Redirect to dashboard where they can set their nickname
+        window.location.href = '/dashboard'
+        setIsLoading(false)
+      }, 1500)
+    } else {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div
       style={{
@@ -439,10 +460,10 @@ export default function AuthPage() {
 
           <div className="space-y-2">
             <h2 className="text-3xl font-bold">Have an Invitation?</h2>
-            <p style={{ color: '#e8e8d0' }}>Enter your invitation code to join</p>
+            <p style={{ color: '#e8e8d0' }}>Enter your invitation code to join AIGINVEST</p>
           </div>
 
-          <form onSubmit={handleSignUp} className="space-y-4">
+          <form onSubmit={handleInvitationCodeJoin} className="space-y-4">
             <div>
               <label style={{ color: '#f5f5dc' }} className="block text-sm font-semibold mb-2">
                 Invitation Code
@@ -458,32 +479,10 @@ export default function AuthPage() {
                 <input
                   type="text"
                   value={formData.invitationCode}
-                  onChange={(e) => setFormData({ ...formData, invitationCode: e.target.value })}
-                  placeholder="Enter your code"
+                  onChange={(e) => setFormData({ ...formData, invitationCode: e.target.value.toUpperCase() })}
+                  placeholder="e.g., A1B2C3D4"
                   className="w-full pl-10 pr-4 py-2 bg-transparent text-[#f5f5dc] placeholder-[#e8e8d0]/50 focus:outline-none uppercase tracking-wider"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label style={{ color: '#f5f5dc' }} className="block text-sm font-semibold mb-2">
-                Full Name
-              </label>
-              <div
-                style={{
-                  backgroundColor: 'rgba(61, 44, 53, 0.5)',
-                  borderColor: '#d4af37'
-                }}
-                className="relative border rounded-lg"
-              >
-                <User size={18} style={{ color: '#d4af37' }} className="absolute left-3 top-3" />
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Your name"
-                  className="w-full pl-10 pr-4 py-2 bg-transparent text-[#f5f5dc] placeholder-[#e8e8d0]/50 focus:outline-none"
+                  maxLength={8}
                   required
                 />
               </div>
@@ -514,14 +513,23 @@ export default function AuthPage() {
 
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || !formData.invitationCode.trim()}
               style={{
                 backgroundColor: '#d4af37',
                 color: '#1a0f15'
               }}
               className="w-full py-3 rounded-lg font-semibold hover:bg-[#e8d4a2] transition disabled:opacity-50"
             >
-              {isLoading ? 'Verifying Code...' : 'Verify & Continue'}
+              {isLoading ? 'Joining...' : 'Join with Invitation Code'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setAuthMode('signin')}
+              style={{ color: '#d4af37' }}
+              className="w-full text-sm hover:text-[#e8d4a2] transition"
+            >
+              Already have an account? Sign In
             </button>
           </form>
         </div>

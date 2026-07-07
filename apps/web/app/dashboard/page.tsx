@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { LogOut, ChevronRight, Check, Lock, Star, Zap } from 'lucide-react'
+import { LogOut, ChevronRight, Check, Lock, Star, Zap, Copy } from 'lucide-react'
 
 interface Package {
   id: string
@@ -119,6 +119,8 @@ export default function DashboardPage() {
   const [showUsernameForm, setShowUsernameForm] = useState(false)
   const [nicknameInput, setNicknameInput] = useState('')
   const [isLoadingUsername, setIsLoadingUsername] = useState(false)
+  const [invitationCode, setInvitationCode] = useState('')
+  const [copiedCode, setCopiedCode] = useState(false)
 
   useEffect(() => {
     // Get user name from localStorage
@@ -128,6 +130,16 @@ export default function DashboardPage() {
     } else {
       // Show nickname form if user hasn't set one yet
       setShowUsernameForm(true)
+    }
+
+    // Generate or retrieve invitation code
+    const savedCode = localStorage.getItem('userInvitationCode')
+    if (savedCode) {
+      setInvitationCode(savedCode)
+    } else {
+      const newCode = Math.random().toString(36).substring(2, 10).toUpperCase()
+      localStorage.setItem('userInvitationCode', newCode)
+      setInvitationCode(newCode)
     }
   }, [])
 
@@ -150,10 +162,17 @@ export default function DashboardPage() {
     }, 500)
   }
 
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(invitationCode)
+    setCopiedCode(true)
+    setTimeout(() => setCopiedCode(false), 2000)
+  }
+
   const handleSignOut = () => {
     localStorage.removeItem('userEmail')
     localStorage.removeItem('userName')
     localStorage.removeItem('userPackage')
+    localStorage.removeItem('userInvitationCode')
     window.location.href = '/auth'
   }
 
@@ -216,8 +235,8 @@ export default function DashboardPage() {
         {/* Header - only show after username is set */}
         {!showUsernameForm && (
           <>
-        {/* Header */}
-        <div className="flex justify-between items-start mb-12">
+            {/* Header */}
+            <div className="flex justify-between items-start mb-12">
           <div>
             <h1 className="text-4xl font-bold mb-2">Welcome, {userName}! 👋</h1>
             <p style={{ color: '#e8e8d0' }} className="text-lg">
@@ -248,6 +267,46 @@ export default function DashboardPage() {
           <p style={{ color: '#e8d4a2' }} className="text-sm">
             💡 <strong>No membership fees.</strong> You only pay for the apps you use. Bigger packages include bonus apps and higher earning capabilities.
           </p>
+        </div>
+
+        {/* Invitation Code Section */}
+        <div
+          style={{
+            backgroundColor: 'rgba(212, 175, 55, 0.1)',
+            borderColor: '#d4af37'
+          }}
+          className="border rounded-lg p-6 mb-12"
+        >
+          <h3 style={{ color: '#d4af37' }} className="font-bold text-lg mb-3">
+            📨 Invite Others to AIGINVEST
+          </h3>
+          <p style={{ color: '#e8e8d0' }} className="text-sm mb-4">
+            Share your unique invitation code with friends and family. They can use it to join and start their journey with AIGINVEST.
+          </p>
+          <div className="flex items-center gap-3 flex-wrap">
+            <div
+              style={{
+                backgroundColor: 'rgba(26, 15, 21, 0.8)',
+                borderColor: '#d4af37'
+              }}
+              className="border rounded-lg px-6 py-3 flex items-center gap-4"
+            >
+              <code style={{ color: '#d4af37' }} className="text-xl font-bold tracking-wider">
+                {invitationCode}
+              </code>
+              <button
+                onClick={handleCopyCode}
+                style={{
+                  backgroundColor: copiedCode ? '#10b981' : '#d4af37',
+                  color: '#1a0f15'
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition hover:opacity-90"
+              >
+                <Copy size={16} />
+                {copiedCode ? 'Copied!' : 'Copy'}
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Packages Grid */}
