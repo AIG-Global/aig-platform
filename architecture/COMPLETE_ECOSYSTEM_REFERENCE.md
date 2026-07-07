@@ -458,6 +458,561 @@ Exchange rate: Self-corrects via supply/demand
 
 ---
 
+## PART 6.5: Wallet Operations & Member Transfers (LOCKED)
+
+### Member Wallet Architecture
+
+Every member has **exactly two accounts** (immutable):
+
+#### 1. Cash Account (EUR)
+**Purpose:** Holding account for real money
+
+**Functions:**
+- Receives 80% of all commissions, bonuses, prizes, and rewards
+- Receives money members transfer into the ecosystem (deposits)
+- Holds funds until member decides what to do with them
+- **Cannot** be used directly for purchases or investments
+
+**Key Constraint:** Must first convert to AIG Cash before spending inside ecosystem
+
+#### 2. AIG Cash Account (AIG$)
+**Purpose:** Only spending account inside AIGINVEST
+
+**Functions:**
+- Receives 20% of all commissions, bonuses, prizes, and rewards
+- Used for all ecosystem purchases (apps, services, marketplace, investments)
+- Used for membership upgrades
+- Used for gift cards
+- Spendable only inside AIGINVEST ecosystem
+
+---
+
+### Joining Process
+
+When a new member joins AIGINVEST:
+
+```
+Step 1: Fiat Payment
+├─ Credit card, bank transfer, or other payment method
+├─ Joins as Free/Starter/Professional/Business/Platinum
+└─ Membership activated immediately
+
+Step 2: Wallet Creation
+├─ Cash Account created (EUR, 1:1 fixed)
+├─ AIG Cash Account created (AIG$, market-driven)
+└─ Both active and ready to use
+
+Key Point: Membership fee is NOT debited from either account
+(Member doesn't yet have ecosystem funds to spend)
+```
+
+---
+
+### Rewards Distribution (Automatic 80/20 Split)
+
+Every earning event automatically divides into Cash Account and AIG Cash Account:
+
+```
+Commission/Bonus/Prize Example:
+├─ Total earned: €100
+├─ → 80% to Cash Account: €80 (real money value)
+├─ → 20% to AIG Cash Account: €20 (spending power)
+└─ Automatic, no manual split required
+
+Examples:
+├─ €100 commission → €80 Cash + €20 AIG$
+├─ €50 bonus → €40 Cash + €10 AIG$
+├─ €25 game prize → €20 Cash + €5 AIG$
+└─ €1,000 leadership bonus → €800 Cash + €200 AIG$
+```
+
+**Rule:** No exceptions. Automatic 80/20 split hard-coded into commission engine.
+
+---
+
+### Depositing Fiat Currency
+
+Members can deposit real money (EUR) into their Cash Account:
+
+```
+Bank Transfer / Credit Card
+    ↓
+  EUR Deposit
+    ↓
+Cash Account (EUR)
+    ↓
+Cannot spend directly (must convert first)
+    ↓
+Convert to AIG Cash
+    ↓
+Ready to spend in ecosystem
+```
+
+**Key Point:** Money in Cash Account is NOT immediately spendable. Conversion to AIG Cash is required.
+
+---
+
+### Converting Cash → AIG Cash (Manual)
+
+Members manually convert Cash Account balance to AIG Cash at **1:1 fixed rate**:
+
+```
+Member Action: "Convert €100 to AIG Cash"
+    ↓
+System debits €100 from Cash Account
+    ↓
+System credits 100 AIG$ to AIG Cash Account
+    ↓
+Transaction recorded (conversion_cash_to_aigcash_manual)
+    ↓
+Completed immediately (no delay)
+```
+
+**Use Cases:**
+- Convert just enough for a specific purchase
+- Convert in bulk for monthly spending
+- Convert incrementally to manage exposure
+
+---
+
+### Internal Transfers (Member to Member)
+
+One of the platform's core strengths: **members can transfer AIG Cash directly to each other**.
+
+#### Transfer Mechanics
+
+```
+Member A (Sender)
+    ↓
+Initiates Transfer of X AIG$
+    ↓
+Platform validates:
+├─ Sender has sufficient balance
+├─ Recipient exists and is active
+└─ Transfer amount is valid
+
+    ↓
+Transaction created + recorded
+    ↓
+AIG Cash debited from Member A
+    ↓
+AIG Cash credited to Member B
+    ↓
+Complete audit trail stored
+```
+
+#### Transfer Features
+
+- **Instant settlement** (real-time)
+- **No fees** (member-to-member transfers are free)
+- **Full traceability** (complete transaction history)
+- **Reversible by support** (only for fraud/error resolution)
+- **Optional memo** (message from sender to recipient)
+
+#### Transfer Use Cases
+
+```
+Team Commissions
+├─ Leader transfers AIG$ to team members
+├─ No intermediary payment processor needed
+└─ Direct value distribution
+
+Gifts & Bonuses
+├─ Member sends AIG$ as thank you
+├─ Member sends as team incentive
+└─ Member sends as prize distribution
+
+Marketplace Liquidation
+├─ Buyer pays seller via AIG$ transfer
+├─ No marketplace intermediary takes fee
+└─ P2P marketplace transactions
+
+Informal Lending
+├─ Member loans AIG$ to another member
+├─ Recorded in blockchain for transparency
+└─ Community trust mechanism
+```
+
+---
+
+### Gift Cards (AIG Cash Only)
+
+Gift cards are purchased using AIG Cash and can be sent to members or non-members:
+
+```
+Member A: Has 100 AIG$
+    ↓
+Purchases gift card for 50 AIG$
+    ↓
+AIG$ debited from Account A
+    ↓
+Gift card created (recipient TBD)
+    ↓
+Can be sent to:
+├─ Another member (by email/username)
+├─ Non-member (by email only)
+└─ Recipient receives code to redeem
+
+    ↓
+Recipient redeems → 50 AIG$ added to their account
+```
+
+**Features:**
+- Denominations: 10, 25, 50, 100, 500 AIG$
+- Recipient doesn't need account to receive
+- Expires if not redeemed in 12 months
+- Can be purchased with personal AIG$ or from seller commissions
+
+---
+
+### Marketplace: AIG Cash ↔ EUR Conversion (Peer-to-Peer)
+
+Unlike manual Cash→AIG Cash conversion (fixed 1:1), the **peer-to-peer marketplace determines AIG$ price dynamically** based on supply and demand.
+
+#### How It Works
+
+```
+Member A (Seller): Lists 1,000 AIG$ at €0.92/unit = €920 total
+    ↓
+Order visible in marketplace (open)
+    ↓
+Member B (Buyer): Sees order, wants to buy
+    ↓
+Member B purchases: 1,000 AIG$ for €920
+    ↓
+Platform transfers AIG$ to Member B
+    ↓
+Platform transfers EUR to Member A (minus 2% fee)
+    ↓
+Seller receives: €920 - €18.40 = €901.60
+    ↓
+Buyer receives: 1,000 AIG$
+```
+
+#### Pricing Mechanics
+
+- **Market-driven:** Price determined by all buyers/sellers, not by platform
+- **Supply/demand:** Price rises when demand > supply, falls when supply > demand
+- **Self-correcting:** Members naturally arbitrage price discrepancies
+- **Transparent:** All orders visible, everyone sees current market price
+
+#### Platform Fee Structure
+
+- **Seller pays 2%** (buyer pays nothing)
+- **EUR transfers only** (not AIG$ transfers)
+- **Example:**
+  - Seller lists 1,000 AIG$ at €1.00 = €1,000
+  - Buyer purchases
+  - Seller receives: €1,000 - €20 (2% fee) = €980
+  - Buyer receives: 1,000 AIG$ (free)
+
+#### Marketplace Order Types
+
+```
+Sell Orders (I want to convert AIG$ → EUR)
+├─ Create: "Sell 500 AIG$ at €0.95/unit"
+├─ Status: Open (waiting for buyer)
+├─ Settlement: When buyer accepts
+└─ Fee: 2% to platform (seller pays)
+
+Buy Orders (I want to convert EUR → AIG$)
+├─ Create: "Buy 500 AIG$ at €0.97/unit"
+├─ Status: Open (waiting for seller)
+├─ Settlement: When seller accepts
+└─ Fee: 0% (buyer pays nothing)
+
+Market Orders (Accept current best price)
+├─ Instant execution
+├─ No waiting for match
+├─ Slight price premium/discount vs limit orders
+└─ Fast conversion when needed
+```
+
+---
+
+### Gift Cards & Membership Upgrades
+
+#### Gift Cards (Repeat)
+- Purchased with AIG Cash (no EUR option)
+- Can be sent to members or non-members
+- Recipient gets AIG$ when redeemed
+- 12-month expiration
+
+#### Membership Upgrades
+- Always purchased with AIG Cash (not Cash Account EUR)
+- Instant activation
+- Can downgrade anytime (pro-rata refund to AIG Cash Account)
+
+**Upgrade Flow:**
+```
+Member: Current Tier = Starter (€399/month)
+    ↓
+Purchases Professional tier upgrade (€699/month)
+    ↓
+AIG Cash debited: 699 AIG$ (equivalent to €699)
+    ↓
+Tier upgraded immediately
+    ↓
+Additional benefits activated
+    ↓
+Can downgrade anytime (receives pro-rata refund)
+```
+
+---
+
+### Wallet Conversion Summary
+
+```
+THREE conversion paths:
+
+1. EXTERNAL → CASH ACCOUNT (Fiat deposits)
+   EUR fiat → Deposited to Cash Account
+   └─ User initiated, via bank/card
+
+2. CASH → AIG CASH (Manual conversion, 1:1 fixed)
+   EUR from Cash Account → AIG$ to AIG Cash Account
+   └─ User initiated, anytime, immediate, fee-free
+
+3. AIG CASH ↔ EUR (Peer-to-peer marketplace, market prices)
+   AIG$ ↔ EUR at market rate (2% fee on seller)
+   └─ User initiated, order matching, price discovery
+
+These three paths give members complete flexibility:
+├─ Deposit fiat at any time
+├─ Convert to AIG$ at fixed 1:1 rate whenever ready
+├─ Exchange AIG$ back to EUR at market prices
+├─ Transfer AIG$ directly to other members (free, instant)
+└─ Full control over cash flow
+```
+
+---
+
+### Wallet APIs
+
+```
+Account Information
+GET /api/v1/accounts
+  Returns: Both accounts with balances
+  Response: {
+    accounts: [
+      {accountType: "cash_account", balance: €5,000},
+      {accountType: "aig_cash_account", balance: €1,200}
+    ]
+  }
+
+GET /api/v1/accounts/{accountType}/transactions
+  Returns: Transaction history (deposits, conversions, transfers)
+  Response: [transaction records with timestamps]
+
+Deposits
+POST /api/v1/accounts/deposits
+  Params: amount, paymentMethod (card|bank|crypto)
+  Returns: {depositId, status: "pending"|"completed"}
+  Webhook: deposit.completed
+
+Manual Conversion (Cash → AIG$, 1:1)
+POST /api/v1/accounts/convert
+  Params: fromAccountType, toAccountType, amount
+  Returns: {conversionId, fromAmount, toAmount, status}
+  Example: Convert 100 EUR → 100 AIG$ (fixed 1:1)
+
+Internal Transfers (Member to Member)
+POST /api/v1/transfers
+  Params: recipientId, amount (AIG$), memo (optional)
+  Returns: {transferId, status: "pending"|"completed"}
+  Webhook: transfer.completed
+
+GET /api/v1/transfers
+  Returns: [all transfers sent and received]
+  Response: [{sender, recipient, amount, timestamp, memo}]
+
+Gift Cards
+POST /api/v1/giftcards
+  Params: amount (AIG$), recipientEmail (optional)
+  Returns: {giftcardCode, balance}
+
+POST /api/v1/giftcards/{code}/redeem
+  Returns: {balance, status: "redeemed"}
+
+Marketplace (AIG$ ↔ EUR)
+GET /api/v1/marketplace/orders
+  Params: orderType (buy|sell), status, limit
+  Returns: [all open orders with prices]
+
+POST /api/v1/marketplace/orders
+  Params: orderType (buy|sell), quantity, pricePerUnit
+  Returns: {orderId, status: "open"}
+
+POST /api/v1/marketplace/orders/{orderId}/accept
+  Returns: {transactionId, status: "completed"}
+
+GET /api/v1/marketplace/price
+  Returns: {currentMarketPrice: €0.95, high24h: €0.98, low24h: €0.91}
+```
+
+---
+
+### Member Dashboard - Account Overview
+
+Every member sees a simple, unified dashboard showing only the essential information:
+
+```
+┌─────────────────────────────────────────┐
+│           MY ACCOUNTS                   │
+├─────────────────────────────────────────┤
+│                                         │
+│  Cash Account              €1,245.80    │
+│  (Real money, holding)                  │
+│                                         │
+│  AIG Cash Account          3,820 AIG$   │
+│  (Spending power)                       │
+│                                         │
+├─────────────────────────────────────────┤
+│  Available Commission      €487.50      │
+│  (Pending earnings)                     │
+│                                         │
+└─────────────────────────────────────────┘
+
+Quick Actions:
+├─ Deposit Money (to Cash Account)
+├─ Convert to AIG Cash (at 1:1 fixed)
+├─ Send to Member (instant transfer)
+├─ View Marketplace (P2P exchange)
+├─ Transaction History
+└─ Settings
+```
+
+**Key Design Principle:** Simplicity. Members see only what they need:
+- How much real money (EUR) they're holding
+- How much spending power (AIG$) they have
+- How much commission is pending
+
+**Available Commission (Pending Earnings):**
+- Earned but not yet approved/paid
+- Shows when it will be approved (usually 24-48 hours)
+- Automatically splits 80/20 when paid
+- Can see breakdown by tier/level
+
+---
+
+### Wallet Operations UI Components
+
+#### Account Card
+```
+Cash Account                  €1,245.80
+├─ Balance type: Real money
+├─ Purpose: Holding vault
+├─ Action: [Deposit Money] [Convert to AIG$]
+└─ Last transaction: Deposit +€500 (2 hours ago)
+
+AIG Cash Account             3,820 AIG$
+├─ Balance type: Spending power
+├─ Purpose: Ecosystem only
+├─ Action: [Send to Member] [Marketplace]
+└─ Last transaction: Purchase -€25 (30 mins ago)
+```
+
+#### Quick Transfer Widget
+```
+Send AIG Cash to a Member
+
+Recipient: [Search by name/email ▼]
+Amount: [_______] AIG$
+Memo: [Optional message...]
+
+[Send] [Cancel]
+
+Recent Recipients:
+├─ John Smith
+├─ Jane Doe
+└─ Team Lead
+```
+
+#### Conversion Tool (Manual 1:1)
+```
+Convert Cash to AIG Cash
+
+From: Cash Account (EUR)
+Available: €1,245.80
+
+To: AIG Cash Account (AIG$)
+Current holdings: 3,820 AIG$
+
+Amount to convert: [_______] EUR
+├─ Minimum: €1
+├─ Maximum: €1,245.80
+└─ Rate: 1 EUR = 1 AIG$ (fixed)
+
+[Convert] [Cancel]
+
+Note: Conversion is immediate and permanent.
+```
+
+#### Transaction History
+```
+Recent Transactions (Last 30 Days)
+
+Date          Type               Amount      Balance
+─────────────────────────────────────────────────────
+Today         Commission paid    +€80        €1,245.80
+              (80% to Cash)      +€20 AIG$
+Today         Deposit            +€500       €1,165.80
+2 days ago    Marketplace sale   -€25        €665.80
+2 days ago    Transfer sent      -€100 AIG$  3,820 AIG$
+              to Jane Doe
+3 days ago    Membership paid    -€399 AIG$  3,920 AIG$
+
+[Filter] [Export CSV] [View Details]
+```
+
+#### Marketplace Browser
+```
+AIG$ to EUR Conversion (P2P Marketplace)
+
+Current Market Price: €0.95 per AIG$
+
+Buy Orders (I want EUR, they want AIG$)
+├─ 500 AIG$ at €0.94 (lowest price)
+├─ 1,000 AIG$ at €0.95 (market)
+└─ 2,000 AIG$ at €0.96 (premium)
+
+Sell Orders (I want AIG$, they want EUR)
+├─ 1,000 AIG$ at €0.96 (highest price)
+├─ 2,000 AIG$ at €0.95 (market)
+└─ 5,000 AIG$ at €0.94 (discount)
+
+[Create Sell Order] [Create Buy Order]
+
+Price Chart (Last 7 days)
+└─ High: €0.98 | Low: €0.91 | Avg: €0.94
+```
+
+---
+
+### Account Security Features
+
+**Two-Factor Authentication:**
+- SMS or authenticator app
+- Required for: deposits, transfers >1,000 AIG$, marketplace orders >€500
+
+**Transaction Limits:**
+- Daily withdrawal: €5,000 (adjustable)
+- Daily transfer: 50,000 AIG$ (adjustable)
+- Monthly deposit: €50,000 (adjustable)
+
+**Fraud Protection:**
+- All transfers reviewed by machine learning
+- Suspicious activity flags for manual review
+- Reversible transfers within 24 hours (if flagged)
+- Full transaction audit trail
+
+**Account Recovery:**
+- Email-based account recovery
+- Backup codes (10 one-time recovery codes)
+- Support team manual recovery (KYC verification required)
+
+---
+
 ## PART 7: Investment Services & Equity Access
 
 ### Investment Opportunities for Members
