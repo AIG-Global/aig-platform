@@ -27,6 +27,7 @@ model User {
   phone_number          String?
   date_of_birth         DateTime?
   nationality           String?
+  language              Language    @default(ENGLISH)
   
   // Account status
   status                UserStatus  @default(ACTIVE)
@@ -100,6 +101,49 @@ enum UserStatus {
   SUSPENDED
   BANNED
   DELETED
+}
+
+enum Language {
+  // Default & Western
+  ENGLISH
+  GERMAN
+  FRENCH
+  SPANISH
+  
+  // Southern Europe & Russia
+  RUSSIAN
+  UKRAINIAN
+  POLISH
+  CZECH
+  ROMANIAN
+  
+  // Asia
+  CHINESE_SIMPLIFIED
+  CHINESE_TRADITIONAL
+  JAPANESE
+  KOREAN
+  THAI
+  VIETNAMESE
+  INDONESIAN
+  TAGALOG
+  
+  // India
+  HINDI
+  TAMIL
+  TELUGU
+  KANNADA
+  MARATHI
+  BENGALI
+  
+  // Africa
+  SWAHILI
+  AMHARIC
+  YORUBA
+  IGBO
+  
+  // South America
+  PORTUGUESE_BRAZILIAN
+  SPANISH_LATIN_AMERICAN
 }
 
 model AuthToken {

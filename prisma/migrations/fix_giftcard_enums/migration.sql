@@ -1,8 +1,16 @@
--- CreateEnum PackageType  
-CREATE TYPE "PackageType" AS ENUM ('STARTER', 'STARTUP', 'PROFESSIONAL');
+-- CreateEnum PackageType (if not exists)  
+DO $$ BEGIN
+  CREATE TYPE "PackageType" AS ENUM ('STARTER', 'STARTUP', 'PROFESSIONAL');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
 
 -- CreateEnum GiftCardStatus
-CREATE TYPE "GiftCardStatus" AS ENUM ('ACTIVE', 'REDEEMED', 'EXPIRED', 'CANCELLED');
+DO $$ BEGIN
+  CREATE TYPE "GiftCardStatus" AS ENUM ('ACTIVE', 'REDEEMED', 'EXPIRED', 'CANCELLED');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
 
 -- Drop old table and recreate with proper types
 DROP TABLE IF EXISTS "GiftCard";
