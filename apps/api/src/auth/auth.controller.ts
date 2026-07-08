@@ -11,7 +11,7 @@ export class AuthController {
    * MVP: no password required — identity is email-based
    */
   @Post('login')
-  async login(@Body() body: { email: string; displayName?: string }) {
+  async login(@Body() body: { email: string; first_name?: string }) {
     const email = body.email?.trim().toLowerCase()
     if (!email) {
       throw new Error('Email is required')
@@ -20,22 +20,23 @@ export class AuthController {
     const user = await this.prisma.user.upsert({
       where: { email },
       update: {
-        lastLoginAt: new Date(),
-        ...(body.displayName && { displayName: body.displayName }),
+        last_login: new Date(),
+        ...(body.first_name && { first_name: body.first_name }),
       },
       create: {
         email,
-        displayName: body.displayName || email.split('@')[0],
-        lastLoginAt: new Date(),
+        first_name: body.first_name || email.split('@')[0],
+        last_login: new Date(),
+        password_hash: 'oauth', // OAuth placeholder
       },
     })
 
     return {
       id: user.id,
       email: user.email,
-      displayName: user.displayName,
-      createdAt: user.createdAt,
-      lastLoginAt: user.lastLoginAt,
+      first_name: user.first_name,
+      created_at: user.created_at,
+      last_login: user.last_login,
     }
   }
 
@@ -56,8 +57,8 @@ export class AuthController {
     return {
       id: user.id,
       email: user.email,
-      displayName: user.displayName,
-      createdAt: user.createdAt,
+      first_name: user.first_name,
+      created_at: user.created_at,
     }
   }
 }

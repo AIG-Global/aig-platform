@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common'
 import { REQUEST } from '@nestjs/core'
-import { PrismaService } from '../prisma.service'
+import { PrismaService } from '../prisma.service.js'
 import type { Request } from 'express'
 
 interface AuditAction {

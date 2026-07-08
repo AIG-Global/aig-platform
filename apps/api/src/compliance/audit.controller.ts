@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common'
-import { AuditService } from './audit.service'
+import { AuditService } from './audit.service.js'
 import { AuthGuard } from '@nestjs/passport'
 
-@Controller('api/compliance/audit')
+@Controller('compliance/audit')
 @UseGuards(AuthGuard('jwt'))
 export class AuditController {
   constructor(private audit: AuditService) {}

@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Param, UseGuards, BadRequestException } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
-import { PrivacyService } from './privacy.service'
+import { PrivacyService } from './privacy.service.js'
 
-@Controller('api/compliance/privacy')
+@Controller('compliance/privacy')
 @UseGuards(AuthGuard('jwt'))
 export class PrivacyController {
   constructor(private privacy: PrivacyService) {}
