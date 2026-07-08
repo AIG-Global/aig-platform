@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "نظام تشغيل الأعمال المدعوم بالذكاء الاصطناعي",
+    "language": "اللغة",
+    "selectLanguage": "اختر اللغة بتاعتك",
+    "detectingLocation": "جاري الكشف عن موقعك...",
+    "welcome": "أهلا وسهلا في AIGINVEST",
+    "menu": {
+      "home": "الرئيسية",
+      "dashboard": "لوحة التحكم",
+      "marketplace": "السوق",
+      "compliance": "الامتثال",
+      "settings": "الإعدادات",
+      "profile": "الملف الشخصي",
+      "logout": "خروج",
+      "login": "دخول",
+      "signup": "إنشاء حساب"
+    },
+    "buttons": {
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "continue": "متابعة",
+      "next": "التالي",
+      "back": "رجوع",
+      "submit": "إرسال",
+      "delete": "حذف",
+      "edit": "تعديل",
+      "copy": "نسخ",
+      "download": "تحميل",
+      "upload": "رفع",
+      "export": "تصدير"
+    },
+    "footer": {
+      "about": "عن",
+      "contact": "اتصل",
+      "privacy": "سياسة الخصوصية",
+      "terms": "شروط الخدمة",
+      "compliance": "الامتثال",
+      "copyright": "© 2026 AIG Global. جميع الحقوق محفوظة."
+    }
+  },
+  "auth": {
+    "login": "دخول",
+    "signup": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "rememberMe": "تذكرني",
+    "noAccount": "ماعندك حساب؟",
+    "alreadyHaveAccount": "عندك حساب بالفعل؟",
+    "signupNow": "اعمل حساب دلوقتي",
+    "loginNow": "ادخل دلوقتي",
+    "loginSuccess": "تم الدخول بنجاح! جاري تحويلك...",
+    "signupSuccess": "تم إنشاء الحساب بنجاح!",
+    "errors": {
+      "invalidEmail": "البريد مش صحيح",
+      "passwordMismatch": "كلمات المرور مش متطابقة",
+      "passwordTooShort": "كلمة المرور لازم تكون 8 حروف على الأقل",
+      "userExists": "المستخدم موجود بالفعل",
+      "invalidCredentials": "البريد أو كلمة المرور غلط"
+    }
+  },
+  "dashboard": {
+    "welcome": "أهلا بعودتك",
+    "accountBalance": "رصيد الحساب",
+    "totalCommissions": "إجمالي العمولات",
+    "activeMembers": "الأعضاء النشطين",
+    "thisMonth": "الشهر ده",
+    "recentTransactions": "آخر تحويلات",
+    "memberNetwork": "شبكة الأعضاء",
+    "performance": "الأداء"
+  },
+  "compliance": {
+    "title": "الامتثال والخصوصية",
+    "dataExport": "تصدير البيانات (GDPR)",
+    "deleteAccount": "حذف الحساب",
+    "consentManagement": "إدارة الموافقة",
+    "auditLog": "سجل التدقيق",
+    "privacyPolicy": "سياسة الخصوصية",
+    "dataProcessing": "معالجة البيانات",
+    "requestExport": "اطلب تصدير البيانات",
+    "requestDeletion": "اطلب حذف الحساب",
+    "marketingConsent": "رسايل الدعاية والإعلان",
+    "analyticsConsent": "تتبع الإحصائيات",
+    "thirdPartyConsent": "مشاركة البيانات مع الجهات التانية"
+  },
+  "errors": {
+    "notFound": "الصفحة مش موجودة",
+    "unauthorized": "أنت مش مخول بالدخول",
+    "forbidden": "الدخول ممنوع",
+    "serverError": "حصل خطأ في الخادم",
+    "networkError": "خطأ في الإنترنت",
+    "tryAgain": "حاول تاني"
+  },
+  "diana": {
+    "title": "Diana - مساعدك الذكي",
+    "startChat": "ابدأ المحادثة",
+    "typeMessage": "اكتب رسالتك...",
+    "sending": "جاري الإرسال...",
+    "offline": "أونلاين مش متاح دلوقتي"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "نظام تشغيل الأعمال المدعوم بالذكاء الاصطناعي",
+    "language": "اللغة",
+    "selectLanguage": "اختر لغتك",
+    "detectingLocation": "جاري الكشف عن موقعك...",
+    "welcome": "مرحبا بك في AIGINVEST",
+    "menu": {
+      "home": "الرئيسية",
+      "dashboard": "لوحة التحكم",
+      "marketplace": "السوق",
+      "compliance": "الامتثال",
+      "settings": "الإعدادات",
+      "profile": "الملف الشخصي",
+      "logout": "تسجيل الخروج",
+      "login": "تسجيل الدخول",
+      "signup": "إنشاء حساب"
+    },
+    "buttons": {
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "continue": "متابعة",
+      "next": "التالي",
+      "back": "رجوع",
+      "submit": "إرسال",
+      "delete": "حذف",
+      "edit": "تعديل",
+      "copy": "نسخ",
+      "download": "تحميل",
+      "upload": "رفع",
+      "export": "تصدير"
+    },
+    "footer": {
+      "about": "عن",
+      "contact": "اتصل",
+      "privacy": "سياسة الخصوصية",
+      "terms": "شروط الخدمة",
+      "compliance": "الامتثال",
+      "copyright": "© 2026 AIG Global. جميع الحقوق محفوظة."
+    }
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "rememberMe": "تذكرني",
+    "noAccount": "ليس لديك حساب؟",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "signupNow": "قم بإنشاء حساب الآن",
+    "loginNow": "قم بتسجيل الدخول الآن",
+    "loginSuccess": "تم تسجيل الدخول بنجاح! جاري إعادة التوجيه...",
+    "signupSuccess": "تم إنشاء الحساب بنجاح!",
+    "errors": {
+      "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+      "passwordMismatch": "كلمات المرور غير متطابقة",
+      "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+      "userExists": "المستخدم موجود بالفعل",
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
+    }
+  },
+  "dashboard": {
+    "welcome": "أهلا بعودتك",
+    "accountBalance": "رصيد الحساب",
+    "totalCommissions": "إجمالي العمولات",
+    "activeMembers": "الأعضاء النشطين",
+    "thisMonth": "هذا الشهر",
+    "recentTransactions": "المعاملات الأخيرة",
+    "memberNetwork": "شبكة الأعضاء",
+    "performance": "الأداء"
+  },
+  "compliance": {
+    "title": "الامتثال والخصوصية",
+    "dataExport": "تصدير البيانات (GDPR)",
+    "deleteAccount": "حذف الحساب",
+    "consentManagement": "إدارة الموافقة",
+    "auditLog": "سجل التدقيق",
+    "privacyPolicy": "سياسة الخصوصية",
+    "dataProcessing": "معالجة البيانات",
+    "requestExport": "طلب تصدير البيانات",
+    "requestDeletion": "طلب حذف الحساب",
+    "marketingConsent": "الاتصالات التسويقية",
+    "analyticsConsent": "تتبع التحليلات",
+    "thirdPartyConsent": "مشاركة البيانات مع الجهات الخارجية"
+  },
+  "errors": {
+    "notFound": "الصفحة غير موجودة",
+    "unauthorized": "وصول غير مصرح به",
+    "forbidden": "الوصول ممنوع",
+    "serverError": "حدث خطأ في الخادم",
+    "networkError": "خطأ في الاتصال بالشبكة",
+    "tryAgain": "يرجى المحاولة مرة أخرى"
+  },
+  "diana": {
+    "title": "مساعد Diana الذكي",
+    "startChat": "بدء المحادثة",
+    "typeMessage": "اكتب رسالتك...",
+    "sending": "جاري الإرسال...",
+    "offline": "حاليا غير متصل"
+  }
+}

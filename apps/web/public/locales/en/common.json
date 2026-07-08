@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "The AI-Powered Business Operating System",
+    "language": "Language",
+    "selectLanguage": "Select Your Language",
+    "detectingLocation": "Detecting your location...",
+    "welcome": "Welcome to AIGINVEST",
+    "menu": {
+      "home": "Home",
+      "dashboard": "Dashboard",
+      "marketplace": "Marketplace",
+      "compliance": "Compliance",
+      "settings": "Settings",
+      "profile": "Profile",
+      "logout": "Logout",
+      "login": "Login",
+      "signup": "Sign Up"
+    },
+    "buttons": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "continue": "Continue",
+      "next": "Next",
+      "back": "Back",
+      "submit": "Submit",
+      "delete": "Delete",
+      "edit": "Edit",
+      "copy": "Copy",
+      "download": "Download",
+      "upload": "Upload",
+      "export": "Export"
+    },
+    "footer": {
+      "about": "About Us",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "compliance": "Compliance",
+      "copyright": "© 2026 AIG Global. All rights reserved."
+    }
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "forgotPassword": "Forgot Password?",
+    "rememberMe": "Remember me",
+    "noAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "signupNow": "Sign up now",
+    "loginNow": "Login now",
+    "loginSuccess": "Login successful! Redirecting...",
+    "signupSuccess": "Account created successfully!",
+    "errors": {
+      "invalidEmail": "Please enter a valid email",
+      "passwordMismatch": "Passwords do not match",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "userExists": "User already exists",
+      "invalidCredentials": "Invalid email or password"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "accountBalance": "Account Balance",
+    "totalCommissions": "Total Commissions",
+    "activeMembers": "Active Members",
+    "thisMonth": "This Month",
+    "recentTransactions": "Recent Transactions",
+    "memberNetwork": "Member Network",
+    "performance": "Performance"
+  },
+  "compliance": {
+    "title": "Compliance & Privacy",
+    "dataExport": "Data Export (GDPR)",
+    "deleteAccount": "Delete Account",
+    "consentManagement": "Consent Management",
+    "auditLog": "Audit Log",
+    "privacyPolicy": "Privacy Policy",
+    "dataProcessing": "Data Processing",
+    "requestExport": "Request Data Export",
+    "requestDeletion": "Request Account Deletion",
+    "marketingConsent": "Marketing Communications",
+    "analyticsConsent": "Analytics Tracking",
+    "thirdPartyConsent": "Third Party Data Sharing"
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "unauthorized": "Unauthorized access",
+    "forbidden": "Access forbidden",
+    "serverError": "Server error occurred",
+    "networkError": "Network connection error",
+    "tryAgain": "Please try again"
+  },
+  "diana": {
+    "title": "Diana AI Assistant",
+    "startChat": "Start Chat",
+    "typeMessage": "Type your message...",
+    "sending": "Sending...",
+    "offline": "Currently offline"
+  }
+}

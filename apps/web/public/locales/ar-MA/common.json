@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "نظام تشغيل الأعمال المدعوم بالذكاء الاصطناعي",
+    "language": "اللغة",
+    "selectLanguage": "اختار اللغة ديالك",
+    "detectingLocation": "جاري البحث على موقعك...",
+    "welcome": "بسملة في AIGINVEST",
+    "menu": {
+      "home": "الصفحة الرئيسية",
+      "dashboard": "لوحة التحكم",
+      "marketplace": "السوق",
+      "compliance": "الامتثال",
+      "settings": "الإعدادات",
+      "profile": "الملف الشخصي",
+      "logout": "خروج",
+      "login": "دخول",
+      "signup": "إنشاء حساب"
+    },
+    "buttons": {
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "continue": "شيّ",
+      "next": "الحد",
+      "back": "رجع",
+      "submit": "بعثّ",
+      "delete": "حذف",
+      "edit": "بدل",
+      "copy": "نسخ",
+      "download": "دونلود",
+      "upload": "حميل",
+      "export": "خرج"
+    },
+    "footer": {
+      "about": "على صيغة",
+      "contact": "تاصل معنا",
+      "privacy": "حماية الخصوصية",
+      "terms": "شروط الخدمة",
+      "compliance": "الامتثال",
+      "copyright": "© 2026 AIG Global. جميع الحقوق محفوظة."
+    }
+  },
+  "auth": {
+    "login": "دخول",
+    "signup": "سجل",
+    "email": "الإيميل",
+    "password": "الكود",
+    "confirmPassword": "أكد الكود ديالك",
+    "firstName": "الاسم الأول",
+    "lastName": "اللقب",
+    "forgotPassword": "نسيت الكود ديالك؟",
+    "rememberMe": "خليني نتذكر",
+    "noAccount": "ما عندك حساب؟",
+    "alreadyHaveAccount": "عندك حساب بزاف؟",
+    "signupNow": "سجل دابا",
+    "loginNow": "ادخل دابا",
+    "loginSuccess": "دخلت بنجاح! جاري تحويلك...",
+    "signupSuccess": "السجيل تم بنجاح!",
+    "errors": {
+      "invalidEmail": "الإيميل مش صح",
+      "passwordMismatch": "الأكواد مش متطابقة",
+      "passwordTooShort": "الكود ديالك قصير برك",
+      "userExists": "هاد الحساب مسجل بزاف",
+      "invalidCredentials": "الإيميل أو الكود غلط"
+    }
+  },
+  "dashboard": {
+    "welcome": "أهلا بعودتك",
+    "accountBalance": "رصيد الحساب",
+    "totalCommissions": "المجموع الغوفة",
+    "activeMembers": "الصحاب النشطين",
+    "thisMonth": "الشهر هاد",
+    "recentTransactions": "آخر التحويلات",
+    "memberNetwork": "شبكة الصحاب",
+    "performance": "الأداء"
+  },
+  "compliance": {
+    "title": "الامتثال والخصوصية",
+    "dataExport": "خرج البيانات",
+    "deleteAccount": "حذف الحساب",
+    "consentManagement": "إدارة الموافقة",
+    "auditLog": "سجل التدقيق",
+    "privacyPolicy": "حماية البيانات ديالك",
+    "dataProcessing": "معالجة البيانات",
+    "requestExport": "طلب خرج البيانات",
+    "requestDeletion": "طلب حذف الحساب",
+    "marketingConsent": "رسائل الدعاية",
+    "analyticsConsent": "تتبع الإحصائيات",
+    "thirdPartyConsent": "مشاركة البيانات مع الجهات التانية"
+  },
+  "errors": {
+    "notFound": "الصفحة ما موجودة",
+    "unauthorized": "ما عندك الصلاحية",
+    "forbidden": "الدخول ممنوع",
+    "serverError": "مشكلة في الخادم",
+    "networkError": "مشكلة في الإنترنت",
+    "tryAgain": "جرب تاني"
+  },
+  "diana": {
+    "title": "Diana - مساعدك الذكي",
+    "startChat": "شرع التحدث",
+    "typeMessage": "اكتب رسالتك...",
+    "sending": "جاري الإرسال...",
+    "offline": "غير متصل دابا"
+  }
+}

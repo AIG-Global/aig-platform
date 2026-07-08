@@ -140,10 +140,27 @@ export class GeolocationService {
       'TZ': 'SWAHILI',
       'UG': 'SWAHILI',
       'ET': 'AMHARIC',
-      'MA': 'FRENCH',
-      'EG': 'ENGLISH',
       'ZA': 'ENGLISH',
       'GH': 'ENGLISH',
+
+      // Middle East & North Africa
+      'SA': 'ARABIC_GULF',
+      'AE': 'ARABIC_GULF',
+      'KW': 'ARABIC_GULF',
+      'QA': 'ARABIC_GULF',
+      'BH': 'ARABIC_GULF',
+      'OM': 'ARABIC_GULF',
+      'YE': 'ARABIC',
+      'EG': 'ARABIC_EGYPTIAN',
+      'SY': 'ARABIC_LEVANTINE',
+      'LB': 'ARABIC_LEVANTINE',
+      'PS': 'ARABIC_LEVANTINE',
+      'JO': 'ARABIC_LEVANTINE',
+      'IQ': 'ARABIC',
+      'MA': 'ARABIC_MOROCCAN',
+      'DZ': 'ARABIC',
+      'TN': 'ARABIC',
+      'LY': 'ARABIC',
 
       // South America
       'BR': 'PORTUGUESE_BRAZILIAN',
@@ -207,6 +224,13 @@ export class GeolocationService {
         { code: 'AMHARIC', name: 'Amharic', nativeName: 'አማርኛ', region: 'Africa' },
         { code: 'YORUBA', name: 'Yoruba', nativeName: 'Yorùbá', region: 'Africa' },
         { code: 'IGBO', name: 'Igbo', nativeName: 'Igbo', region: 'Africa' },
+
+        // Middle East & Arabic
+        { code: 'ARABIC', name: 'Arabic (Standard)', nativeName: 'العربية', region: 'Middle East' },
+        { code: 'ARABIC_EGYPTIAN', name: 'Arabic (Egyptian)', nativeName: 'العربية المصرية', region: 'Middle East' },
+        { code: 'ARABIC_GULF', name: 'Arabic (Gulf)', nativeName: 'العربية الخليجية', region: 'Middle East' },
+        { code: 'ARABIC_LEVANTINE', name: 'Arabic (Levantine)', nativeName: 'العربية الشامية', region: 'Middle East' },
+        { code: 'ARABIC_MOROCCAN', name: 'Arabic (Moroccan)', nativeName: 'العربية المغربية', region: 'Africa' },
 
         // South America
         { code: 'PORTUGUESE_BRAZILIAN', name: 'Portuguese (Brazilian)', nativeName: 'Português (Brasil)', region: 'South America' },

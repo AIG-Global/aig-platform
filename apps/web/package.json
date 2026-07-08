@@ -8,8 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "i18next": "^26.3.4",
     "lucide-react": "^1.23.0",
     "next": "14.0.0",
+    "next-i18next": "^16.0.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-markdown": "^10.1.0",

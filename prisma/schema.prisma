@@ -135,11 +135,16 @@ enum Language {
   MARATHI
   BENGALI
   
-  // Africa
+  // Africa & Middle East
   SWAHILI
   AMHARIC
   YORUBA
   IGBO
+  ARABIC
+  ARABIC_EGYPTIAN
+  ARABIC_GULF
+  ARABIC_LEVANTINE
+  ARABIC_MOROCCAN
   
   // South America
   PORTUGUESE_BRAZILIAN

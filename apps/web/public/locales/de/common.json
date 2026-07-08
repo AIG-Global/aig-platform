@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Das KI-gestützte Business Operating System",
+    "language": "Sprache",
+    "selectLanguage": "Wählen Sie Ihre Sprache",
+    "detectingLocation": "Ihre Position wird erkannt...",
+    "welcome": "Willkommen bei AIGINVEST",
+    "menu": {
+      "home": "Startseite",
+      "dashboard": "Dashboard",
+      "marketplace": "Marktplatz",
+      "compliance": "Compliance",
+      "settings": "Einstellungen",
+      "profile": "Profil",
+      "logout": "Abmelden",
+      "login": "Anmelden",
+      "signup": "Registrieren"
+    },
+    "buttons": {
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "continue": "Weiter",
+      "next": "Nächste",
+      "back": "Zurück",
+      "submit": "Absenden",
+      "delete": "Löschen",
+      "edit": "Bearbeiten",
+      "copy": "Kopieren",
+      "download": "Herunterladen",
+      "upload": "Hochladen",
+      "export": "Exportieren"
+    },
+    "footer": {
+      "about": "Über uns",
+      "contact": "Kontakt",
+      "privacy": "Datenschutz",
+      "terms": "Nutzungsbedingungen",
+      "compliance": "Compliance",
+      "copyright": "© 2026 AIG Global. Alle Rechte vorbehalten."
+    }
+  },
+  "auth": {
+    "login": "Anmelden",
+    "signup": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirmPassword": "Passwort wiederholen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "forgotPassword": "Passwort vergessen?",
+    "rememberMe": "Anmeldedaten merken",
+    "noAccount": "Noch kein Konto?",
+    "alreadyHaveAccount": "Sie haben bereits ein Konto?",
+    "signupNow": "Jetzt registrieren",
+    "loginNow": "Jetzt anmelden",
+    "loginSuccess": "Anmeldung erfolgreich! Wird weitergeleitet...",
+    "signupSuccess": "Konto erfolgreich erstellt!",
+    "errors": {
+      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "passwordMismatch": "Passwörter stimmen nicht überein",
+      "passwordTooShort": "Passwort muss mindestens 8 Zeichen lang sein",
+      "userExists": "Benutzer existiert bereits",
+      "invalidCredentials": "Ungültige E-Mail oder Passwort"
+    }
+  },
+  "dashboard": {
+    "welcome": "Willkommen zurück",
+    "accountBalance": "Kontosaldo",
+    "totalCommissions": "Gesamtprovisionen",
+    "activeMembers": "Aktive Mitglieder",
+    "thisMonth": "Dieser Monat",
+    "recentTransactions": "Letzte Transaktionen",
+    "memberNetwork": "Mitgliedernetzwerk",
+    "performance": "Leistung"
+  },
+  "compliance": {
+    "title": "Compliance & Datenschutz",
+    "dataExport": "Datenexport (DSGVO)",
+    "deleteAccount": "Konto löschen",
+    "consentManagement": "Zustimmungsverwaltung",
+    "auditLog": "Audit-Protokoll",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "dataProcessing": "Datenverarbeitung",
+    "requestExport": "Datenexport anfordern",
+    "requestDeletion": "Kontolöschung anfordern",
+    "marketingConsent": "Marketing-Mitteilungen",
+    "analyticsConsent": "Analyse-Tracking",
+    "thirdPartyConsent": "Datenaustausch mit Dritten"
+  },
+  "errors": {
+    "notFound": "Seite nicht gefunden",
+    "unauthorized": "Nicht autorisierter Zugriff",
+    "forbidden": "Zugriff verboten",
+    "serverError": "Serverfehler aufgetreten",
+    "networkError": "Netzwerkverbindungsfehler",
+    "tryAgain": "Bitte versuchen Sie es erneut"
+  },
+  "diana": {
+    "title": "Diana KI-Assistent",
+    "startChat": "Chat starten",
+    "typeMessage": "Geben Sie Ihre Nachricht ein...",
+    "sending": "Wird gesendet...",
+    "offline": "Derzeit offline"
+  }
+}
