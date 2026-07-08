@@ -76,6 +76,9 @@ model User {
   app_usage_events      AppUsageEvent[]
   service_interests     ServiceInterest[]
   
+  // Gift cards
+  giftCards_claimed     GiftCard[] @relation("giftCards_claimed")
+  
   // Investments
   investment_funds      InvestmentFund[] @relation("user_investment_funds")
   north_star_positions  NorthStarTokenPosition[] @relation("user_north_star_positions")
@@ -1597,6 +1600,45 @@ model InvestmentRelease {
 // ============================================================================
 // NORTH STAR INVESTMENT SYSTEM
 // ============================================================================
+
+// ============================================================================
+// GIFT CARDS
+// ============================================================================
+
+model GiftCard {
+  id              String      @id @default(cuid())
+  code            String      @unique
+  packageType     PackageType
+  valueEur        Int         // Value in euros (e.g., 399 = €399)
+  
+  status          GiftCardStatus @default(ACTIVE)
+  createdAt       DateTime    @default(now())
+  
+  // Redemption
+  claimedBy       String?
+  claimedByUser   User?       @relation("giftCards_claimed", fields: [claimedBy], references: [id], onDelete: SetNull)
+  claimedAt       DateTime?
+  
+  expiresAt       DateTime?   // Optional expiration date
+  
+  @@index([code])
+  @@index([packageType])
+  @@index([status])
+  @@index([claimedBy])
+}
+
+enum PackageType {
+  STARTER
+  STARTUP
+  PROFESSIONAL
+}
+
+enum GiftCardStatus {
+  ACTIVE
+  REDEEMED
+  EXPIRED
+  CANCELLED
+}
 
 // North Star Ltd owns all tokens; member participation via these records
 model NorthStarTokenPosition {
