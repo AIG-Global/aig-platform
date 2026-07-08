@@ -11,21 +11,14 @@ export default function InvitePage() {
   return (
     <div
       className="relative w-full min-h-screen overflow-hidden flex items-center justify-center"
-      style={{ background: 'linear-gradient(135deg, #1a0f15 0%, #2a1f28 50%, #1a0f15 100%)' }}
+      style={{
+        backgroundImage: 'linear-gradient(135deg, rgba(26, 15, 21, 0.85) 0%, rgba(42, 31, 40, 0.85) 50%, rgba(26, 15, 21, 0.85) 100%), url(/images/vault.jpeg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        backgroundAttachment: 'fixed',
+        backgroundRepeat: 'no-repeat'
+      }}
     >
-      {/* Vault Background */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <img
-          src="/images/vault.jpeg"
-          alt="background"
-          className="w-full h-full"
-          style={{
-            objectFit: 'cover',
-            objectPosition: 'center center',
-            filter: 'brightness(0.3) saturate(0.6)',
-          }}
-        />
-      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70" />
 
       {/* Content */}
