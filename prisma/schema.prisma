@@ -54,6 +54,33 @@ model User {
   commissions           Commission[]
   investments           Investment[]
   wallet_transactions   WalletTransaction[]
+  affiliate_network     AffiliateNetwork?
+  
+  // Referral network
+  referrals_made        Referral[]  @relation("referrer")
+  referrals_received    Referral[]  @relation("referred")
+  
+  // General / Management pool
+  general               General?
+  appointments_given    GeneralAppointment[] @relation("appointment_giver")
+  appointments_received GeneralAppointment[] @relation("appointment_receiver")
+  
+  // Location for geotagging
+  geo_lat               Float?
+  geo_lng               Float?
+  geo_city              String?
+  geo_country           String?
+  geo_continent         String?
+  
+  // Analytics
+  app_usage_events      AppUsageEvent[]
+  service_interests     ServiceInterest[]
+  
+  // Investments
+  investment_funds      InvestmentFund[] @relation("user_investment_funds")
+  north_star_positions  NorthStarTokenPosition[] @relation("user_north_star_positions")
+  north_star_trades_bought NorthStarTrade[] @relation("north_star_trades_bought")
+  fgt_allocations       FGTAllocation[] @relation("user_fgt_allocations")
   
   @@index([email])
   @@index([primary_org_id])
@@ -1067,7 +1094,7 @@ enum ModuleStatus {
 
 model ModuleConfig {
   id          String      @id @default(cuid())
-  module_id   String
+  module_id   String      @unique
   module      Module      @relation(fields: [module_id], references: [id], onDelete: Cascade)
   
   config_key  String
@@ -1100,6 +1127,9 @@ model Permission {
   action      String
   description String?
   
+  // Relations
+  rolePermissions RolePermission[] @relation("role_permissions")
+  
   @@unique([resource, action])
 }
 
@@ -1108,7 +1138,7 @@ model RolePermission {
   role_id     String
   role        Role        @relation(fields: [role_id], references: [id], onDelete: Cascade)
   permission_id String
-  permission  Permission  @relation("permission", fields: [permission_id], references: [id], onDelete: Cascade)
+  permission  Permission  @relation("role_permissions", fields: [permission_id], references: [id], onDelete: Cascade)
   
   @@unique([role_id, permission_id])
   @@index([role_id])
@@ -1161,4 +1191,582 @@ model ExchangeRate {
   
   @@unique([from_currency, to_currency, valid_from])
   @@index([valid_from])
+}
+
+// ============================================================================
+// MLM & AFFILIATE SYSTEM
+// ============================================================================
+
+model AppRegistry {
+  id          String      @id @default(cuid())
+  name        String      @unique  // e.g., "AIG-Ask", "AIG-MoneyGames"
+  slug        String      @unique  // e.g., "aig-ask", "aig-moneygames"
+  description String?
+  icon_url    String?
+  color       String?
+  
+  // Tier access - which tiers can access this app
+  free_access    Boolean   @default(false)
+  starter_access Boolean   @default(false)
+  professional_access Boolean @default(false)
+  
+  status      AppStatus   @default(ACTIVE)
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  @@index([status])
+}
+
+model Referral {
+  id          String      @id @default(cuid())
+  
+  // Referrer/Affiliate (who made the referral)
+  referrer_id String
+  referrer    User        @relation("referrer", fields: [referrer_id], references: [id], onDelete: Cascade)
+  
+  // Referred/Downline (who was referred)
+  referred_id String
+  referred    User        @relation("referred", fields: [referred_id], references: [id], onDelete: Cascade)
+  
+  // Referral details
+  referral_code String?    // Code used for referral
+  tier          Int        // 1-10 (affiliate level in network)
+  
+  status        ReferralStatus @default(ACTIVE)
+  referred_at   DateTime   @default(now())
+  
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  
+  @@unique([referrer_id, referred_id])
+  @@index([referrer_id])
+  @@index([referred_id])
+  @@index([tier])
+}
+
+enum ReferralStatus {
+  PENDING
+  ACTIVE
+  INACTIVE
+  CANCELLED
+}
+
+model AffiliateNetwork {
+  id          String      @id @default(cuid())
+  user_id     String      @unique
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  
+  // Direct referrals (Level 1)
+  direct_referrals_count  Int     @default(0)
+  
+  // All levels combined
+  total_network_size      Int     @default(0)
+  
+  // Commission tracking
+  total_commissions_earned BigInt  @default(0) // In cents
+  total_commissions_pending BigInt @default(0) // In cents
+  
+  // Tier/rank
+  current_tier            MembershipTier
+  fast_tracker_status     String? // e.g., "Silver", "Gold", "Platinum"
+  
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  @@index([user_id])
+}
+
+// ============================================================================
+// GENERALS & MANAGEMENT POOL SYSTEM
+// ============================================================================
+
+// A General is a leader appointed to receive a share of the 20% management pool
+model General {
+  id                    String        @id @default(cuid())
+  user_id               String        @unique
+  user                  User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  // Who appointed this general (null = root / admin-appointed)
+  appointed_by_id       String?
+  appointed_by          General?      @relation("general_hierarchy", fields: [appointed_by_id], references: [id])
+  appointees            General[]     @relation("general_hierarchy")
+
+  // Pool allocation: percent of the 20% management pool they earn
+  // e.g., allocated_percent = 10.0 means they earn 10% of the pool
+  allocated_percent     Float         @default(0)    // Total % allocated TO this general
+  distributed_percent   Float         @default(0)    // How much they've given away to sub-generals
+  // effective_percent = allocated_percent - distributed_percent (computed in app)
+
+  // String capacity: sum of all allocated percents in this general's lineage chain
+  // Enforced at application level: no chain can exceed 20%
+  string_root_id        String?       // ID of the root General of this string (null = self is root)
+  string_root           General?      @relation("string_members", fields: [string_root_id], references: [id])
+  string_members        General[]     @relation("string_members")
+
+  status                GeneralStatus @default(ACTIVE)
+
+  created_at            DateTime      @default(now())
+  updated_at            DateTime      @updatedAt
+
+  // Relations
+  appointments_given    GeneralAppointment[] @relation("appointment_general_giver")
+  appointments_received GeneralAppointment[] @relation("appointment_general_receiver")
+  pool_earnings         PoolEarning[]
+
+  @@index([user_id])
+  @@index([appointed_by_id])
+  @@index([string_root_id])
+}
+
+enum GeneralStatus {
+  ACTIVE
+  SUSPENDED
+  REVOKED
+}
+
+// Records a "Sharing is Caring" appointment: a General sharing % with another user
+model GeneralAppointment {
+  id                    String              @id @default(cuid())
+
+  // The General giving away part of their allocation
+  giver_general_id      String
+  giver_general         General             @relation("appointment_general_giver", fields: [giver_general_id], references: [id])
+  giver_user_id         String
+  giver_user            User                @relation("appointment_giver", fields: [giver_user_id], references: [id])
+
+  // The user receiving the appointment (becomes a General upon acceptance)
+  receiver_user_id      String
+  receiver_user         User                @relation("appointment_receiver", fields: [receiver_user_id], references: [id])
+  receiver_general_id   String?             // Set when they accept and General record is created
+  receiver_general      General?            @relation("appointment_general_receiver", fields: [receiver_general_id], references: [id])
+
+  percent_given         Float               // % of pool being shared
+  
+  status                AppointmentStatus   @default(PENDING_CONTRACT)
+  
+  // Revocation: giver requests, admin approves
+  revoke_requested_at   DateTime?
+  revoke_approved_at    DateTime?
+  revoke_notes          String?
+
+  created_at            DateTime            @default(now())
+  updated_at            DateTime            @updatedAt
+
+  // Contract must be signed by both parties
+  contract              GeneralContract?
+
+  @@index([giver_general_id])
+  @@index([receiver_user_id])
+  @@index([status])
+}
+
+enum AppointmentStatus {
+  PENDING_CONTRACT      // Waiting for both parties to sign
+  CONTRACT_SIGNED       // Both signed, active
+  ACTIVE                // General receiving pool earnings
+  REVOKE_REQUESTED      // Giver wants it back, awaiting admin
+  REVOKED               // Admin approved revocation
+  REJECTED              // Receiver declined
+}
+
+// AIG-Secure-Sign contract embedded in the system
+model GeneralContract {
+  id                    String            @id @default(cuid())
+  appointment_id        String            @unique
+  appointment           GeneralAppointment @relation(fields: [appointment_id], references: [id])
+
+  // Document reference (AIG-Secure-Sign output)
+  document_url          String?
+  document_hash         String?           // SHA-256 for integrity verification
+  secure_sign_ref       String?           // AIG-Secure-Sign internal reference
+
+  // Signing timestamps
+  giver_signed_at       DateTime?
+  receiver_signed_at    DateTime?
+  admin_reviewed_at     DateTime?
+  admin_reviewer_id     String?
+
+  // Contract terms snapshot
+  percent_given         Float
+  terms_snapshot        String            // JSON snapshot of terms at signing time
+
+  status                ContractStatus    @default(DRAFT)
+
+  created_at            DateTime          @default(now())
+  updated_at            DateTime          @updatedAt
+
+  @@index([appointment_id])
+  @@index([status])
+}
+
+enum ContractStatus {
+  DRAFT
+  PENDING_GIVER_SIGNATURE
+  PENDING_RECEIVER_SIGNATURE
+  FULLY_SIGNED
+  CANCELLED
+  VOIDED
+}
+
+// Tracks all income events that feed the 20% management pool
+model PoolTransaction {
+  id                    String            @id @default(cuid())
+  source_type           CommissionSource
+  source_id             String            // Order ID, Membership ID, etc.
+  source_description    String?
+
+  total_amount_eur      BigInt            // Total income in cents
+  pool_amount_eur       BigInt            // 20% of total_amount_eur
+
+  period_month          Int               // 1-12
+  period_year           Int
+  
+  status                PoolStatus        @default(PENDING)
+  distributed_at        DateTime?
+  created_at            DateTime          @default(now())
+
+  earnings              PoolEarning[]
+
+  @@index([source_type, source_id])
+  @@index([period_year, period_month])
+  @@index([status])
+}
+
+enum PoolStatus {
+  PENDING
+  DISTRIBUTED
+  CANCELLED
+}
+
+// How much each General earned from a specific pool transaction
+model PoolEarning {
+  id                    String            @id @default(cuid())
+  
+  general_id            String
+  general               General           @relation(fields: [general_id], references: [id])
+  
+  transaction_id        String
+  transaction           PoolTransaction   @relation(fields: [transaction_id], references: [id])
+
+  effective_percent     Float             // % applied at time of distribution
+  amount_eur            BigInt            // In cents
+
+  status                CommissionStatus  @default(PENDING)
+  paid_at               DateTime?
+  created_at            DateTime          @default(now())
+
+  @@unique([general_id, transaction_id])
+  @@index([general_id])
+  @@index([transaction_id])
+  @@index([status])
+}
+
+// ============================================================================
+// ANALYTICS & TELEMETRY
+// ============================================================================
+
+model AppUsageEvent {
+  id              String    @id @default(cuid())
+  app_slug        String    // e.g., "aig-ask", "diana-ai"
+  user_id         String
+  user            User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  
+  session_id      String?   // Track sessions
+  duration_seconds Int?     // How long they used the app
+  
+  geo_country     String?
+  geo_continent   String?
+  geo_city        String?
+  
+  user_tier       MembershipTier
+  is_general      Boolean   @default(false)
+  
+  created_at      DateTime  @default(now())
+  
+  @@index([app_slug])
+  @@index([user_id])
+  @@index([created_at])
+  @@index([geo_country])
+  @@index([user_tier])
+}
+
+// Aggregated analytics snapshots (for dashboard caching)
+model AnalyticsSnapshot {
+  id              String    @id @default(cuid())
+  
+  period          String    // "daily", "weekly", "monthly"
+  period_date     DateTime
+  
+  metric_type     String    // "app_usage", "member_growth", "service_interest", etc
+  dimension       String?   // "country", "continent", "tier", "app", etc
+  dimension_value String?   // actual value (e.g., "Finland", "Europe", "PROFESSIONAL")
+  
+  value           Float
+  count           Int       @default(0)
+  
+  @@unique([period, period_date, metric_type, dimension, dimension_value])
+  @@index([period_date])
+  @@index([metric_type])
+}
+
+model ServiceInterest {
+  id          String    @id @default(cuid())
+  user_id     String
+  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  
+  service     String    // "crypto", "investing", "wdm", "trading", "ai", etc
+  interest_level Int     // 1-5
+  last_updated DateTime  @default(now())
+  
+  @@unique([user_id, service])
+  @@index([user_id])
+}
+
+// ============================================================================
+// INVESTMENT SYSTEM
+// ============================================================================
+
+model InvestmentFund {
+  id              String        @id @default(cuid())
+  user_id         String
+  user            User          @relation("user_investment_funds", fields: [user_id], references: [id], onDelete: Cascade)
+  
+  fund_type       FundType      // "LONG_TERM_3Y", "LONG_TERM_5Y", "LONG_TERM_7Y", "LONG_TERM_10Y", "NORTH_STAR"
+  duration_months Int?          // 36, 60, 84, 120 for long-term
+  
+  principal_eur   BigInt        // Initial investment in cents
+  current_balance_eur BigInt
+  accrued_interest_eur BigInt   @default(0)
+  
+  investment_month DateTime      // When they invested
+  maturity_month  DateTime?     // When fund matures (null = North Star)
+  
+  reinvest_on_maturity Boolean  @default(true)
+  status          InvestmentFundStatus @default(ACTIVE)
+  
+  commission_eur  BigInt        // 15% of principal
+  
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+  matured_at      DateTime?
+  released_at     DateTime?
+  
+  releases        InvestmentRelease[]
+  
+  @@index([user_id])
+  @@index([fund_type])
+  @@index([maturity_month])
+  @@index([status])
+}
+
+enum FundType {
+  LONG_TERM_3Y
+  LONG_TERM_5Y
+  LONG_TERM_7Y
+  LONG_TERM_10Y
+  NORTH_STAR
+}
+
+enum InvestmentFundStatus {
+  ACTIVE
+  MATURED
+  REINVESTED
+  RELEASED
+  CANCELLED
+}
+
+// When a fund matures and is released to AIG Cash account
+model InvestmentRelease {
+  id                String    @id @default(cuid())
+  investment_fund_id String
+  investment_fund   InvestmentFund @relation(fields: [investment_fund_id], references: [id], onDelete: Cascade)
+  
+  user_id           String
+  
+  principal_eur     BigInt
+  interest_eur      BigInt
+  total_release_eur BigInt
+  
+  released_to_account_id String // AIG Cash account ID
+  released_at       DateTime  @default(now())
+  
+  @@index([user_id])
+  @@index([investment_fund_id])
+}
+
+// ============================================================================
+// NORTH STAR INVESTMENT SYSTEM
+// ============================================================================
+
+// North Star Ltd owns all tokens; member participation via these records
+model NorthStarTokenPosition {
+  id              String    @id @default(cuid())
+  user_id         String
+  user            User      @relation("user_north_star_positions", fields: [user_id], references: [id], onDelete: Cascade)
+  
+  tokens_owned    BigInt    // Amount of tokens (e.g., 1000 = 1000 tokens)
+  average_cost_per_token_eur Float // Cost per token when purchased
+  
+  total_invested_eur BigInt  // Sum of all purchases
+  
+  // Freezes
+  freeze_1_active Boolean   @default(false)
+  freeze_1_locked_price_eur Float?
+  freeze_1_locked_at DateTime?
+  freeze_1_expires_at DateTime?
+  
+  freeze_2_active Boolean   @default(false)
+  freeze_2_locked_price_eur Float?
+  freeze_2_locked_at DateTime?
+  freeze_2_expires_at DateTime?
+  
+  status          TokenPositionStatus @default(HOLDING)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  purchases       NorthStarPurchase[]
+  trades          NorthStarTrade[] @relation("from_position")
+  
+  @@unique([user_id])
+  @@index([user_id])
+}
+
+enum TokenPositionStatus {
+  HOLDING
+  SOLD_OUT
+  TRADING
+  FROZEN
+}
+
+// Track each token purchase
+model NorthStarPurchase {
+  id                String    @id @default(cuid())
+  position_id       String
+  position          NorthStarTokenPosition @relation(fields: [position_id], references: [id], onDelete: Cascade)
+  
+  quantity          BigInt
+  price_per_token_eur Float
+  total_cost_eur    BigInt
+  
+  purchased_at      DateTime  @default(now())
+  
+  @@index([position_id])
+}
+
+// Member-to-member token trading (enabled after 24 months)
+model NorthStarTrade {
+  id              String    @id @default(cuid())
+  
+  seller_position_id String
+  seller_position   NorthStarTokenPosition @relation("from_position", fields: [seller_position_id], references: [id], onDelete: Cascade)
+  
+  buyer_user_id   String
+  buyer_user      User      @relation("north_star_trades_bought", fields: [buyer_user_id], references: [id], onDelete: Cascade)
+  
+  quantity        BigInt
+  price_per_token_eur Float
+  total_value_eur BigInt
+  
+  status          TradeStatus @default(PENDING)
+  
+  created_at      DateTime  @default(now())
+  completed_at    DateTime?
+  
+  @@index([seller_position_id])
+  @@index([buyer_user_id])
+  @@index([status])
+}
+
+enum TradeStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+// Current market value of North Star token
+// Updated monthly with the appreciation schedule
+model NorthStarTokenMarketValue {
+  id              String    @id @default(cuid())
+  month_number    Int       // 1-based: 1, 5, 11, 12, 15, 16, 18, 22, 23, 24, etc
+  price_per_token_eur Float
+  monthly_appreciation_percent Float // e.g., 11.834 for month 1
+  
+  recorded_at     DateTime  @default(now())
+  
+  @@unique([month_number])
+  @@index([month_number])
+}
+
+// ============================================================================
+// FUTURE GOVERNANCE TOKEN (FGT)
+// ============================================================================
+
+model FGTToken {
+  id              String    @id @default(cuid())
+  
+  // Fixed config
+  total_supply    BigInt    @default(200000000) // 200M tokens
+  starting_price_eur Float  @default(0.85)
+  
+  // Tracking
+  tokens_distributed BigInt  @default(0)
+  tokens_remaining BigInt    @default(200000000)
+  
+  status          FGTStatus @default(UNRELEASED)
+  
+  @@index([status])
+}
+
+enum FGTStatus {
+  UNRELEASED
+  IN_DISTRIBUTION
+  FULLY_DISTRIBUTED
+}
+
+// FGT allocation to users (earned through commissions, governance, etc)
+model FGTAllocation {
+  id              String    @id @default(cuid())
+  user_id         String
+  user            User      @relation("user_fgt_allocations", fields: [user_id], references: [id], onDelete: Cascade)
+  
+  tokens_allocated BigInt   // Amount of FGT tokens
+  allocation_reason String  // "commission_share", "governance_reward", "early_investor", etc
+  
+  claimed         Boolean   @default(false)
+  claimed_at      DateTime?
+  
+  created_at      DateTime  @default(now())
+  
+  @@index([user_id])
+  @@index([claimed])
+}
+
+// ============================================================================
+// PHONE SALES (WDM MARKETPLACE)
+// ============================================================================
+
+model NorthStarPhoneProduct {
+  id              String    @id @default(cuid())
+  
+  model_name      String    @unique // "North Star ONE"
+  description     String
+  specs           String?   // JSON
+  
+  base_price_eur  BigInt    // Base price in cents
+  
+  stock_quantity  Int
+  pre_orders      Int       @default(0)
+  
+  expected_launch DateTime?
+  status          PhoneProductStatus @default(COMING_SOON)
+  
+  created_at      DateTime  @default(now())
+  
+  @@index([model_name])
+}
+
+enum PhoneProductStatus {
+  COMING_SOON
+  AVAILABLE
+  DISCONTINUED
 }

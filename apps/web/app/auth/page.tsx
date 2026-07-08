@@ -1,11 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { ArrowRight, Mail, User, Key } from 'lucide-react'
 
 export default function AuthPage() {
+  const searchParams = useSearchParams()
   const [authMode, setAuthMode] = useState<'welcome' | 'signin' | 'signup' | 'invite'>('welcome')
+
+  useEffect(() => {
+    const mode = searchParams.get('mode')
+    if (mode === 'signin') setAuthMode('signin')
+    else if (mode === 'signup') setAuthMode('signup')
+    else if (mode === 'invitation') setAuthMode('invite')
+  }, [searchParams])
   const [formData, setFormData] = useState({
     email: '',
     name: '',
@@ -74,13 +83,32 @@ export default function AuthPage() {
   }
 
   return (
-    <div
+    <div 
+      className="relative w-full min-h-screen overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #1a0f15 0%, #2a1f28 50%, #1a0f15 100%)',
-        color: '#f5f5dc'
-      }}
-      className="w-full min-h-screen flex items-center justify-center px-4 py-12"
-    >
+        backgroundImage: 'linear-gradient(135deg, rgba(26, 15, 21, 0.85) 0%, rgba(42, 31, 40, 0.85) 50%, rgba(26, 15, 21, 0.85) 100%), url(/images/vault.jpeg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        backgroundAttachment: 'fixed',
+        backgroundRepeat: 'no-repeat'
+      }}>
+
+      {/* Dark overlay gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
+
+      {/* Content centered */}
+      <div className="relative z-10 w-full min-h-screen flex items-center justify-center px-4 py-12">
+
+        {/* Semi-transparent box */}
+        <div
+          style={{
+            backgroundColor: 'rgba(26, 15, 21, 0.55)',
+            backdropFilter: 'blur(12px)',
+            borderColor: '#d4af37',
+            color: '#f5f5dc'
+          }}
+          className="w-full max-w-md rounded-3xl border-2 px-8 py-8 shadow-2xl"
+        >
       {/* Welcome Screen */}
       {authMode === 'welcome' && (
         <div className="w-full max-w-md space-y-8">
@@ -186,9 +214,11 @@ export default function AuthPage() {
             ← Back
           </button>
 
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold">Welcome Back</h2>
-            <p style={{ color: '#e8e8d0' }}>Sign in to your AIGINVEST account</p>
+          <div className="space-y-2 text-center">
+            <h2 className="text-2xl font-bold">Welcome to Your Business Vault</h2>
+            <p style={{ color: '#e8e8d0' }} className="text-sm">Keep your passwords safe.</p>
+            <p style={{ color: '#d4af37' }} className="italic font-light text-center">"You Can Watch Me, Mock Me, Try To Block Me But You Cannot Stop Me."</p>
+            <p style={{ color: '#e8e8d0' }} className="text-xs text-center">— Jordan Belfort</p>
           </div>
 
           {!verificationSent ? (
@@ -535,7 +565,7 @@ export default function AuthPage() {
       )}
 
       {/* Diana Widget */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-0 right-6 z-40">
         <button
           style={{
             background: 'linear-gradient(to br, #d4af37, #e8d4a2)',
@@ -546,6 +576,8 @@ export default function AuthPage() {
         >
           💬
         </button>
+      </div>
+        </div>
       </div>
     </div>
   )
