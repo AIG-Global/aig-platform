@@ -10,6 +10,7 @@ interface Package {
   monthlyPrice: number
   description: string
   earningCap: string | 'unlimited'
+  investmentCapacity: string | 'unlimited'
   apps: string[]
   bonusFeatures: string[]
   highlight?: boolean
@@ -17,33 +18,36 @@ interface Package {
 
 const PACKAGES: Package[] = [
   {
-    id: 'remittance',
-    name: 'Remittance',
-    monthlyPrice: 0,
-    description: 'Flexible start',
-    earningCap: '€100/month',
-    apps: ['App Store', 'Investment Hub', 'Analytics'],
-    bonusFeatures: ['Email support', 'Basic commissions'],
-    highlight: false
-  },
-  {
-    id: 'starter',
-    name: 'Starter',
+    id: 'packagea',
+    name: 'Package A',
     monthlyPrice: 399,
-    description: 'Growing your business',
-    earningCap: '€500/month',
-    apps: ['App Store', 'Investment Hub', 'Analytics', 'Premium Tools', 'Team Collaboration', 'Advanced Reporting', 'Mobile App'],
-    bonusFeatures: ['Priority support', 'Advanced commissions', 'Team management'],
+    description: 'Getting started',
+    earningCap: '€1,000/month',
+    investmentCapacity: '€1,000',
+    apps: ['App Store', 'Investment Hub', 'Analytics'],
+    bonusFeatures: ['Email support', 'Basic commissions', 'Starter analytics'],
     highlight: false
   },
   {
-    id: 'startup',
-    name: 'Start-Up',
-    monthlyPrice: 999,
-    description: 'Established business',
+    id: 'packageb',
+    name: 'Package B',
+    monthlyPrice: 699,
+    description: 'Growing faster',
     earningCap: '€5,000/month',
+    investmentCapacity: '€5,000',
+    apps: ['App Store', 'Investment Hub', 'Analytics', 'Premium Tools', 'Team Collaboration', 'Advanced Reporting', 'Mobile App'],
+    bonusFeatures: ['Priority support', 'Advanced commissions', 'Team management', 'Portfolio tracking'],
+    highlight: false
+  },
+  {
+    id: 'packagec',
+    name: 'Package C',
+    monthlyPrice: 1099,
+    description: 'Established business',
+    earningCap: '€10,000/month',
+    investmentCapacity: '€10,000',
     apps: ['App Store', 'Investment Hub', 'Analytics', 'Premium Tools', 'Team Collaboration', 'Advanced Reporting', 'Mobile App', 'VIP Concierge', 'API Access'],
-    bonusFeatures: ['24/7 priority support', 'Enhanced commissions', 'Advanced analytics', 'Custom integrations'],
+    bonusFeatures: ['24/7 priority support', 'Enhanced commissions', 'Advanced analytics', 'Custom integrations', 'White Label Options'],
     highlight: true
   },
   {
@@ -52,14 +56,15 @@ const PACKAGES: Package[] = [
     monthlyPrice: 2999,
     description: 'Enterprise solutions',
     earningCap: 'unlimited',
+    investmentCapacity: 'unlimited',
     apps: ['App Store', 'Investment Hub', 'Analytics', 'Premium Tools', 'Team Collaboration', 'Advanced Reporting', 'Mobile App', 'VIP Concierge', 'API Access', 'White Label', 'Enterprise Features'],
-    bonusFeatures: ['Dedicated account manager', 'Unlimited commissions', 'Real-time analytics', 'Custom development', 'Priority feature requests'],
+    bonusFeatures: ['Dedicated account manager', 'Unlimited commissions', 'Real-time analytics', 'Custom development', 'Priority feature requests', 'Unlimited investment access'],
     highlight: false
   }
 ]
 
 export default function DashboardPage() {
-  const [selectedPackage, setSelectedPackage] = useState('startup')
+  const [selectedPackage, setSelectedPackage] = useState('packagec')
   const [userName, setUserName] = useState('')
   const [showUsernameForm, setShowUsernameForm] = useState(false)
   const [nicknameInput, setNicknameInput] = useState('')
@@ -400,7 +405,10 @@ export default function DashboardPage() {
                         <span style={{ color: '#e8e8d0' }} className="text-sm">/month</span>
                       </div>
                       <p style={{ color: '#d4af37' }} className="text-xs mt-1">
-                        Earning cap: {typeof pkg.earningCap === 'string' ? pkg.earningCap : 'Unlimited'}
+                        Earning cap: {typeof pkg.earningCap === 'string' ? pkg.earningCap : pkg.earningCap}
+                      </p>
+                      <p style={{ color: '#10b981' }} className="text-xs mt-1">
+                        Investment capacity: {typeof pkg.investmentCapacity === 'string' ? pkg.investmentCapacity : pkg.investmentCapacity}
                       </p>
                     </div>
 
@@ -429,6 +437,35 @@ export default function DashboardPage() {
                 <h2 className="text-3xl font-bold mb-6">
                   {PACKAGES.find((p) => p.id === selectedPackage)?.name} Package Details
                 </h2>
+
+                <div
+                  style={{
+                    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                    borderColor: '#d4af37'
+                  }}
+                  className="border rounded-lg p-4 mb-6 grid md:grid-cols-2 gap-6"
+                >
+                  <div>
+                    <p style={{ color: '#d4af37' }} className="text-sm font-semibold mb-1">
+                      Monthly Earning Cap
+                    </p>
+                    <p className="text-2xl font-bold">
+                      {PACKAGES.find((p) => p.id === selectedPackage)?.earningCap === 'unlimited'
+                        ? 'Unlimited'
+                        : PACKAGES.find((p) => p.id === selectedPackage)?.earningCap}
+                    </p>
+                  </div>
+                  <div>
+                    <p style={{ color: '#10b981' }} className="text-sm font-semibold mb-1">
+                      Investment Capacity
+                    </p>
+                    <p className="text-2xl font-bold">
+                      {PACKAGES.find((p) => p.id === selectedPackage)?.investmentCapacity === 'unlimited'
+                        ? 'Unlimited'
+                        : PACKAGES.find((p) => p.id === selectedPackage)?.investmentCapacity}
+                    </p>
+                  </div>
+                </div>
 
                 <div className="grid md:grid-cols-2 gap-8">
                   {/* Features */}

@@ -1,0 +1,76 @@
+// Add this to prisma/schema.prisma at the end of the file
+
+// ============================================================================
+// PAYMENT & SUBSCRIPTIONS
+// ============================================================================
+
+model PaymentSession {
+  id                    String      @id @default(cuid())
+  
+  stripeSessionId       String      @unique
+  userId                String
+  user                  User        @relation("paymentSessions", fields: [userId], references: [id])
+  
+  packId                String      // Membership pack ID: remittance, starter, startup, professional
+  amount                BigInt      // Amount in cents (EUR)
+  status                String      @default("pending") // pending, completed, cancelled
+  
+  stripeSubscriptionId  String?     // Set after successful checkout
+  
+  createdAt             DateTime    @default(now())
+  completedAt           DateTime?
+  expiresAt             DateTime    // Session expires after 24 hours
+  updatedAt             DateTime    @updatedAt
+  
+  @@index([userId])
+  @@index([stripeSessionId])
+  @@index([status])
+}
+
+model PaymentRecord {
+  id                    String      @id @default(cuid())
+  
+  userId                String
+  user                  User        @relation("paymentRecords", fields: [userId], references: [id])
+  
+  amount                BigInt      // Amount in cents (EUR)
+  currency              String      @default("EUR")
+  status                String      // succeeded, failed, pending
+  
+  stripeInvoiceId       String?     @unique
+  stripePaymentIntentId String?     @unique
+  
+  description           String?
+  failureReason         String?
+  
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@index([stripeInvoiceId])
+}
+
+model Subscription {
+  id                    String      @id @default(cuid())
+  
+  userId                String      @unique
+  user                  User        @relation("subscription", fields: [userId], references: [id], onDelete: Cascade)
+  
+  stripeSubscriptionId  String      @unique
+  stripeCustomerId      String
+  
+  packId                String      // Current membership pack
+  status                String      @default("active") // active, paused, cancelled
+  
+  currentPeriodStart    DateTime
+  currentPeriodEnd      DateTime
+  cancelAtPeriodEnd     Boolean     @default(false)
+  
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  cancelledAt           DateTime?
+  
+  @@index([status])
+  @@index([packId])
+}

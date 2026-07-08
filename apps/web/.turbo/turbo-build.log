@@ -2,16 +2,3 @@
 > web@0.1.0 build C:\Users\PC\AIG-Global\aig-platform\apps\web
 > next build
 
-   ▲ Next.js 14.0.0
-
-   Creating an optimized production build ...
-<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: EPERM: operation not permitted, rename 'C:\Users\PC\AIG-Global\aig-platform\apps\web\.next\cache\webpack\client-production\0.pack_' -> 'C:\Users\PC\AIG-Global\aig-platform\apps\web\.next\cache\webpack\client-production\0.pack'
- ✓ Compiled successfully
-   Linting and checking validity of types ...
-Failed to compile.
-
-Type error: File 'C:/Users/PC/AIG-Global/aig-platform/apps/web/.next/types/app/page.ts' not found.
-  The file is in the program because:
-    Root file specified for compilation
-
- ELIFECYCLE  Command failed with exit code 1.

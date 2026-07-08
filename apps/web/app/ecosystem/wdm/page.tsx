@@ -393,7 +393,7 @@ export default function WDMPage() {
               <div style={{
                 borderTopColor: '#d4af37',
                 borderTopWidth: '1px',
-                paddingTopMargin: '16px'
+                borderTopStyle: 'solid'
               }} className="pt-4 mt-4">
                 <p style={{ color: '#d4af37' }} className="font-bold">100% Commission Redistribution!</p>
                 <p style={{ color: '#e8e8d0' }} className="text-sm mt-2">All commissions are redistributed to network members monthly</p>

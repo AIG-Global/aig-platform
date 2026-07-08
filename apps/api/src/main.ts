@@ -13,6 +13,9 @@ import { ActivityModule } from './activity/activity.module.js'
 import { ProgressModule } from './progress/progress.module.js'
 import { MissionModule } from './mission/mission.module.js'
 import { WDMModule } from './wdm/wdm.module.js'
+import { CommissionsModule } from './commissions/commissions.module.js'
+import { GeneralsModule } from './generals/generals.module.js'
+import { AnalyticsModule } from './analytics/analytics.module.js'
 
 // ESM compatibility
 const __filename = fileURLToPath(import.meta.url)
@@ -65,6 +68,9 @@ class AppController {
     ProgressModule,
     MissionModule,
     WDMModule,
+    CommissionsModule,
+    GeneralsModule,
+    AnalyticsModule,
     IdentityModule,
     //UserManagementModule,
     //OrganizationManagementModule,

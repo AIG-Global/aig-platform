@@ -1,7 +1,23 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { MessageCircle, Send, X, Volume2, VolumeX } from 'lucide-react'
+import { Send, X, Volume2, VolumeX } from 'lucide-react'
+
+// Add CSS for animations
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style')
+  style.textContent = `
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-0.5rem);
+      }
+    }
+  `
+  document.head.appendChild(style)
+}
 
 interface Message {
   id: string
@@ -11,6 +27,7 @@ interface Message {
 }
 
 export default function DianaWidget() {
+  // ALL hooks must be called unconditionally
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -24,6 +41,25 @@ export default function DianaWidget() {
   const [isMuted, setIsMuted] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isAuthPage, setIsAuthPage] = useState(false)
+
+  // Use effect to check if we're on an auth page (after initial render)
+  useEffect(() => {
+    // Check immediately on mount and whenever location changes
+    const checkAuthPage = () => {
+      const pathname = window.location.pathname
+      const isAuth = pathname === '/auth' || pathname.startsWith('/auth?')
+      setIsAuthPage(isAuth)
+    }
+    
+    checkAuthPage()
+    
+    // Also listen for route changes
+    const handlePopState = () => checkAuthPage()
+    window.addEventListener('popstate', handlePopState)
+    
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -36,7 +72,6 @@ export default function DianaWidget() {
   const handleSend = async () => {
     if (!input.trim()) return
 
-    // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       text: input,
@@ -48,14 +83,15 @@ export default function DianaWidget() {
     setInput('')
     setIsLoading(true)
 
-    // Simulate Diana response
     setTimeout(() => {
       const dianaResponses: { [key: string]: string } = {
         'hi': "Hello! I'm here to help you learn about AIGINVEST ecosystem. What would you like to know?",
-        'pricing': "We offer 4 membership tiers: Free (€0), Starter (€399/month), Professional (€699/month), and Enterprise (€2,999/month).",
+        'pricing': "Check out our membership tiers: Package A (Free), Package B (€399/mo), Package C (€699/mo), and Enterprise (€2,999/mo). Visit /packages to see the full Wealth Escalation Pathway!",
+        'package': "We have 4 membership packages: Free entry, Starter (€399/mo), Professional (€699/mo), and Enterprise (€2,999/mo). Each tier unlocks more earning potential. Visit /packages for details!",
         'diana': "I'm Diana, your AI companion. I can help with the AIG ecosystem, answer questions, and guide you through features.",
-        'affiliate': "Our affiliate program offers 26% commission on Level 1, with up to 10 levels of commissions. Professional tier members get unlimited earning!",
+        'affiliate': "Our affiliate program offers 26% commission on Level 1, with up to 10 levels of commissions. Professional tier members get unlimited earning potential!",
         'earn': "You can earn through affiliate commissions, marketplace sales, investments, and more. All earnings get 80% EUR Cash + 20% AIG$ tokens.",
+        'wealth': "Visit /packages to see The Wealth Escalation Pathway - our complete membership structure designed to help you grow your earnings!",
         'default': "That's a great question! I can help with information about memberships, Diana AI apps, the marketplace, affiliate program, and investments. What interests you?"
       }
 
@@ -79,7 +115,6 @@ export default function DianaWidget() {
       setMessages(prev => [...prev, dianaMessage])
       setIsLoading(false)
 
-      // Text-to-speech if not muted
       if (!isMuted && window.speechSynthesis) {
         const utterance = new SpeechSynthesisUtterance(response)
         utterance.rate = 0.95
@@ -88,38 +123,103 @@ export default function DianaWidget() {
     }, 500)
   }
 
+  // Don't render on auth pages
+  if (isAuthPage) {
+    return null
+  }
+
   return (
-    <>
-      {/* Diana Chat Widget */}
-      <div className="fixed bottom-6 right-6 z-40">
-        {isOpen ? (
-          <div className="bg-luxury-cream dark:bg-luxury-900 rounded-2xl shadow-2xl w-96 h-96 flex flex-col border border-luxury-gold/30">
+    <div style={{
+      position: 'fixed',
+      bottom: '1.5rem',
+      right: '1.5rem',
+      zIndex: 50,
+      pointerEvents: 'auto'
+    }}>
+      {isOpen ? (
+        <div 
+          style={{
+            borderRadius: '1rem',
+            width: '24rem',
+            height: '24rem',
+            display: 'flex',
+            flexDirection: 'column',
+            border: '1px solid rgba(212, 175, 55, 0.3)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+            backgroundColor: '#1a0f15',
+            overflow: 'hidden'
+          }}
+        >
             {/* Header */}
-            <div className="bg-gradient-to-r from-luxury-gold to-luxury-gold-light text-luxury-950 p-4 rounded-t-2xl flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-luxury-950/30 bg-luxury-950/10">
+            <div style={{
+              background: 'linear-gradient(to right, #d4af37, #e8d4a2)',
+              color: '#1a0f15',
+              padding: '1rem',
+              borderRadius: '1rem 1rem 0 0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              boxSizing: 'border-box'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div 
+                  style={{
+                    width: '3rem',
+                    height: '3rem',
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    border: 'none',
+                    backgroundColor: 'transparent'
+                  }}
+                >
                   <img
-                    src="/avatars/diana/diana-avatar.svg"
+                    src="/images/diana-avatar.png"
                     alt="Diana"
-                    className="w-full h-full"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', mixBlendMode: 'multiply' }}
                   />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg">Diana</h3>
-                  <p className="text-xs text-luxury-950/70">AI Assistant • Online</p>
+                  <h3 style={{ fontWeight: 'bold', fontSize: '1.125rem', margin: 0, color: '#1a0f15' }}>Diana</h3>
+                  <p style={{ fontSize: '0.75rem', color: 'rgba(26, 15, 21, 0.7)', margin: 0 }}>AI Assistant • Online</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <button
                   onClick={() => setIsMuted(!isMuted)}
-                  className="p-1 hover:bg-luxury-950/20 rounded-lg transition"
+                  style={{
+                    padding: '0.25rem',
+                    borderRadius: '0.5rem',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(26, 15, 21, 0.2)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
                   title={isMuted ? 'Unmute' : 'Mute'}
                 >
                   {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1 hover:bg-luxury-950/20 rounded-lg transition"
+                  style={{
+                    padding: '0.25rem',
+                    borderRadius: '0.5rem',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(26, 15, 21, 0.2)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
                 >
                   <X size={18} />
                 </button>
@@ -127,42 +227,96 @@ export default function DianaWidget() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-luxury-cream dark:bg-luxury-900">
+            <div 
+              style={{
+                flex: 1,
+                overflowY: 'auto',
+                padding: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem',
+                backgroundColor: 'rgba(26, 15, 21, 0.8)'
+              }}
+            >
               {messages.map(msg => (
                 <div
                   key={msg.id}
-                  className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} gap-2`}
+                  style={{
+                    display: 'flex',
+                    justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start',
+                    gap: '0.5rem'
+                  }}
                 >
                   {msg.sender === 'diana' && (
                     <img
-                      src="/avatars/diana/diana-avatar.svg"
+                      src="/images/diana-avatar.png"
                       alt="Diana"
-                      className="w-7 h-7 rounded-full flex-shrink-0"
+                      style={{
+                        width: '1.75rem',
+                        height: '1.75rem',
+                        borderRadius: '50%',
+                        flexShrink: 0,
+                        objectFit: 'cover'
+                      }}
                     />
                   )}
                   <div
-                    className={`max-w-xs px-4 py-2 rounded-lg text-sm ${
-                      msg.sender === 'user'
-                        ? 'bg-luxury-gold text-luxury-950 rounded-br-none font-medium'
-                        : 'bg-luxury-800 dark:bg-luxury-800 text-luxury-cream rounded-bl-none'
-                    }`}
+                    style={{
+                      maxWidth: '20rem',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '0.5rem',
+                      fontSize: '0.875rem',
+                      backgroundColor: msg.sender === 'user' ? '#d4af37' : '#3d2c35',
+                      color: msg.sender === 'user' ? '#1a0f15' : '#f5f5dc',
+                      borderBottomRightRadius: msg.sender === 'user' ? '0' : undefined,
+                      borderBottomLeftRadius: msg.sender === 'diana' ? '0' : undefined,
+                      fontWeight: msg.sender === 'user' ? 'bold' : 'normal'
+                    }}
                   >
                     {msg.text}
                   </div>
                 </div>
               ))}
               {isLoading && (
-                <div className="flex justify-start gap-2">
+                <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '0.5rem' }}>
                   <img
-                    src="/avatars/diana/diana-avatar.svg"
+                    src="/images/diana-avatar.png"
                     alt="Diana"
-                    className="w-7 h-7 rounded-full flex-shrink-0"
+                    style={{
+                      width: '1.75rem',
+                      height: '1.75rem',
+                      borderRadius: '50%',
+                      flexShrink: 0,
+                      objectFit: 'cover'
+                    }}
                   />
-                  <div className="bg-luxury-800 dark:bg-luxury-800 px-4 py-2 rounded-lg">
-                    <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-luxury-gold rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-luxury-gold rounded-full animate-bounce animation-delay-100"></div>
-                      <div className="w-2 h-2 bg-luxury-gold rounded-full animate-bounce animation-delay-200"></div>
+                  <div style={{
+                    backgroundColor: '#3d2c35',
+                    padding: '1rem',
+                    borderRadius: '0.5rem'
+                  }}>
+                    <div style={{ display: 'flex', gap: '0.25rem' }}>
+                      <div style={{
+                        width: '0.5rem',
+                        height: '0.5rem',
+                        backgroundColor: '#d4af37',
+                        borderRadius: '50%',
+                        animation: 'bounce 1.4s infinite'
+                      }}></div>
+                      <div style={{
+                        width: '0.5rem',
+                        height: '0.5rem',
+                        backgroundColor: '#d4af37',
+                        borderRadius: '50%',
+                        animation: 'bounce 1.4s infinite 0.2s'
+                      }}></div>
+                      <div style={{
+                        width: '0.5rem',
+                        height: '0.5rem',
+                        backgroundColor: '#d4af37',
+                        borderRadius: '50%',
+                        animation: 'bounce 1.4s infinite 0.4s'
+                      }}></div>
                     </div>
                   </div>
                 </div>
@@ -171,19 +325,64 @@ export default function DianaWidget() {
             </div>
 
             {/* Input */}
-            <div className="border-t border-luxury-gold/30 p-3 flex gap-2 bg-luxury-cream dark:bg-luxury-900 rounded-b-2xl">
+            <div 
+              style={{
+                borderTop: '1px solid rgba(212, 175, 55, 0.3)',
+                padding: '0.75rem',
+                display: 'flex',
+                gap: '0.5rem',
+                borderRadius: '0 0 2rem 2rem',
+                backgroundColor: 'rgba(26, 15, 21, 0.8)'
+              }}
+            >
               <input
                 type="text"
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyPress={e => e.key === 'Enter' && handleSend()}
                 placeholder="Ask Diana..."
-                className="flex-1 px-3 py-2 bg-luxury-cream-dark dark:bg-luxury-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-luxury-gold dark:text-luxury-cream"
+                style={{
+                  backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                  color: '#f5f5dc',
+                  borderRadius: '0.5rem',
+                  padding: '0.5rem 0.75rem',
+                  fontSize: '0.875rem',
+                  flex: 1,
+                  outline: 'none',
+                  border: '1.5px solid #d4af37'
+                }}
+                onFocus={(e) => {
+                  e.target.style.boxShadow = '0 0 0 2px #d4af37';
+                  e.target.style.outline = 'none'
+                }}
+                onBlur={(e) => {
+                  e.target.style.boxShadow = 'none'
+                }}
               />
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isLoading}
-                className="p-2 bg-luxury-gold hover:bg-luxury-gold-light disabled:bg-gray-400 text-luxury-950 rounded-lg transition font-bold"
+                style={{
+                  padding: '0.5rem',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#d4af37',
+                  borderRadius: '0.5rem',
+                  fontWeight: 'bold',
+                  cursor: !input.trim() || isLoading ? 'not-allowed' : 'pointer',
+                  opacity: !input.trim() || isLoading ? 0.5 : 1,
+                  transition: 'opacity 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  if (!(!input.trim() || isLoading)) {
+                    e.currentTarget.style.opacity = '0.8'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!(!input.trim() || isLoading)) {
+                    e.currentTarget.style.opacity = '1'
+                  }
+                }}
               >
                 <Send size={16} />
               </button>
@@ -192,17 +391,35 @@ export default function DianaWidget() {
         ) : (
           <button
             onClick={() => setIsOpen(true)}
-            className="w-16 h-16 bg-gradient-to-br from-luxury-gold to-luxury-gold-light hover:from-luxury-gold-light hover:to-luxury-gold text-luxury-950 rounded-full shadow-2xl flex items-center justify-center transition transform hover:scale-110 overflow-hidden border-2 border-luxury-gold/60 hover:border-luxury-gold"
+            style={{
+              backgroundColor: 'transparent',
+              border: 'none',
+              padding: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'transform 0.2s, opacity 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = '0.8'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = '1'
+            }}
             title="Chat with Diana"
           >
             <img
-              src="/avatars/diana/diana-avatar.svg"
+              src="/images/diana-avatar.png"
               alt="Diana"
-              className="w-14 h-14"
+              style={{
+                width: '10rem',
+                height: 'auto',
+                mixBlendMode: 'multiply'
+              }}
             />
           </button>
         )}
       </div>
-    </>
-  )
+    )
 }
