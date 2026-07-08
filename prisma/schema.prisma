@@ -76,6 +76,11 @@ model User {
   app_usage_events      AppUsageEvent[]
   service_interests     ServiceInterest[]
   
+  // Compliance & Audit
+  auditLogs             AuditLog[] @relation("auditLogs")
+  consentRecords        ConsentRecord[] @relation("consentRecords")
+  dataExportLogs        DataExportLog[] @relation("dataExportLogs")
+  
   // Gift cards
   giftCards_claimed     GiftCard[] @relation("giftCards_claimed")
   
@@ -1595,6 +1600,91 @@ model InvestmentRelease {
   
   @@index([user_id])
   @@index([investment_fund_id])
+}
+
+// ============================================================================
+// COMPLIANCE & AUDIT
+// ============================================================================
+
+model AuditLog {
+  id              String      @id @default(cuid())
+  userId          String?
+  user            User?       @relation("auditLogs", fields: [userId], references: [id], onDelete: SetNull)
+  
+  // Action details
+  action          String      // e.g., "USER_CREATED", "DATA_EXPORTED", "ACCOUNT_DELETED"
+  resourceType    String      // e.g., "User", "Account", "Membership"
+  resourceId      String?     // ID of affected resource
+  
+  // Change tracking
+  changes         String?     // JSON object: { before: {...}, after: {...} }
+  
+  // Context
+  ipAddress       String?
+  userAgent       String?
+  method          String?     // HTTP method (GET, POST, DELETE, etc.)
+  path            String?     // API path
+  statusCode      Int?
+  
+  // Metadata
+  reason          String?     // Why the action was taken
+  metadata        String?     // Additional context as JSON
+  
+  createdAt       DateTime    @default(now())
+  
+  @@index([userId])
+  @@index([action])
+  @@index([resourceType])
+  @@index([createdAt])
+}
+
+model ConsentRecord {
+  id              String      @id @default(cuid())
+  userId          String
+  user            User        @relation("consentRecords", fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Consent types
+  marketing       Boolean     @default(false)
+  analytics       Boolean     @default(false)
+  thirdParty      Boolean     @default(false)
+  
+  // Consent details
+  consentedAt     DateTime    @default(now())
+  withdrawnAt     DateTime?
+  
+  // Legal
+  ipAddress       String?
+  userAgent       String?
+  privacyVersion  String      // Version of privacy policy consented to
+  
+  @@index([userId])
+  @@index([consentedAt])
+}
+
+model DataExportLog {
+  id              String      @id @default(cuid())
+  userId          String
+  user            User        @relation("dataExportLogs", fields: [userId], references: [id], onDelete: Cascade)
+  
+  status          ExportStatus @default(PENDING)
+  format          String      @default("json") // json, csv, etc.
+  
+  filePath        String?     // S3 path or local path
+  expiresAt       DateTime?   // When the export link expires
+  
+  requestedAt     DateTime    @default(now())
+  completedAt     DateTime?
+  
+  @@index([userId])
+  @@index([status])
+}
+
+enum ExportStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  EXPIRED
 }
 
 // ============================================================================

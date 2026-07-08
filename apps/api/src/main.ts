@@ -16,6 +16,9 @@ import { WDMModule } from './wdm/wdm.module.js'
 import { CommissionsModule } from './commissions/commissions.module.js'
 import { GeneralsModule } from './generals/generals.module.js'
 import { AnalyticsModule } from './analytics/analytics.module.js'
+import { ComplianceModule } from './compliance/compliance.module.js'
+import { MailchimpModule } from './mailchimp/mailchimp.module.js'
+import { PaymentModule } from './payment/payment.module.js'
 
 // ESM compatibility
 const __filename = fileURLToPath(import.meta.url)
@@ -71,6 +74,9 @@ class AppController {
     CommissionsModule,
     GeneralsModule,
     AnalyticsModule,
+    ComplianceModule,
+    MailchimpModule,
+    PaymentModule,
     IdentityModule,
     //UserManagementModule,
     //OrganizationManagementModule,
