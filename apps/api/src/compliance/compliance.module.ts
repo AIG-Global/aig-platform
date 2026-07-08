@@ -3,7 +3,7 @@ import { AuditService } from './audit.service'
 import { PrivacyService } from './privacy.service'
 import { AuditController } from './audit.controller'
 import { PrivacyController } from './privacy.controller'
-import { PrismaService } from '../prisma/prisma.service'
+import { PrismaService } from '../prisma.service'
 
 @Module({
   controllers: [AuditController, PrivacyController],
