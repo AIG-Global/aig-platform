@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "ਏਆਈ-ਸ਼ਕਤੀ ਪ੍ਰਾਪਤ ਕਾਰੋਬਾਰ ਚਲਾਉਣ ਪ੍ਰਣਾਲੀ",
+    "language": "ਭਾਸ਼ਾ",
+    "selectLanguage": "ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ",
+    "detectingLocation": "ਆਪਣੀ ਸਥਿਤੀ ਦਾ ਪਤਾ ਲਗਾਇਆ ਜਾ ਰਿਹਾ ਹੈ...",
+    "welcome": "AIGINVEST ਵਿੱਚ ਸੁਆਗਤ ਹੈ",
+    "menu": {
+      "home": "ਘਰ",
+      "dashboard": "ਡੈਸ਼ਬੋਰਡ",
+      "marketplace": "ਬਾਜ਼ਾਰ",
+      "compliance": "ਅਨੁਪਾਲਨ",
+      "settings": "ਸੈਟਿੰਗਾਂ",
+      "profile": "ਪ੍ਰੋਫਾਈਲ",
+      "logout": "ਲਾਗ ਆਊਟ",
+      "login": "ਲਾਗ ਇਨ",
+      "signup": "ਸਾਈਨ ਅਪ ਕਰੋ"
+    },
+    "buttons": {
+      "save": "ਬਚਾਉ",
+      "cancel": "ਰੱਦ ਕਰੋ",
+      "continue": "ਜਾਰੀ ਰੱਖੋ",
+      "next": "ਅਗਲਾ",
+      "back": "ਪਿਛਲੇ",
+      "submit": "ਪੇਸ਼ ਕਰੋ",
+      "delete": "ਮਿਟਾਓ",
+      "edit": "ਸੰਪਾਦਨ ਕਰੋ",
+      "copy": "ਕਾਪੀ ਕਰੋ",
+      "download": "ਡਾਊਨਲੋਡ ਕਰੋ",
+      "upload": "ਅਪ ਲੋਡ ਕਰੋ",
+      "export": "ਨਿਕਾਸ"
+    },
+    "footer": {
+      "about": "ਬਾਰੇ ਵਿੱਚ",
+      "contact": "ਸੰਪਰਕ",
+      "privacy": "ਗੋਪਨੀਯਤਾ ਨੀਤੀ",
+      "terms": "ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ",
+      "compliance": "ਅਨੁਪਾਲਨ",
+      "copyright": "© 2026 AIG Global। ਸਮੁਚੇ ਅਧਿਕਾਰ ਸੁਰਖਤ।"
+    }
+  },
+  "auth": {
+    "login": "ਲਾਗ ਇਨ",
+    "signup": "ਸਾਈਨ ਅਪ ਕਰੋ",
+    "email": "ਈ-ਮੇਲ",
+    "password": "ਪਾਸਵਰਡ",
+    "confirmPassword": "ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+    "firstName": "ਪਹਿਲਾ ਨਾਮ",
+    "lastName": "ਆਖਰੀ ਨਾਮ",
+    "forgotPassword": "ਪਾਸਵਰਡ ਭੁੱਲ ਗਏ?",
+    "rememberMe": "ਮੈਨੂੰ ਯਾਦ ਕਰੋ",
+    "noAccount": "ਖਾਤਾ ਨਹੀਂ ਹੈ?",
+    "alreadyHaveAccount": "ਪਹਿਲਾਂ ਹੀ ਖਾਤਾ ਹੈ?",
+    "signupNow": "ਹੁਣ ਸਾਈਨ ਅਪ ਕਰੋ",
+    "loginNow": "ਹੁਣ ਲਾਗ ਇਨ ਕਰੋ",
+    "loginSuccess": "ਲਾਗ ਇਨ ਸਫਲ!",
+    "signupSuccess": "ਖਾਤਾ ਸਫਲਤਾਪੂਰਵਕ ਬਣਾਇਆ ਗਿਆ!",
+    "errors": {
+      "invalidEmail": "ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਵੈਧ ਈ-ਮੇਲ ਦਰਜ ਕਰੋ",
+      "passwordMismatch": "ਪਾਸਵਰਡ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ",
+      "passwordTooShort": "ਪਾਸਵਰਡ ਘੱਟੋ ਘੱਟ 8 ਅੱਖਰ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ",
+      "userExists": "ਉਪਭੋਗਤਾ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ",
+      "invalidCredentials": "ਗਲਤ ਈ-ਮੇਲ ਜਾਂ ਪਾਸਵਰਡ"
+    }
+  },
+  "dashboard": {
+    "welcome": "ਵਾਪਸ ਸੁਆਗਤ ਹੈ",
+    "accountBalance": "ਖਾਤਾ ਬੈਲੇਂਸ",
+    "totalCommissions": "ਕੁੱਲ ਕਮਿਸ਼ਨ",
+    "activeMembers": "ਕਿਰਿਆ ਸਦਸ੍ਯ",
+    "thisMonth": "ਇਸ ਮਹੀਨੇ",
+    "recentTransactions": "ਹਾਲਿਆ ਲੈਨ-ਦੇਨ",
+    "memberNetwork": "ਸਦਸ੍ਯ ਨੈੱਟਵਰਕ",
+    "performance": "ਰੁੱਖ"
+  },
+  "compliance": {
+    "title": "ਅਨੁਪਾਲਨ ਅਤੇ ਗੋਪਨੀਯਤਾ",
+    "dataExport": "ਡਾਟਾ ਨਿਕਾਸ (GDPR)",
+    "deleteAccount": "ਖਾਤਾ ਮਿਟਾਓ",
+    "consentManagement": "ਸਹਿਮਤੀ ਪ੍ਰਬੰਧਨ",
+    "auditLog": "ਆਡਿਟ ਲਾਗ",
+    "privacyPolicy": "ਗੋਪਨੀਯਤਾ ਨੀਤੀ",
+    "dataProcessing": "ਡਾਟਾ ਪ੍ਰਸੰਸਕਰਣ",
+    "requestExport": "ਡਾਟਾ ਨਿਕਾਸ ਦੀ ਬੇਨਤੀ ਕਰੋ",
+    "requestDeletion": "ਖਾਤਾ ਮਿਟਾਉਣ ਦੀ ਬੇਨਤੀ ਕਰੋ",
+    "marketingConsent": "ਮਾਰਕੀਟਿੰਗ ਸੰਚਾਰ",
+    "analyticsConsent": "ਵਿਸ਼ਲੇਸ਼ਣ ਟ੍ਰੈਕਿੰਗ",
+    "thirdPartyConsent": "ਤੀਸਰੇ ਪੱਖ ਨਾਲ ਡਾਟਾ ਸ਼ਾਂਟੀ"
+  },
+  "errors": {
+    "notFound": "ਸਫਾ ਨਹੀਂ ਮਿਲਿਆ",
+    "unauthorized": "ਗੈਰ-ਅਧਿਕ੍ਰਿਤ ਪਹੁੰਚ",
+    "forbidden": "ਪਹੁੰਚ ਮਨਾ ਹੈ",
+    "serverError": "ਸਰਵਰ ਦੀ ਗਲਤੀ",
+    "networkError": "ਨੈੱਟਵਰਕ ਕੁਨੈਕਸ਼ਨ ਗਲਤੀ",
+    "tryAgain": "ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ"
+  },
+  "diana": {
+    "title": "Diana AI ਸਹਾਇਕ",
+    "startChat": "ਚੈਟ ਸ਼ੁਰੂ ਕਰੋ",
+    "typeMessage": "ਆਪਣਾ ਸੰਦੇਸ਼ ਟਾਈਪ ਕਰੋ...",
+    "sending": "ਭੇਜ ਰਿਹਾ ਹੈ...",
+    "offline": "ਵਰਤਮਾਨ ਵਿੱਚ ਆਫਲਾਈਨ"
+  }
+}

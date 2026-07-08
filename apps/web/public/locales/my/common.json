@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "အလုပ်စီမံခန့်ခွဲမှု ကျွန်ုပ်တို့ သိပ္ပံ System",
+    "language": "ဘာသာစကား",
+    "selectLanguage": "သင့်ဘာသာစကား ရွေးချယ်ပါ",
+    "detectingLocation": "သင်၏တည်နေရာ ကြေးမုံ...",
+    "welcome": "AIGINVEST သို့ ကြိုးဆိုကြေးမုံ",
+    "menu": {
+      "home": "နံ",
+      "dashboard": "Dashboard",
+      "marketplace": "စျေးကွက်",
+      "compliance": "စုံစမ်း",
+      "settings": "ချိန်ညှိ",
+      "profile": "အကျ",
+      "logout": "ထွက်ခွာ",
+      "login": "ဝင်ရောက်",
+      "signup": "အရင်းအကျ"
+    },
+    "buttons": {
+      "save": "သိမ်း",
+      "cancel": "ပယ်ဖျက်",
+      "continue": "ရှေ့သို့",
+      "next": "ရှေ့သို့",
+      "back": "နောက်သို့",
+      "submit": "ထည့်သွင်း",
+      "delete": "ဖျက်",
+      "edit": "ပြင်ဆင်",
+      "copy": "ကူးယူ",
+      "download": "ဒေါင်းလုပ်",
+      "upload": "အပ်နှံ",
+      "export": "ထုတ်ယူ"
+    },
+    "footer": {
+      "about": "အကြောင်း",
+      "contact": "ဆက်စပ်",
+      "privacy": "ကိုယ်ရေးအချက်အလက် မူ",
+      "terms": "ဝန်ဆောင်မှု စည်းမျဉ်း",
+      "compliance": "စုံစမ်း",
+      "copyright": "© 2026 AIG Global. အခွင့်အရေး လုံးလုံးသည်။"
+    }
+  },
+  "auth": {
+    "login": "ဝင်ရောက်",
+    "signup": "အရင်းအကျ",
+    "email": "အီလက်ထရောနစ်စာတိုက်",
+    "password": "စကားဝှက်",
+    "confirmPassword": "စကားဝှက် အတည်း",
+    "firstName": "အခြေအုံ",
+    "lastName": "မည်",
+    "forgotPassword": "စကားဝှက် မေ့ခဲ့ပါသလား",
+    "rememberMe": "ကျွန်ုပ် မေ့မည် အမှတ်",
+    "noAccount": "အကောင့် လုံးဝ မဆိုလုံးဝ",
+    "alreadyHaveAccount": "ပြီးသည့် အကောင့် ရှိပါ",
+    "signupNow": "အခုအချိန်မှ အရင်းအကျ",
+    "loginNow": "အခုအချိန်မှ ဝင်ရောက်",
+    "loginSuccess": "အောင်မြင်သည့်",
+    "signupSuccess": "အကောင့် အောင်မြင်ခဲ့သည်!",
+    "errors": {
+      "invalidEmail": "အီလက်ထရောနစ်စာတိုက် ထည့်သွင်း",
+      "passwordMismatch": "စကားဝှက် မကိုက်ညီ",
+      "passwordTooShort": "စကားဝှက် အနည်းဆုံး 8 စကား",
+      "userExists": "အသုံးပြုသူ ရှိလျှင်",
+      "invalidCredentials": "အီလက်ထရောနစ်စာတိုက် သို့ စကားဝှက်"
+    }
+  },
+  "dashboard": {
+    "welcome": "ကြိုးဆိုကြေးမုံ သည့် အပြန်",
+    "accountBalance": "အကောင့် ကျန်ဒြပ်",
+    "totalCommissions": "အုပ်စုကျ နိုင်ငံတကာ",
+    "activeMembers": "ကျင်းပ အပြင်အဆင် အုပ်စုမှ",
+    "thisMonth": "ဒီလ",
+    "recentTransactions": "အနီးအီးရ လွှဲခြင်း",
+    "memberNetwork": "အုပ်စုမှ ကွန်ယက်",
+    "performance": "အမုံ့စုံ"
+  },
+  "compliance": {
+    "title": "စုံစမ်း ကိုယ်ရေးအချက်အလက်",
+    "dataExport": "အချက်အလက် အကုန်အုံ (GDPR)",
+    "deleteAccount": "အကောင့် ဖျက်",
+    "consentManagement": "သဘောတူ အုပ်ချုပ်ခြင်း",
+    "auditLog": "အဆင့်သီးခြားစီ မှတ်တမ်း",
+    "privacyPolicy": "ကိုယ်ရေးအချက်အလက် မူ",
+    "dataProcessing": "အချက်အလက် အပြည့်အစုံ",
+    "requestExport": "အချက်အလက် အကုန်အုံ အတောင်း",
+    "requestDeletion": "အကောင့် ဖျက် အတောင်း",
+    "marketingConsent": "အရောင်းအဝယ် မြန်မြန်",
+    "analyticsConsent": "ဝန်ဆောင်မှု ကြည့်ရှုခြင်း",
+    "thirdPartyConsent": "တတ ကုန်ကြမ်း ဖျင်ခြင်း"
+  },
+  "errors": {
+    "notFound": "စာမျက်နှာ မတွေ့ရှိ",
+    "unauthorized": "ခွင့်ပြုချက် မရှိ အဝင်",
+    "forbidden": "ခွင့်ပြုချက် အပယ်",
+    "serverError": "ကွန်ပျူတာ အမှား",
+    "networkError": "ကွန်ယက် အလုံးအရင်း အမှား",
+    "tryAgain": "ထပ်မံ시도"
+  },
+  "diana": {
+    "title": "Diana အီလက်ထရောနစ် အကူအညီ",
+    "startChat": "အစ စကားဝိုင်း",
+    "typeMessage": "သင့်စာသားထည့်သွင်း...",
+    "sending": "ပို့လျှက်...",
+    "offline": "ယခု အွန်လိုင်း မဟုတ်"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Isistimu Yokusebenza Ebhiziniseni Esixhaswe yI-AI",
+    "language": "Ulwimi",
+    "selectLanguage": "Khetha Ulwimi Lwakho",
+    "detectingLocation": "Iluzinga Indawo Yakho...",
+    "welcome": "Wamkelekile kwiAIGINVEST",
+    "menu": {
+      "home": "Ikhaya",
+      "dashboard": "Ibhodi Yokulawula",
+      "marketplace": "Inkonzo Yentengiso",
+      "compliance": "Ukulingana",
+      "settings": "Isetingi",
+      "profile": "Iprofayile",
+      "logout": "Phuma",
+      "login": "Bangela",
+      "signup": "Bhalisa"
+    },
+    "buttons": {
+      "save": "Cima",
+      "cancel": "Bhaxa",
+      "continue": "Qhubeka",
+      "next": "Okulandelayo",
+      "back": "Buyelela",
+      "submit": "Thumela",
+      "delete": "Cima",
+      "edit": "Lungisa",
+      "copy": "Kopa",
+      "download": "Khuphela Ikhompuyutha",
+      "upload": "Ukungenisa",
+      "export": "Thutha"
+    },
+    "footer": {
+      "about": "Malunga naku",
+      "contact": "Xhobela",
+      "privacy": "Ipolisi Yobubumfihlo",
+      "terms": "Imigaqo Yoluphakamiselo",
+      "compliance": "Ukulingana",
+      "copyright": "© 2026 AIG Global. Zonke Amalungelo Agcinwe."
+    }
+  },
+  "auth": {
+    "login": "Bangela",
+    "signup": "Bhalisa",
+    "email": "I-imeyile",
+    "password": "Ipasswodi",
+    "confirmPassword": "Qinisekeza Ipasswodi",
+    "firstName": "Igama Lokuqala",
+    "lastName": "Igama Lokugqibela",
+    "forgotPassword": "Unakhohlwa Ipasswodi?",
+    "rememberMe": "Ndikhumbule",
+    "noAccount": "Awunakho Iakawundi?",
+    "alreadyHaveAccount": "Ukuba Nesiakawundi Sele?",
+    "signupNow": "Bhalisa Ngoku",
+    "loginNow": "Bangela Ngoku",
+    "loginSuccess": "Ukubangela Kwathi Ngempumelelo!",
+    "signupSuccess": "Iakawundi Yenziwe Ngempumelelo!",
+    "errors": {
+      "invalidEmail": "Nceda Faka I-imeyile Evulelekileyo",
+      "passwordMismatch": "Izipasswodi Azinqabnalani",
+      "passwordTooShort": "Ipasswodi Kufuneka Ibe Okungenani Izakhelo Ezisibhozo",
+      "userExists": "Umsebenzisi Usekhona",
+      "invalidCredentials": "I-imeyile Okanye Ipasswodi Ayivulelekileyo"
+    }
+  },
+  "dashboard": {
+    "welcome": "Wamkelekile Ukubuya",
+    "accountBalance": "Ibalansisi Ye-Iakawundi",
+    "totalCommissions": "Ikakhompilisha Lonke",
+    "activeMembers": "Amalunga Asebenzayo",
+    "thisMonth": "Enyangeni",
+    "recentTransactions": "Iitransaksheni Zembi-evali",
+    "memberNetwork": "Inethiwaki Ye-Ilungu",
+    "performance": "Umsebenzi"
+  },
+  "compliance": {
+    "title": "Ukulingana kunye noBubumfihlo",
+    "dataExport": "Thutha Idatha (GDPR)",
+    "deleteAccount": "Cima Iakawundi",
+    "consentManagement": "Ukulawula Iimvume",
+    "auditLog": "I-Logi Ye-Iindlela Zokuphenyaphenya",
+    "privacyPolicy": "Ipolisi Yobubumfihlo",
+    "dataProcessing": "Ukunqamula Idatha",
+    "requestExport": "Omele Uthuthiwe Idatha",
+    "requestDeletion": "Omele Ucimwe Iakawundi",
+    "marketingConsent": "Unxibelelwano Lwe-Makhethini",
+    "analyticsConsent": "Ukunqamula Ubuchule",
+    "thirdPartyConsent": "Ibahagi Ledatha Kunye Nethathu"
+  },
+  "errors": {
+    "notFound": "Ipheji Ayifunyanwanga",
+    "unauthorized": "Ukufinyelela Okungavumelekileyo",
+    "forbidden": "Ukufinyelela Okuvimbelekileyo",
+    "serverError": "Impazamo Kakhompyutha",
+    "networkError": "Impazamo Yokunxibelelana Nenethiwaki",
+    "tryAgain": "Zama Kwakhona"
+  },
+  "diana": {
+    "title": "Umsizi we-Diana AI",
+    "startChat": "Qalela Incoko",
+    "typeMessage": "Bhala Ilizwi Lakho...",
+    "sending": "Ilithumelela...",
+    "offline": "Ngalesi sikhathi Awukho Ku-Intanethi"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Το Σύστημα Λειτουργίας Επιχείρησης Τροφοδοτούμενο από ΤΝ",
+    "language": "Γλώσσα",
+    "selectLanguage": "Επιλέξτε τη γλώσσα σας",
+    "detectingLocation": "Ανίχνευση της τοποθεσίας σας...",
+    "welcome": "Καλώς ήρθατε στο AIGINVEST",
+    "menu": {
+      "home": "Αρχική",
+      "dashboard": "Πίνακας Ελέγχου",
+      "marketplace": "Αγορά",
+      "compliance": "Συμμόρφωση",
+      "settings": "Ρυθμίσεις",
+      "profile": "Προφίλ",
+      "logout": "Αποσύνδεση",
+      "login": "Σύνδεση",
+      "signup": "Εγγραφή"
+    },
+    "buttons": {
+      "save": "Αποθήκευση",
+      "cancel": "Ακύρωση",
+      "continue": "Συνέχεια",
+      "next": "Επόμενο",
+      "back": "Πίσω",
+      "submit": "Υποβολή",
+      "delete": "Διαγραφή",
+      "edit": "Επεξεργασία",
+      "copy": "Αντιγραφή",
+      "download": "Λήψη",
+      "upload": "Μεταφόρτωση",
+      "export": "Εξαγωγή"
+    },
+    "footer": {
+      "about": "Σχετικά",
+      "contact": "Επικοινωνία",
+      "privacy": "Πολιτική Απορρήτου",
+      "terms": "Όροι Υπηρεσίας",
+      "compliance": "Συμμόρφωση",
+      "copyright": "© 2026 AIG Global. Όλα τα δικαιώματα διατηρούνται."
+    }
+  },
+  "auth": {
+    "login": "Σύνδεση",
+    "signup": "Εγγραφή",
+    "email": "Email",
+    "password": "Κωδικός Πρόσβασης",
+    "confirmPassword": "Επιβεβαίωση Κωδικού",
+    "firstName": "Όνομα",
+    "lastName": "Επώνυμο",
+    "forgotPassword": "Ξεχάσατε τον κωδικό;",
+    "rememberMe": "Να με θυμάσαι",
+    "noAccount": "Δεν έχετε λογαριασμό;",
+    "alreadyHaveAccount": "Έχετε ήδη λογαριασμό;",
+    "signupNow": "Εγγραφείτε τώρα",
+    "loginNow": "Συνδεθείτε τώρα",
+    "loginSuccess": "Επιτυχής σύνδεση!",
+    "signupSuccess": "Λογαριασμός δημιουργήθηκε με επιτυχία!",
+    "errors": {
+      "invalidEmail": "Εισάγετε έγκυρο email",
+      "passwordMismatch": "Οι κωδικοί δεν ταιριάζουν",
+      "passwordTooShort": "Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες",
+      "userExists": "Ο χρήστης υπάρχει ήδη",
+      "invalidCredentials": "Μη έγκυρο email ή κωδικός"
+    }
+  },
+  "dashboard": {
+    "welcome": "Καλώς ήρθατε ξανά",
+    "accountBalance": "Υπόλοιπο Λογαριασμού",
+    "totalCommissions": "Σύνολο Προμηθειών",
+    "activeMembers": "Ενεργά Μέλη",
+    "thisMonth": "Αυτό το Μήνα",
+    "recentTransactions": "Πρόσφατες Συναλλαγές",
+    "memberNetwork": "Δίκτυο Μελών",
+    "performance": "Απόδοση"
+  },
+  "compliance": {
+    "title": "Συμμόρφωση και Απόρρητο",
+    "dataExport": "Εξαγωγή Δεδομένων (GDPR)",
+    "deleteAccount": "Διαγραφή Λογαριασμού",
+    "consentManagement": "Διαχείριση Συναίνεσης",
+    "auditLog": "Αρχείο Ελέγχου",
+    "privacyPolicy": "Πολιτική Απορρήτου",
+    "dataProcessing": "Επεξεργασία Δεδομένων",
+    "requestExport": "Αίτημα Εξαγωγής Δεδομένων",
+    "requestDeletion": "Αίτημα Διαγραφής Λογαριασμού",
+    "marketingConsent": "Επικοινωνίες Μάρκετινγκ",
+    "analyticsConsent": "Παρακολούθηση Αναλυτικών",
+    "thirdPartyConsent": "Κοινοποίηση Δεδομένων με Τρίτους"
+  },
+  "errors": {
+    "notFound": "Σελίδα δεν βρέθηκε",
+    "unauthorized": "Μη εξουσιοδοτημένη πρόσβαση",
+    "forbidden": "Απαγορευμένη πρόσβαση",
+    "serverError": "Σφάλμα διακομιστή",
+    "networkError": "Σφάλμα σύνδεσης δικτύου",
+    "tryAgain": "Δοκιμάστε ξανά"
+  },
+  "diana": {
+    "title": "Βοηθός Diana ΤΝ",
+    "startChat": "Έναρξη Συνομιλίας",
+    "typeMessage": "Πληκτρολογήστε το μήνυμά σας...",
+    "sending": "Αποστολή...",
+    "offline": "Αυτή τη στιγμή χωρίς σύνδεση"
+  }
+}

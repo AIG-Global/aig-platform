@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "מערכת ההפעלה העסקית מבוססת בינה מלאכותית",
+    "language": "שפה",
+    "selectLanguage": "בחר את שפתך",
+    "detectingLocation": "זיהוי המיקום שלך...",
+    "welcome": "ברוכים הבאים ל-AIGINVEST",
+    "menu": {
+      "home": "בית",
+      "dashboard": "לוח בקרה",
+      "marketplace": "שוק",
+      "compliance": "ציות",
+      "settings": "הגדרות",
+      "profile": "פרופיל",
+      "logout": "התנתקות",
+      "login": "התחברות",
+      "signup": "הרשמה"
+    },
+    "buttons": {
+      "save": "שמור",
+      "cancel": "ביטול",
+      "continue": "המשך",
+      "next": "הבא",
+      "back": "חזור",
+      "submit": "שלח",
+      "delete": "מחק",
+      "edit": "ערוך",
+      "copy": "העתק",
+      "download": "הורד",
+      "upload": "העלה",
+      "export": "ייצוא"
+    },
+    "footer": {
+      "about": "אודות",
+      "contact": "צור קשר",
+      "privacy": "מדיניות פרטיות",
+      "terms": "תנאי השירות",
+      "compliance": "ציות",
+      "copyright": "© 2026 AIG Global. כל הזכויות שמורות."
+    }
+  },
+  "auth": {
+    "login": "התחברות",
+    "signup": "הרשמה",
+    "email": "דוא\"ל",
+    "password": "סיסמה",
+    "confirmPassword": "אשר סיסמה",
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "forgotPassword": "שכחת סיסמה?",
+    "rememberMe": "זכור אותי",
+    "noAccount": "אין לך חשבון?",
+    "alreadyHaveAccount": "יש לך כבר חשבון?",
+    "signupNow": "הרשם עכשיו",
+    "loginNow": "התחבר עכשיו",
+    "loginSuccess": "התחברות בוצעה בהצלחה!",
+    "signupSuccess": "החשבון נוצר בהצלחה!",
+    "errors": {
+      "invalidEmail": "הזן דוא\"ל תקין",
+      "passwordMismatch": "הסיסמאות אינן תואמות",
+      "passwordTooShort": "הסיסמה חייבת להיות 8 תווים לפחות",
+      "userExists": "המשתמש כבר קיים",
+      "invalidCredentials": "דוא\"ל או סיסמה לא תקינים"
+    }
+  },
+  "dashboard": {
+    "welcome": "ברוכים שבחזרתך",
+    "accountBalance": "יתרת חשבון",
+    "totalCommissions": "סך הכל עמלות",
+    "activeMembers": "חברים פעילים",
+    "thisMonth": "החודש הזה",
+    "recentTransactions": "עסקאות אחרונות",
+    "memberNetwork": "רשת חברים",
+    "performance": "ביצועים"
+  },
+  "compliance": {
+    "title": "ציות ופרטיות",
+    "dataExport": "ייצוא נתונים (GDPR)",
+    "deleteAccount": "מחק חשבון",
+    "consentManagement": "ניהול הסכמה",
+    "auditLog": "יומן ביקורת",
+    "privacyPolicy": "מדיניות פרטיות",
+    "dataProcessing": "עיבוד נתונים",
+    "requestExport": "בקש ייצוא נתונים",
+    "requestDeletion": "בקש מחיקת חשבון",
+    "marketingConsent": "תקשורת שיווק",
+    "analyticsConsent": "מעקב ניתוח",
+    "thirdPartyConsent": "שיתוף נתונים עם צד שלישי"
+  },
+  "errors": {
+    "notFound": "הדף לא נמצא",
+    "unauthorized": "גישה לא מורשית",
+    "forbidden": "גישה אסורה",
+    "serverError": "שגיאה בשרת",
+    "networkError": "שגיאת חיבור רשת",
+    "tryAgain": "נסה שוב"
+  },
+  "diana": {
+    "title": "עוזר Diana AI",
+    "startChat": "התחל צ'אט",
+    "typeMessage": "הקלד את הודעתך...",
+    "sending": "שולח...",
+    "offline": "כרגע לא מחובר"
+  }
+}

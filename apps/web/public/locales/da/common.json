@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Det AI-Drevet Forretningsstyringssystem",
+    "language": "Sprog",
+    "selectLanguage": "Vælg dit sprog",
+    "detectingLocation": "Registrerer din placering...",
+    "welcome": "Velkommen til AIGINVEST",
+    "menu": {
+      "home": "Hjem",
+      "dashboard": "Kontrolpanel",
+      "marketplace": "Marked",
+      "compliance": "Overholdelse",
+      "settings": "Indstillinger",
+      "profile": "Profil",
+      "logout": "Log ud",
+      "login": "Log ind",
+      "signup": "Registrer"
+    },
+    "buttons": {
+      "save": "Gem",
+      "cancel": "Annuller",
+      "continue": "Fortsæt",
+      "next": "Næste",
+      "back": "Tilbage",
+      "submit": "Indsend",
+      "delete": "Slet",
+      "edit": "Rediger",
+      "copy": "Kopier",
+      "download": "Download",
+      "upload": "Upload",
+      "export": "Eksporter"
+    },
+    "footer": {
+      "about": "Om",
+      "contact": "Kontakt",
+      "privacy": "Fortrolighedspolitik",
+      "terms": "Servicevilkår",
+      "compliance": "Overholdelse",
+      "copyright": "© 2026 AIG Global. Alle rettigheder forbeholdt."
+    }
+  },
+  "auth": {
+    "login": "Log ind",
+    "signup": "Registrer",
+    "email": "E-mail",
+    "password": "Adgangskode",
+    "confirmPassword": "Bekræft adgangskode",
+    "firstName": "Fornavn",
+    "lastName": "Efternavn",
+    "forgotPassword": "Glemt adgangskode?",
+    "rememberMe": "Husk mig",
+    "noAccount": "Har du ingen konto?",
+    "alreadyHaveAccount": "Har du allerede en konto?",
+    "signupNow": "Registrer nu",
+    "loginNow": "Log ind nu",
+    "loginSuccess": "Log ind var vellykket!",
+    "signupSuccess": "Konto oprettet med succes!",
+    "errors": {
+      "invalidEmail": "Angiv en gyldig e-mail",
+      "passwordMismatch": "Adgangskoderne matcher ikke",
+      "passwordTooShort": "Adgangskoden skal være mindst 8 tegn",
+      "userExists": "Brugeren findes allerede",
+      "invalidCredentials": "Ugyldig e-mail eller adgangskode"
+    }
+  },
+  "dashboard": {
+    "welcome": "Velkommen tilbage",
+    "accountBalance": "Kontosaldo",
+    "totalCommissions": "Samlede provisioner",
+    "activeMembers": "Aktive medlemmer",
+    "thisMonth": "Denne måned",
+    "recentTransactions": "Seneste transaktioner",
+    "memberNetwork": "Medlemsnetværk",
+    "performance": "Ydeevne"
+  },
+  "compliance": {
+    "title": "Overholdelse og privatliv",
+    "dataExport": "Eksporter data (GDPR)",
+    "deleteAccount": "Slet konto",
+    "consentManagement": "Samtykkestyring",
+    "auditLog": "Revisionlog",
+    "privacyPolicy": "Fortrolighedspolitik",
+    "dataProcessing": "Databehandling",
+    "requestExport": "Anmod om dataeksport",
+    "requestDeletion": "Anmod om kontoslettelse",
+    "marketingConsent": "Markedsføringskommunikation",
+    "analyticsConsent": "Analytics-sporing",
+    "thirdPartyConsent": "Datadeling med tredjeparter"
+  },
+  "errors": {
+    "notFound": "Siden blev ikke fundet",
+    "unauthorized": "Uautoriseret adgang",
+    "forbidden": "Adgang forbudt",
+    "serverError": "Serverfejl opstod",
+    "networkError": "Netværksforbindelsesfejl",
+    "tryAgain": "Prøv igen"
+  },
+  "diana": {
+    "title": "Diana AI-assistent",
+    "startChat": "Start chat",
+    "typeMessage": "Skriv din besked...",
+    "sending": "Sender...",
+    "offline": "I øjeblikket offline"
+  }
+}

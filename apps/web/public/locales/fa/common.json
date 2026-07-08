@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "سیستم عامل تجاری با قدرت هوش مصنوعی",
+    "language": "زبان",
+    "selectLanguage": "زبان خود را انتخاب کنید",
+    "detectingLocation": "تشخیص مکان شما...",
+    "welcome": "خوش آمدید به AIGINVEST",
+    "menu": {
+      "home": "خانه",
+      "dashboard": "داشبورد",
+      "marketplace": "بازارچه",
+      "compliance": "انطباق",
+      "settings": "تنظیمات",
+      "profile": "نمایه",
+      "logout": "خروج",
+      "login": "ورود",
+      "signup": "ثبت نام"
+    },
+    "buttons": {
+      "save": "ذخیره",
+      "cancel": "لغو",
+      "continue": "ادامه",
+      "next": "بعدی",
+      "back": "بازگشت",
+      "submit": "ارسال",
+      "delete": "حذف",
+      "edit": "ویرایش",
+      "copy": "کپی",
+      "download": "دانلود",
+      "upload": "آپلود",
+      "export": "صادرات"
+    },
+    "footer": {
+      "about": "درباره",
+      "contact": "تماس",
+      "privacy": "سیاست حفاظت از حریم خصوصی",
+      "terms": "شرایط سرویس",
+      "compliance": "انطباق",
+      "copyright": "© 2026 AIG Global. تمام حقوق محفوظ است."
+    }
+  },
+  "auth": {
+    "login": "ورود",
+    "signup": "ثبت نام",
+    "email": "ایمیل",
+    "password": "رمز عبور",
+    "confirmPassword": "تایید رمز عبور",
+    "firstName": "نام",
+    "lastName": "نام خانوادگی",
+    "forgotPassword": "رمز عبور را فراموش کردید؟",
+    "rememberMe": "مرا به یاد داشته باش",
+    "noAccount": "حساب ندارید؟",
+    "alreadyHaveAccount": "آیا قبلاً حساب دارید؟",
+    "signupNow": "اکنون ثبت نام کنید",
+    "loginNow": "اکنون وارد شوید",
+    "loginSuccess": "ورود با موفقیت انجام شد!",
+    "signupSuccess": "حساب با موفقیت ایجاد شد!",
+    "errors": {
+      "invalidEmail": "یک ایمیل معتبر وارد کنید",
+      "passwordMismatch": "رمزهای عبور منطبق نیستند",
+      "passwordTooShort": "رمز عبور باید حداقل 8 کاراکتر باشد",
+      "userExists": "کاربر قبلاً وجود دارد",
+      "invalidCredentials": "ایمیل یا رمز عبور نامعتبر"
+    }
+  },
+  "dashboard": {
+    "welcome": "خوش آمدید",
+    "accountBalance": "موجودی حساب",
+    "totalCommissions": "کل کمیسیون ها",
+    "activeMembers": "اعضای فعال",
+    "thisMonth": "این ماه",
+    "recentTransactions": "معاملات اخیر",
+    "memberNetwork": "شبکه اعضاء",
+    "performance": "کارایی"
+  },
+  "compliance": {
+    "title": "انطباق و حریم خصوصی",
+    "dataExport": "صادرات داده (GDPR)",
+    "deleteAccount": "حذف حساب",
+    "consentManagement": "مدیریت رضایت",
+    "auditLog": "سیاق حسابرسی",
+    "privacyPolicy": "سیاست حفاظت از حریم خصوصی",
+    "dataProcessing": "پردازش داده",
+    "requestExport": "درخواست صادرات داده",
+    "requestDeletion": "درخواست حذف حساب",
+    "marketingConsent": "ارتباطات بازاریابی",
+    "analyticsConsent": "ردیابی تحلیلات",
+    "thirdPartyConsent": "اشتراک داده با طرف ثالث"
+  },
+  "errors": {
+    "notFound": "صفحه پیدا نشد",
+    "unauthorized": "دسترسی غیرمجاز",
+    "forbidden": "دسترسی ممنوع",
+    "serverError": "خطای سرور رخ داد",
+    "networkError": "خطای اتصال شبکه",
+    "tryAgain": "دوباره سعی کنید"
+  },
+  "diana": {
+    "title": "دستیار Diana AI",
+    "startChat": "شروع چت",
+    "typeMessage": "پیام خود را بنویسید...",
+    "sending": "درحال ارسال...",
+    "offline": "در حال حاضر آفلاین"
+  }
+}

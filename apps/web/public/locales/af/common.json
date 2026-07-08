@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Die Besturingsstelsel vir Besigheid wat deur AI Aangedryf Word",
+    "language": "Taal",
+    "selectLanguage": "Kies Jou Taal",
+    "detectingLocation": "Jou Ligging word Bespeur...",
+    "welcome": "Welkom by AIGINVEST",
+    "menu": {
+      "home": "Tuis",
+      "dashboard": "Beheerder",
+      "marketplace": "Handelmark",
+      "compliance": "Nakoming",
+      "settings": "Instellings",
+      "profile": "Profiel",
+      "logout": "Teken Uit",
+      "login": "Teken In",
+      "signup": "Registreer"
+    },
+    "buttons": {
+      "save": "Stoor",
+      "cancel": "Kanselleer",
+      "continue": "Gaan Voort",
+      "next": "Volgende",
+      "back": "Terug",
+      "submit": "Dien In",
+      "delete": "Skrap",
+      "edit": "Redigeer",
+      "copy": "Kopieer",
+      "download": "Laai Af",
+      "upload": "Laai Op",
+      "export": "Voer Uit"
+    },
+    "footer": {
+      "about": "Oor Ons",
+      "contact": "Kontak",
+      "privacy": "Privaatheidbeleid",
+      "terms": "Diensvoorwaardes",
+      "compliance": "Nakoming",
+      "copyright": "© 2026 AIG Global. Alle Regte Voorbehoud."
+    }
+  },
+  "auth": {
+    "login": "Teken In",
+    "signup": "Registreer",
+    "email": "E-pos",
+    "password": "Wagwoord",
+    "confirmPassword": "Bevestig Wagwoord",
+    "firstName": "Voornaam",
+    "lastName": "Van",
+    "forgotPassword": "Wagwoord Vergete?",
+    "rememberMe": "Onthou Mij",
+    "noAccount": "Geen Rekening Het?",
+    "alreadyHaveAccount": "Het U Reeds 'n Rekening?",
+    "signupNow": "Registreer Nou",
+    "loginNow": "Teken Nou In",
+    "loginSuccess": "Aanmelding Geslaagd!",
+    "signupSuccess": "Rekening Suksesvol Geskep!",
+    "errors": {
+      "invalidEmail": "Voer Asseblief 'n Geldige E-pos In",
+      "passwordMismatch": "Wagwoorde Stem Nie Ooreen",
+      "passwordTooShort": "Wagwoord Moet Minstens 8 Karakters Wees",
+      "userExists": "Gebruiker Bestaan Reeds",
+      "invalidCredentials": "Ongeldige E-pos of Wagwoord"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welkom Terug",
+    "accountBalance": "Rekeningsaldo",
+    "totalCommissions": "Totale Kommissies",
+    "activeMembers": "Aktiewe Lede",
+    "thisMonth": "Hierdie Maand",
+    "recentTransactions": "Onlangse Transaksies",
+    "memberNetwork": "Ledenetwerk",
+    "performance": "Prestasie"
+  },
+  "compliance": {
+    "title": "Nakoming en Privaatheid",
+    "dataExport": "Voer Data Uit (GDPR)",
+    "deleteAccount": "Skrap Rekening",
+    "consentManagement": "Toestemmingsbeheer",
+    "auditLog": "Ouditlogboek",
+    "privacyPolicy": "Privaatheidbeleid",
+    "dataProcessing": "Datavorwerk",
+    "requestExport": "Versoek Data-uitvoer",
+    "requestDeletion": "Versoek Rekeningskrapping",
+    "marketingConsent": "Bemarkingskommunikasie",
+    "analyticsConsent": "Ontledingopvolging",
+    "thirdPartyConsent": "Datadeling met Derde Partye"
+  },
+  "errors": {
+    "notFound": "Bladsy Nie Gevind",
+    "unauthorized": "Ongemagtigde Toegang",
+    "forbidden": "Toegang Verbode",
+    "serverError": "Bedienerfout Opgetreed",
+    "networkError": "Netwerkverbindingsfout",
+    "tryAgain": "Probeer Asseblief Weer"
+  },
+  "diana": {
+    "title": "Diana AI Assistent",
+    "startChat": "Begin Kletspraatjie",
+    "typeMessage": "Tik U Boodskap...",
+    "sending": "Stuur Tans...",
+    "offline": "Tans Aflyn"
+  }
+}

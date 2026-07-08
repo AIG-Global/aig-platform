@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "ប្រព័ន្ធប្រតិបត្តិការប៉ាហ៍ឡើងដោយ AI",
+    "language": "ភាសា",
+    "selectLanguage": "ជ្រើសរើសភាសារបស់អ្នក",
+    "detectingLocation": "កំពុងរកឱ្យឃើញទីតាំងរបស់អ្នក...",
+    "welcome": "សូមស្វាគមន៍ដល់ AIGINVEST",
+    "menu": {
+      "home": "ទំព័រដើម",
+      "dashboard": "ផ្ទាំងគ្រប់គ្រង",
+      "marketplace": "ទីផ្សារ",
+      "compliance": "ការប្រឹក្សាធានា",
+      "settings": "ការកំណត់",
+      "profile": "ប្រវត្តិរូប",
+      "logout": "ចាកចេញ",
+      "login": "ឈានចូល",
+      "signup": "ចុះឈ្មោះ"
+    },
+    "buttons": {
+      "save": "រក្សាទុក",
+      "cancel": "បោះបង់",
+      "continue": "បន្ត",
+      "next": "បន្ទាប់",
+      "back": "ត្រឡប់ក្រោយ",
+      "submit": "ដាក់ស្នើ",
+      "delete": "លុប",
+      "edit": "កែសម្រួល",
+      "copy": "ចម្លង",
+      "download": "ទាញយក",
+      "upload": "ផ្ទុក",
+      "export": "នាំចេញ"
+    },
+    "footer": {
+      "about": "អំពី",
+      "contact": "ទាក់ទងយើងខ្ញុំ",
+      "privacy": "គោលការណ៍ឯកជនភាព",
+      "terms": "លក្ខខណ្ឌសេវាកម្ម",
+      "compliance": "ការប្រឹក្សាធានា",
+      "copyright": "© 2026 AIG Global. រក្សាសិទ្ធិទាំងអស់។"
+    }
+  },
+  "auth": {
+    "login": "ឈានចូល",
+    "signup": "ចុះឈ្មោះ",
+    "email": "ផ្ទាំងលិខិត",
+    "password": "ពាក្យសម្ងាត់",
+    "confirmPassword": "បញ្ជាក់ពាក្យសម្ងាត់",
+    "firstName": "ឈ្មោះក្នុង",
+    "lastName": "នាមត្រកូល",
+    "forgotPassword": "健忘ពាក្យសម្ងាត់?",
+    "rememberMe": "ចងចាំខ្ញុំ",
+    "noAccount": "មិនមានគណនី?",
+    "alreadyHaveAccount": "មានគណនីរួចហើយ?",
+    "signupNow": "ចុះឈ្មោះឥឡូវ",
+    "loginNow": "ឈានចូលឥឡូវ",
+    "loginSuccess": "ឈានចូលបានជោគជ័យ!",
+    "signupSuccess": "គណនីបានបង្កើតដោយជោគជ័យ!",
+    "errors": {
+      "invalidEmail": "សូមបញ្ចូលផ្ទាំងលិខិតដែលមានសុពលភាព",
+      "passwordMismatch": "ពាក្យសម្ងាត់មិនស្របគ្នា",
+      "passwordTooShort": "ពាក្យសម្ងាត់ត្រូវតែមានយ៉ាងហោចណាស់ 8 តួអក្សរ",
+      "userExists": "អ្នកប្រើប្រាស់មានរួចហើយ",
+      "invalidCredentials": "ផ្ទាំងលិខិត ឬ ពាក្យសម្ងាត់មិនត្រឹមត្រូវ"
+    }
+  },
+  "dashboard": {
+    "welcome": "ស្វាគមន៍ត្រលប់មក",
+    "accountBalance": "សមតុល្យគណនី",
+    "totalCommissions": "មូលនិធិសរុប",
+    "activeMembers": "សមាជិកសកម្ម",
+    "thisMonth": "ខែនេះ",
+    "recentTransactions": "거래​ដែលថ្មីៗ",
+    "memberNetwork": "បណ្តាញសមាជិក",
+    "performance": "សម្ផុតកម្ម"
+  },
+  "compliance": {
+    "title": "ការប្រឹក្សាធានា និងឯកជនភាព",
+    "dataExport": "នាំចេញទិន្នន័យ (GDPR)",
+    "deleteAccount": "លុបគណនី",
+    "consentManagement": "ការគ្រប់គ្រងការយល់ព្រម",
+    "auditLog": "កំណត់ហេតុលម្អិត",
+    "privacyPolicy": "គោលការណ៍ឯកជនភាព",
+    "dataProcessing": "ដំណើរការទិន្នន័យ",
+    "requestExport": "ស្នើរនាំចេញទិន្នន័យ",
+    "requestDeletion": "ស្នើរលុបគណនី",
+    "marketingConsent": "ការទាក់ទងផ្សារ",
+    "analyticsConsent": "ការតាមដានការវិភាគ",
+    "thirdPartyConsent": "ការចែករំលែកទិន្នន័យជាមួយភាគីទីបី"
+  },
+  "errors": {
+    "notFound": "ទំព័រមិនត្រូវបានរកឃើញ",
+    "unauthorized": "ការទទួលបានដែលមិនត្រឹមត្រូវ",
+    "forbidden": "ការទទួលបានហាមឃាត់",
+    "serverError": "កំហុសម៉ាស៊ីនមេ",
+    "networkError": "កំហុសការតភ្ជាប់បណ្ដាញ",
+    "tryAgain": "សាកម្តងទៀត"
+  },
+  "diana": {
+    "title": "ជំនួយការ Diana AI",
+    "startChat": "ចាប់ផ្តើមការសន្ទនា",
+    "typeMessage": "ទាយបន្ទាត់របស់អ្នក...",
+    "sending": "កំពុងផ្ញើ...",
+    "offline": "ឥឡូវមិនតាច"
+  }
+}

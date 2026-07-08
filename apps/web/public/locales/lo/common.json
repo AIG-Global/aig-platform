@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "ລະບົບ Operating ທາງ​ວ​ິ​ສະ​ວະກັນ AI",
+    "language": "ພາ​ສາ",
+    "selectLanguage": "ເລືອກພາສາຂອງທ່ານ",
+    "detectingLocation": "ກຳ​ລັງ​ກວດ​ສອບ​ທີ່​ຕັ້ງ​ຂອງ​ທ່ານ...",
+    "welcome": "ຍິນ​ດີ​ຕ້ອນ​ຮັບ​ເຖິງ AIGINVEST",
+    "menu": {
+      "home": "ໜ້າ​ຫຼັກ",
+      "dashboard": "ແຜງ​ຄວບ​ຄຸມ",
+      "marketplace": "ຕະ​ຫຼາດ",
+      "compliance": "ຄວາມ​ສອດ​ຄ່ອງ",
+      "settings": "ການ​ຕັ້ງ​ຄ່າ",
+      "profile": "ໂປ​ຣ​ຟາຍ​ລ໌",
+      "logout": "ອອກ​ລະ​ບົບ",
+      "login": "ເຂົ້າ​ລະ​ບົບ",
+      "signup": "ລົງ​ທະ​ບຽນ"
+    },
+    "buttons": {
+      "save": "ບັນ​ທຶກ",
+      "cancel": "ຍົກ​ເລີກ",
+      "continue": "ສືບ​ຕໍ່",
+      "next": "ຕໍ່​ໄປ",
+      "back": "ກັບ​ຄືນ",
+      "submit": "ສົ່ງ",
+      "delete": "ລຶບ",
+      "edit": "ແກ້​ໄຂ",
+      "copy": "ອັອກ​ສຳ​ເນົາ",
+      "download": "ໂຫຼດ",
+      "upload": "ອັບ​ໂຫຼດ",
+      "export": "ສົ່ງ​ອອກ"
+    },
+    "footer": {
+      "about": "ກ່ຽວ​ກັບ",
+      "contact": "ຕິ​ດ​ຕໍ່",
+      "privacy": "ນະ​ໂຍ​ບາຍ​ຄວາມ​ເປັນ​ສ່ວນ​ຕົວ",
+      "terms": "ເງື່ອນ​ໄຂ​ການ​ບໍ​ລິ​ການ",
+      "compliance": "ຄວາມ​ສອດ​ຄ່ອງ",
+      "copyright": "© 2026 AIG Global. ຂອບ​ໃຈ​ທີ່​ຮັກ​ສາ."
+    }
+  },
+  "auth": {
+    "login": "ເຂົ້າ​ລະ​ບົບ",
+    "signup": "ລົງ​ທະ​ບຽນ",
+    "email": "ອີ​ເມວ",
+    "password": "ລະ​ຫັດ​ຜ່ານ",
+    "confirmPassword": "ຢືນ​ຢັນ​ລະ​ຫັດ​ຜ່ານ",
+    "firstName": "ຊື່",
+    "lastName": "ນາມ​ສະ​ກຸນ",
+    "forgotPassword": "ລືມ​ລະ​ຫັດ​ຜ່ານ?",
+    "rememberMe": "ຈື່​ໄວ້",
+    "noAccount": "ບໍ່ມີ​ບັນ​ຊີ?",
+    "alreadyHaveAccount": "ມີ​ບັນ​ຊີ​ແລ້ວ?",
+    "signupNow": "ລົງ​ທະ​ບຽນ​ດຽວ​ນີ້",
+    "loginNow": "ເຂົ້າ​ລະ​ບົບ​ດຽວ​ນີ້",
+    "loginSuccess": "ເຂົ້າ​ລະ​ບົບ​ສຳ​ເລັດ!",
+    "signupSuccess": "ບັນ​ຊີ​ສ້າງ​ສຳ​ເລັດ!",
+    "errors": {
+      "invalidEmail": "ກະ​ລຸ​ນາ​ໃສ່​ອີ​ເມວ​ທີ່ຖືກ​ຕ້ອງ",
+      "passwordMismatch": "ລະ​ຫັດ​ຜ່ານ​ບໍ່​ຕົ​ວ​ຈ​ກັນ",
+      "passwordTooShort": "ລະ​ຫັດ​ຜ່ານ​ຕ້ອງ​ຢ່າງ​ໜ້ອຍ 8 ຕົວ​ອັກ​ສອນ",
+      "userExists": "ຜູ້​ໃຊ້​ມີ​ຢູ່​ແລ້ວ",
+      "invalidCredentials": "ອີ​ເມວ​ຫຼື​ລະ​ຫັດ​ຜ່ານ​ບໍ່ຖືກ​ຕ້ອງ"
+    }
+  },
+  "dashboard": {
+    "welcome": "ຍິນ​ດີ​ຕ້ອນ​ຮັບ​ກັບ​ຄືນ",
+    "accountBalance": "ຍອດ​ເງິນ​ບັນ​ຊີ",
+    "totalCommissions": "ລາຄາ​ເບື້ອງ​ຕົ້ນ​ທັງ​ໝົດ",
+    "activeMembers": "ສະ​ມາ​ຊິກ​ທີ່​ຢູ່​ໃນ​ສາຍ",
+    "thisMonth": "ເດືອນ​ນີ້",
+    "recentTransactions": "거래​ຫຼື​ບໍ​ລິ​ກຳ​ໄກ​ຫຼື",
+    "memberNetwork": "ເຄື່ອ​ຂ່າຍ​ສະ​ມາ​ຊິກ",
+    "performance": "ຄຸ​ນ​ນະ​ພາບ"
+  },
+  "compliance": {
+    "title": "ຄວາມ​ສອດ​ຄ່ອງ​ແລະ​ຄວາມ​ເປັນ​ສ່ວນ​ຕົວ",
+    "dataExport": "ສົ່ງ​ອອກ​ຂໍ້​ມູນ (GDPR)",
+    "deleteAccount": "ລຶບ​ບັນ​ຊີ",
+    "consentManagement": "ການ​ຈັດ​ການ​ຄວາມ​ຍົກ​ຍ້າຍ",
+    "auditLog": "ລະ​ຫັດ​ບັນ​ທຶກ",
+    "privacyPolicy": "ນະ​ໂຍ​ບາຍ​ຄວາມ​ເປັນ​ສ່ວນ​ຕົວ",
+    "dataProcessing": "ການ​ປະ​ມວນ​ຜົນ​ຂໍ້​ມູນ",
+    "requestExport": "ຂໍ​ອອກ​ຂໍ້​ມູນ",
+    "requestDeletion": "ຂໍ​ລຶບ​ບັນ​ຊີ",
+    "marketingConsent": "ການ​ສື່​ສານ​ດ້ານ​ການ​ຕະ​ຫລາດ",
+    "analyticsConsent": "ການ​ຕິ​ດ​ຕາມ​ການ​ວິ​ເຄາະ",
+    "thirdPartyConsent": "ການ​ແບ່ງ​ປັນ​ຂໍ້​ມູນ​ກັບ​ພາກ​ສ່ວນ​ທີ່​ສາມ"
+  },
+  "errors": {
+    "notFound": "ບໍ່​ພົບ​ໜ້າ",
+    "unauthorized": "ບໍ່​ອະ​ນຸ​ມັດ​ການ​ເຂົ້າ​ເຖິງ",
+    "forbidden": "ບໍ່​ອະ​ນຸ​ມັດ​ການ​ເຂົ້າ​ເຖິງ",
+    "serverError": "ຜິດ​ພາດ​ຈາກ​ເຊີ​ວ​ເວີ",
+    "networkError": "ຜິດ​ພາດ​ການ​ເຊື່ອມ​ຕໍ່​ເຄື່ອ​ຂ່າຍ",
+    "tryAgain": "ລອງ​ໃໝ່"
+  },
+  "diana": {
+    "title": "ຜູ້​ຊ່ວຍ Diana AI",
+    "startChat": "ເລີ່ມ​ສົນ​ທະ​ນາ",
+    "typeMessage": "ພິ​ມ​ຂໍ້​ຄວາມ​ຂອງ​ທ່ານ...",
+    "sending": "ກຳ​ລັງ​ສົ່ງ...",
+    "offline": "ລະ​ຫວ່າງ​ອອ​ບ​ໄລ​ນ໌"
+  }
+}

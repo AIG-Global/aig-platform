@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "AI-Supported Business Operating System",
+    "language": "Hausa",
+    "selectLanguage": "Zabar Harshen Ku",
+    "detectingLocation": "Ana Tantance Waje...",
+    "welcome": "Maraba da zuwa AIGINVEST",
+    "menu": {
+      "home": "Gida",
+      "dashboard": "Dashboard",
+      "marketplace": "Kasuwa",
+      "compliance": "Karwita",
+      "settings": "Saituna",
+      "profile": "Profile",
+      "logout": "Fita",
+      "login": "Shigo",
+      "signup": "Rigistra"
+    },
+    "buttons": {
+      "save": "Ajiya",
+      "cancel": "Soke",
+      "continue": "Ci gaba",
+      "next": "Gida",
+      "back": "Koma baje",
+      "submit": "Aika",
+      "delete": "Gida",
+      "edit": "Gyara",
+      "copy": "Kwafi",
+      "download": "Sauko",
+      "upload": "Haɗa",
+      "export": "Fitar"
+    },
+    "footer": {
+      "about": "Gamada",
+      "contact": "Tuntuɓa",
+      "privacy": "Alovar Kudi",
+      "terms": "Shari'ar Aiki",
+      "compliance": "Karwita",
+      "copyright": "© 2026 AIG Global. Duk Haɓaka a tsare."
+    }
+  },
+  "auth": {
+    "login": "Shigo",
+    "signup": "Rigistra",
+    "email": "Imel",
+    "password": "Kalmar Sirri",
+    "confirmPassword": "Tabbatar da Kalmar Sirri",
+    "firstName": "Suna Na Farko",
+    "lastName": "Suna Na Aher",
+    "forgotPassword": "Mantuwa da Kalmar Sirri?",
+    "rememberMe": "Tunata Ni",
+    "noAccount": "Ba ka da Akaun?",
+    "alreadyHaveAccount": "Ka da Akaun Tun?",
+    "signupNow": "Rigistra Nan",
+    "loginNow": "Shigo Nan",
+    "loginSuccess": "Shigo Ya Yi Nasara!",
+    "signupSuccess": "An Ƙirƙiri Akaun!",
+    "errors": {
+      "invalidEmail": "Shigar da Imel Mai Iyaka",
+      "passwordMismatch": "Kalmomin Sirri Ba Su Dace",
+      "passwordTooShort": "Kalmar Sirri Dole Ne Ta Yi Gutari Aƙallai 8 Haruffuka",
+      "userExists": "Mai Aiki Yana Akwai",
+      "invalidCredentials": "Imel Ko Kalmar Sirri Ba Ta Da Iyaka"
+    }
+  },
+  "dashboard": {
+    "welcome": "Maraba da Naukiya",
+    "accountBalance": "Alamar Akaun",
+    "totalCommissions": "Jami'ar Komisyon",
+    "activeMembers": "Miemberin Aiki",
+    "thisMonth": "Wannan Watan",
+    "recentTransactions": "Saitunan Jiya Jiya",
+    "memberNetwork": "Cibiyar Memba",
+    "performance": "Aiki"
+  },
+  "compliance": {
+    "title": "Karwita da Kudi",
+    "dataExport": "Fitar Data (GDPR)",
+    "deleteAccount": "Gida Akaun",
+    "consentManagement": "Sarrafa Jagwaici",
+    "auditLog": "Rajistar Bincike",
+    "privacyPolicy": "Alovar Kudi",
+    "dataProcessing": "Sarrafa Data",
+    "requestExport": "Buɗa Don Fitar Data",
+    "requestDeletion": "Buɗa Don Gida Akaun",
+    "marketingConsent": "Sadarwar Kasua",
+    "analyticsConsent": "Nodding Aikin Bincike",
+    "thirdPartyConsent": "Raba Data da Waje"
+  },
+  "errors": {
+    "notFound": "Ba a Samu Pej",
+    "unauthorized": "Ba Karewa",
+    "forbidden": "Hadewa",
+    "serverError": "Kuta na Jiya",
+    "networkError": "Kuta na Haɗa Jiya",
+    "tryAgain": "Sai Koma"
+  },
+  "diana": {
+    "title": "Diana AI Taimakon",
+    "startChat": "Fara Zance",
+    "typeMessage": "Rubutu Saƙon Ku...",
+    "sending": "Ana Aika...",
+    "offline": "A Yanzu Babu Jiya"
+  }
+}

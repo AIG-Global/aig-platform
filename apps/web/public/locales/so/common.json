@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Nidaamka Shaqada ee Ganacsiga Kaydiga AI",
+    "language": "Luuqadda",
+    "selectLanguage": "Dooro Luuqaddaada",
+    "detectingLocation": "Lagu helista meeshaaydaa...",
+    "welcome": "Ku soo dhawoow AIGINVEST",
+    "menu": {
+      "home": "Guriga",
+      "dashboard": "Wax Khalifa",
+      "marketplace": "Sookda",
+      "compliance": "Adegga",
+      "settings": "Fikradaha",
+      "profile": "Astaamaha",
+      "logout": "Ka bax",
+      "login": "Gal",
+      "signup": "Bilaha"
+    },
+    "buttons": {
+      "save": "Keydi",
+      "cancel": "Annag",
+      "continue": "Socod",
+      "next": "Xiga",
+      "back": "Dib u noqdo",
+      "submit": "Soo dhex geej",
+      "delete": "Tirtir",
+      "edit": "Badal",
+      "copy": "Koof",
+      "download": "Soo dhex jeedhi",
+      "upload": "Kor u oji",
+      "export": "Xir"
+    },
+    "footer": {
+      "about": "Ku saabsan",
+      "contact": "Xiriir",
+      "privacy": "Siyaasadda Gaarka",
+      "terms": "Sharci Adeegga",
+      "compliance": "Adegga",
+      "copyright": "© 2026 AIG Global. Dhammaan xuquuqda ayaa iska illoobay."
+    }
+  },
+  "auth": {
+    "login": "Gal",
+    "signup": "Bilaha",
+    "email": "Iimayl",
+    "password": "Secredad",
+    "confirmPassword": "Xaqiiji Secredad",
+    "firstName": "Magac Hordhac",
+    "lastName": "Magac Ugu dambeeya",
+    "forgotPassword": "Secredad illoobay?",
+    "rememberMe": "Iska xusuus",
+    "noAccount": "Noqoto arintan?",
+    "alreadyHaveAccount": "Marba leh arintan?",
+    "signupNow": "Iska bilaab hadda",
+    "loginNow": "Gal hadda",
+    "loginSuccess": "Galka waafaqday!",
+    "signupSuccess": "Arintu waafaqday!",
+    "errors": {
+      "invalidEmail": "Fadlan gal iimayl saxda ah",
+      "passwordMismatch": "Secredad uma dhaafsan",
+      "passwordTooShort": "Secredad waa inay yar tahay 8 carur",
+      "userExists": "Isticmaalaha ayaa jira",
+      "invalidCredentials": "Iimayl ama secredad aan saxnaan"
+    }
+  },
+  "dashboard": {
+    "welcome": "Ku soo dhawoow lamar",
+    "accountBalance": "Miiska Arintan",
+    "totalCommissions": "Guud ahaan Cambiyada",
+    "activeMembers": "Xubinnada Shaqaynta",
+    "thisMonth": "Bilisha",
+    "recentTransactions": "Waxbararka Dhowaan",
+    "memberNetwork": "Shabakada Xubinnada",
+    "performance": "Ficilka"
+  },
+  "compliance": {
+    "title": "Adegga iyo Gaarka",
+    "dataExport": "Xaraxa Diiwaan (GDPR)",
+    "deleteAccount": "Tirtir Arintan",
+    "consentManagement": "Idbaalitaanka Qofka",
+    "auditLog": "Saxaafaadka Baadida",
+    "privacyPolicy": "Siyaasadda Gaarka",
+    "dataProcessing": "Diyaarista Xaraxa",
+    "requestExport": "Codsiga Xaraxa Diiwaan",
+    "requestDeletion": "Codsiga Tirtirka Arintan",
+    "marketingConsent": "Walaac Ganacsiga",
+    "analyticsConsent": "Yakhyada Bartibaaga",
+    "thirdPartyConsent": "Qybinta Xaraxa ay Kala Hayaan Qof Kale"
+  },
+  "errors": {
+    "notFound": "Boggu lama helin",
+    "unauthorized": "Mamnuuc khalaf",
+    "forbidden": "Mamnuuc",
+    "serverError": "Khaladka Dibiga",
+    "networkError": "Khaladka Isku-xidha Shabakada",
+    "tryAgain": "Maro dib"
+  },
+  "diana": {
+    "title": "Diana AI Taageerada",
+    "startChat": "Bilaha Sheekada",
+    "typeMessage": "Qor Fariin...",
+    "sending": "Iska soo diraya...",
+    "offline": "Hadda Asalka"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Det AI-Drivna Affärsoperativsystemet",
+    "language": "Språk",
+    "selectLanguage": "Välj ditt språk",
+    "detectingLocation": "Detekterar din plats...",
+    "welcome": "Välkommen till AIGINVEST",
+    "menu": {
+      "home": "Hem",
+      "dashboard": "Instrumentpanel",
+      "marketplace": "Marknadsplats",
+      "compliance": "Efterlevnad",
+      "settings": "Inställningar",
+      "profile": "Profil",
+      "logout": "Logga ut",
+      "login": "Logga in",
+      "signup": "Registrera"
+    },
+    "buttons": {
+      "save": "Spara",
+      "cancel": "Avbryt",
+      "continue": "Fortsätt",
+      "next": "Nästa",
+      "back": "Tillbaka",
+      "submit": "Skicka",
+      "delete": "Radera",
+      "edit": "Redigera",
+      "copy": "Kopiera",
+      "download": "Ladda ner",
+      "upload": "Ladda upp",
+      "export": "Exportera"
+    },
+    "footer": {
+      "about": "Om",
+      "contact": "Kontakt",
+      "privacy": "Sekretesspolicy",
+      "terms": "Användarvillkor",
+      "compliance": "Efterlevnad",
+      "copyright": "© 2026 AIG Global. Alla rättigheter reserverade."
+    }
+  },
+  "auth": {
+    "login": "Logga in",
+    "signup": "Registrera",
+    "email": "E-post",
+    "password": "Lösenord",
+    "confirmPassword": "Bekräfta lösenord",
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
+    "forgotPassword": "Glömt lösenordet?",
+    "rememberMe": "Kom ihåg mig",
+    "noAccount": "Har du inget konto?",
+    "alreadyHaveAccount": "Har du redan ett konto?",
+    "signupNow": "Registrera nu",
+    "loginNow": "Logga in nu",
+    "loginSuccess": "Inloggning lyckades!",
+    "signupSuccess": "Konto skapat framgångsrikt!",
+    "errors": {
+      "invalidEmail": "Ange en giltig e-postadress",
+      "passwordMismatch": "Lösenorden matchar inte",
+      "passwordTooShort": "Lösenordet måste innehålla minst 8 tecken",
+      "userExists": "Användaren finns redan",
+      "invalidCredentials": "Ogiltig e-postadress eller lösenord"
+    }
+  },
+  "dashboard": {
+    "welcome": "Välkommen tillbaka",
+    "accountBalance": "Kontosaldo",
+    "totalCommissions": "Totala provisioner",
+    "activeMembers": "Aktiva medlemmar",
+    "thisMonth": "Denna månad",
+    "recentTransactions": "Senaste transaktioner",
+    "memberNetwork": "Medlemsnätverk",
+    "performance": "Prestanda"
+  },
+  "compliance": {
+    "title": "Efterlevnad och integritet",
+    "dataExport": "Exportera data (GDPR)",
+    "deleteAccount": "Radera konto",
+    "consentManagement": "Samtyckehantering",
+    "auditLog": "Granskningslogg",
+    "privacyPolicy": "Sekretesspolicy",
+    "dataProcessing": "Databehandling",
+    "requestExport": "Begär dataexport",
+    "requestDeletion": "Begär borttagning av konto",
+    "marketingConsent": "Marknadsföringskommunikation",
+    "analyticsConsent": "Analytics-spårning",
+    "thirdPartyConsent": "Datadelning med tredje part"
+  },
+  "errors": {
+    "notFound": "Sidan hittades inte",
+    "unauthorized": "Obehörig åtkomst",
+    "forbidden": "Åtkomst förbjuden",
+    "serverError": "Serverfel uppstod",
+    "networkError": "Nätverksanslutningsfel",
+    "tryAgain": "Försök igen"
+  },
+  "diana": {
+    "title": "Diana AI-assistent",
+    "startChat": "Starta chatt",
+    "typeMessage": "Skriv ditt meddelande...",
+    "sending": "Skickar...",
+    "offline": "För närvarande offline"
+  }
+}

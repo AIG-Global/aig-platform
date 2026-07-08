@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Yapay Zeka Destekli İşletme İşletim Sistemi",
+    "language": "Dil",
+    "selectLanguage": "Dilinizi seçin",
+    "detectingLocation": "Konumunuz algılanıyor...",
+    "welcome": "AIGINVEST'e hoş geldiniz",
+    "menu": {
+      "home": "Anasayfa",
+      "dashboard": "Gösterge Paneli",
+      "marketplace": "Market",
+      "compliance": "Uyum",
+      "settings": "Ayarlar",
+      "profile": "Profil",
+      "logout": "Çıkış Yap",
+      "login": "Giriş Yap",
+      "signup": "Kayıt Ol"
+    },
+    "buttons": {
+      "save": "Kaydet",
+      "cancel": "İptal",
+      "continue": "Devam",
+      "next": "İleri",
+      "back": "Geri",
+      "submit": "Gönder",
+      "delete": "Sil",
+      "edit": "Düzenle",
+      "copy": "Kopyala",
+      "download": "İndir",
+      "upload": "Yükle",
+      "export": "Dışa Aktar"
+    },
+    "footer": {
+      "about": "Hakkında",
+      "contact": "İletişim",
+      "privacy": "Gizlilik Politikası",
+      "terms": "Hizmet Şartları",
+      "compliance": "Uyum",
+      "copyright": "© 2026 AIG Global. Tüm hakları saklıdır."
+    }
+  },
+  "auth": {
+    "login": "Giriş Yap",
+    "signup": "Kayıt Ol",
+    "email": "E-posta",
+    "password": "Parola",
+    "confirmPassword": "Parolayı Onayla",
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "forgotPassword": "Parolanızı mı unuttunuz?",
+    "rememberMe": "Beni hatırla",
+    "noAccount": "Hesabınız yok mu?",
+    "alreadyHaveAccount": "Zaten bir hesabınız var mı?",
+    "signupNow": "Şimdi Kayıt Olun",
+    "loginNow": "Şimdi Giriş Yapın",
+    "loginSuccess": "Giriş başarılı!",
+    "signupSuccess": "Hesap başarıyla oluşturuldu!",
+    "errors": {
+      "invalidEmail": "Geçerli bir e-posta adı girin",
+      "passwordMismatch": "Parolalar eşleşmiyor",
+      "passwordTooShort": "Parola en az 8 karakter olmalıdır",
+      "userExists": "Kullanıcı zaten var",
+      "invalidCredentials": "Geçersiz e-posta veya parola"
+    }
+  },
+  "dashboard": {
+    "welcome": "Tekrar hoş geldiniz",
+    "accountBalance": "Hesap Bakiyesi",
+    "totalCommissions": "Toplam Komisyonlar",
+    "activeMembers": "Aktif Üyeler",
+    "thisMonth": "Bu Ay",
+    "recentTransactions": "Son İşlemler",
+    "memberNetwork": "Üye Ağı",
+    "performance": "Performans"
+  },
+  "compliance": {
+    "title": "Uyum ve Gizlilik",
+    "dataExport": "Verileri Dışa Aktar (GDPR)",
+    "deleteAccount": "Hesabı Sil",
+    "consentManagement": "Onay Yönetimi",
+    "auditLog": "Denetim Günlüğü",
+    "privacyPolicy": "Gizlilik Politikası",
+    "dataProcessing": "Veri İşleme",
+    "requestExport": "Veri Dışa Aktarma Iste",
+    "requestDeletion": "Hesap Silme İste",
+    "marketingConsent": "Pazarlama İletişimi",
+    "analyticsConsent": "Analitik İzlemesi",
+    "thirdPartyConsent": "Üçüncü Taraflarla Veri Paylaşımı"
+  },
+  "errors": {
+    "notFound": "Sayfa bulunamadı",
+    "unauthorized": "Yetkisiz erişim",
+    "forbidden": "Erişim yasak",
+    "serverError": "Sunucu hatası oluştu",
+    "networkError": "Ağ bağlantısı hatası",
+    "tryAgain": "Lütfen tekrar deneyin"
+  },
+  "diana": {
+    "title": "Diana Yapay Zeka Asistanı",
+    "startChat": "Sohbeti Başlat",
+    "typeMessage": "Mesajınızı yazın...",
+    "sending": "Gönderiliyor...",
+    "offline": "Şu anda çevrimdışı"
+  }
+}

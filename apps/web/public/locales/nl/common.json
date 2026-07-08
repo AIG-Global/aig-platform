@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Het AI-Aangestuurde Bedrijfsbesturingssysteem",
+    "language": "Taal",
+    "selectLanguage": "Selecteer uw taal",
+    "detectingLocation": "Uw locatie detecteren...",
+    "welcome": "Welkom bij AIGINVEST",
+    "menu": {
+      "home": "Startpagina",
+      "dashboard": "Dashboard",
+      "marketplace": "Marktplaats",
+      "compliance": "Compliance",
+      "settings": "Instellingen",
+      "profile": "Profiel",
+      "logout": "Afmelden",
+      "login": "Aanmelden",
+      "signup": "Registreren"
+    },
+    "buttons": {
+      "save": "Opslaan",
+      "cancel": "Annuleren",
+      "continue": "Doorgaan",
+      "next": "Volgende",
+      "back": "Terug",
+      "submit": "Verzenden",
+      "delete": "Verwijderen",
+      "edit": "Bewerken",
+      "copy": "Kopiëren",
+      "download": "Downloaden",
+      "upload": "Uploaden",
+      "export": "Exporteren"
+    },
+    "footer": {
+      "about": "Over",
+      "contact": "Contact",
+      "privacy": "Privacybeleid",
+      "terms": "Servicevoorwaarden",
+      "compliance": "Compliance",
+      "copyright": "© 2026 AIG Global. Alle rechten voorbehouden."
+    }
+  },
+  "auth": {
+    "login": "Aanmelden",
+    "signup": "Registreren",
+    "email": "E-mailadres",
+    "password": "Wachtwoord",
+    "confirmPassword": "Wachtwoord bevestigen",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "rememberMe": "Onthoud mij",
+    "noAccount": "Hebt u geen account?",
+    "alreadyHaveAccount": "Hebt u al een account?",
+    "signupNow": "Registreer nu",
+    "loginNow": "Meld u nu aan",
+    "loginSuccess": "Aanmelden geslaagd!",
+    "signupSuccess": "Account succesvol aangemaakt!",
+    "errors": {
+      "invalidEmail": "Voer een geldig e-mailadres in",
+      "passwordMismatch": "Wachtwoorden komen niet overeen",
+      "passwordTooShort": "Wachtwoord moet minstens 8 tekens lang zijn",
+      "userExists": "Gebruiker bestaat al",
+      "invalidCredentials": "Ongeldig e-mailadres of wachtwoord"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welkom terug",
+    "accountBalance": "Rekeningsaldo",
+    "totalCommissions": "Totale Provisies",
+    "activeMembers": "Actieve Leden",
+    "thisMonth": "Deze Maand",
+    "recentTransactions": "Recente Transacties",
+    "memberNetwork": "Ledennetwerk",
+    "performance": "Prestatie"
+  },
+  "compliance": {
+    "title": "Compliance en Privacy",
+    "dataExport": "Gegevens exporteren (GDPR)",
+    "deleteAccount": "Account verwijderen",
+    "consentManagement": "Toestemmingsbeheer",
+    "auditLog": "Auditlogboek",
+    "privacyPolicy": "Privacybeleid",
+    "dataProcessing": "Gegevensverwerking",
+    "requestExport": "Gegevensexport aanvragen",
+    "requestDeletion": "Accountverwijdering aanvragen",
+    "marketingConsent": "Marketingcommunicatie",
+    "analyticsConsent": "Analyticstracking",
+    "thirdPartyConsent": "Gegevensdeling met derden"
+  },
+  "errors": {
+    "notFound": "Pagina niet gevonden",
+    "unauthorized": "Ongeautoriseerde toegang",
+    "forbidden": "Toegang verboden",
+    "serverError": "Serverfout opgetreden",
+    "networkError": "Netwerkverbindingsfout",
+    "tryAgain": "Probeer het opnieuw"
+  },
+  "diana": {
+    "title": "Diana AI-assistent",
+    "startChat": "Chat starten",
+    "typeMessage": "Typ uw bericht...",
+    "sending": "Verzenden...",
+    "offline": "Momenteel offline"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "AI බලපෑම් ව්‍යවසාය ක්‍රියාකාරී පද්ධතිය",
+    "language": "භාෂාව",
+    "selectLanguage": "ඔබේ භාෂාව තෝරන්න",
+    "detectingLocation": "ඔබේ ස්‍ථානය අනාවරණය කරමින් ඇත...",
+    "welcome": "AIGINVEST වෙත සාදරයින් පිළිගනිමු",
+    "menu": {
+      "home": "ගෙදර",
+      "dashboard": "උපකරණ පුවරුව",
+      "marketplace": "වෙළඳ පිට්ඨ",
+      "compliance": "අනුකූලතාව",
+      "settings": "සැකසුම්",
+      "profile": "පැතිකඩ",
+      "logout": "ඉවත් වන්න",
+      "login": "ඇතුල් වන්න",
+      "signup": "ලිපිනාම ගිණුම"
+    },
+    "buttons": {
+      "save": "සුරකින්න",
+      "cancel": "අවලංගු කරන්න",
+      "continue": "ඉදිරියට යන්න",
+      "next": "ඊළඟ",
+      "back": "පෙර",
+      "submit": "ඉදිරිපත් කරන්න",
+      "delete": "ඉවත් කරන්න",
+      "edit": "සංස්කරණය කරන්න",
+      "copy": "පිටපත් කරන්න",
+      "download": "බාගත කරන්න",
+      "upload": "උඩුගත කරන්න",
+      "export": "අපනයන"
+    },
+    "footer": {
+      "about": "පිළිබඳ",
+      "contact": "සම්බන්ධ කරන්න",
+      "privacy": "පෞද්ගලිකતා ප්‍රතිපත්තිය",
+      "terms": "සේවා කොන්දේසි",
+      "compliance": "අනුකූලතාව",
+      "copyright": "© 2026 AIG Global. සියලු අයිතිවාසිකම් ඉතිරි ඇත."
+    }
+  },
+  "auth": {
+    "login": "ඇතුල් වන්න",
+    "signup": "ලිපිනාම ගිණුම",
+    "email": "විද්‍යුත් ලිපිනය",
+    "password": "මුරපදය",
+    "confirmPassword": "මුරපදය තහවුරු කරන්න",
+    "firstName": "පළමු නම",
+    "lastName": "අවසාන නම",
+    "forgotPassword": "මුරපදය අමතක කර ගත්තා ද?",
+    "rememberMe": "මිත්‍යා කරන්න",
+    "noAccount": "ගිණුම් නැත ද?",
+    "alreadyHaveAccount": "දැනටමත් ගිණුම ඇත ද?",
+    "signupNow": "දැන් ලිපිනාම ගිණුම",
+    "loginNow": "දැන් ඇතුල් වන්න",
+    "loginSuccess": "ඇතුල් වීම සාර්ථක!",
+    "signupSuccess": "ගිණුම සාර්ථකව තනන්න!",
+    "errors": {
+      "invalidEmail": "කරුණාකර වලංගු විද්‍යුත් ලිපිනය ඇතුල් කරන්න",
+      "passwordMismatch": "මුරපදයන් ගැලපෙන්නේ නැත",
+      "passwordTooShort": "මුරපදය අවම වශයෙන් 8 දර්ශන විය යුතුය",
+      "userExists": "පරිශීලක දැනටමත් පවතී",
+      "invalidCredentials": "වලංගු නොවන විද්‍යුත් ලිපිනය හෝ මුරපදය"
+    }
+  },
+  "dashboard": {
+    "welcome": "නැවතත් සාදරයින් පිළිගනිමු",
+    "accountBalance": "ගිණුම් ශේෂය",
+    "totalCommissions": "සම්පූර්ණ කොමිසම්",
+    "activeMembers": "ක්‍රියාශීල සාමාජිකයින්",
+    "thisMonth": "මෙම මාසයේ",
+    "recentTransactions": "මෑතකාලීන ගනුදෙනු",
+    "memberNetwork": "සාමාජික ජාලය",
+    "performance": "ක්‍රියාකාරිත්වය"
+  },
+  "compliance": {
+    "title": "අනුකූලතාව සහ පෞද්ගලිකතාව",
+    "dataExport": "දත්ත අපනයනය (GDPR)",
+    "deleteAccount": "ගිණුම ඉවත් කරන්න",
+    "consentManagement": "එකඟතා කළමනාකරණය",
+    "auditLog": "ඉතිහාස තිර",
+    "privacyPolicy": "පෞද්ගලිකතා ප්‍රතිපත්තිය",
+    "dataProcessing": "දත්ත සකසුම",
+    "requestExport": "දත්ත අපනයනය ඉල්ලන්න",
+    "requestDeletion": "ගිණුම ඉවත් කිරීම ඉල්ලන්න",
+    "marketingConsent": "අලෙවිකරණ ගිණුම්කරණ",
+    "analyticsConsent": "විශ්ලේෂණ ක්‍රියාවලිය",
+    "thirdPartyConsent": "තෙවන පක්ෂ සමඟ දත්ත බෙදාගැනීම"
+  },
+  "errors": {
+    "notFound": "පිටුව හමුවී නැත",
+    "unauthorized": "අසම්මතකරණ අ​ටි",
+    "forbidden": "ප්‍රවේශය තහනම්",
+    "serverError": "සේවාදායක දෝෂ",
+    "networkError": "ජාලය සම්බන්ධතා දෝෂ",
+    "tryAgain": "නැවත උත්සාහ කරන්න"
+  },
+  "diana": {
+    "title": "Diana AI ​​සහාය",
+    "startChat": "කතාබස ආරම්භ කරන්න",
+    "typeMessage": "ඔබේ පණිවිඩ ඉඩ ගිණුම්කරණය කරන්න...",
+    "sending": "යවමින් ඇත...",
+    "offline": "දැනට ඔෆলයින් ඇත"
+  }
+}

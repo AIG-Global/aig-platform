@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "AI سے چلایا جانے والا کاروباری آپریٹنگ سسٹم",
+    "language": "زبان",
+    "selectLanguage": "اپنی زبان منتخب کریں",
+    "detectingLocation": "آپ کی جگہ کا پتہ لگایا جا رہا ہے...",
+    "welcome": "AIGINVEST میں خوش آمدید",
+    "menu": {
+      "home": "ہوم",
+      "dashboard": "ڈیش بورڈ",
+      "marketplace": "مارکیٹ",
+      "compliance": "موافقت",
+      "settings": "سیٹنگز",
+      "profile": "پروفائل",
+      "logout": "لاگ آؤٹ",
+      "login": "لاگ ان",
+      "signup": "سائن اپ کریں"
+    },
+    "buttons": {
+      "save": "محفوظ",
+      "cancel": "منسوخ",
+      "continue": "جاری رکھیں",
+      "next": "اگلا",
+      "back": "واپسی",
+      "submit": "جمع کریں",
+      "delete": "حذف کریں",
+      "edit": "ترمیم",
+      "copy": "کاپی",
+      "download": "ڈاؤن لوڈ",
+      "upload": "اپ لوڈ",
+      "export": "برآمد"
+    },
+    "footer": {
+      "about": "کے بارے میں",
+      "contact": "رابطہ",
+      "privacy": "رازداری کی پالیسی",
+      "terms": "خدمات کی شرائط",
+      "compliance": "موافقت",
+      "copyright": "© 2026 AIG Global۔ تمام حقوق محفوظ۔"
+    }
+  },
+  "auth": {
+    "login": "لاگ ان",
+    "signup": "سائن اپ کریں",
+    "email": "ای میل",
+    "password": "پاس ورڈ",
+    "confirmPassword": "پاس ورڈ کی تصدیق کریں",
+    "firstName": "پہلا نام",
+    "lastName": "آخری نام",
+    "forgotPassword": "پاس ورڈ بھول گئے ہیں؟",
+    "rememberMe": "مجھے یاد رکھیں",
+    "noAccount": "کوئی اکاؤنٹ نہیں ہے؟",
+    "alreadyHaveAccount": "پہلے سے اکاؤنٹ ہے؟",
+    "signupNow": "ابھی سائن اپ کریں",
+    "loginNow": "ابھی لاگ ان کریں",
+    "loginSuccess": "لاگ ان کامیاب!",
+    "signupSuccess": "اکاؤنٹ کامیابی سے بنایا گیا!",
+    "errors": {
+      "invalidEmail": "براہ کرم ایک درست ای میل درج کریں",
+      "passwordMismatch": "پاس ورڈ مماثل نہیں ہیں",
+      "passwordTooShort": "پاس ورڈ کم از کم 8 حروف ہونا چاہیے",
+      "userExists": "صارف پہلے سے موجود ہے",
+      "invalidCredentials": "غلط ای میل یا پاس ورڈ"
+    }
+  },
+  "dashboard": {
+    "welcome": "واپس خوش آمدید",
+    "accountBalance": "اکاؤنٹ بیلنس",
+    "totalCommissions": "کل کمیشن",
+    "activeMembers": "فعال ارکان",
+    "thisMonth": "اس مہینہ",
+    "recentTransactions": "حالیہ لین دین",
+    "memberNetwork": "ممبر نیٹ ورک",
+    "performance": "کارکردگی"
+  },
+  "compliance": {
+    "title": "موافقت اور رازداری",
+    "dataExport": "ڈیٹا برآمد (GDPR)",
+    "deleteAccount": "اکاؤنٹ حذف کریں",
+    "consentManagement": "رضامندی کا انتظام",
+    "auditLog": "آڈٹ لاگ",
+    "privacyPolicy": "رازداری کی پالیسی",
+    "dataProcessing": "ڈیٹا پروسیسنگ",
+    "requestExport": "ڈیٹا برآمد کی درخواست کریں",
+    "requestDeletion": "اکاؤنٹ حذف کی درخواست کریں",
+    "marketingConsent": "مارکیٹنگ کمیونیکیشن",
+    "analyticsConsent": "تجزیات کی نگرانی",
+    "thirdPartyConsent": "تیسریوں کے ساتھ ڈیٹا شیئرنگ"
+  },
+  "errors": {
+    "notFound": "صفحہ نہیں ملا",
+    "unauthorized": "غیر مجاز رسائی",
+    "forbidden": "رسائی ممنوع",
+    "serverError": "سرور خرابی واقع",
+    "networkError": "نیٹ ورک کنکشن خرابی",
+    "tryAgain": "دوبارہ کوشش کریں"
+  },
+  "diana": {
+    "title": "Diana AI دستیار",
+    "startChat": "چیٹ شروع کریں",
+    "typeMessage": "اپنا پیغام لکھیں...",
+    "sending": "بھیج رہے ہیں...",
+    "offline": "فی الوقت آف لائن"
+  }
+}

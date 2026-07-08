@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Det AI-Drevne Forretningsstyringssystemet",
+    "language": "Språk",
+    "selectLanguage": "Velg ditt språk",
+    "detectingLocation": "Oppdager plasseringen din...",
+    "welcome": "Velkommen til AIGINVEST",
+    "menu": {
+      "home": "Hjem",
+      "dashboard": "Instrumentbord",
+      "marketplace": "Markedsplass",
+      "compliance": "Samsvar",
+      "settings": "Innstillinger",
+      "profile": "Profil",
+      "logout": "Logg ut",
+      "login": "Logg inn",
+      "signup": "Registrer"
+    },
+    "buttons": {
+      "save": "Lagre",
+      "cancel": "Avbryt",
+      "continue": "Fortsett",
+      "next": "Neste",
+      "back": "Tilbake",
+      "submit": "Send",
+      "delete": "Slett",
+      "edit": "Rediger",
+      "copy": "Kopier",
+      "download": "Last ned",
+      "upload": "Last opp",
+      "export": "Eksporter"
+    },
+    "footer": {
+      "about": "Om",
+      "contact": "Kontakt",
+      "privacy": "Personvernregler",
+      "terms": "Betingelser",
+      "compliance": "Samsvar",
+      "copyright": "© 2026 AIG Global. Alle rettigheter forbeholdt."
+    }
+  },
+  "auth": {
+    "login": "Logg inn",
+    "signup": "Registrer",
+    "email": "E-post",
+    "password": "Passord",
+    "confirmPassword": "Bekreft passord",
+    "firstName": "Fornavn",
+    "lastName": "Etternavn",
+    "forgotPassword": "Glemt passordet?",
+    "rememberMe": "Husk meg",
+    "noAccount": "Har du ingen konto?",
+    "alreadyHaveAccount": "Har du allerede en konto?",
+    "signupNow": "Registrer nå",
+    "loginNow": "Logg inn nå",
+    "loginSuccess": "Innlogging vellykket!",
+    "signupSuccess": "Konto opprettet!",
+    "errors": {
+      "invalidEmail": "Skriv inn en gyldig e-post",
+      "passwordMismatch": "Passordene stemmer ikke",
+      "passwordTooShort": "Passordet må være minst 8 tegn",
+      "userExists": "Brukeren finnes allerede",
+      "invalidCredentials": "Ugyldig e-post eller passord"
+    }
+  },
+  "dashboard": {
+    "welcome": "Velkommen tilbake",
+    "accountBalance": "Kontosaldo",
+    "totalCommissions": "Totale provisjoner",
+    "activeMembers": "Aktive medlemmer",
+    "thisMonth": "Denne måneden",
+    "recentTransactions": "Nylige transaksjoner",
+    "memberNetwork": "Medlemsnettverk",
+    "performance": "Ytelse"
+  },
+  "compliance": {
+    "title": "Samsvar og personvern",
+    "dataExport": "Eksporter data (GDPR)",
+    "deleteAccount": "Slett konto",
+    "consentManagement": "Samtykkehåndtering",
+    "auditLog": "Revisjonslogg",
+    "privacyPolicy": "Personvernregler",
+    "dataProcessing": "Databehandling",
+    "requestExport": "Be om dataeksport",
+    "requestDeletion": "Be om kontosletting",
+    "marketingConsent": "Markedsføringskommunikasjon",
+    "analyticsConsent": "Analyticssporing",
+    "thirdPartyConsent": "Datadeling med tredjeparter"
+  },
+  "errors": {
+    "notFound": "Siden ble ikke funnet",
+    "unauthorized": "Uautorisert tilgang",
+    "forbidden": "Tilgang nektet",
+    "serverError": "Serverfeil oppstod",
+    "networkError": "Nettverkstilkoblingsfeil",
+    "tryAgain": "Prøv igjen"
+  },
+  "diana": {
+    "title": "Diana AI-assistent",
+    "startChat": "Start chat",
+    "typeMessage": "Skriv meldingen din...",
+    "sending": "Sender...",
+    "offline": "Offline nå"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "AIGINVEST",
+    "tagline": "Il Sistema Operativo Aziendale Alimentato da IA",
+    "language": "Lingua",
+    "selectLanguage": "Seleziona la tua lingua",
+    "detectingLocation": "Rilevamento della tua posizione...",
+    "welcome": "Benvenuto in AIGINVEST",
+    "menu": {
+      "home": "Home",
+      "dashboard": "Dashboard",
+      "marketplace": "Marketplace",
+      "compliance": "Conformità",
+      "settings": "Impostazioni",
+      "profile": "Profilo",
+      "logout": "Esci",
+      "login": "Accedi",
+      "signup": "Iscriviti"
+    },
+    "buttons": {
+      "save": "Salva",
+      "cancel": "Annulla",
+      "continue": "Continua",
+      "next": "Avanti",
+      "back": "Indietro",
+      "submit": "Invia",
+      "delete": "Elimina",
+      "edit": "Modifica",
+      "copy": "Copia",
+      "download": "Scarica",
+      "upload": "Carica",
+      "export": "Esporta"
+    },
+    "footer": {
+      "about": "Chi Siamo",
+      "contact": "Contatti",
+      "privacy": "Politica sulla Privacy",
+      "terms": "Termini di Servizio",
+      "compliance": "Conformità",
+      "copyright": "© 2026 AIG Global. Tutti i diritti riservati."
+    }
+  },
+  "auth": {
+    "login": "Accedi",
+    "signup": "Iscriviti",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Conferma Password",
+    "firstName": "Nome",
+    "lastName": "Cognome",
+    "forgotPassword": "Password dimenticata?",
+    "rememberMe": "Ricordami",
+    "noAccount": "Non hai un account?",
+    "alreadyHaveAccount": "Hai già un account?",
+    "signupNow": "Iscriviti ora",
+    "loginNow": "Accedi ora",
+    "loginSuccess": "Accesso effettuato con successo!",
+    "signupSuccess": "Account creato con successo!",
+    "errors": {
+      "invalidEmail": "Inserisci un'email valida",
+      "passwordMismatch": "Le password non coincidono",
+      "passwordTooShort": "La password deve avere almeno 8 caratteri",
+      "userExists": "L'utente esiste già",
+      "invalidCredentials": "Email o password non validi"
+    }
+  },
+  "dashboard": {
+    "welcome": "Bentornato",
+    "accountBalance": "Saldo del Conto",
+    "totalCommissions": "Commissioni Totali",
+    "activeMembers": "Membri Attivi",
+    "thisMonth": "Questo Mese",
+    "recentTransactions": "Transazioni Recenti",
+    "memberNetwork": "Rete dei Membri",
+    "performance": "Prestazioni"
+  },
+  "compliance": {
+    "title": "Conformità e Privacy",
+    "dataExport": "Esporta Dati (GDPR)",
+    "deleteAccount": "Elimina Account",
+    "consentManagement": "Gestione del Consenso",
+    "auditLog": "Log di Audit",
+    "privacyPolicy": "Politica sulla Privacy",
+    "dataProcessing": "Elaborazione dei Dati",
+    "requestExport": "Richiedi Esportazione Dati",
+    "requestDeletion": "Richiedi Eliminazione Account",
+    "marketingConsent": "Comunicazioni di Marketing",
+    "analyticsConsent": "Tracciamento Analitiche",
+    "thirdPartyConsent": "Condivisione Dati con Terzi"
+  },
+  "errors": {
+    "notFound": "Pagina non trovata",
+    "unauthorized": "Accesso non autorizzato",
+    "forbidden": "Accesso proibito",
+    "serverError": "Errore del server",
+    "networkError": "Errore di connessione di rete",
+    "tryAgain": "Riprova di nuovo"
+  },
+  "diana": {
+    "title": "Assistente Diana IA",
+    "startChat": "Inizia Chat",
+    "typeMessage": "Digita il tuo messaggio...",
+    "sending": "Invio...",
+    "offline": "Attualmente offline"
+  }
+}
