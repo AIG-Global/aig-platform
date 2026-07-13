@@ -109,6 +109,7 @@ export default function GlobalTopMenu() {
 
   const languageMenuRef = useRef<HTMLDivElement>(null)
   const accountMenuRef = useRef<HTMLDivElement>(null)
+  const navMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const preference = getStoredLanguagePreference()
@@ -132,6 +133,9 @@ export default function GlobalTopMenu() {
       }
       if (accountMenuRef.current && !accountMenuRef.current.contains(event.target as Node)) {
         setShowAccountMenu(false)
+      }
+      if (navMenuRef.current && !navMenuRef.current.contains(event.target as Node)) {
+        setActiveNavMenu(null)
       }
     }
 
@@ -189,7 +193,7 @@ export default function GlobalTopMenu() {
           </Link>
         </div>
 
-        <div style={{ whiteSpace: 'nowrap', overflowX: 'auto', scrollbarGutter: 'stable both-edges' }}>
+        <div ref={navMenuRef} style={{ whiteSpace: 'normal', overflow: 'visible' }}>
           <div
             style={{
               display: 'flex',
@@ -197,7 +201,7 @@ export default function GlobalTopMenu() {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '10px',
-              flexWrap: 'nowrap',
+              flexWrap: 'wrap',
               minWidth: 'max-content',
               margin: '0 auto',
             }}
@@ -215,6 +219,14 @@ export default function GlobalTopMenu() {
                 >
                   <Link
                     href={item.url}
+                    onClick={(event) => {
+                      if (!item.children || item.children.length === 0) return
+                      const isOpen = activeNavMenu === item.name
+                      if (!isOpen) {
+                        event.preventDefault()
+                        setActiveNavMenu(item.name)
+                      }
+                    }}
                     style={{
                       backgroundColor: active ? 'rgba(27, 18, 6, 0.26)' : 'rgba(255, 255, 255, 0.18)',
                       border: '1px solid rgba(27, 18, 6, 0.22)',
@@ -267,6 +279,7 @@ export default function GlobalTopMenu() {
                         <Link
                           key={`${item.name}-${subItem.name}`}
                           href={subItem.url}
+                          onClick={() => setActiveNavMenu(null)}
                           style={{
                             color: '#1b1206',
                             borderBottom: '1px solid rgba(27, 18, 6, 0.12)',

@@ -141,6 +141,52 @@
     });
   }
 
+  function initDashboardMenuSubmenus() {
+    const menuItems = Array.from(document.querySelectorAll('.dashboard-menu-item.has-submenu'));
+    if (!menuItems.length) return;
+
+    const closeAll = (exceptItem) => {
+      menuItems.forEach((item) => {
+        if (item !== exceptItem) {
+          item.classList.remove('open');
+        }
+      });
+    };
+
+    menuItems.forEach((item) => {
+      const trigger = item.querySelector('[data-menu-trigger]');
+      if (!trigger) return;
+
+      trigger.addEventListener('click', (event) => {
+        if (window.innerWidth > 1024) return;
+        event.preventDefault();
+        const willOpen = !item.classList.contains('open');
+        closeAll(item);
+        item.classList.toggle('open', willOpen);
+      });
+
+      item.addEventListener('mouseenter', () => {
+        if (window.innerWidth <= 1024) return;
+        closeAll(item);
+        item.classList.add('open');
+      });
+
+      item.addEventListener('mouseleave', () => {
+        if (window.innerWidth <= 1024) return;
+        item.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('mousedown', (event) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      const insideAny = menuItems.some((item) => item.contains(target));
+      if (!insideAny) {
+        closeAll();
+      }
+    });
+  }
+
   const demoCatalog = [
     { name: "Neon Fruits", icon: "🍒", cat: "slots", edge: "low", note: "Classic 3-reel fruit" },
     { name: "Jade Reels", icon: "💎", cat: "slots", edge: "medium", note: "High symbol variance" },
@@ -1140,5 +1186,6 @@
   });
 
   initTopMenuControls();
+  initDashboardMenuSubmenus();
   boot();
 })();

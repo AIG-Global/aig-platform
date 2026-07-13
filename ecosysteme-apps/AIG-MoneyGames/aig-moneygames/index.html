@@ -78,10 +78,14 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
   align-items: center;
   justify-content: center;
   gap: 12px;
-  overflow-x: auto;
+  overflow: visible;
   padding: 11px 12px;
-  white-space: nowrap;
-  scrollbar-gutter: stable both-edges;
+  white-space: normal;
+  flex-wrap: wrap;
+}
+.dashboard-menu-item {
+  position: relative;
+  flex-shrink: 0;
 }
 .dashboard-menu-links a {
   color: #1b1206;
@@ -105,6 +109,41 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 }
 .dashboard-menu-links a:hover {
   background: rgba(255,255,255,0.34);
+}
+.dashboard-submenu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 2px);
+  min-width: 236px;
+  max-height: 340px;
+  overflow-y: auto;
+  display: none;
+  z-index: 160;
+  background: rgba(243, 200, 101, 0.98);
+  border: 1px solid rgba(27, 18, 6, 0.22);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.22);
+}
+.dashboard-menu-item.has-submenu.open .dashboard-submenu,
+.dashboard-menu-item.has-submenu:hover .dashboard-submenu,
+.dashboard-menu-item.has-submenu:focus-within .dashboard-submenu {
+  display: block;
+}
+.dashboard-menu-links .dashboard-submenu a {
+  min-width: 0;
+  height: auto;
+  border: 0;
+  border-bottom: 1px solid rgba(27, 18, 6, 0.12);
+  border-radius: 0;
+  background: transparent;
+  display: block;
+  text-align: left;
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: normal;
+}
+.dashboard-menu-links .dashboard-submenu a:hover {
+  background: rgba(255,255,255,0.35);
 }
 .topbar {
   border-bottom: 1px solid var(--line);
@@ -477,13 +516,49 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 
 <div class="dashboard-menu-bar">
   <div class="dashboard-menu-links">
-    <a href="/business-tools">📦 Business Tools</a>
-    <a href="/ecosystem/investments">💰 Investment Hub</a>
-    <a href="/ecosystem/analytics">📊 Analytics</a>
-    <a href="/ecosystem/wdm">🌍 World Domination Market</a>
-    <a href="/music">🎵 Music</a>
-    <a href="/games">🎮 Games</a>
-    <a href="/dashboard">🧭 Dashboard</a>
+    <div class="dashboard-menu-item has-submenu">
+      <a href="/business-tools" data-menu-trigger="business-tools">📦 Business Tools</a>
+      <div class="dashboard-submenu" aria-label="Business Tools sub pages">
+        <a href="/business-tools">Business Tools Home</a>
+        <a href="/business-tools/packages">Packages</a>
+        <a href="/business-tools/join">Join</a>
+        <a href="/toolkit/app/aig-ask">AIG Ask</a>
+        <a href="/toolkit/app/aig-business-weather">AIG Business Weather</a>
+        <a href="/toolkit/app/aig-helo">AIG HELO</a>
+        <a href="/toolkit/app/aig-investor-alerts">AIG Investor Alerts</a>
+        <a href="/toolkit/app/aig-me">AIG Me</a>
+        <a href="/toolkit/app/aig-moneygames">AIG MoneyGames</a>
+        <a href="/toolkit/app/aig-news">AIG News</a>
+        <a href="/toolkit/app/aig-record">AIG Record</a>
+        <a href="/toolkit/app/aig-secure-sign">AIG Secure Sign</a>
+        <a href="/toolkit/app/aig-translate">AIG Translate</a>
+        <a href="/toolkit/app/aig-website">AIG Website</a>
+      </div>
+    </div>
+    <div class="dashboard-menu-item has-submenu">
+      <a href="/ecosystem/investments" data-menu-trigger="investment-hub">💰 Investment Hub</a>
+      <div class="dashboard-submenu" aria-label="Investment Hub sub pages">
+        <a href="/ecosystem/investments/general-info">General Info</a>
+        <a href="/ecosystem/investments/forex-trading">Forex Trading</a>
+        <a href="/ecosystem/investments/cfd-trading">CFD Trading</a>
+        <a href="/ecosystem/investments/crypto-trading">Crypto Trading</a>
+        <a href="/ecosystem/investments/aig-phone-ltd">AIG Phone ltd</a>
+        <a href="/ecosystem/investments/long-term-investments">Long term investments</a>
+        <a href="/ecosystem/investments/other-investments">Other investments</a>
+        <a href="/ecosystem/investments/aig-cash-trading">AIG Cash Trading</a>
+      </div>
+    </div>
+    <div class="dashboard-menu-item has-submenu">
+      <a href="/ecosystem/analytics" data-menu-trigger="analytics">📊 Analytics</a>
+      <div class="dashboard-submenu" aria-label="Analytics sub pages">
+        <a href="/ecosystem/analytics">Ecosystem Analytics</a>
+        <a href="/admin/analytics">Admin Analytics</a>
+      </div>
+    </div>
+    <div class="dashboard-menu-item"><a href="/ecosystem/wdm">🌍 World Domination Market</a></div>
+    <div class="dashboard-menu-item"><a href="/music">🎵 Music</a></div>
+    <div class="dashboard-menu-item"><a href="/games">🎮 Games</a></div>
+    <div class="dashboard-menu-item"><a href="/dashboard">🧭 Dashboard</a></div>
   </div>
 </div>
 
