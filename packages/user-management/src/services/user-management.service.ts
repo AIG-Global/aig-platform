@@ -6,7 +6,7 @@
  */
 
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common'
-import { AuthenticationService } from '../../../identity/src/services/authentication.service.js'
+import { AuthenticationService } from '@aig/identity'
 import { UserRepository } from '../repositories/user.repository'
 import { CreateUserDto, UpdateUserDto, ChangePasswordDto, UserResponseDto } from '../dto/user.dto'
 

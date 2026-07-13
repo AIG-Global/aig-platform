@@ -63,6 +63,49 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
   z-index: 2;
   perspective: 1400px;
 }
+.dashboard-menu-bar {
+  position: sticky;
+  top: 0;
+  z-index: 70;
+  width: 100%;
+  min-height: 66px;
+  border-bottom: 1px solid rgba(122, 86, 28, 0.55);
+  background: linear-gradient(90deg, #c58f2d 0%, #e8b448 40%, #f1ca6a 52%, #e1ad3f 68%, #b88124 100%);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.dashboard-menu-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 11px 12px;
+  white-space: nowrap;
+  scrollbar-gutter: stable both-edges;
+}
+.dashboard-menu-links a {
+  color: #1b1206;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 12px;
+  border: 1px solid rgba(27, 18, 6, 0.22);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  min-width: 148px;
+  height: 40px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+}
+.dashboard-menu-links a[href*="world-domination"],
+.dashboard-menu-links a[href*="/ecosystem/wdm"] {
+  min-width: 224px;
+}
+.dashboard-menu-links a:hover {
+  background: rgba(255,255,255,0.34);
+}
 .topbar {
   border-bottom: 1px solid var(--line);
   padding: 14px 20px;
@@ -282,6 +325,48 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 .paytable-row { display: flex; justify-content: space-between; padding: 4px 0; border-top: 1px solid var(--line); }
 .paytable-row:first-child { border-top: none; }
 
+.music-player-shell {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 1fr;
+  gap: 12px;
+}
+.music-track-list {
+  max-height: 420px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.music-track-btn {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-raised);
+  color: var(--text);
+  text-align: left;
+  padding: 9px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.music-track-btn:hover,
+.music-track-btn.active {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+.music-main {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  background: var(--panel-raised);
+}
+.music-meta {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.music-audio {
+  width: 100%;
+}
+
 /* Blackjack */
 .bj-table { text-align: center; }
 .bj-hand-label { font-size: 11px; color: var(--text-faint); text-transform: uppercase; margin-bottom: 8px; }
@@ -390,6 +475,18 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 <div class="casino-ambient"></div>
 <div class="casino-stars"></div>
 
+<div class="dashboard-menu-bar">
+  <div class="dashboard-menu-links">
+    <a href="/business-tools">📦 Business Tools</a>
+    <a href="/ecosystem/investments">💰 Investment Hub</a>
+    <a href="/ecosystem/analytics">📊 Analytics</a>
+    <a href="/ecosystem/wdm">🌍 World Domination Market</a>
+    <a href="/music">🎵 Music</a>
+    <a href="/games">🎮 Games</a>
+    <a href="/dashboard">🧭 Dashboard</a>
+  </div>
+</div>
+
 <div id="authShell" class="auth-shell">
   <div class="auth-card">
     <img src="assets/moneygames-logo.png" alt="AIG MoneyGames" style="width:100%; max-width:240px; height:auto; margin-bottom:16px; border-radius:8px;">
@@ -457,10 +554,22 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
         <div class="section-title">Games</div>
         <div class="game-grid">
           <div class="game-card" data-game="slots"><div class="icon"><img src="assets/slots-logo.png" alt="Slots" style="width:54px; height:54px; object-fit:contain;"></div><div class="title">Slots</div><div class="sub">3 reels &middot; ~93.6% RTP</div></div>
+          <div class="game-card" data-game="portal-slots"><div class="icon">🎰</div><div class="title">Member Portal Slots</div><div class="sub">Open slots in native app view</div></div>
+          <div class="game-card" data-game="music"><div class="icon">🎵</div><div class="title">Music Player</div><div class="sub">Native in-page music player</div></div>
           <div class="game-card" data-game="blackjack"><div class="icon">🃏</div><div class="title">Blackjack</div><div class="sub">Dealer stands on 17</div></div>
           <div class="game-card" data-game="roulette"><div class="icon">🎯</div><div class="title">Roulette</div><div class="sub">European, single zero</div></div>
           <div class="game-card" data-game="baccarat"><div class="icon">🀄</div><div class="title">Baccarat</div><div class="sub">Player, banker, tie</div></div>
           <div class="game-card" data-game="keno"><div class="icon">🔢</div><div class="title">Keno</div><div class="sub">Pick 10 of 40</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Imported From AIGINVEST /music</div>
+        <div class="panel" style="padding:12px;">
+          <div class="mini-note" style="text-align:left; margin-bottom:10px;">
+            Open AIGINVEST games directly in a new tab (no embedded frame).
+          </div>
+          <a class="other-game-btn primary" href="http://localhost:3001/games" target="_blank" rel="noopener noreferrer">Open Imported Games</a>
         </div>
       </div>
 
@@ -512,19 +621,11 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
             </div>
           </div>
           <div style="font-size:11.5px; color:var(--text-faint); margin:-2px 0 10px; text-align:left;">
-            All partner games open inside the embedded iframe below.
+            Partner games open in a new tab (no embedded iframe).
           </div>
           <div id="otherGamePlaceholder" style="width:100%; min-height:620px; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#0b0f16;">
             <img src="assets/other-games/game-placeholder.png" alt="Select a game to start playing" style="width:100%; min-height:620px; object-fit:cover; display:block;">
           </div>
-          <iframe
-            id="otherGameFrame"
-            src="about:blank"
-            title="Embedded Partner Game"
-            loading="lazy"
-            referrerpolicy="no-referrer"
-            style="width:100%; min-height:620px; border:1px solid var(--line); border-radius:10px; background:#0b0f16; display:none;"
-          ></iframe>
         </div>
       </div>
     </div>
@@ -639,6 +740,29 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
             <button class="btn btn-primary" id="kenoDrawBtn">DRAW</button>
           </div>
           <div class="slots-result" id="kenoResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MUSIC PLAYER (NATIVE, NO IFRAME) -->
+    <div id="musicView" style="display:none;">
+      <button class="btn-key" data-back="lobby">&larr; Lobby</button>
+      <div class="section">
+        <div class="section-title">Native Music Player</div>
+        <div class="panel" style="padding:12px;">
+          <div class="mini-note" style="text-align:left; margin-bottom:10px;">
+            Loads tracks from the portal music library API and plays them directly here.
+          </div>
+          <div class="music-player-shell">
+            <div>
+              <div class="mini-note" style="text-align:left; margin-bottom:8px;">Playlist</div>
+              <div id="musicTrackList" class="music-track-list"></div>
+            </div>
+            <div class="music-main">
+              <div id="musicNowPlaying" class="music-meta">Select a track to start playback</div>
+              <audio id="musicAudioPlayer" class="music-audio" controls preload="none"></audio>
+            </div>
+          </div>
         </div>
       </div>
     </div>

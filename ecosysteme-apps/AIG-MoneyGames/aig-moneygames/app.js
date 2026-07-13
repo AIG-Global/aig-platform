@@ -5,6 +5,23 @@
 (function () {
   "use strict";
 
+  function hideMenuWhenEmbedded() {
+    let embedded = false;
+    try {
+      embedded = window.top !== window.self;
+    } catch (err) {
+      embedded = true;
+    }
+
+    if (!embedded) return;
+    const menuBar = document.querySelector('.dashboard-menu-bar');
+    if (menuBar) {
+      menuBar.style.display = 'none';
+    }
+  }
+
+  hideMenuWhenEmbedded();
+
   const G = window.AIGGames;
   const A = window.AIGMGAuth;
 
@@ -18,8 +35,11 @@
     otherGameActiveSlug: null,
     otherGameSessionStartMs: null
   };
+  const MUSIC_LIBRARY_URL = "http://localhost:3001/api/music/library";
+  const MUSIC_MEDIA_BASE_URL = "http://localhost:3001/api/media";
   const el = {};
   [
+    "menuLanguageBtn", "menuLanguageMenu", "menuProfileBtn",
     "authShell", "appShell", "authError", "loginPanel", "registerPanel",
     "navLobbyBtn", "navLeaderboardBtn", "navDashboardBtn", "balanceDisplay", "signOutBtn", "globalNotice",
     "lobbyView", "lobbyBalance", "lobbyNetChange", "monthLabel",
@@ -28,11 +48,98 @@
     "rouletteView", "rouletteResultArea", "rouletteGrid", "rouletteOutsideBets", "rouletteBetAmount", "rouletteSpinBtn", "rouletteSelectionLabel",
     "baccaratView", "baccaratBetChoice", "baccaratBetAmount", "baccaratDealBtn", "baccaratPlayerCards", "baccaratBankerCards", "baccaratTotals", "baccaratResult",
     "kenoView", "kenoGrid", "kenoBetAmount", "kenoDrawBtn", "kenoPicksLabel", "kenoResult",
+    "musicView", "musicTrackList", "musicAudioPlayer", "musicNowPlaying",
     "catalogBetAmount", "catalogGrid", "catalogStatus",
-    "otherGamesGrid", "otherGameFrame", "otherGamePlaceholder", "otherGameNowPlaying", "otherGameTrailerLink", "otherGameBackToList", "otherGamesTopTime", "otherGamesTopStarts",
+    "otherGamesGrid", "otherGamePlaceholder", "otherGameNowPlaying", "otherGameTrailerLink", "otherGameBackToList", "otherGamesTopTime", "otherGamesTopStarts",
     "demoGameView", "demoGameIcon", "demoGameTitle", "demoGameNote", "demoGameBetAmount", "demoGamePlayBtn", "demoGameResult",
     "leaderboardView", "leaderboardPanel"
   ].forEach(id => { el[id] = document.getElementById(id); });
+
+  const menuLanguageOptions = [
+    { code: "en", label: "English", flag: "🇬🇧" },
+    { code: "es", label: "Espanol", flag: "🇪🇸" },
+    { code: "de", label: "Deutsch", flag: "🇩🇪" },
+    { code: "fr", label: "Francais", flag: "🇫🇷" },
+    { code: "it", label: "Italiano", flag: "🇮🇹" },
+    { code: "pt", label: "Portugues", flag: "🇵🇹" },
+    { code: "nl", label: "Nederlands", flag: "🇳🇱" },
+    { code: "tr", label: "Turkce", flag: "🇹🇷" },
+    { code: "pl", label: "Polski", flag: "🇵🇱" },
+    { code: "uk", label: "Ukrainska", flag: "🇺🇦" }
+  ];
+
+  function getLanguageScopeKey() {
+    const email = String(localStorage.getItem("userEmail") || "").trim().toLowerCase();
+    if (email) return `email:${email}`;
+    const username = String(localStorage.getItem("userName") || "").trim().toLowerCase();
+    if (username) return `user:${username}`;
+    return "guest";
+  }
+
+  function getStoredMenuLanguage() {
+    const scoped = localStorage.getItem(`aig:user-language:${getLanguageScopeKey()}`);
+    const legacy = localStorage.getItem("userLanguage");
+    const code = String(scoped || legacy || "en").trim().toLowerCase();
+    return menuLanguageOptions.find((option) => option.code === code)?.code || "en";
+  }
+
+  function setStoredMenuLanguage(code) {
+    const validCode = menuLanguageOptions.find((option) => option.code === code)?.code || "en";
+    localStorage.setItem(`aig:user-language:${getLanguageScopeKey()}`, validCode);
+    localStorage.setItem(`aig:user-language-mode:${getLanguageScopeKey()}`, "manual");
+    localStorage.setItem("userLanguage", validCode);
+  }
+
+  function refreshTopMenuLanguageButton() {
+    if (!el.menuLanguageBtn || !el.menuLanguageMenu) return;
+    const selected = getStoredMenuLanguage();
+    const selectedOption = menuLanguageOptions.find((option) => option.code === selected) || menuLanguageOptions[0];
+    el.menuLanguageBtn.textContent = `${selectedOption.flag} ${selectedOption.label} ▾`;
+    el.menuLanguageMenu.querySelectorAll(".menu-language-item").forEach((button) => {
+      const isActive = button.getAttribute("data-lang") === selectedOption.code;
+      button.classList.toggle("active", isActive);
+    });
+  }
+
+  function refreshTopMenuProfileButton() {
+    if (!el.menuProfileBtn) return;
+    const nickname = String(localStorage.getItem("userName") || "").trim();
+    el.menuProfileBtn.textContent = nickname || "My Profile";
+  }
+
+  function initTopMenuControls() {
+    if (!el.menuLanguageBtn || !el.menuLanguageMenu) return;
+
+    refreshTopMenuLanguageButton();
+    refreshTopMenuProfileButton();
+
+    el.menuLanguageBtn.addEventListener("click", () => {
+      const isOpen = el.menuLanguageMenu.style.display === "block";
+      el.menuLanguageMenu.style.display = isOpen ? "none" : "block";
+      el.menuLanguageBtn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+    });
+
+    el.menuLanguageMenu.querySelectorAll(".menu-language-item").forEach((button) => {
+      button.addEventListener("click", () => {
+        const code = String(button.getAttribute("data-lang") || "en");
+        setStoredMenuLanguage(code);
+        refreshTopMenuLanguageButton();
+        el.menuLanguageMenu.style.display = "none";
+        el.menuLanguageBtn.setAttribute("aria-expanded", "false");
+        window.dispatchEvent(new CustomEvent("aig-language-changed", { detail: { language: code, mode: "manual" } }));
+      });
+    });
+
+    document.addEventListener("mousedown", (event) => {
+      if (!el.menuLanguageMenu || !el.menuLanguageBtn) return;
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (!el.menuLanguageMenu.contains(target) && !el.menuLanguageBtn.contains(target)) {
+        el.menuLanguageMenu.style.display = "none";
+        el.menuLanguageBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
 
   const demoCatalog = [
     { name: "Neon Fruits", icon: "🍒", cat: "slots", edge: "low", note: "Classic 3-reel fruit" },
@@ -287,12 +394,13 @@
   // ============================================================
   function showView(name) {
     if (name !== "lobbyView") finalizeOtherGameSession();
-    ["lobbyView", "slotsView", "blackjackView", "rouletteView", "baccaratView", "kenoView", "leaderboardView", "demoGameView"].forEach(v => {
+    ["lobbyView", "slotsView", "blackjackView", "rouletteView", "baccaratView", "kenoView", "musicView", "leaderboardView", "demoGameView"].forEach(v => {
       el[v].style.display = v === name ? "block" : "none";
     });
     if (name === "lobbyView") renderLobby();
     if (name === "leaderboardView") renderLeaderboard("monthly");
   }
+
   el.navLobbyBtn.addEventListener("click", () => showView("lobbyView"));
   el.navLeaderboardBtn.addEventListener("click", () => showView("leaderboardView"));
   el.navDashboardBtn.addEventListener("click", () => {
@@ -304,6 +412,8 @@
     card.addEventListener("click", () => {
       const game = card.getAttribute("data-game");
       if (game === "slots") { showView("slotsView"); renderSlotsPaytable(); }
+      else if (game === "portal-slots") { showView("slotsView"); renderSlotsPaytable(); }
+      else if (game === "music") { showView("musicView"); }
       else if (game === "blackjack") { showView("blackjackView"); resetBlackjackUI(); }
       else if (game === "roulette") { showView("rouletteView"); renderRouletteBoard(); }
       else if (game === "baccarat") { showView("baccaratView"); resetBaccaratUI(); }
@@ -432,9 +542,7 @@
   function loadOtherGame(game) {
     beginOtherGameSession(game);
     const direct = `https://cdn.htmlgames.com/${game.slug}/`;
-    if (el.otherGamePlaceholder) el.otherGamePlaceholder.style.display = "none";
-    el.otherGameFrame.style.display = "block";
-    el.otherGameFrame.src = direct;
+    if (el.otherGamePlaceholder) el.otherGamePlaceholder.style.display = "block";
     el.otherGameNowPlaying.textContent = `Now playing: ${game.name}`;
     const hasTrailer = typeof game.trailer === "string"
       && game.trailer.startsWith("https://youtu.be/")
@@ -447,19 +555,19 @@
       el.otherGameTrailerLink.style.display = "none";
     }
 
-    // Move the page to the embedded player immediately after selecting a game.
-    el.otherGameFrame.scrollIntoView({ behavior: "auto", block: "start" });
+    // Strict no-iframe flow for this route: open partner games in a new tab.
+    window.open(direct, "_blank", "noopener,noreferrer");
+    el.otherGameNowPlaying.scrollIntoView({ behavior: "auto", block: "start" });
   }
 
   function renderOtherGames() {
-    if (!el.otherGamesGrid || !el.otherGameFrame) return;
+    if (!el.otherGamesGrid) return;
     el.otherGamesGrid.innerHTML = otherGames.map((game, idx) => `
       <div class="other-game-card" data-other-game="${idx}">
         ${game.cover ? `<img class="other-game-cover" src="${escapeHtml(game.cover)}" alt="${escapeHtml(game.name)} cover" loading="lazy">` : ""}
         <div class="other-game-title">${escapeHtml(game.name)}</div>
         <div class="other-game-actions">
-          <button class="other-game-btn primary" data-other-game="${idx}">Play Here</button>
-          <button class="other-game-btn" data-other-game="${idx}">Open In Iframe</button>
+          <button class="other-game-btn primary" data-other-game="${idx}">Open Game</button>
         </div>
       </div>`).join('');
       renderOtherGamesTopLists();
@@ -475,14 +583,54 @@
   });
 
   el.otherGameBackToList?.addEventListener("click", () => {
-    // Stop the current embedded game and bring focus back to the game picker grid.
+    // End active session and bring focus back to the game picker grid.
     finalizeOtherGameSession();
-    el.otherGameFrame.src = "about:blank";
-    el.otherGameFrame.style.display = "none";
     if (el.otherGamePlaceholder) el.otherGamePlaceholder.style.display = "block";
     el.otherGameNowPlaying.textContent = "No game selected";
     el.otherGamesGrid.scrollIntoView({ behavior: "smooth", block: "start" });
   });
+
+  async function loadMusicLibrary() {
+    if (!el.musicTrackList || !el.musicAudioPlayer || !el.musicNowPlaying) return;
+    el.musicTrackList.innerHTML = `<div class="mini-note" style="text-align:left;">Loading tracks...</div>`;
+    try {
+      const res = await fetch(MUSIC_LIBRARY_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Music API ${res.status}`);
+      const data = await res.json();
+      const tracks = Array.isArray(data?.tracks) ? data.tracks : [];
+      if (!tracks.length) {
+        el.musicTrackList.innerHTML = `<div class="mini-note" style="text-align:left;">No tracks available.</div>`;
+        return;
+      }
+
+      el.musicTrackList.innerHTML = tracks.map((track, idx) => `
+        <button class="music-track-btn" data-track-index="${idx}">
+          ${escapeHtml(track.title || "Untitled")}
+        </button>
+      `).join("");
+
+      const playTrack = (track, button) => {
+        document.querySelectorAll(".music-track-btn").forEach((b) => b.classList.remove("active"));
+        if (button) button.classList.add("active");
+        const src = `${MUSIC_MEDIA_BASE_URL}${track.src}`;
+        el.musicAudioPlayer.src = src;
+        el.musicNowPlaying.textContent = `Now Playing: ${track.title || "Untitled"}${track.artist ? ` — ${track.artist}` : ""}`;
+        el.musicAudioPlayer.play().catch(() => {});
+      };
+
+      el.musicTrackList.querySelectorAll(".music-track-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          const idx = parseInt(button.getAttribute("data-track-index"), 10);
+          playTrack(tracks[idx], button);
+        });
+      });
+
+      playTrack(tracks[0], el.musicTrackList.querySelector(".music-track-btn"));
+    } catch (err) {
+      el.musicTrackList.innerHTML = `<div class="mini-note" style="text-align:left;">Music library unavailable.</div>`;
+      el.musicNowPlaying.textContent = "Unable to load music tracks";
+    }
+  }
 
   function quickRoundMultiplier(edge) {
     const roll = G.randomInt(1000) / 1000;
@@ -971,7 +1119,18 @@
     el.authShell.style.display = "none";
     el.appShell.style.display = "block";
     refreshBalanceDisplay();
-    showView("lobbyView");
+    const hash = String(window.location.hash || "").toLowerCase();
+    if (hash === "#slotsview") {
+      showView("slotsView");
+      renderSlotsPaytable();
+    } else if (hash === "#memberportalslots") {
+      openMemberPortalArcade("slots");
+    } else if (hash === "#musicview") {
+      openMemberPortalArcade("music");
+    } else {
+      showView("lobbyView");
+    }
+    loadMusicLibrary();
     initCasino3D();
   }
 
@@ -980,5 +1139,6 @@
     if (document.hidden) finalizeOtherGameSession();
   });
 
+  initTopMenuControls();
   boot();
 })();

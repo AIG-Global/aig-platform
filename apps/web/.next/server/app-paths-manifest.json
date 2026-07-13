@@ -1,7 +1,13 @@
 {
+  "/business-tools/page": "app/business-tools/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/page": "app/page.js",
-  "/auth/page": "app/auth/page.js",
-  "/api/auth/session/route": "app/api/auth/session/route.js",
-  "/api/music-library/route": "app/api/music-library/route.js"
+  "/ecosystem/analytics/page": "app/ecosystem/analytics/page.js",
+  "/games/page": "app/games/page.js",
+  "/business-tools/join/page": "app/business-tools/join/page.js",
+  "/business-tools/packages/page": "app/business-tools/packages/page.js",
+  "/music/page": "app/music/page.js",
+  "/toolkit/app/[appId]/page": "app/toolkit/app/[appId]/page.js",
+  "/ecosystem/investments/page": "app/ecosystem/investments/page.js",
+  "/ecosystem/investments/[category]/page": "app/ecosystem/investments/[category]/page.js",
+  "/admin/analytics/page": "app/admin/analytics/page.js"
 }

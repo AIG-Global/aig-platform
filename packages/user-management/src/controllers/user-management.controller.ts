@@ -18,7 +18,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common'
-import { JwtAuthGuard } from '../../../identity/src/guards/jwt-auth.guard.js'
+import { JwtAuthGuard } from '@aig/identity'
 import { UserManagementService } from '../services/user-management.service'
 import {
   CreateUserDto,

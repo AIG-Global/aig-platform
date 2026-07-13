@@ -1,9 +1,9 @@
 import 'reflect-metadata'
 import { NestFactory } from '@nestjs/core'
 import { Module, Controller, Get } from '@nestjs/common'
-import { createRequire } from 'module'
-import { fileURLToPath } from 'url'
-import { dirname, resolve } from 'path'
+import { IdentityModule } from '@aig/identity'
+import { UserManagementModule } from '@aig/user-management'
+import { OrganizationManagementModule } from '@aig/organization-management'
 import { AuthModule } from './auth/auth.module.js'
 import { ComplianceModule } from './compliance/compliance.module.js'
 import { LocalizationModule } from './localization/localization.module.js'
@@ -22,24 +22,6 @@ import { BackofficeModule } from './backoffice/backoffice.module.js'
 // import { AnalyticsModule } from './analytics/analytics.module.js'
 // import { MailchimpModule } from './mailchimp/mailchimp.module.js'
 // import { PaymentModule } from './payment/payment.module.js'
-
-// ESM compatibility
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-const require = createRequire(import.meta.url)
-
-// Dynamically require Phase 2 modules using absolute paths
-const identityPath = resolve(__dirname, '../../../packages/identity/dist')
-//const userMgmtPath = resolve(__dirname, '../../../packages/user-management/dist/user-management/src')
-//const orgMgmtPath = resolve(__dirname, '../../../packages/organization-management/dist/organization-management/src')
-
-const identityDist = require(identityPath)
-//const userMgmtDist = require(userMgmtPath)
-//const orgMgmtDist = require(orgMgmtPath)
-
-const IdentityModule = identityDist.IdentityModule
-//const UserManagementModule = userMgmtDist.UserManagementModule
-//const OrganizationManagementModule = orgMgmtDist.OrganizationManagementModule
 
 @Controller()
 class AppController {
@@ -70,11 +52,12 @@ class AppController {
     LocalizationModule,
     BackofficeModule,
     IdentityModule,
+    UserManagementModule,
+    OrganizationManagementModule,
     // Temporarily disabled modules pending schema alignment
     // ChatModule, ProjectModule, TaskModule, WorkspaceModule, ActivityModule,
     // ProgressModule, MissionModule, WDMModule, CommissionsModule, GeneralsModule,
     // AnalyticsModule, MailchimpModule, PaymentModule,
-    // UserManagementModule, OrganizationManagementModule,
   ],
   controllers: [AppController],
 })

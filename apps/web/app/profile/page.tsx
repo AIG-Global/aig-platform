@@ -2,6 +2,12 @@
 
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
+import {
+  getStoredLanguagePreference,
+  setStoredLanguagePreference,
+  SUPPORTED_LANGUAGE_OPTIONS,
+  type SupportedLanguage,
+} from '../lib/language-preference'
 
 type HistoryEntry = {
   id: number
@@ -29,6 +35,10 @@ export default function ProfilePage() {
   const [email, setEmail] = useState('diana@aiginvest.com')
   const [phone, setPhone] = useState('+358 40 123 4567')
   const [username, setUsername] = useState('Diana')
+  const [nicknameMessage, setNicknameMessage] = useState('')
+  const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>('en')
+  const [languageMode, setLanguageMode] = useState<'auto' | 'manual'>('auto')
+  const [languageMessage, setLanguageMessage] = useState('')
 
   const [kycStatus, setKycStatus] = useState<'not-required' | 'required' | 'approved'>('required')
   const [kycReason, setKycReason] = useState('Required due to expanded wallet and transfer activity.')
@@ -81,7 +91,41 @@ export default function ProfilePage() {
     if (Number.isFinite(parsed)) {
       setDeletionRequestedAt(parsed)
     }
+
+    const savedName = localStorage.getItem('userName')
+    if (savedName && savedName.trim().length > 0) {
+      setUsername(savedName)
+    }
+
+    const preference = getStoredLanguagePreference()
+    setSelectedLanguage(preference.language)
+    setLanguageMode(preference.mode)
   }, [])
+
+  const handleSaveNickname = () => {
+    const normalized = username.trim()
+    if (!normalized) {
+      setNicknameMessage('Nickname cannot be empty.')
+      return
+    }
+
+    localStorage.setItem('userName', normalized)
+    setUsername(normalized)
+    setNicknameMessage('Nickname saved for your account.')
+  }
+
+  const handleSaveLanguage = () => {
+    setStoredLanguagePreference(selectedLanguage, 'manual')
+    setLanguageMode('manual')
+    setLanguageMessage('Language saved for this user. It will stay until changed again.')
+    window.dispatchEvent(new CustomEvent('aig-language-changed', { detail: { language: selectedLanguage, mode: 'manual' } }))
+  }
+
+  const handleUseAutomaticLanguage = () => {
+    setLanguageMode('auto')
+    setLanguageMessage('Automatic language detection enabled (IP/location-based default).')
+    window.dispatchEvent(new CustomEvent('aig-language-changed', { detail: { mode: 'auto' } }))
+  }
 
   const totalNetworkEarnings = 196420
   const earningsByYear = [
@@ -273,12 +317,56 @@ export default function ProfilePage() {
 
         <div style={{ display: 'grid', gap: '16px' }}>
           <section style={{ backgroundColor: 'rgba(17, 24, 39, 0.75)', border: '1px solid rgba(148, 163, 184, 0.3)', borderRadius: '12px', padding: '16px' }}>
+            <h2 style={{ color: '#f8d57a', fontWeight: 700, marginBottom: '10px' }}>Nickname Selection</h2>
+            <p style={{ fontSize: '13px', color: '#cbd5e1', marginBottom: '8px' }}>
+              Your nickname is managed here and shown in dashboard/profile menus.
+            </p>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Choose your nickname"
+                maxLength={20}
+                style={{ ...fieldStyle, width: '260px' }}
+              />
+              <button onClick={handleSaveNickname} style={smallButtonStyle}>Save nickname</button>
+            </div>
+            <p style={{ marginTop: '8px', color: '#94a3b8', fontSize: '12px' }}>{username.trim().length}/20 characters</p>
+            {nicknameMessage && <p style={{ marginTop: '6px', color: '#93c5fd', fontSize: '12px' }}>{nicknameMessage}</p>}
+          </section>
+
+          <section style={{ backgroundColor: 'rgba(17, 24, 39, 0.75)', border: '1px solid rgba(148, 163, 184, 0.3)', borderRadius: '12px', padding: '16px' }}>
+            <h2 style={{ color: '#f8d57a', fontWeight: 700, marginBottom: '10px' }}>Language Preference</h2>
+            <p style={{ fontSize: '13px', color: '#cbd5e1', marginBottom: '8px' }}>
+              Default language is selected automatically by IP/country. You can set your own language and keep it until you change it again.
+            </p>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <select
+                value={selectedLanguage}
+                onChange={(e) => setSelectedLanguage(e.target.value as SupportedLanguage)}
+                style={{ ...fieldStyle, width: '240px' }}
+              >
+                {SUPPORTED_LANGUAGE_OPTIONS.map((language) => (
+                  <option key={language.code} value={language.code}>
+                    {language.flag} {language.name}
+                  </option>
+                ))}
+              </select>
+              <button onClick={handleSaveLanguage} style={smallButtonStyle}>Save language</button>
+              <button onClick={handleUseAutomaticLanguage} style={{ ...smallButtonStyle, backgroundColor: '#94a3b8', color: '#0f172a' }}>Use automatic</button>
+            </div>
+            <p style={{ marginTop: '8px', color: '#94a3b8', fontSize: '12px' }}>
+              Current mode: <strong>{languageMode === 'manual' ? 'Manual (user selected)' : 'Automatic (IP/country based)'}</strong>
+            </p>
+            {languageMessage && <p style={{ marginTop: '6px', color: '#93c5fd', fontSize: '12px' }}>{languageMessage}</p>}
+          </section>
+
+          <section style={{ backgroundColor: 'rgba(17, 24, 39, 0.75)', border: '1px solid rgba(148, 163, 184, 0.3)', borderRadius: '12px', padding: '16px' }}>
             <h2 style={{ color: '#f8d57a', fontWeight: 700, marginBottom: '12px' }}>Identity, KYC, and Contact Details</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '10px' }}>
               <input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Full name" style={fieldStyle} />
               <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" style={fieldStyle} />
               <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone" style={fieldStyle} />
-              <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" style={fieldStyle} />
               <input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Address" style={{ ...fieldStyle, gridColumn: '1 / -1' }} />
             </div>
             <div style={{ marginTop: '12px', fontSize: '13px', color: '#cbd5e1' }}>

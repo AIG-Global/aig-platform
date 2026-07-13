@@ -1,796 +1,101 @@
-'use client'
+ 'use client'
 
 import { useState, useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
-import { LogOut, ChevronRight, Check, Lock, Star, Zap, Copy, Gift, ChevronDown, Globe, User, Wallet, History, FileText, Headphones, MessageCircle, Map, Users, TrendingUp, Users2, Target, BookOpen, Briefcase, Award, ArrowRight, Music2, Play, Pause, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react'
+import { LogOut, ChevronRight, Check, Star, Zap, Copy, Gift, ChevronDown, Globe, User, Wallet, History, FileText, Headphones, MessageCircle, Map, Users, TrendingUp, Users2, Target, BookOpen, Briefcase, Award, ArrowRight } from 'lucide-react'
 import maplibregl from 'maplibre-gl'
 import { PMTiles, Protocol } from 'pmtiles'
 import { layers, namedFlavor } from '@protomaps/basemaps'
-import 'maplibre-gl/dist/maplibre-gl.css'
+import { getStoredLanguagePreference, setStoredLanguagePreference, type SupportedLanguage } from '../lib/language-preference'
 
-// Professional dashboard with TribeWin visual design aesthetic
-// 100% AIGINVEST branded - no external branding or terminology
-
-interface Package {
-  id: string
-  name: string
-  monthlyPrice: number
-  description: string
-  earningCap: string | 'unlimited'
-  investmentCapacity: string | 'unlimited'
-  apps: string[]
-  bonusFeatures: string[]
-  highlight?: boolean
-}
-
-const PACKAGES: Package[] = [
+const INVESTMENT_OPTIONS = [
   {
-    id: 'packagea',
-    name: 'Starter Business Pack',
-    monthlyPrice: 399,
-    description: 'Begin your wealth journey',
-    earningCap: '€1,000/month',
-    investmentCapacity: '€1,000',
-    apps: ['WDM and AIG ecosystem access', 'AIG Investment platform', 'AIG MoneyGames App', 'AIG Investor Alerts', 'Marketplace seller access', 'Monthly webinars'],
-    bonusFeatures: ['26% Level-1 commission rate', 'Full ecosystem access', 'Transfer fee 3.90% (80% network, 20% management)', 'AIG Cash transfers FREE'],
-    highlight: false
+    id: 'crypto-market-access',
+    name: 'Crypto market access',
+    description: 'Liquid exposure to crypto market opportunities.',
   },
   {
-    id: 'packageb',
-    name: 'Start-Up Business Pack',
-    monthlyPrice: 699,
-    description: 'Scale your growth fast',
-    earningCap: '€5,000/month',
-    investmentCapacity: '€5,000',
-    apps: ['All Starter Pack features', 'AIG HELO (emergency travel)', 'AIG Business Weather', 'Preferred seller status'],
-    bonusFeatures: ['Enhanced earning potential', 'Priority support', 'Transfer fee 1.90%', 'AIG Cash transfers FREE'],
-    highlight: false
+    id: 'tagmarkets-investments',
+    name: 'Tagmarkets.com investments',
+    description: 'Tagmarkets.com product investments with variable lock periods.',
+  },
+  {
+    id: 'aig-phone-shares',
+    name: 'AIG Phone LTD shares',
+    description: 'Pre-launch AIG Phone equity allocation.',
+  },
+  {
+    id: 'managed-funds-3y',
+    name: 'Professionally Managed Funds - 3 Year',
+    description: 'Managed allocation with a 3-year cycle.',
+  },
+  {
+    id: 'managed-funds-5y',
+    name: 'Professionally Managed Funds - 5 Year',
+    description: 'Managed allocation with a 5-year cycle.',
+  },
+  {
+    id: 'managed-funds-7y',
+    name: 'Professionally Managed Funds - 7 Year',
+    description: 'Managed allocation with a 7-year cycle.',
+  },
+  {
+    id: 'managed-funds-10y',
+    name: 'Professionally Managed Funds - 10 Year',
+    description: 'Managed allocation with a 10-year cycle.',
+  },
+]
+
+const PACKAGES = [
+  {
+    id: 'starter',
+    name: 'Starter Package',
+    investmentCapacity: 0,
+  },
+  {
+    id: 'growth',
+    name: 'Growth Package',
+    investmentCapacity: 5000,
   },
   {
     id: 'packagec',
-    name: 'Premium Business Pack',
-    monthlyPrice: 1099,
-    description: "It's time to build",
-    earningCap: '€10,000/month',
-    investmentCapacity: '€10,000',
-    apps: ['All Start-Up Pack features', 'AIG Me (relationship manager)', 'Exclusive VIP tools', 'Priority support'],
-    bonusFeatures: ['High earning capacity', 'Transfer fee 0.90%', 'Exclusive events', 'AIG Cash transfers FREE'],
-    highlight: true
+    name: 'Professional Package',
+    investmentCapacity: null,
   },
-  {
-    id: 'professional',
-    name: 'Professional Business Pack',
-    monthlyPrice: 2999,
-    description: 'Reach the world',
-    earningCap: 'unlimited',
-    investmentCapacity: 'unlimited',
-    apps: ['All current and future apps', 'AIG Record (organization management)', 'AIG Secure Sign', 'AIG Ask (Claude AI integration)', 'AIG ONE (premium dashboard)', 'Affiliate commissions up to 10 levels'],
-    bonusFeatures: ['Unlimited earning potential', 'Transfer fee 0.15%', '24/7 VIP support', 'Strategic partnership opportunities', 'AIG Cash transfers FREE'],
-    highlight: false
-  }
 ]
 
-// Enhanced members data with network details
 const MEMBERS_DATA = [
-  { id: 1, name: 'John Smith', circle: 1, status: 'Active', joinDate: '2024-01-15', directEarnings: 1250, networkEarnings: 5200, activeNetwork: 12 },
-  { id: 2, name: 'Sarah Johnson', circle: 1, status: 'Active', joinDate: '2024-02-20', directEarnings: 2100, networkEarnings: 8900, activeNetwork: 18 },
-  { id: 3, name: 'Michael Brown', circle: 2, status: 'Inactive', joinDate: '2024-03-10', directEarnings: 450, networkEarnings: 1200, activeNetwork: 3 },
-  { id: 4, name: 'Emma Davis', circle: 1, status: 'Active', joinDate: '2024-04-05', directEarnings: 1890, networkEarnings: 6700, activeNetwork: 15 },
-  { id: 5, name: 'James Wilson', circle: 1, status: 'Active', joinDate: '2024-05-12', directEarnings: 3200, networkEarnings: 12400, activeNetwork: 22 }
+  { id: 1, name: 'James Wilson', circle: 1, status: 'Active', directEarnings: 4200, networkEarnings: 8200, joinDate: '2024-05-12', package: 'Professional Business Pack', earned: 12400 },
+  { id: 2, name: 'Michael Brown', circle: 2, status: 'Inactive', directEarnings: 650, networkEarnings: 550, joinDate: '2024-03-10', package: 'Starter Business Pack', earned: 1200 },
+  { id: 3, name: 'Sofia Garcia', circle: 1, status: 'Active', directEarnings: 3100, networkEarnings: 4800, joinDate: '2024-07-21', package: 'Growth Business Pack', earned: 7900 },
+  { id: 4, name: 'Daniel Kim', circle: 3, status: 'Active', directEarnings: 2100, networkEarnings: 3900, joinDate: '2024-09-04', package: 'Professional Business Pack', earned: 6000 },
 ]
 
-// Activity/transaction ledger
 const ACTIVITIES_DATA = [
-  { id: 1, date: '2024-12-20', type: 'Commission', amount: 450, balance: 15450, description: 'Monthly commission from network' },
-  { id: 2, date: '2024-12-19', type: 'Withdrawal', amount: -2000, balance: 15000, description: 'Withdrawal to bank account' },
-  { id: 3, date: '2024-12-18', type: 'Bonus', amount: 300, balance: 17000, description: 'Performance bonus' },
-  { id: 4, date: '2024-12-17', type: 'Commission', amount: 650, balance: 16700, description: 'Weekly commission payout' },
-  { id: 5, date: '2024-12-16', type: 'Deposit', amount: 5000, balance: 16050, description: 'Bank transfer deposit' }
+  { id: 1, date: '2026-07-10', type: 'Commission', amount: 850, balance: 15000, description: 'Weekly commission payout' },
+  { id: 2, date: '2026-07-11', type: 'Bonus', amount: 300, balance: 15300, description: 'Leadership bonus credited' },
+  { id: 3, date: '2026-07-12', type: 'Withdrawal', amount: -250, balance: 15050, description: 'Cash wallet withdrawal' },
 ]
 
-const parseInvestmentCapacity = (capacity: string | 'unlimited'): number | null => {
-  if (capacity === 'unlimited') return null
-  const digits = capacity.replace(/[^\d]/g, '')
-  if (!digits) return 0
-  return parseInt(digits, 10)
+function normalizeDashboardPackageId(packageId: string) {
+  const normalized = packageId.trim().toLowerCase()
+
+  if (normalized === 'professional' || normalized === 'packagec') return 'packagec'
+  if (normalized === 'starter' || normalized === 'packagea') return 'starter'
+  if (normalized === 'growth' || normalized === 'packageb') return 'growth'
+
+  return 'packagec'
 }
 
-const normalizeDashboardPackageId = (value: string | null | undefined): string => {
-  const normalized = (value ?? '').trim().toLowerCase()
-
-  if (normalized === 'professional' || normalized === 'pro+' || normalized === 'pro_plus') return 'professional'
-  if (normalized === 'premium' || normalized === 'packagec' || normalized === 'pro') return 'packagec'
-  if (normalized === 'startup' || normalized === 'packageb' || normalized === 'growth') return 'packageb'
-  if (normalized === 'starter' || normalized === 'remittance' || normalized === 'packagea') return 'packagea'
-
-  return 'packagea'
-}
-
-const INVESTMENT_OPTIONS = [
-  { id: 'managed-funds', name: 'Managed Funds', description: 'Professional fund baskets managed by ecosystem strategy teams.' },
-  { id: 'wdm-inventory', name: 'WDM Inventory', description: 'AIG Cash inventory reserved for World Domination Market operations.' },
-  { id: 'token-strategies', name: 'Token Strategies', description: 'North Star and AIG Phone token strategy allocations.' },
-  { id: 'liquidity-reserve', name: 'Liquidity Reserve', description: 'Reserve allocation for settlement stability and risk control.' },
-]
-
-interface AudioTrack {
-  title: string
-  artist: string
-  album: string
-  src: string
-}
-
-const DEFAULT_AUDIO_LIBRARY: AudioTrack[] = [
-  {
-    title: "ASK DIANA DIAMONDS DON'T OWN ME",
-    artist: 'AIG Invest',
-    album: 'Ask Diana Sessions',
-    src: '/mediafiles/ASK%20DIANA%20DIAMONDS%20DON%27T%20OWN%20ME.wav'
-  },
-  {
-    title: 'ASK DIANA THE NORTH STAR RISE',
-    artist: 'AIG Invest',
-    album: 'Ask Diana Sessions',
-    src: '/mediafiles/ASK%20DIANA%20THE%20NORTH%20STAR%20RISE.wav'
-  },
-  {
-    title: 'Verse 1',
-    artist: 'Matt Mertel, AIG Theme',
-    album: 'AIG Theme Sessions',
-    src: '/mediafiles/Verse%201.wav'
-  },
-  {
-    title: 'AIG Anthem Together We Rise',
-    artist: 'NorthStar',
-    album: 'NorthStar Anthem',
-    src: '/mediafiles/AIG%20Anthem%20Together%20We%20Rise.wav'
-  },
-  {
-    title: 'No Monkey Business',
-    artist: 'Mike and the Minions',
-    album: 'No Monkey Business',
-    src: '/mediafiles/No%20Monkey%20Business.wav'
-  },
-]
-
-const DashboardMusicPlayer = () => {
-  const audioRef = useRef<HTMLAudioElement>(null)
-  const audioContextRef = useRef<AudioContext | null>(null)
-  const analyserRef = useRef<AnalyserNode | null>(null)
-  const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null)
-  const animationFrameRef = useRef<number | null>(null)
-  const frequencyDataRef = useRef<Uint8Array | null>(null)
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [viewMode, setViewMode] = useState<'player' | 'playlist'>('player')
-  const [progress, setProgress] = useState(0)
-  const [duration, setDuration] = useState(0)
-  const [volume, setVolume] = useState(0.9)
-  const [isMuted, setIsMuted] = useState(false)
-  const [beatLevels, setBeatLevels] = useState<number[]>(Array.from({ length: 28 }, () => 0.08))
-  const [trackDurations, setTrackDurations] = useState<Record<string, number>>({})
-  const [songSearch, setSongSearch] = useState('')
-  const [audioLibrary, setAudioLibrary] = useState<AudioTrack[]>(DEFAULT_AUDIO_LIBRARY)
-  const [playbackError, setPlaybackError] = useState<string | null>(null)
-
-  const currentTrack = audioLibrary[currentTrackIndex]
-
-  const filteredTracks = useMemo(() => {
-    const query = songSearch.trim().toLowerCase()
-
-    return audioLibrary
-      .map((track, index) => ({ ...track, index }))
-      .filter((track) => {
-        if (!query) return true
-
-        const searchable = `${track.title} ${track.artist} ${track.album}`.toLowerCase()
-        return searchable.includes(query)
-      })
-  }, [songSearch, audioLibrary])
-
-  useEffect(() => {
-    let active = true
-
-    const loadMusicLibrary = async () => {
-      try {
-        const response = await fetch('/api/music-library', { cache: 'no-store' })
-        if (!response.ok) return
-
-        const payload = await response.json() as { items?: AudioTrack[] }
-        const items = Array.isArray(payload.items) ? payload.items : []
-        if (!active || items.length === 0) return
-
-        setAudioLibrary(items)
-      } catch {
-        // Keep fallback tracks if dynamic library is unavailable.
-      }
-    }
-
-    void loadMusicLibrary()
-
-    return () => {
-      active = false
-    }
-  }, [])
-
-  useEffect(() => {
-    setCurrentTrackIndex((previous) => {
-      if (audioLibrary.length === 0) return 0
-      return Math.min(previous, audioLibrary.length - 1)
-    })
-  }, [audioLibrary])
-
-  const stopBeatAnimation = () => {
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current)
-      animationFrameRef.current = null
-    }
-  }
-
-  const startBeatAnimation = () => {
-    const analyser = analyserRef.current
-    const frequencyData = frequencyDataRef.current
-    if (!analyser || !frequencyData) return
-
-    stopBeatAnimation()
-
-    const tick = () => {
-      analyser.getByteFrequencyData(frequencyData)
-      const barCount = 28
-      const step = Math.max(1, Math.floor(frequencyData.length / barCount))
-      const nextLevels = Array.from({ length: barCount }, (_, index) => {
-        const value = frequencyData[index * step] ?? 0
-        return Math.max(0.08, value / 255)
-      })
-      setBeatLevels(nextLevels)
-      animationFrameRef.current = requestAnimationFrame(tick)
-    }
-
-    animationFrameRef.current = requestAnimationFrame(tick)
-  }
-
-  const ensureVisualizer = () => {
-    const audio = audioRef.current
-    if (!audio) return null
-
-    if (!audioContextRef.current) {
-      const context = new AudioContext()
-      const analyser = context.createAnalyser()
-      analyser.fftSize = 128
-      analyser.smoothingTimeConstant = 0.82
-
-      const sourceNode = context.createMediaElementSource(audio)
-      sourceNode.connect(analyser)
-      analyser.connect(context.destination)
-
-      audioContextRef.current = context
-      analyserRef.current = analyser
-      sourceNodeRef.current = sourceNode
-      frequencyDataRef.current = new Uint8Array(analyser.frequencyBinCount)
-    }
-
-    return {
-      context: audioContextRef.current,
-      analyser: analyserRef.current,
-    }
-  }
-
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-
-    audio.volume = isMuted ? 0 : volume
-  }, [volume, isMuted])
-
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio || !currentTrack) return
-
-    audio.src = currentTrack.src
-    audio.load()
-    setProgress(0)
-    setDuration(0)
-  }, [currentTrack])
-
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio || !currentTrack) return
-
-    if (isPlaying) {
-      const visualizer = ensureVisualizer()
-      if (visualizer?.context?.state === 'suspended') {
-        void visualizer.context.resume()
-      }
-      startBeatAnimation()
-      void audio.play()
-        .then(() => setPlaybackError(null))
-        .catch(() => {
-          setIsPlaying(false)
-          setPlaybackError('Playback blocked by browser policy. Click Start Player to begin audio.')
-        })
-      return
-    }
-
-    stopBeatAnimation()
-    setBeatLevels(Array.from({ length: 28 }, () => 0.08))
-    audio.pause()
-  }, [isPlaying, currentTrack])
-
-  useEffect(() => {
-    let cancelled = false
-    const disposers: Array<() => void> = []
-
-    audioLibrary.forEach((track) => {
-      if (trackDurations[track.src]) return
-
-      const probe = new Audio(track.src)
-      probe.preload = 'metadata'
-
-      const handleLoadedMetadata = () => {
-        if (cancelled) return
-        setTrackDurations((prev) => ({
-          ...prev,
-          [track.src]: probe.duration || 0,
-        }))
-      }
-
-      const handleError = () => {
-        if (cancelled) return
-        setTrackDurations((prev) => ({
-          ...prev,
-          [track.src]: 0,
-        }))
-      }
-
-      probe.addEventListener('loadedmetadata', handleLoadedMetadata)
-      probe.addEventListener('error', handleError)
-
-      disposers.push(() => {
-        probe.removeEventListener('loadedmetadata', handleLoadedMetadata)
-        probe.removeEventListener('error', handleError)
-      })
-    })
-
-    return () => {
-      cancelled = true
-      disposers.forEach((dispose) => dispose())
-    }
-  }, [trackDurations, audioLibrary])
-
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-
-    const handleLoadedMetadata = () => {
-      setDuration(audio.duration || 0)
-    }
-
-    const handleTimeUpdate = () => {
-      setProgress(audio.currentTime || 0)
-    }
-
-    const handleEnded = () => {
-      if (audioLibrary.length === 0) return
-      setProgress(0)
-      setCurrentTrackIndex((index) => (index + 1) % audioLibrary.length)
-      setIsPlaying(true)
-    }
-
-    audio.addEventListener('loadedmetadata', handleLoadedMetadata)
-    audio.addEventListener('timeupdate', handleTimeUpdate)
-    audio.addEventListener('ended', handleEnded)
-
-    return () => {
-      audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
-      audio.removeEventListener('timeupdate', handleTimeUpdate)
-      audio.removeEventListener('ended', handleEnded)
-    }
-  }, [audioLibrary.length])
-
-  useEffect(() => {
-    return () => {
-      stopBeatAnimation()
-      if (audioContextRef.current) {
-        void audioContextRef.current.close()
-      }
-    }
-  }, [])
-
-  const togglePlay = () => {
-    const audio = audioRef.current
-    if (!audio || !currentTrack) return
-
-    if (isPlaying) {
-      audio.pause()
-      setIsPlaying(false)
-      setPlaybackError(null)
-      stopBeatAnimation()
-      setBeatLevels(Array.from({ length: 28 }, () => 0.08))
-      return
-    }
-
-    const visualizer = ensureVisualizer()
-    if (visualizer?.context?.state === 'suspended') {
-      void visualizer.context.resume()
-    }
-    startBeatAnimation()
-    void audio.play()
-      .then(() => {
-        setIsPlaying(true)
-        setPlaybackError(null)
-      })
-      .catch(() => {
-        setIsPlaying(false)
-        setPlaybackError('Playback blocked by browser policy. Click Start Player to begin audio.')
-      })
-  }
-
-  const startPlayer = () => {
-    setPlaybackError(null)
-    if (!isPlaying) {
-      togglePlay()
-    }
-  }
-
-  const goToPreviousTrack = () => {
-    if (audioLibrary.length === 0) return
-    setCurrentTrackIndex((index) => (index - 1 + audioLibrary.length) % audioLibrary.length)
-    setIsPlaying(true)
-  }
-
-  const goToNextTrack = () => {
-    if (audioLibrary.length === 0) return
-    setCurrentTrackIndex((index) => (index + 1) % audioLibrary.length)
-    setIsPlaying(true)
-  }
-
-  const handleSeek = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const audio = audioRef.current
-    if (!audio) return
-
-    const nextTime = Number(event.target.value)
-    audio.currentTime = nextTime
-    setProgress(nextTime)
-  }
-
-  return (
-    <div
-      style={{
-        backgroundColor: '#080808',
-        border: 'none',
-        boxShadow: 'none',
-        width: '100%',
-        maxWidth: '1150px',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-      className="rounded-none p-4"
-    >
-      <div style={{ position: 'relative', zIndex: 1 }}>
-      <div className="flex items-center justify-between gap-4 flex-wrap mb-5">
-        <h2 style={{ color: '#d4af37', textShadow: '0 0 15px rgba(212, 175, 55, 0.6)' }} className="text-xl font-bold flex items-center gap-2">
-          <Music2 size={24} /> AIG Music Player
-        </h2>
-        <div className="flex items-center gap-2 flex-wrap">
-          <div style={{ color: '#c0c0c0' }} className="text-xs flex items-center gap-2">
-            <Lock size={14} /> Locked playlist sourced only from mediafiles
-          </div>
-          <div className="flex items-center gap-1 rounded-full p-1" style={{ backgroundColor: 'rgba(26, 15, 21, 0.6)', border: '1px solid rgba(212, 175, 55, 0.2)' }}>
-            <button
-              onClick={() => setViewMode('player')}
-              style={{
-                backgroundColor: viewMode === 'player' ? '#d4af37' : 'transparent',
-                color: viewMode === 'player' ? '#1a0f15' : '#c0c0c0'
-              }}
-              className="px-3 py-1.5 rounded-full text-xs font-semibold transition"
-            >
-              Player
-            </button>
-            <button
-              onClick={() => setViewMode('playlist')}
-              style={{
-                backgroundColor: viewMode === 'playlist' ? '#d4af37' : 'transparent',
-                color: viewMode === 'playlist' ? '#1a0f15' : '#c0c0c0'
-              }}
-              className="px-3 py-1.5 rounded-full text-xs font-semibold transition"
-            >
-              Playlist
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <audio ref={audioRef} preload="metadata" />
-
-      {viewMode === 'player' ? (
-        <div style={{ position: 'relative', minHeight: 'auto', overflow: 'hidden' }}>
-          <div
-            style={{
-              backgroundColor: 'rgba(10, 10, 10, 0.08)',
-              border: 'none',
-              boxShadow: 'none',
-              width: '100%',
-              position: 'relative',
-              minHeight: 'auto',
-              overflow: 'hidden'
-            }}
-            className="rounded-lg p-0"
-          >
-          <div
-            style={{
-              height: '697px',
-              width: '85%',
-              backgroundImage: 'url("/images/aig-music-main-player.png")',
-              backgroundSize: 'contain',
-              backgroundPosition: 'top left',
-              backgroundRepeat: 'no-repeat',
-              filter: 'saturate(1.15) contrast(1.12)'
-            }}
-          />
-
-          <div
-            style={{
-              position: 'absolute',
-              left: '16px',
-              right: '16px',
-              bottom: '16px'
-            }}
-          >
-            <p style={{ color: playbackError ? '#fca5a5' : '#9ae6b4' }} className="text-xs font-semibold">
-              {playbackError ?? (isPlaying ? 'Playing now' : 'Ready to play')}
-            </p>
-
-            {!isPlaying && (
-              <button
-                onClick={startPlayer}
-                style={{
-                  backgroundColor: 'rgba(212, 175, 55, 0.22)',
-                  border: '1px solid rgba(212, 175, 55, 0.44)',
-                  color: '#f5f5dc'
-                }}
-                className="mt-2 px-3 py-1.5 rounded-md text-xs font-semibold hover:bg-[#d4af37]/30 transition"
-              >
-                Start Player
-              </button>
-            )}
-
-            <div className="mt-3 flex items-center gap-3">
-              <button
-                onClick={goToPreviousTrack}
-                style={{ backgroundColor: 'rgba(184, 184, 184, 0.12)', color: '#f5f5dc' }}
-                className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#b8b8b8]/20 transition"
-                aria-label="Previous track"
-              >
-                <SkipBack size={18} />
-              </button>
-              <button
-                onClick={togglePlay}
-                style={{ backgroundColor: '#d4af37', color: '#1a0f15' }}
-                className="w-12 h-12 rounded-full flex items-center justify-center hover:bg-[#e8d4a2] transition font-bold"
-                aria-label={isPlaying ? 'Pause track' : 'Play track'}
-              >
-                {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-              </button>
-              <button
-                onClick={goToNextTrack}
-                style={{ backgroundColor: 'rgba(184, 184, 184, 0.12)', color: '#f5f5dc' }}
-                className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#b8b8b8]/20 transition"
-                aria-label="Next track"
-              >
-                <SkipForward size={18} />
-              </button>
-            </div>
-
-            <div className="mt-3">
-              <div className="flex items-center justify-between text-xs mb-2" style={{ color: '#c0c0c0' }}>
-                <span>{formatPlayerTime(progress)}</span>
-                <span>{formatPlayerTime(duration)}</span>
-              </div>
-              <input
-                type="range"
-                min={0}
-                max={Math.max(duration, 0)}
-                value={Math.min(progress, duration || progress)}
-                onChange={handleSeek}
-                style={{ accentColor: '#d4af37' }}
-                className="w-full"
-              />
-            </div>
-
-            <div className="mt-3 flex items-center gap-3">
-              <button
-                onClick={() => setIsMuted((prev) => !prev)}
-                aria-label={isMuted ? 'Unmute player' : 'Mute player'}
-                style={{ backgroundColor: 'rgba(184, 184, 184, 0.12)', color: '#f5f5dc' }}
-                className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#b8b8b8]/20 transition"
-              >
-                {isMuted ? <VolumeX size={15} style={{ color: '#d4af37' }} /> : <Volume2 size={15} style={{ color: '#d4af37' }} />}
-              </button>
-              <input
-                type="range"
-                min={0}
-                max={1}
-                step={0.01}
-                value={volume}
-                onChange={(event) => setVolume(Number(event.target.value))}
-                style={{ accentColor: '#d4af37' }}
-                className="w-full"
-              />
-            </div>
-          </div>
-
-          </div>
-
-          <div
-            style={{
-              background: 'linear-gradient(160deg, rgba(10, 10, 10, 0.88) 0%, rgba(22, 20, 16, 0.86) 100%)',
-              border: '1px solid rgba(212, 175, 55, 0.22)',
-              boxShadow: '0 8px 20px rgba(0, 0, 0, 0.32)',
-              position: 'absolute',
-              top: '118px',
-              left: 'calc(120px + 5cm + 12ch - 12px)',
-              right: 'auto',
-              width: '32%',
-              maxWidth: '260px',
-              minWidth: '180px'
-            }}
-            className="rounded-lg p-4"
-          >
-            <div className="flex items-center justify-between gap-3 mb-4">
-              <h3 style={{ color: '#f5f5dc' }} className="text-sm font-semibold tracking-wide">AIG Music Library</h3>
-              <span style={{ color: '#8b8b8b' }} className="text-xs">Songs listed from your mediafiles folder</span>
-            </div>
-
-            <div className="mb-3">
-              <input
-                type="text"
-                value={songSearch}
-                onChange={(event) => setSongSearch(event.target.value)}
-                placeholder="Search music..."
-                style={{
-                  backgroundColor: 'rgba(12, 12, 12, 0.74)',
-                  border: '1px solid rgba(212, 175, 55, 0.32)',
-                  color: '#f5f5dc'
-                }}
-                className="w-full rounded-full px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#d4af37]/50"
-              />
-            </div>
-
-            <div style={{ borderColor: 'rgba(212, 175, 55, 0.22)' }} className="rounded-lg border overflow-hidden">
-              <div
-                style={{
-                  background: 'linear-gradient(90deg, rgba(212, 175, 55, 0.18) 0%, rgba(212, 175, 55, 0.04) 100%)',
-                  color: '#e7dcc0',
-                  display: 'grid',
-                  gridTemplateColumns: '44px minmax(0, 2fr) minmax(0, 1.3fr) minmax(0, 1.2fr) 62px',
-                  columnGap: '8px'
-                }}
-                className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em]"
-              >
-                <span>#</span>
-                <span>Title</span>
-                <span>Artist</span>
-                <span>Album</span>
-                <span className="text-right">Time</span>
-              </div>
-              <div
-                className="aig-music-scroll max-h-[352px] overflow-auto"
-                style={{ scrollbarWidth: 'thin', scrollbarColor: '#d4af37 rgba(30, 24, 14, 0.8)' }}
-              >
-                {filteredTracks.map((track, index) => (
-                  <button
-                    key={track.src}
-                    onClick={() => {
-                      setCurrentTrackIndex(track.index)
-                      setIsPlaying(true)
-                    }}
-                    style={{
-                      background: track.index === currentTrackIndex
-                        ? 'linear-gradient(90deg, rgba(212, 175, 55, 0.24) 0%, rgba(212, 175, 55, 0.06) 100%)'
-                        : 'linear-gradient(90deg, rgba(184, 184, 184, 0.03) 0%, rgba(184, 184, 184, 0.01) 100%)',
-                      borderBottom: '1px solid rgba(184, 184, 184, 0.12)',
-                      boxShadow: track.index === currentTrackIndex ? 'inset 0 0 14px rgba(212, 175, 55, 0.18)' : 'none'
-                    }}
-                    className="w-full text-left px-3 py-2 hover:bg-[#d4af37]/10 transition items-center"
-                    aria-label={`Play ${track.title} by ${track.artist}`}
-                  >
-                    <div
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: '44px minmax(0, 2fr) minmax(0, 1.3fr) minmax(0, 1.2fr) 62px',
-                        columnGap: '8px',
-                        alignItems: 'center'
-                      }}
-                    >
-                    <span style={{ color: '#8b8b8b' }} className="block text-sm tabular-nums">{String(index + 1).padStart(2, '0')}</span>
-                    <span style={{ color: '#f5f5dc' }} className="block text-sm font-semibold truncate">{track.title}</span>
-                    <span style={{ color: '#c0c0c0' }} className="block text-sm truncate">{track.artist}</span>
-                    <span style={{ color: '#b7b7b7' }} className="block text-sm truncate">{track.album}</span>
-                    <span style={{ color: track.index === currentTrackIndex ? '#f0c24d' : '#a0a0a0' }} className="block text-sm text-right tabular-nums">
-                      {formatPlayerTime(trackDurations[track.src] ?? 0)}
-                    </span>
-                    </div>
-                  </button>
-                ))}
-                {filteredTracks.length === 0 && (
-                  <div className="px-4 py-6 text-sm" style={{ color: '#9a9a9a' }}>
-                    No songs match your search.
-                  </div>
-                )}
-              </div>
-            </div>
-
-          </div>
-        </div>
-      ) : (
-        <div style={{ backgroundColor: 'rgba(26, 15, 21, 0.55)', border: '1px solid rgba(212, 175, 55, 0.25)' }} className="rounded-lg p-4">
-          <div className="flex items-center justify-between gap-3 mb-4">
-            <h3 style={{ color: '#f5f5dc' }} className="text-sm font-semibold tracking-wide">AIG Music Library</h3>
-            <span style={{ color: '#8b8b8b' }} className="text-xs">Select a song to play</span>
-          </div>
-
-          <div className="grid grid-cols-1 gap-2">
-            {audioLibrary.map((track, index) => (
-              <button
-                key={track.src}
-                onClick={() => {
-                  setCurrentTrackIndex(index)
-                  setIsPlaying(true)
-                  setViewMode('player')
-                }}
-                style={{
-                  backgroundColor: index === currentTrackIndex ? 'rgba(212, 175, 55, 0.16)' : 'rgba(184, 184, 184, 0.06)',
-                  borderColor: index === currentTrackIndex ? '#d4af37' : 'rgba(184, 184, 184, 0.18)'
-                }}
-                className="w-full text-left rounded-lg border px-4 py-4 hover:bg-[#d4af37]/10 transition"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <div style={{ color: '#f5f5dc' }} className="text-base font-semibold">{track.title}</div>
-                    <div style={{ color: '#c0c0c0' }} className="text-sm mt-1">{track.artist}</div>
-                    <div style={{ color: '#8b8b8b' }} className="text-xs mt-1">{track.album}</div>
-                  </div>
-                  <div className="text-right">
-                    <div style={{ color: index === currentTrackIndex ? '#d4af37' : '#8b8b8b' }} className="text-xs font-semibold uppercase tracking-[0.18em]">
-                      {index === currentTrackIndex ? 'Selected' : 'Select'}
-                    </div>
-                    <div style={{ color: '#8b8b8b' }} className="text-[11px] mt-1 tabular-nums">{formatPlayerTime(trackDurations[track.src] ?? 0)}</div>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-
-        </div>
-      )}
-
-      <style jsx>{`
-        .aig-music-scroll::-webkit-scrollbar {
-          width: 10px;
-        }
-
-        .aig-music-scroll::-webkit-scrollbar-track {
-          background: rgba(20, 16, 12, 0.8);
-        }
-
-        .aig-music-scroll::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #f0ca68 0%, #d4af37 100%);
-          border-radius: 999px;
-          border: 2px solid rgba(20, 16, 12, 0.8);
-        }
-      `}</style>
-      </div>
-    </div>
-  )
-}
-
-const formatPlayerTime = (seconds: number) => {
-  if (!Number.isFinite(seconds) || seconds <= 0) return '0:00'
-
-  const totalSeconds = Math.floor(seconds)
-  const minutes = Math.floor(totalSeconds / 60)
-  const remainingSeconds = totalSeconds % 60
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
+function parseInvestmentCapacity(value: number | string | null | undefined) {
+  if (value === null || value === undefined) return null
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null
+
+  const normalized = value.trim().toLowerCase()
+  if (normalized === 'unlimited') return null
+
+  const parsed = Number(normalized)
+  return Number.isFinite(parsed) ? parsed : null
 }
 
 // Interactive World Map Component
@@ -1388,9 +693,6 @@ export default function DashboardEnhancedPage() {
   const SELL_RATE = 5
   const [selectedPackage, setSelectedPackage] = useState('packagec')
   const [userName, setUserName] = useState('')
-  const [showUsernameForm, setShowUsernameForm] = useState(false)
-  const [nicknameInput, setNicknameInput] = useState('')
-  const [isLoadingUsername, setIsLoadingUsername] = useState(false)
   const [invitationCode, setInvitationCode] = useState('')
   const [copiedCode, setCopiedCode] = useState(false)
   const [cashBalance, setCashBalance] = useState(15000)
@@ -1415,6 +717,7 @@ export default function DashboardEnhancedPage() {
   const [selectedLanguage, setSelectedLanguage] = useState('en')
   const [showAccountMenu, setShowAccountMenu] = useState(false)
   const [showLanguageMenu, setShowLanguageMenu] = useState(false)
+  const [activeNavMenu, setActiveNavMenu] = useState<string | null>(null)
   const accountMenuRef = useRef<HTMLDivElement>(null)
   const languageMenuRef = useRef<HTMLDivElement>(null)
   
@@ -1509,13 +812,73 @@ export default function DashboardEnhancedPage() {
   ]
 
   const apps = [
-    { name: 'App Store', icon: '🛍️', url: '/toolkit' },
-    { name: 'Investment Hub', icon: '💰', url: '/ecosystem/investments' },
-    { name: 'Analytics', icon: '📊', url: '/ecosystem/analytics' },
-    { name: 'World Domination Market', icon: '🌍', url: '/ecosystem/wdm' },
-    { name: 'Toolkit', icon: '🧰', url: '/toolkit' },
-    { name: 'Profile', icon: '👤', url: '/profile' },
+    {
+      name: 'App Store',
+      url: '/toolkit',
+      children: [
+        { name: 'Toolkit Home', url: '/toolkit' },
+        { name: 'Packages', url: '/packages' },
+        { name: 'Join', url: '/join' },
+      ],
+    },
+    {
+      name: 'Investment Hub',
+      url: '/ecosystem/investments',
+      children: [
+        { name: 'Investments', url: '/ecosystem/investments' },
+        { name: 'Ecosystem', url: '/ecosystem' },
+      ],
+    },
+    {
+      name: 'Analytics',
+      url: '/ecosystem/analytics',
+      children: [
+        { name: 'Ecosystem Analytics', url: '/ecosystem/analytics' },
+        { name: 'Admin Analytics', url: '/admin/analytics' },
+      ],
+    },
+    {
+      name: 'World Domination Market',
+      url: '/ecosystem/wdm',
+      children: [
+        { name: 'WDM', url: '/ecosystem/wdm' },
+        { name: 'Ecosystem', url: '/ecosystem' },
+      ],
+    },
+    {
+      name: 'Toolkit',
+      url: '/toolkit',
+      children: [
+        { name: 'Toolkit Home', url: '/toolkit' },
+        { name: 'MoneyGames App', url: '/toolkit/app/aig-moneygames' },
+        { name: 'AIG Ask App', url: '/toolkit/app/aig-ask' },
+      ],
+    },
+    {
+      name: 'Music',
+      url: '/music',
+      children: [
+        { name: 'Music Page', url: '/music' },
+      ],
+    },
+    {
+      name: 'Games',
+      url: '/games',
+      children: [
+        { name: 'All Games', url: '/games' },
+        { name: 'Slots', url: '/games?tab=slots' },
+      ],
+    },
+    {
+      name: 'Profile',
+      url: '/profile',
+      children: [
+        { name: 'Profile', url: '/profile' },
+        { name: 'Missions', url: '/missions' },
+      ],
+    },
   ]
+  const accountLabel = userName && userName.trim().length > 0 ? userName : 'My Profile'
 
   // Close menus when clicking outside
   useEffect(() => {
@@ -1537,6 +900,8 @@ export default function DashboardEnhancedPage() {
     const savedName = localStorage.getItem('userName')
     const savedPackage = localStorage.getItem('userPackage')
     const savedCode = localStorage.getItem('userInvitationCode')
+    const savedLanguagePreference = getStoredLanguagePreference()
+    setSelectedLanguage(savedLanguagePreference.language)
 
     setUserEmail(email || '')
     
@@ -1605,11 +970,7 @@ export default function DashboardEnhancedPage() {
       if (savedGiftCerts) setGiftCerts(JSON.parse(savedGiftCerts))
     }
     
-    if (!savedName) {
-      setShowUsernameForm(true)
-    } else {
-      setUserName(savedName)
-    }
+    setUserName(savedName || '')
 
     if (!savedCode) {
       const newCode = Math.random().toString(36).substring(2, 10).toUpperCase()
@@ -1638,20 +999,6 @@ export default function DashboardEnhancedPage() {
         }),
       })
     }
-  }
-
-  const handleSaveNickname = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!nicknameInput.trim()) return
-
-    setIsLoadingUsername(true)
-    setTimeout(() => {
-      localStorage.setItem('userName', nicknameInput.trim())
-      setUserName(nicknameInput.trim())
-      setShowUsernameForm(false)
-      setNicknameInput('')
-      setIsLoadingUsername(false)
-    }, 500)
   }
 
   const handleCopyCode = () => {
@@ -1858,55 +1205,237 @@ export default function DashboardEnhancedPage() {
       className="w-full min-h-screen py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Nickname Selection Form */}
-        {showUsernameForm && (
-          <div
-            style={{
-              backgroundColor: 'rgba(61, 44, 53, 0.7)',
-              borderColor: '#b8b8b8'
-            }}
-            className="border rounded-lg p-8 mb-12 max-w-md mx-auto"
-          >
-            <h2 className="text-2xl font-bold mb-6" style={{ color: '#b8b8b8' }}>
-              Welcome! Let's Set Your Nickname
-            </h2>
-            <form onSubmit={handleSaveNickname}>
-              <div className="mb-4">
-                <label className="block text-sm mb-2" style={{ color: '#c0c0c0' }}>
-                  Choose a Nickname
-                </label>
-                <input
-                  type="text"
-                  value={nicknameInput}
-                  onChange={(e) => setNicknameInput(e.target.value)}
-                  placeholder="e.g., Mikko"
-                  style={{ backgroundColor: 'rgba(26, 15, 21, 0.8)' }}
-                  className="w-full px-4 py-3 border rounded-lg text-[#f0f0f0] placeholder-[#c0c0c0]/50 focus:outline-none focus:ring-2 focus:ring-[#b8b8b8]"
-                  maxLength={20}
-                  required
-                />
-                <p style={{ color: '#c0c0c0' }} className="text-xs mt-2">
-                  {nicknameInput.length}/20 characters
-                </p>
-              </div>
-              <button
-                type="submit"
-                disabled={isLoadingUsername || !nicknameInput.trim()}
-                style={{
-                  backgroundColor: '#b8b8b8',
-                  color: '#1a0f15'
-                }}
-                className="w-full py-3 rounded-lg font-semibold hover:bg-[#e8d4a2] transition disabled:opacity-50"
-              >
-                {isLoadingUsername ? 'Saving...' : 'Set Nickname & Continue'}
-              </button>
-            </form>
-          </div>
-        )}
-
         {/* Main Dashboard Content */}
-        {!showUsernameForm && (
-          <>
+        <>
+            {/* App Links - Golden Page-Wide Bar (moved to global layout menu) */}
+            {false && (
+            <div
+              style={{
+                position: 'sticky',
+                top: '0',
+                zIndex: 70,
+                width: '100%',
+                border: '1px solid rgba(122, 86, 28, 0.55)',
+                borderRadius: '0',
+                background: 'linear-gradient(90deg, rgba(197, 143, 45, 0.86) 0%, rgba(232, 180, 72, 0.86) 40%, rgba(241, 202, 106, 0.86) 52%, rgba(225, 173, 63, 0.86) 68%, rgba(184, 129, 36, 0.86) 100%)',
+                boxShadow: '0 10px 26px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25)',
+                backdropFilter: 'blur(4px)',
+                padding: '10px 12px',
+                marginBottom: '16px',
+              }}
+              className="w-full"
+            >
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '180px minmax(0, 1fr) 250px',
+                  alignItems: 'center',
+                  columnGap: '12px',
+                }}
+              >
+                <div style={{ width: '180px', flexShrink: 0 }}>
+                  <a href="/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+                    <img
+                      src="/logos/aig-logo.jpeg"
+                      alt="AIG"
+                      style={{ height: '34px', width: 'auto', border: '1px solid rgba(27, 18, 6, 0.25)' }}
+                    />
+                  </a>
+                </div>
+
+                <div className="flex-1 overflow-x-auto" style={{ whiteSpace: 'nowrap' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '12px',
+                      flexWrap: 'nowrap',
+                      minWidth: 'max-content',
+                      margin: '0 auto',
+                    }}
+                  >
+                    {apps.map((app) => (
+                      <div
+                        key={app.name}
+                        className="relative"
+                        style={{ flexShrink: 0 }}
+                        onMouseEnter={() => setActiveNavMenu(app.name)}
+                        onMouseLeave={() => setActiveNavMenu((current) => (current === app.name ? null : current))}
+                      >
+                        <a
+                          href={app.url}
+                          style={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.18)',
+                            borderColor: 'rgba(27, 18, 6, 0.22)',
+                            borderRadius: '0',
+                            color: '#1b1206',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                          }}
+                          className="px-4 py-2 border hover:bg-white/40 transition text-sm font-semibold whitespace-nowrap"
+                        >
+                          {app.name}
+                        </a>
+
+                        {app.children && app.children.length > 0 && activeNavMenu === app.name && (
+                          <div
+                            style={{
+                              position: 'absolute',
+                              left: '0',
+                              top: 'calc(100% + 6px)',
+                              backgroundColor: 'rgba(243, 200, 101, 0.98)',
+                              border: '1px solid rgba(27, 18, 6, 0.22)',
+                              minWidth: '220px',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'stretch',
+                              whiteSpace: 'normal',
+                            }}
+                            className="shadow-xl z-50"
+                          >
+                            {app.children.map((subItem) => (
+                              <a
+                                key={`${app.name}-${subItem.name}`}
+                                href={subItem.url}
+                                style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }}
+                                className="block px-3 py-2 text-sm hover:bg-white/35 transition last:border-b-0"
+                              >
+                                {subItem.name}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    width: '250px',
+                    flexShrink: 0,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    gap: '8px',
+                    flexWrap: 'nowrap',
+                  }}
+                >
+                  <div ref={languageMenuRef} className="relative">
+                    <button
+                      onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                      style={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.42)',
+                        border: '1px solid rgba(27, 18, 6, 0.45)',
+                        color: '#120b02',
+                        boxShadow: '0 1px 0 rgba(255,255,255,0.55), 0 3px 10px rgba(27, 18, 6, 0.2)',
+                        minHeight: '42px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 transition text-sm font-extrabold whitespace-nowrap"
+                    >
+                      {languages.find((language) => language.code === selectedLanguage)?.flag} {selectedLanguage.toUpperCase()}
+                      <ChevronDown size={12} />
+                    </button>
+
+                    {showLanguageMenu && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          right: '0',
+                          top: 'calc(100% + 6px)',
+                          backgroundColor: 'rgba(243, 200, 101, 0.98)',
+                          border: '1px solid rgba(27, 18, 6, 0.22)',
+                        }}
+                        className="min-w-max shadow-xl z-50"
+                      >
+                        {languages.map((language) => (
+                          <button
+                            key={language.code}
+                            onClick={() => {
+                              setSelectedLanguage(language.code)
+                              setStoredLanguagePreference(language.code as SupportedLanguage, 'manual')
+                              window.dispatchEvent(new CustomEvent('aig-language-changed', { detail: { language: language.code, mode: 'manual' } }))
+                              setShowLanguageMenu(false)
+                            }}
+                            style={{
+                              backgroundColor: selectedLanguage === language.code ? 'rgba(255,255,255,0.28)' : 'transparent',
+                              color: '#1b1206',
+                              borderBottom: '1px solid rgba(27, 18, 6, 0.12)',
+                            }}
+                            className="w-full text-left px-3 py-2 text-xs hover:bg-white/35 transition last:border-b-0"
+                          >
+                            {language.flag} {language.name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div ref={accountMenuRef} className="relative">
+                    <button
+                      onClick={() => setShowAccountMenu(!showAccountMenu)}
+                      style={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.42)',
+                        border: '1px solid rgba(27, 18, 6, 0.45)',
+                        color: '#120b02',
+                        boxShadow: '0 1px 0 rgba(255,255,255,0.55), 0 3px 10px rgba(27, 18, 6, 0.2)',
+                        minHeight: '42px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 transition text-sm font-extrabold whitespace-nowrap"
+                    >
+                      {accountLabel}
+                      <ChevronDown size={12} />
+                    </button>
+
+                    {showAccountMenu && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          right: '0',
+                          top: 'calc(100% + 6px)',
+                          backgroundColor: 'rgba(243, 200, 101, 0.98)',
+                          border: '1px solid rgba(27, 18, 6, 0.22)',
+                          minWidth: '220px',
+                        }}
+                        className="shadow-xl z-50"
+                      >
+                        <div style={{ borderBottom: '1px solid rgba(27, 18, 6, 0.18)', padding: '10px 12px' }}>
+                          <p style={{ color: '#3b2a0f', fontSize: '11px', fontWeight: 700 }}>USER INFO</p>
+                          <p style={{ color: '#1b1206', fontSize: '12px', fontWeight: 700, marginTop: '2px' }}>{accountLabel}</p>
+                          <p style={{ color: '#3b2a0f', fontSize: '11px' }}>{userEmail || 'No email'}</p>
+                        </div>
+
+                        <a href="/profile" style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }} className="block px-3 py-2 text-sm hover:bg-white/35 transition">All User Info</a>
+                        <a href="/profile" style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }} className="block px-3 py-2 text-sm hover:bg-white/35 transition">My Profile</a>
+                        <a href="#" style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }} className="block px-3 py-2 text-sm hover:bg-white/35 transition">Wallet</a>
+                        <a href="#" style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }} className="block px-3 py-2 text-sm hover:bg-white/35 transition">Account History</a>
+                        <a href="#" style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }} className="block px-3 py-2 text-sm hover:bg-white/35 transition">Gift Cards</a>
+                        <a href="#" style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }} className="block px-3 py-2 text-sm hover:bg-white/35 transition">Support</a>
+                        <a href="/ecosystem/wdm" style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }} className="block px-3 py-2 text-sm hover:bg-white/35 transition">WDM</a>
+                        <a href="#" style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }} className="block px-3 py-2 text-sm hover:bg-white/35 transition">My Network</a>
+                        <a href="#" style={{ color: '#1b1206', borderBottom: '1px solid rgba(27, 18, 6, 0.12)' }} className="block px-3 py-2 text-sm hover:bg-white/35 transition">Agreements</a>
+                        <button
+                          onClick={handleSignOut}
+                          style={{ color: '#1b1206' }}
+                          className="w-full text-left px-3 py-2 text-sm hover:bg-white/35 transition"
+                        >
+                          Log Out
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            )}
+
             {/* SIMPLE HERO - Clean TribeWin Style with Logo and Welcome */}
             <div className="mb-12 flex items-center gap-6">
               {/* Welcome Text */}
@@ -1919,171 +1448,6 @@ export default function DashboardEnhancedPage() {
                 </p>
               </div>
             </div>
-
-            {/* Navigation Bar - TribeWin Style Header */}
-            <div style={{ marginBottom: '20px' }}>
-              <div className="flex justify-between items-center mb-6 pb-4" style={{ borderBottom: `1px solid rgba(184, 184, 184, 0.2)` }}>
-                <div className="flex items-center gap-4">
-                  <div ref={languageMenuRef} className="relative">
-                    <button
-                      onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                      style={{
-                        backgroundColor: 'rgba(184, 184, 184, 0.1)',
-                        borderColor: '#b8b8b8'
-                      }}
-                      className="flex items-center gap-2 px-3 py-2 border rounded-lg hover:bg-[#b8b8b8]/20 transition text-sm font-medium"
-                    >
-                      <Globe size={16} />
-                      {languages.find(l => l.code === selectedLanguage)?.flag} {selectedLanguage.toUpperCase()}
-                      <ChevronDown size={14} />
-                    </button>
-
-                    {showLanguageMenu && (
-                      <div
-                        style={{
-                          backgroundColor: 'rgba(26, 15, 21, 0.95)',
-                          borderColor: '#b8b8b8'
-                        }}
-                        className="absolute top-full mt-2 right-0 border rounded-lg shadow-2xl min-w-max z-50"
-                      >
-                        {languages.map((lang) => (
-                          <button
-                            key={lang.code}
-                            onClick={() => {
-                              setSelectedLanguage(lang.code)
-                              setShowLanguageMenu(false)
-                            }}
-                            style={{
-                              backgroundColor: selectedLanguage === lang.code ? 'rgba(184, 184, 184, 0.15)' : 'transparent'
-                            }}
-                            className="w-full text-left px-4 py-2 flex items-center gap-2 hover:bg-[#b8b8b8]/10 transition border-b border-[#b8b8b8]/10 last:border-b-0 text-sm"
-                          >
-                            <span>{lang.flag}</span>
-                            <span style={{ color: '#c0c0c0' }}>{lang.name}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <div ref={accountMenuRef} className="relative">
-                    <button
-                      onClick={() => setShowAccountMenu(!showAccountMenu)}
-                      style={{
-                        backgroundColor: 'rgba(184, 184, 184, 0.1)',
-                        borderColor: '#b8b8b8',
-                        color: '#b8b8b8'
-                      }}
-                      className="flex items-center gap-2 px-3 py-2 border rounded-lg hover:bg-[#b8b8b8]/20 transition text-sm font-medium"
-                    >
-                      <User size={16} />
-                      {userName}
-                      <ChevronDown size={14} />
-                    </button>
-
-                    {showAccountMenu && (
-                      <div
-                        style={{
-                          backgroundColor: 'rgba(26, 15, 21, 0.95)',
-                          borderColor: '#b8b8b8'
-                        }}
-                        className="absolute top-full mt-2 right-0 border rounded-lg shadow-2xl min-w-56 z-50"
-                      >
-                        <div style={{ borderBottomColor: '#b8b8b8' }} className="border-b px-4 py-3">
-                          <p style={{ color: '#b8b8b8' }} className="text-xs font-semibold">ACCOUNT</p>
-                          <p style={{ color: '#c0c0c0' }} className="text-sm mt-1">{userName}</p>
-                        </div>
-
-                        <a href="/profile" style={{ borderBottomColor: '#b8b8b8/10' }} className="flex items-center gap-3 px-4 py-3 hover:bg-[#b8b8b8]/10 transition border-b text-sm">
-                          <User size={16} style={{ color: '#2563eb' }} />
-                          <span style={{ color: '#c0c0c0' }}>Profile</span>
-                        </a>
-
-                        <a href="#" style={{ borderBottomColor: '#b8b8b8/10' }} className="flex items-center gap-3 px-4 py-3 hover:bg-[#b8b8b8]/10 transition border-b text-sm">
-                          <Wallet size={16} style={{ color: '#6b7280' }} />
-                          <span style={{ color: '#c0c0c0' }}>Wallets</span>
-                        </a>
-
-                        <a href="#" style={{ borderBottomColor: '#b8b8b8/10' }} className="flex items-center gap-3 px-4 py-3 hover:bg-[#b8b8b8]/10 transition border-b text-sm">
-                          <History size={16} style={{ color: '#9ca3af' }} />
-                          <span style={{ color: '#c0c0c0' }}>Account History</span>
-                        </a>
-
-                        <a href="#" style={{ borderBottomColor: '#b8b8b8/10' }} className="flex items-center gap-3 px-4 py-3 hover:bg-[#b8b8b8]/10 transition border-b text-sm">
-                          <Gift size={16} style={{ color: '#707070' }} />
-                          <span style={{ color: '#c0c0c0' }}>Private Gift Cards</span>
-                        </a>
-
-                        <a href="#" style={{ borderBottomColor: '#b8b8b8/10' }} className="flex items-center gap-3 px-4 py-3 hover:bg-[#b8b8b8]/10 transition border-b text-sm">
-                          <Headphones size={16} style={{ color: '#ef4444' }} />
-                          <span style={{ color: '#c0c0c0' }}>Support</span>
-                        </a>
-
-                        <a href="#" style={{ borderBottomColor: '#b8b8b8/10' }} className="flex items-center gap-3 px-4 py-3 hover:bg-[#b8b8b8]/10 transition border-b text-sm">
-                          <MessageCircle size={16} style={{ color: '#06b6d4' }} />
-                          <span style={{ color: '#c0c0c0' }}>Ask Diana</span>
-                        </a>
-
-                        <a href="/ecosystem/wdm" style={{ borderBottomColor: '#b8b8b8/10' }} className="flex items-center gap-3 px-4 py-3 hover:bg-[#b8b8b8]/10 transition border-b text-sm">
-                          <Map size={16} style={{ color: '#b8b8b8' }} />
-                          <span style={{ color: '#c0c0c0' }}>World Domination Market</span>
-                        </a>
-
-                        <a href="#" style={{ borderBottomColor: '#b8b8b8/10' }} className="flex items-center gap-3 px-4 py-3 hover:bg-[#b8b8b8]/10 transition border-b text-sm">
-                          <Users size={16} style={{ color: '#2563eb' }} />
-                          <span style={{ color: '#c0c0c0' }}>My Network</span>
-                        </a>
-
-                        <button
-                          onClick={handleSignOut}
-                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#b8b8b8]/10 transition text-sm text-left"
-                        >
-                          <LogOut size={16} style={{ color: '#ef4444' }} />
-                          <span style={{ color: '#c0c0c0' }}>Log Out</span>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* App Links */}
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {apps.map((app) => (
-                  <a
-                    key={app.name}
-                    href={app.url}
-                    style={{
-                      backgroundColor: 'rgba(184, 184, 184, 0.08)',
-                      borderColor: '#b8b8b8'
-                    }}
-                    className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-[#b8b8b8]/20 transition text-sm font-medium whitespace-nowrap"
-                  >
-                    <span>{app.icon}</span>
-                    <span style={{ color: '#c0c0c0' }}>{app.name}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* MUSIC PLAYER SECTION */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-                position: 'relative',
-                zIndex: 80,
-                paddingTop: '20cm',
-                marginBottom: '-0.5cm'
-              }}
-              className="gap-4"
-            >
-              <DashboardMusicPlayer />
-            </div>
-
             {/* WALLET SECTION - Cash + AIG Cash Exchange */}
             <div 
               style={{
@@ -3383,8 +2747,7 @@ export default function DashboardEnhancedPage() {
                 />
               </button>
             </div>
-          </>
-        )}
+        </>
       </div>
     </div>
   )

@@ -10,17 +10,6 @@ exports.id = "vendor-chunks/maplibre-gl@5.24.0";
 exports.ids = ["vendor-chunks/maplibre-gl@5.24.0"];
 exports.modules = {
 
-/***/ "(ssr)/../../node_modules/.pnpm/maplibre-gl@5.24.0/node_modules/maplibre-gl/dist/maplibre-gl.css":
-/*!*************************************************************************************************!*\
-  !*** ../../node_modules/.pnpm/maplibre-gl@5.24.0/node_modules/maplibre-gl/dist/maplibre-gl.css ***!
-  \*************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (\"7e27dfc94a21\");\nif (false) {}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi4vLi4vbm9kZV9tb2R1bGVzLy5wbnBtL21hcGxpYnJlLWdsQDUuMjQuMC9ub2RlX21vZHVsZXMvbWFwbGlicmUtZ2wvZGlzdC9tYXBsaWJyZS1nbC5jc3MiLCJtYXBwaW5ncyI6Ijs7OztBQUFBLGlFQUFlLGNBQWM7QUFDN0IsSUFBSSxLQUFVLEVBQUUsRUFBdUIiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly93ZWIvLi4vLi4vbm9kZV9tb2R1bGVzLy5wbnBtL21hcGxpYnJlLWdsQDUuMjQuMC9ub2RlX21vZHVsZXMvbWFwbGlicmUtZ2wvZGlzdC9tYXBsaWJyZS1nbC5jc3M/ZjVkMiJdLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZGVmYXVsdCBcIjdlMjdkZmM5NGEyMVwiXG5pZiAobW9kdWxlLmhvdCkgeyBtb2R1bGUuaG90LmFjY2VwdCgpIH1cbiJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(ssr)/../../node_modules/.pnpm/maplibre-gl@5.24.0/node_modules/maplibre-gl/dist/maplibre-gl.css\n");
-
-/***/ }),
-
 /***/ "(ssr)/../../node_modules/.pnpm/maplibre-gl@5.24.0/node_modules/maplibre-gl/dist/maplibre-gl.js":
 /*!************************************************************************************************!*\
   !*** ../../node_modules/.pnpm/maplibre-gl@5.24.0/node_modules/maplibre-gl/dist/maplibre-gl.js ***!

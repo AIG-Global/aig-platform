@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pwsh -File start.ps1",
+    "dev": "powershell -ExecutionPolicy Bypass -File start.ps1",
     "dev:web": "turbo run dev --filter=web",
     "dev:api": "cd apps/api && npm run dev",
     "dev:api:start": "node apps/api/dist/main.js",
