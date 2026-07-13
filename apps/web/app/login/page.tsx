@@ -106,6 +106,21 @@ export default function LoginPage() {
       localStorage.setItem('userId', user.id)
       localStorage.setItem('userEmail', user.email)
       localStorage.setItem('userDisplayName', user.displayName || email.split('@')[0])
+      localStorage.setItem('userName', user.displayName || email.split('@')[0])
+      if (!localStorage.getItem('userPackage')) {
+        localStorage.setItem('userPackage', 'packagea')
+      }
+
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user.email,
+          packageId: localStorage.getItem('userPackage') || 'packagea',
+          userName: user.displayName || email.split('@')[0],
+          userPassword: localStorage.getItem('userPassword') || undefined,
+        }),
+      })
 
       // First-time users go to onboarding, returning users go to home
       const isNewUser = !user.lastLoginAt || new Date(user.lastLoginAt).getTime() === new Date(user.createdAt).getTime()

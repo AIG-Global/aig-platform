@@ -41,21 +41,27 @@ export default function DianaWidget() {
   const [isMuted, setIsMuted] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [isAuthPage, setIsAuthPage] = useState(false)
+  const [isHiddenPage, setIsHiddenPage] = useState(false)
 
-  // Use effect to check if we're on an auth page (after initial render)
+  // Use effect to check if we're on a page where the widget should be hidden
   useEffect(() => {
-    // Check immediately on mount and whenever location changes
-    const checkAuthPage = () => {
+    const checkHiddenPage = () => {
       const pathname = window.location.pathname
-      const isAuth = pathname === '/auth' || pathname.startsWith('/auth?')
-      setIsAuthPage(isAuth)
+      const shouldHide =
+        pathname === '/auth' ||
+        pathname.startsWith('/auth?') ||
+        pathname === '/join' ||
+        pathname.startsWith('/join?') ||
+        pathname === '/ecosystem/investments' ||
+        pathname.startsWith('/ecosystem/investments?') ||
+        pathname === '/toolkit/app' ||
+        pathname.startsWith('/toolkit/app/')
+      setIsHiddenPage(shouldHide)
     }
     
-    checkAuthPage()
+    checkHiddenPage()
     
-    // Also listen for route changes
-    const handlePopState = () => checkAuthPage()
+    const handlePopState = () => checkHiddenPage()
     window.addEventListener('popstate', handlePopState)
     
     return () => window.removeEventListener('popstate', handlePopState)
@@ -86,8 +92,8 @@ export default function DianaWidget() {
     setTimeout(() => {
       const dianaResponses: { [key: string]: string } = {
         'hi': "Hello! I'm here to help you learn about AIGINVEST ecosystem. What would you like to know?",
-        'pricing': "Check out our membership tiers: Package A (Free), Package B (€399/mo), Package C (€699/mo), and Enterprise (€2,999/mo). Visit /packages to see the full Wealth Escalation Pathway!",
-        'package': "We have 4 membership packages: Free entry, Starter (€399/mo), Professional (€699/mo), and Enterprise (€2,999/mo). Each tier unlocks more earning potential. Visit /packages for details!",
+        'pricing': "Current business packs are: Remittance (€0), Starter Business Pack (€399/mo), Start-Up Business Pack (€699/mo), Premium Business Pack (€1,099/mo), and Professional Business Pack (€2,999/mo). Visit /packages for full details.",
+        'package': "We currently offer 5 package levels: Remittance, Starter Business Pack, Start-Up Business Pack, Premium Business Pack, and Professional Business Pack. Visit /packages to compare caps and included services.",
         'diana': "I'm Diana, your AI companion. I can help with the AIG ecosystem, answer questions, and guide you through features.",
         'affiliate': "Our affiliate program offers 26% commission on Level 1, with up to 10 levels of commissions. Professional tier members get unlimited earning potential!",
         'earn': "You can earn through affiliate commissions, marketplace sales, investments, and more. All earnings get 80% EUR Cash + 20% AIG$ tokens.",
@@ -123,8 +129,8 @@ export default function DianaWidget() {
     }, 500)
   }
 
-  // Don't render on auth pages
-  if (isAuthPage) {
+  // Don't render on pages where the widget would obstruct the main experience
+  if (isHiddenPage) {
     return null
   }
 
@@ -134,7 +140,8 @@ export default function DianaWidget() {
       bottom: '1.5rem',
       right: '1.5rem',
       zIndex: 50,
-      pointerEvents: 'auto'
+      pointerEvents: 'auto',
+      backgroundColor: 'transparent'
     }}>
       {isOpen ? (
         <div 
@@ -399,13 +406,16 @@ export default function DianaWidget() {
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              transition: 'transform 0.2s, opacity 0.2s'
+              transition: 'transform 0.2s, opacity 0.2s',
+              filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.opacity = '0.8'
+              e.currentTarget.style.transform = 'scale(1.05)'
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.opacity = '1'
+              e.currentTarget.style.transform = 'scale(1)'
             }}
             title="Chat with Diana"
           >
@@ -415,7 +425,8 @@ export default function DianaWidget() {
               style={{
                 width: '10rem',
                 height: 'auto',
-                mixBlendMode: 'multiply'
+                filter: 'drop-shadow(0 2px 8px rgba(212, 175, 55, 0.4))',
+                opacity: 0.95
               }}
             />
           </button>

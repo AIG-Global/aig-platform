@@ -7,6 +7,7 @@ import { dirname, resolve } from 'path'
 import { AuthModule } from './auth/auth.module.js'
 import { ComplianceModule } from './compliance/compliance.module.js'
 import { LocalizationModule } from './localization/localization.module.js'
+import { BackofficeModule } from './backoffice/backoffice.module.js'
 // Temporarily disabled modules with schema mismatches - to be fixed in next session
 // import { ChatModule } from './chat/chat.module.js'
 // import { ProjectModule } from './projects/project.module.js'
@@ -67,6 +68,7 @@ class AppController {
     AuthModule,
     ComplianceModule,
     LocalizationModule,
+    BackofficeModule,
     IdentityModule,
     // Temporarily disabled modules pending schema alignment
     // ChatModule, ProjectModule, TaskModule, WorkspaceModule, ActivityModule,

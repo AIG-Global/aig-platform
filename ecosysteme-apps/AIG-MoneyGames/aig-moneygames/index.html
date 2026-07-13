@@ -16,6 +16,31 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; }
+.casino-ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(1200px 700px at 8% 8%, rgba(232,163,61,0.14), transparent 55%),
+    radial-gradient(900px 620px at 92% 12%, rgba(95,168,211,0.12), transparent 60%),
+    radial-gradient(1000px 700px at 50% 100%, rgba(155,140,224,0.1), transparent 65%),
+    linear-gradient(180deg, rgba(7,9,13,0.82) 0%, rgba(10,13,18,0.88) 100%),
+    url('assets/moneygames-bg.jpg') center center / cover no-repeat;
+}
+.casino-stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.22;
+  background-image:
+    radial-gradient(circle at 20% 30%, #ffffff 0.8px, transparent 1px),
+    radial-gradient(circle at 80% 20%, #ffffff 0.8px, transparent 1px),
+    radial-gradient(circle at 40% 70%, #ffffff 0.8px, transparent 1px),
+    radial-gradient(circle at 65% 55%, #ffffff 0.8px, transparent 1px);
+  background-size: 260px 260px;
+}
 .mono { font-family: var(--font-mono); }
 a { color: var(--blue); text-decoration: none; }
 input, select { width: 100%; background: var(--panel-raised); border: 1px solid var(--line); color: var(--text); font-family: var(--font-sans); font-size: 13.5px; padding: 9px 12px; border-radius: 5px; }
@@ -30,8 +55,29 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 .btn-block { width: 100%; }
 .btn-sm { font-size: 12px; padding: 7px 14px; }
 
-.shell { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
-.topbar { border-bottom: 1px solid var(--line); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: rgba(10,13,18,0.96); backdrop-filter: blur(6px); z-index: 50; flex-wrap: wrap; gap: 10px; }
+.shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+  position: relative;
+  z-index: 2;
+  perspective: 1400px;
+}
+.topbar {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: rgba(10,13,18,0.96);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+  flex-wrap: wrap;
+  gap: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.38), inset 0 -1px 0 rgba(232,163,61,0.16);
+}
 .brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 15px; letter-spacing: 0.3px; }
 .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
 .topbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -55,20 +101,176 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 .error-text { color: var(--red-bright); font-size: 12px; margin-top: -6px; margin-bottom: 12px; display: none; }
 .error-text.show { display: block; }
 
-.game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin: 16px 0; }
-.game-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; cursor: pointer; text-align: center; }
-.game-card:hover { border-color: var(--amber-dim); }
+.game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin: 16px 0; }
+.game-card {
+  background: linear-gradient(165deg, rgba(28,33,41,0.96) 0%, rgba(18,22,29,0.98) 100%);
+  border: 1px solid rgba(232,163,61,0.2);
+  border-radius: 14px;
+  padding: 20px;
+  cursor: pointer;
+  text-align: center;
+  transform-style: preserve-3d;
+  transform: rotateX(7deg) translateZ(0);
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  box-shadow: 0 14px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.game-card:hover {
+  border-color: rgba(232,163,61,0.56);
+  transform: rotateX(0deg) translateY(-4px) translateZ(14px);
+  box-shadow: 0 20px 34px rgba(0,0,0,0.55), 0 0 0 1px rgba(232,163,61,0.2) inset, 0 0 22px rgba(232,163,61,0.22);
+}
 .game-card .icon { font-size: 36px; margin-bottom: 8px; }
 .game-card .title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
 .game-card .sub { font-size: 11.5px; color: var(--text-faint); }
 
-.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+.catalog-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.catalog-chip {
+  border: 1px solid var(--line);
+  background: var(--panel-raised);
+  color: var(--text-dim);
+  border-radius: 20px;
+  padding: 7px 12px;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+.catalog-chip.active { border-color: var(--amber); color: var(--amber); }
+.catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+.catalog-card {
+  background: linear-gradient(165deg, rgba(28,33,41,0.96) 0%, rgba(18,22,29,0.98) 100%);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.catalog-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.catalog-icon { font-size: 19px; }
+.catalog-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 2px 7px;
+}
+.catalog-title { font-size: 12.5px; font-weight: 700; }
+.catalog-sub { font-size: 11px; color: var(--text-faint); min-height: 28px; }
+.catalog-play {
+  border: 1px solid var(--amber);
+  background: rgba(232,163,61,0.14);
+  color: var(--amber);
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.other-games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; margin-bottom: 12px; }
+.other-game-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-raised);
+  padding: 8px;
+  text-align: left;
+  cursor: pointer;
+}
+.other-game-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  margin-bottom: 6px;
+  background: #0b0f16;
+}
+.other-game-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.other-game-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.other-game-btn {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #0f172a;
+  color: var(--text-dim);
+}
+.other-game-btn.primary { border-color: var(--amber); color: var(--amber); background: rgba(232,163,61,0.12); }
+.other-games-analytics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 8px;
+  margin: 0 0 10px;
+}
+.other-games-analytics-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 8px;
+  text-align: left;
+}
+.other-games-analytics-title {
+  font-size: 11px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+.other-games-analytics-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+.other-games-analytics-list li {
+  margin: 2px 0;
+}
+.demo-stage { text-align: center; }
+.demo-stage-icon { font-size: 58px; margin: 10px 0; }
+.demo-stage-title { font-size: 20px; font-weight: 800; }
+.demo-stage-note { color: var(--text-dim); margin: 6px auto 14px; max-width: 620px; }
+.demo-round-box {
+  margin: 14px auto;
+  max-width: 620px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+  background: var(--panel-raised);
+}
+
+.panel {
+  background: linear-gradient(160deg, rgba(18,22,29,0.96) 0%, rgba(14,18,24,0.98) 100%);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.04);
+}
 .section { margin: 24px 0; }
 .section-title { font-size: 12.5px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
 
 /* Slots */
 .slots-machine { display: flex; justify-content: center; gap: 10px; margin: 24px 0; }
-.reel { width: 90px; height: 90px; background: var(--panel-raised); border: 2px solid var(--line); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 44px; }
+.reel {
+  width: 98px;
+  height: 98px;
+  background: radial-gradient(circle at 36% 30%, #2b3340 0%, #141921 72%);
+  border: 2px solid #323b49;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  box-shadow: inset 0 8px 14px rgba(255,255,255,0.06), inset 0 -10px 14px rgba(0,0,0,0.45), 0 14px 18px rgba(0,0,0,0.45);
+  transform-style: preserve-3d;
+  transform: rotateX(16deg);
+}
 .reel.spinning { animation: reelSpin 0.15s linear infinite; }
 @keyframes reelSpin { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
 .slots-result { text-align: center; font-size: 15px; font-weight: 700; min-height: 24px; margin: 10px 0; }
@@ -84,7 +286,20 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 .bj-table { text-align: center; }
 .bj-hand-label { font-size: 11px; color: var(--text-faint); text-transform: uppercase; margin-bottom: 8px; }
 .bj-cards { display: flex; justify-content: center; gap: 6px; margin-bottom: 8px; min-height: 70px; flex-wrap: wrap; }
-.bj-card { width: 46px; height: 64px; background: #fff; color: #1a1a1a; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+.bj-card {
+  width: 50px;
+  height: 70px;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f3f8 100%);
+  color: #1a1a1a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 10px 14px rgba(0,0,0,0.42);
+  transform: translateZ(10px) rotateX(8deg);
+}
 .bj-card.red { color: #c0392b; }
 .bj-card.hidden { background: var(--amber-dim); color: transparent; }
 .bj-total { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 20px; }
@@ -101,7 +316,50 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 .roulette-outside-bets button { font-size: 11.5px; padding: 8px 12px; border-radius: 5px; border: 1px solid var(--line); background: var(--panel-raised); color: var(--text); cursor: pointer; }
 .roulette-outside-bets button.selected { border-color: var(--amber); color: var(--amber); }
 .roulette-result { text-align: center; margin: 16px 0; }
-.roulette-ball-display { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; font-size: 20px; font-weight: 800; color: #fff; }
+.roulette-ball-display {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: inset -10px -10px 14px rgba(0,0,0,0.28), inset 10px 10px 14px rgba(255,255,255,0.12), 0 12px 18px rgba(0,0,0,0.45);
+  animation: roulettePulse 0.8s ease;
+}
+@keyframes roulettePulse {
+  0% { transform: scale(0.86) rotate(-14deg); opacity: 0.65; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Baccarat + Keno */
+.mini-note { font-size: 11.5px; color: var(--text-faint); text-align: center; margin-top: 8px; }
+.baccarat-row { display: flex; justify-content: center; gap: 14px; margin: 14px 0; flex-wrap: wrap; }
+.baccarat-seat {
+  min-width: 220px;
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+}
+.baccarat-seat h4 { margin: 0 0 10px; font-size: 12px; color: var(--text-dim); text-transform: uppercase; }
+.baccarat-cards { display: flex; gap: 6px; flex-wrap: wrap; min-height: 36px; }
+.baccarat-totals { text-align: center; font-size: 12px; color: var(--text-dim); margin-top: 8px; }
+.keno-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin: 10px 0 14px; }
+.keno-ball {
+  border: 1px solid var(--line);
+  background: var(--panel-raised);
+  color: var(--text-dim);
+  border-radius: 6px;
+  height: 34px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.keno-ball.selected { border-color: var(--amber); color: var(--amber); }
+.keno-ball.hit { border-color: var(--green); color: var(--green); }
 
 /* Leaderboard */
 .lb-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
@@ -121,16 +379,20 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 @media (max-width: 500px) {
   .roulette-grid { grid-template-columns: repeat(4, 1fr); }
   .reel { width: 70px; height: 70px; font-size: 34px; }
+  .keno-grid { grid-template-columns: repeat(5, 1fr); }
+  .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+  .other-games-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
 <body>
 
+<div class="casino-ambient"></div>
+<div class="casino-stars"></div>
+
 <div id="authShell" class="auth-shell">
   <div class="auth-card">
-    <div class="brand" style="margin-bottom:6px;"><span class="dot"></span>AIG MONEYGAMES</div>
-    <p style="font-size:12.5px; color:var(--text-dim); margin:0 0 20px;">Play-money games, monthly community competitions. No real money, ever.</p>
-
+    <img src="assets/moneygames-logo.png" alt="AIG MoneyGames" style="width:100%; max-width:240px; height:auto; margin-bottom:16px; border-radius:8px;">
     <div class="auth-tabs">
       <button class="auth-tab active" data-tab="login">Sign in</button>
       <button class="auth-tab" data-tab="register">Create account</button>
@@ -158,10 +420,13 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
 <div id="appShell" style="display:none;">
 
   <div class="topbar">
-    <div class="brand"><span class="dot"></span>AIG MONEYGAMES</div>
+    <div class="brand" style="display:flex; align-items:center; gap:10px;">
+      <img src="assets/moneygames-logo.png" alt="AIG MoneyGames" style="height:32px; width:auto; border-radius:6px;">
+    </div>
     <div class="topbar-right">
       <button class="btn-key" id="navLobbyBtn">Lobby</button>
       <button class="btn-key" id="navLeaderboardBtn">Leaderboards</button>
+      <button class="btn-key" id="navDashboardBtn">Dashboard</button>
       <span class="balance-pill">🪙 <span id="balanceDisplay">0</span></span>
       <button class="btn-key" id="signOutBtn">Sign out</button>
     </div>
@@ -182,18 +447,84 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
       <div class="section">
         <div class="section-title">This month's competition <span class="countdown-note" id="monthLabel"></span></div>
         <div class="panel" style="text-align:center;">
-          <div style="font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.4px;">Your balance</div>
+          <div style="font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.4px;">Coins you have now</div>
           <div style="font-size:36px; font-weight:800; color:var(--amber); font-family:var(--font-mono); margin:6px 0;"><span id="lobbyBalance">10000</span> 🪙</div>
-          <div style="font-size:13px; color:var(--text-dim);">Net this month: <span id="lobbyNetChange" style="font-weight:700;"></span></div>
+          <div style="font-size:13px; color:var(--text-dim);">End-of-month score right now: <span id="lobbyNetChange" style="font-weight:700;"></span></div>
         </div>
       </div>
 
       <div class="section">
         <div class="section-title">Games</div>
         <div class="game-grid">
-          <div class="game-card" data-game="slots"><div class="icon">🎰</div><div class="title">Slots</div><div class="sub">3 reels &middot; ~93.6% RTP</div></div>
+          <div class="game-card" data-game="slots"><div class="icon"><img src="assets/slots-logo.png" alt="Slots" style="width:54px; height:54px; object-fit:contain;"></div><div class="title">Slots</div><div class="sub">3 reels &middot; ~93.6% RTP</div></div>
           <div class="game-card" data-game="blackjack"><div class="icon">🃏</div><div class="title">Blackjack</div><div class="sub">Dealer stands on 17</div></div>
           <div class="game-card" data-game="roulette"><div class="icon">🎯</div><div class="title">Roulette</div><div class="sub">European, single zero</div></div>
+          <div class="game-card" data-game="baccarat"><div class="icon">🀄</div><div class="title">Baccarat</div><div class="sub">Player, banker, tie</div></div>
+          <div class="game-card" data-game="keno"><div class="icon">🔢</div><div class="title">Keno</div><div class="sub">Pick 10 of 40</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Demo Game Library</div>
+        <div class="panel">
+          <div class="catalog-toolbar">
+            <button class="catalog-chip active" data-cat="all">All</button>
+            <button class="catalog-chip" data-cat="slots">Slots</button>
+            <button class="catalog-chip" data-cat="table">Table</button>
+            <button class="catalog-chip" data-cat="instant">Instant Win</button>
+            <input type="number" id="catalogBetAmount" value="50" min="10" step="10" style="max-width:110px; margin-left:auto;">
+          </div>
+          <div id="catalogGrid" class="catalog-grid"></div>
+          <div id="catalogStatus" class="mini-note">Choose any tile to play a quick demo round.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Featured: Slot Games Gallery</div>
+        <div class="panel" style="padding:0; overflow:hidden; border-radius:14px;">
+          <img src="assets/other-games/slot-games.png" alt="Featured Slot Games" style="width:100%; display:block; height:auto;">
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Other Games</div>
+        <div class="panel" style="text-align:center;">
+          <img src="assets/other-games-logo.png" alt="Other Games" style="width:100%; max-width:300px; height:auto; margin-bottom:16px; border-radius:10px;">
+          <div style="font-size:12.5px; color:var(--text-dim); margin-bottom:12px;">
+            Launch partner games directly below (no generic catalog popup).
+          </div>
+          <div id="otherGamesGrid" class="other-games-grid"></div>
+          <div class="other-games-analytics">
+            <div class="other-games-analytics-card">
+              <div class="other-games-analytics-title">Top 15 Most Played (By Time)</div>
+              <ol id="otherGamesTopTime" class="other-games-analytics-list"></ol>
+            </div>
+            <div class="other-games-analytics-card">
+              <div class="other-games-analytics-title">Top 15 Most Started</div>
+              <ol id="otherGamesTopStarts" class="other-games-analytics-list"></ol>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+            <div id="otherGameNowPlaying" style="font-size:12px; color:var(--text-dim);">No game selected</div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button id="otherGameBackToList" class="other-game-btn">Back To Games</button>
+              <a id="otherGameTrailerLink" href="https://youtu.be/7aBXVBLStJI" target="_blank" rel="noopener noreferrer" class="other-game-btn">Watch Trailer</a>
+            </div>
+          </div>
+          <div style="font-size:11.5px; color:var(--text-faint); margin:-2px 0 10px; text-align:left;">
+            All partner games open inside the embedded iframe below.
+          </div>
+          <div id="otherGamePlaceholder" style="width:100%; min-height:620px; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#0b0f16;">
+            <img src="assets/other-games/game-placeholder.png" alt="Select a game to start playing" style="width:100%; min-height:620px; object-fit:cover; display:block;">
+          </div>
+          <iframe
+            id="otherGameFrame"
+            src="about:blank"
+            title="Embedded Partner Game"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+            style="width:100%; min-height:620px; border:1px solid var(--line); border-radius:10px; background:#0b0f16; display:none;"
+          ></iframe>
         </div>
       </div>
     </div>
@@ -265,15 +596,81 @@ label { font-size: 11.5px; color: var(--text-dim); display: block; margin-bottom
       </div>
     </div>
 
+    <!-- BACCARAT -->
+    <div id="baccaratView" style="display:none;">
+      <button class="btn-key" data-back="lobby">&larr; Lobby</button>
+      <div class="section">
+        <div class="panel">
+          <div class="bet-row">
+            <select id="baccaratBetChoice" style="max-width:180px;">
+              <option value="player">Bet: Player</option>
+              <option value="banker">Bet: Banker</option>
+              <option value="tie">Bet: Tie</option>
+            </select>
+            <input type="number" id="baccaratBetAmount" value="50" min="10" step="10">
+            <button class="btn btn-primary" id="baccaratDealBtn">DEAL</button>
+          </div>
+          <div class="baccarat-row">
+            <div class="baccarat-seat">
+              <h4>Player</h4>
+              <div class="baccarat-cards" id="baccaratPlayerCards"></div>
+            </div>
+            <div class="baccarat-seat">
+              <h4>Banker</h4>
+              <div class="baccarat-cards" id="baccaratBankerCards"></div>
+            </div>
+          </div>
+          <div class="baccarat-totals" id="baccaratTotals"></div>
+          <div class="slots-result" id="baccaratResult"></div>
+          <div class="mini-note">Payouts: Player 1:1, Banker 0.95:1, Tie 8:1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KENO -->
+    <div id="kenoView" style="display:none;">
+      <button class="btn-key" data-back="lobby">&larr; Lobby</button>
+      <div class="section">
+        <div class="panel">
+          <div class="mini-note" id="kenoPicksLabel">Pick 10 numbers (1-40)</div>
+          <div class="keno-grid" id="kenoGrid"></div>
+          <div class="bet-row">
+            <input type="number" id="kenoBetAmount" value="50" min="10" step="10">
+            <button class="btn btn-primary" id="kenoDrawBtn">DRAW</button>
+          </div>
+          <div class="slots-result" id="kenoResult"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- LEADERBOARDS -->
     <div id="leaderboardView" style="display:none;">
       <button class="btn-key" data-back="lobby">&larr; Lobby</button>
       <div class="section">
         <div class="lb-tabs">
-          <button class="lb-tab active" data-lb="monthly">This month</button>
-          <button class="lb-tab" data-lb="yearly">This year</button>
+          <button class="lb-tab active" data-lb="monthly">End-of-month coins</button>
+          <button class="lb-tab" data-lb="yearly">Best monthly finish (year)</button>
         </div>
         <div class="panel" id="leaderboardPanel"></div>
+      </div>
+    </div>
+
+    <!-- DEMO GAME VIEW -->
+    <div id="demoGameView" style="display:none;">
+      <button class="btn-key" data-back="lobby">&larr; Lobby</button>
+      <div class="section">
+        <div class="panel demo-stage">
+          <div class="demo-stage-icon" id="demoGameIcon">🎰</div>
+          <div class="demo-stage-title" id="demoGameTitle">Demo Game</div>
+          <div class="demo-stage-note" id="demoGameNote">Play a round to compete for coins.</div>
+          <div class="demo-round-box">
+            <div class="bet-row">
+              <input type="number" id="demoGameBetAmount" value="50" min="10" step="10">
+              <button class="btn btn-primary" id="demoGamePlayBtn">PLAY ROUND</button>
+            </div>
+            <div class="slots-result" id="demoGameResult"></div>
+          </div>
+        </div>
       </div>
     </div>
 

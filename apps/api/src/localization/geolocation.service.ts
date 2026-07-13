@@ -88,12 +88,21 @@ export class GeolocationService {
       'ES': 'SPANISH',
       'GB': 'ENGLISH',
       'IE': 'ENGLISH',
-      'NL': 'ENGLISH',
-      'BE': 'FRENCH',
+      'NL': 'DUTCH',
+      'BE': 'DUTCH',
       'AT': 'GERMAN',
       'CH': 'GERMAN',
+      'IT': 'ITALIAN',
+      'GR': 'GREEK',
+      'PT': 'PORTUGUESE',
 
-      // Southern Europe & Russia
+      // Northern Europe
+      'SE': 'SWEDISH',
+      'NO': 'NORWEGIAN',
+      'DK': 'DANISH',
+      'FI': 'SWEDISH',
+
+      // Eastern Europe & Russia
       'RU': 'RUSSIAN',
       'UA': 'UKRAINIAN',
       'BY': 'RUSSIAN',
@@ -106,6 +115,12 @@ export class GeolocationService {
       'RS': 'ENGLISH',
       'HR': 'ENGLISH',
       'SI': 'ENGLISH',
+
+      // Middle East & Turkey
+      'TR': 'TURKISH',
+      'IL': 'HEBREW',
+      'IR': 'PERSIAN',
+      'AF': 'PERSIAN',
 
       // Asia - East
       'CN': 'CHINESE_SIMPLIFIED',
@@ -123,25 +138,35 @@ export class GeolocationService {
       'SG': 'ENGLISH',
       'PH': 'TAGALOG',
       'BN': 'INDONESIAN',
-      'LA': 'ENGLISH',
-      'MM': 'ENGLISH',
-      'KH': 'ENGLISH',
+      'LA': 'LAO',
+      'MM': 'BURMESE',
+      'KH': 'KHMER',
 
-      // India & South Asia
+      // South Asia
       'IN': 'HINDI',
+      'PK': 'URDU',
       'BD': 'BENGALI',
-      'LK': 'ENGLISH',
-      'NP': 'ENGLISH',
-      'PK': 'ENGLISH',
+      'LK': 'SINHALA',
+      'NP': 'HINDI',
 
-      // Africa
+      // Africa - West
       'NG': 'YORUBA',
+      'GH': 'ENGLISH',
+      'SN': 'FRENCH',
+      'CI': 'FRENCH',
+
+      // Africa - Central & East
       'KE': 'SWAHILI',
       'TZ': 'SWAHILI',
       'UG': 'SWAHILI',
       'ET': 'AMHARIC',
-      'ZA': 'ENGLISH',
-      'GH': 'ENGLISH',
+      'SO': 'SOMALI',
+      'DJ': 'ARABIC',
+
+      // Africa - Southern
+      'ZA': 'ZULU',
+      'BW': 'ENGLISH',
+      'ZW': 'ENGLISH',
 
       // Middle East & North Africa
       'SA': 'ARABIC_GULF',
@@ -188,16 +213,36 @@ export class GeolocationService {
       languages: [
         // Default & Western
         { code: 'ENGLISH', name: 'English', nativeName: 'English', region: 'Default' },
-        { code: 'GERMAN', name: 'German', nativeName: 'Deutsch', region: 'Western Europe' },
-        { code: 'FRENCH', name: 'French', nativeName: 'Français', region: 'Western Europe' },
-        { code: 'SPANISH', name: 'Spanish (Spain)', nativeName: 'Español', region: 'Western Europe' },
+        { code: 'GERMAN', name: 'German', nativeName: 'Deutsch', region: 'Europe' },
+        { code: 'FRENCH', name: 'French', nativeName: 'Français', region: 'Europe' },
+        { code: 'SPANISH', name: 'Spanish (Spain)', nativeName: 'Español', region: 'Europe' },
+        { code: 'DUTCH', name: 'Dutch', nativeName: 'Nederlands', region: 'Europe' },
+        { code: 'ITALIAN', name: 'Italian', nativeName: 'Italiano', region: 'Europe' },
+        { code: 'GREEK', name: 'Greek', nativeName: 'Ελληνικά', region: 'Europe' },
+        { code: 'PORTUGUESE', name: 'Portuguese (Portugal)', nativeName: 'Português', region: 'Europe' },
+        { code: 'PORTUGUESE_BRAZILIAN', name: 'Portuguese (Brazilian)', nativeName: 'Português (Brasil)', region: 'South America' },
 
-        // Southern Europe & Russia
-        { code: 'RUSSIAN', name: 'Russian', nativeName: 'Русский', region: 'Eastern Europe & Russia' },
-        { code: 'UKRAINIAN', name: 'Ukrainian', nativeName: 'Українська', region: 'Eastern Europe & Russia' },
-        { code: 'POLISH', name: 'Polish', nativeName: 'Polski', region: 'Eastern Europe & Russia' },
-        { code: 'CZECH', name: 'Czech', nativeName: 'Čeština', region: 'Eastern Europe & Russia' },
-        { code: 'ROMANIAN', name: 'Romanian', nativeName: 'Română', region: 'Eastern Europe & Russia' },
+        // Northern Europe
+        { code: 'SWEDISH', name: 'Swedish', nativeName: 'Svenska', region: 'Europe' },
+        { code: 'NORWEGIAN', name: 'Norwegian', nativeName: 'Norsk', region: 'Europe' },
+        { code: 'DANISH', name: 'Danish', nativeName: 'Dansk', region: 'Europe' },
+
+        // Eastern Europe & Russia
+        { code: 'RUSSIAN', name: 'Russian', nativeName: 'Русский', region: 'Europe' },
+        { code: 'UKRAINIAN', name: 'Ukrainian', nativeName: 'Українська', region: 'Europe' },
+        { code: 'POLISH', name: 'Polish', nativeName: 'Polski', region: 'Europe' },
+        { code: 'CZECH', name: 'Czech', nativeName: 'Čeština', region: 'Europe' },
+        { code: 'ROMANIAN', name: 'Romanian', nativeName: 'Română', region: 'Europe' },
+
+        // Middle East
+        { code: 'TURKISH', name: 'Turkish', nativeName: 'Türkçe', region: 'Middle East' },
+        { code: 'HEBREW', name: 'Hebrew', nativeName: 'עברית', region: 'Middle East' },
+        { code: 'PERSIAN', name: 'Persian (Farsi)', nativeName: 'فارسی', region: 'Middle East' },
+        { code: 'ARABIC', name: 'Arabic (Standard)', nativeName: 'العربية', region: 'Middle East' },
+        { code: 'ARABIC_EGYPTIAN', name: 'Arabic (Egyptian)', nativeName: 'العربية المصرية', region: 'Middle East' },
+        { code: 'ARABIC_GULF', name: 'Arabic (Gulf)', nativeName: 'العربية الخليجية', region: 'Middle East' },
+        { code: 'ARABIC_LEVANTINE', name: 'Arabic (Levantine)', nativeName: 'العربية الشامية', region: 'Middle East' },
+        { code: 'ARABIC_MOROCCAN', name: 'Arabic (Moroccan)', nativeName: 'العربية المغربية', region: 'Africa' },
 
         // Asia - East
         { code: 'CHINESE_SIMPLIFIED', name: 'Chinese (Simplified)', nativeName: '简体中文', region: 'Asia' },
@@ -210,30 +255,37 @@ export class GeolocationService {
         { code: 'VIETNAMESE', name: 'Vietnamese', nativeName: 'Tiếng Việt', region: 'Asia' },
         { code: 'INDONESIAN', name: 'Indonesian', nativeName: 'Bahasa Indonesia', region: 'Asia' },
         { code: 'TAGALOG', name: 'Tagalog', nativeName: 'Tagalog', region: 'Asia' },
+        { code: 'BURMESE', name: 'Burmese', nativeName: 'ဗမာ', region: 'Asia' },
+        { code: 'LAO', name: 'Lao', nativeName: 'ລາວ', region: 'Asia' },
+        { code: 'KHMER', name: 'Khmer', nativeName: 'ខ្មែរ', region: 'Asia' },
 
-        // India & South Asia
-        { code: 'HINDI', name: 'Hindi', nativeName: 'हिन्दी', region: 'India' },
-        { code: 'TAMIL', name: 'Tamil', nativeName: 'தமிழ்', region: 'India' },
-        { code: 'TELUGU', name: 'Telugu', nativeName: 'తెలుగు', region: 'India' },
-        { code: 'KANNADA', name: 'Kannada', nativeName: 'ಕನ್ನಡ', region: 'India' },
-        { code: 'MARATHI', name: 'Marathi', nativeName: 'मराठी', region: 'India' },
-        { code: 'BENGALI', name: 'Bengali', nativeName: 'বাংলা', region: 'India' },
+        // South Asia
+        { code: 'HINDI', name: 'Hindi', nativeName: 'हिन्दी', region: 'Asia' },
+        { code: 'URDU', name: 'Urdu', nativeName: 'اردو', region: 'Asia' },
+        { code: 'PUNJABI', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ', region: 'Asia' },
+        { code: 'TAMIL', name: 'Tamil', nativeName: 'தமிழ்', region: 'Asia' },
+        { code: 'TELUGU', name: 'Telugu', nativeName: 'తెలుగు', region: 'Asia' },
+        { code: 'KANNADA', name: 'Kannada', nativeName: 'ಕನ್ನಡ', region: 'Asia' },
+        { code: 'MARATHI', name: 'Marathi', nativeName: 'मराठी', region: 'Asia' },
+        { code: 'BENGALI', name: 'Bengali', nativeName: 'বাংলা', region: 'Asia' },
+        { code: 'SINHALA', name: 'Sinhala', nativeName: 'සිංහල', region: 'Asia' },
 
-        // Africa
+        // Africa - East & Horn
         { code: 'SWAHILI', name: 'Swahili', nativeName: 'Kiswahili', region: 'Africa' },
+        { code: 'SOMALI', name: 'Somali', nativeName: 'Soomaali', region: 'Africa' },
         { code: 'AMHARIC', name: 'Amharic', nativeName: 'አማርኛ', region: 'Africa' },
+
+        // Africa - West & Central
         { code: 'YORUBA', name: 'Yoruba', nativeName: 'Yorùbá', region: 'Africa' },
         { code: 'IGBO', name: 'Igbo', nativeName: 'Igbo', region: 'Africa' },
+        { code: 'HAUSA', name: 'Hausa', nativeName: 'Hausa', region: 'Africa' },
 
-        // Middle East & Arabic
-        { code: 'ARABIC', name: 'Arabic (Standard)', nativeName: 'العربية', region: 'Middle East' },
-        { code: 'ARABIC_EGYPTIAN', name: 'Arabic (Egyptian)', nativeName: 'العربية المصرية', region: 'Middle East' },
-        { code: 'ARABIC_GULF', name: 'Arabic (Gulf)', nativeName: 'العربية الخليجية', region: 'Middle East' },
-        { code: 'ARABIC_LEVANTINE', name: 'Arabic (Levantine)', nativeName: 'العربية الشامية', region: 'Middle East' },
-        { code: 'ARABIC_MOROCCAN', name: 'Arabic (Moroccan)', nativeName: 'العربية المغربية', region: 'Africa' },
+        // Africa - Southern
+        { code: 'ZULU', name: 'Zulu', nativeName: 'isiZulu', region: 'Africa' },
+        { code: 'XHOSA', name: 'Xhosa', nativeName: 'isiXhosa', region: 'Africa' },
+        { code: 'AFRIKAANS', name: 'Afrikaans', nativeName: 'Afrikaans', region: 'Africa' },
 
         // South America
-        { code: 'PORTUGUESE_BRAZILIAN', name: 'Portuguese (Brazilian)', nativeName: 'Português (Brasil)', region: 'South America' },
         { code: 'SPANISH_LATIN_AMERICAN', name: 'Spanish (Latin America)', nativeName: 'Español (Latinoamérica)', region: 'South America' }
       ]
     }

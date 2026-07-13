@@ -2,6 +2,80 @@
 
 import Image from 'next/image'
 
+const BUSINESS_PACKS = [
+  {
+    name: 'Remittance',
+    subtitle: 'Entry Access',
+    price: '€0',
+    earningCap: '€100 / month',
+    investmentMin: 'Not available',
+    transferFee: '5.0%',
+    features: [
+      'WDM and AIG ecosystem access',
+      'AIG Ask (limited)',
+      'MoneyGames (basic access)',
+      'Affiliate referrals up to Level 1',
+    ],
+  },
+  {
+    name: 'Starter Business Pack',
+    subtitle: 'Growth Tools',
+    price: '€399/mo',
+    earningCap: '€1,000 / month',
+    investmentMin: '€1,000',
+    transferFee: '3.90% (80% network, 20% management)',
+    features: [
+      'AIG Investment platform',
+      'AIG MoneyGames App',
+      'AIG Investor Alerts',
+      'Marketplace seller access',
+    ],
+  },
+  {
+    name: 'Start-Up Business Pack',
+    subtitle: 'Scale Faster',
+    price: '€699/mo',
+    earningCap: '€5,000 / month',
+    investmentMin: '€5,000',
+    transferFee: '1.90%',
+    features: [
+      'All Starter Pack features',
+      'AIG HELO (emergency travel)',
+      'AIG Business Weather',
+      'Preferred seller status',
+    ],
+  },
+  {
+    name: 'Premium Business Pack',
+    subtitle: 'Premium Suite',
+    price: '€1,099/mo',
+    earningCap: '€10,000 / month',
+    investmentMin: '€10,000',
+    transferFee: '0.90%',
+    features: [
+      'All Start-Up Pack features',
+      'AIG Me (relationship manager)',
+      'Exclusive VIP tools',
+      'Priority support',
+    ],
+  },
+  {
+    name: 'Professional Business Pack',
+    subtitle: 'Elite Suite',
+    price: '€2,999/mo',
+    earningCap: 'Unlimited',
+    investmentMin: '€200,000',
+    transferFee: '0.15%',
+    features: [
+      'All current and future apps',
+      'AIG Record and AIG Secure Sign',
+      'AIG Ask (Claude AI integration)',
+      'Affiliate commissions up to 10 levels',
+    ],
+    featured: true,
+  },
+]
+
 export default function PackagesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-luxury-950 to-luxury-900 text-luxury-cream p-8">
@@ -11,7 +85,7 @@ export default function PackagesPage() {
           The Wealth Escalation Pathway
         </h1>
         <p className="text-center text-luxury-cream/80 text-lg max-w-2xl mx-auto">
-          Choose the perfect membership tier to accelerate your wealth and unlock exclusive benefits within the AIGINVEST ecosystem.
+          Membership is always free. Choose your business pack to unlock higher caps, deeper app access, and stronger earning potential.
         </p>
       </div>
 
@@ -30,58 +104,30 @@ export default function PackagesPage() {
       </div>
 
       {/* Package Details */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        {/* Package A */}
-        <div className="bg-luxury-900/50 backdrop-blur-sm rounded-xl border border-luxury-gold/20 p-6 hover:border-luxury-gold/50 transition">
-          <h3 className="text-2xl font-bold text-luxury-gold mb-2">Package A</h3>
-          <p className="text-luxury-cream/80 text-sm mb-4">Entry Level</p>
-          <div className="text-3xl font-bold text-luxury-gold mb-6">Free</div>
-          <ul className="space-y-2 text-sm text-luxury-cream/80">
-            <li>✓ Basic access to ecosystem</li>
-            <li>✓ Diana AI assistant</li>
-            <li>✓ Community forum</li>
-            <li>✓ Educational resources</li>
-          </ul>
-        </div>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+        {BUSINESS_PACKS.map((pack) => (
+          <div
+            key={pack.name}
+            className={`bg-luxury-900/50 backdrop-blur-sm rounded-xl border p-6 transition hover:border-luxury-gold/60 ${pack.featured ? 'border-luxury-gold/40 ring-1 ring-luxury-gold/40' : 'border-luxury-gold/20'}`}
+          >
+            <h3 className="text-2xl font-bold text-luxury-gold mb-2">{pack.name}</h3>
+            <p className="text-luxury-cream/80 text-sm mb-4">{pack.subtitle}</p>
+            <div className="text-3xl font-bold text-luxury-gold mb-4">{pack.price}</div>
 
-        {/* Package B */}
-        <div className="bg-luxury-900/50 backdrop-blur-sm rounded-xl border border-luxury-gold/20 p-6 hover:border-luxury-gold/50 transition">
-          <h3 className="text-2xl font-bold text-luxury-gold mb-2">Package B</h3>
-          <p className="text-luxury-cream/80 text-sm mb-4">Starter Tier</p>
-          <div className="text-3xl font-bold text-luxury-gold mb-6">€399<span className="text-sm">/mo</span></div>
-          <ul className="space-y-2 text-sm text-luxury-cream/80">
-            <li>✓ All Package A features</li>
-            <li>✓ Advanced marketplace access</li>
-            <li>✓ Priority support</li>
-            <li>✓ 10% affiliate commission</li>
-          </ul>
-        </div>
+            <div className="text-xs text-luxury-cream/80 space-y-1 mb-4">
+              <p><strong>Earning cap:</strong> {pack.earningCap}</p>
+              <p><strong>Investment min:</strong> {pack.investmentMin}</p>
+              <p><strong>Transfer fee:</strong> {pack.transferFee}</p>
+              <p><strong>AIG Cash transfers:</strong> FREE</p>
+            </div>
 
-        {/* Package C */}
-        <div className="bg-luxury-900/50 backdrop-blur-sm rounded-xl border border-luxury-gold/30 p-6 hover:border-luxury-gold/60 transition ring-1 ring-luxury-gold/40">
-          <h3 className="text-2xl font-bold text-luxury-gold mb-2">Package C</h3>
-          <p className="text-luxury-cream/80 text-sm mb-4">Professional</p>
-          <div className="text-3xl font-bold text-luxury-gold mb-6">€699<span className="text-sm">/mo</span></div>
-          <ul className="space-y-2 text-sm text-luxury-cream/80">
-            <li>✓ All Package B features</li>
-            <li>✓ VIP marketplace access</li>
-            <li>✓ 26% affiliate commission</li>
-            <li>✓ Multi-level earnings (10 levels)</li>
-          </ul>
-        </div>
-
-        {/* Enterprise */}
-        <div className="bg-luxury-900/50 backdrop-blur-sm rounded-xl border border-luxury-gold/20 p-6 hover:border-luxury-gold/50 transition">
-          <h3 className="text-2xl font-bold text-luxury-gold mb-2">Enterprise</h3>
-          <p className="text-luxury-cream/80 text-sm mb-4">Premium</p>
-          <div className="text-3xl font-bold text-luxury-gold mb-6">€2,999<span className="text-sm">/mo</span></div>
-          <ul className="space-y-2 text-sm text-luxury-cream/80">
-            <li>✓ All features unlocked</li>
-            <li>✓ Dedicated account manager</li>
-            <li>✓ Unlimited affiliate levels</li>
-            <li>✓ Custom investment strategies</li>
-          </ul>
-        </div>
+            <ul className="space-y-2 text-sm text-luxury-cream/80">
+              {pack.features.map((feature) => (
+                <li key={feature}>✓ {feature}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
 
       {/* Earnings Structure */}
@@ -105,12 +151,12 @@ export default function PackagesPage() {
             <h3 className="text-xl font-bold text-luxury-gold mb-4">Affiliate Commission</h3>
             <div className="space-y-3">
               <div className="flex justify-between items-center p-3 bg-luxury-950/30 rounded-lg">
-                <span className="text-luxury-cream">Package C & Above</span>
+                <span className="text-luxury-cream">Starter Pack & Above</span>
                 <span className="text-luxury-gold font-bold">26% Level 1</span>
               </div>
               <div className="flex justify-between items-center p-3 bg-luxury-950/30 rounded-lg">
                 <span className="text-luxury-cream">Multi-Level Depth</span>
-                <span className="text-luxury-gold font-bold">10+ Levels</span>
+                <span className="text-luxury-gold font-bold">Up to 10 Levels</span>
               </div>
             </div>
           </div>

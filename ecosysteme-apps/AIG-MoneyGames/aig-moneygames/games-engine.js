@@ -188,10 +188,97 @@
     return { won, payoutMultiplier: ROULETTE_PAYOUTS[betType] };
   }
 
+  // ============================================================
+  // BACCARAT — simple punto banco style with clear payouts.
+  // ============================================================
+  function baccaratTotal(cards) {
+    return cards.reduce((sum, card) => {
+      const raw = cardValue(card);
+      return (sum + (raw >= 10 ? 0 : raw)) % 10;
+    }, 0);
+  }
+
+  function maybeDrawThird(cards, shoe) {
+    if (baccaratTotal(cards) <= 5) cards.push(shoe.pop());
+  }
+
+  function playBaccaratRound(betAmount, betOn) {
+    const shoe = freshShoe(6);
+    const player = [shoe.pop(), shoe.pop()];
+    const banker = [shoe.pop(), shoe.pop()];
+
+    maybeDrawThird(player, shoe);
+    maybeDrawThird(banker, shoe);
+
+    const playerTotal = baccaratTotal(player);
+    const bankerTotal = baccaratTotal(banker);
+
+    let outcome = 'tie';
+    if (playerTotal > bankerTotal) outcome = 'player';
+    else if (bankerTotal > playerTotal) outcome = 'banker';
+
+    const multipliers = { player: 1, banker: 0.95, tie: 8 };
+    const won = betOn === outcome;
+    const payout = won ? Math.round(betAmount * multipliers[outcome]) : 0;
+
+    return {
+      player,
+      banker,
+      playerTotal,
+      bankerTotal,
+      outcome,
+      won,
+      payout,
+      netChange: won ? payout : -betAmount,
+    };
+  }
+
+  // ============================================================
+  // KENO — pick 10 numbers (1-40), draw 10, payout by matches.
+  // ============================================================
+  const KENO_RANGE = 40;
+  const KENO_DRAW_COUNT = 10;
+  const KENO_PAYOUT = {
+    0: 0,
+    1: 0,
+    2: 0,
+    3: 0.5,
+    4: 2,
+    5: 5,
+    6: 12,
+    7: 25,
+    8: 60,
+    9: 150,
+    10: 400,
+  };
+
+  function playKenoRound(betAmount, picks) {
+    const sanitizedPicks = Array.from(new Set((picks || []).filter((n) => Number.isInteger(n) && n >= 1 && n <= KENO_RANGE))).slice(0, KENO_DRAW_COUNT);
+    const pool = Array.from({ length: KENO_RANGE }, (_, i) => i + 1);
+    const draw = shuffle(pool).slice(0, KENO_DRAW_COUNT).sort((a, b) => a - b);
+    const matches = sanitizedPicks.filter((n) => draw.includes(n));
+    const matchCount = matches.length;
+    const payoutMultiplier = KENO_PAYOUT[matchCount] || 0;
+    const payout = Math.round(betAmount * payoutMultiplier);
+    const won = payoutMultiplier > 0;
+
+    return {
+      picks: sanitizedPicks,
+      draw,
+      matches,
+      matchCount,
+      payoutMultiplier,
+      payout,
+      won,
+      netChange: won ? payout : -betAmount,
+    };
+  }
+
   window.AIGGames = {
     randomInt, pick, shuffle,
     SLOTS_SYMBOLS, SLOTS_PAYTABLE, CHERRY_PAIR_PAYOUT, spinSlots, computeSlotsRTP,
     freshShoe, cardValue, handValue, dealerShouldHit,
-    ROULETTE_PAYOUTS, rouletteColor, spinRoulette, evaluateRouletteBet
+    ROULETTE_PAYOUTS, rouletteColor, spinRoulette, evaluateRouletteBet,
+    playBaccaratRound, playKenoRound, KENO_PAYOUT
   };
 })();

@@ -25,6 +25,33 @@ textarea {
   font-family: inherit;
 }
 
+/* Fix for dialog and modal backdrops */
+dialog {
+  background-color: #0f1419 !important;
+  color: #f0f0f0 !important;
+  border: 2px solid #d4af37 !important;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Fix for any modal or overlay elements */
+[role="dialog"],
+[role="modal"],
+.modal,
+.dialog {
+  background-color: #0f1419 !important;
+  color: #f0f0f0 !important;
+}
+
+/* Fix for backdrop overlays */
+.modal-backdrop,
+.dialog-backdrop,
+[role="presentation"] {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
 @media (max-width: 640px) {
   .desktop-only {
     display: none !important;

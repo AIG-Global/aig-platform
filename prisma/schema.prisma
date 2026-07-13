@@ -110,44 +110,79 @@ enum Language {
   FRENCH
   SPANISH
   
-  // Southern Europe & Russia
+  // Europe - Southern
+  PORTUGUESE
+  PORTUGUESE_BRAZILIAN
+  ITALIAN
+  GREEK
+  
+  // Europe - Eastern & Russia
   RUSSIAN
   UKRAINIAN
   POLISH
   CZECH
   ROMANIAN
   
-  // Asia
-  CHINESE_SIMPLIFIED
-  CHINESE_TRADITIONAL
-  JAPANESE
-  KOREAN
-  THAI
-  VIETNAMESE
-  INDONESIAN
-  TAGALOG
+  // Europe - Northern
+  SWEDISH
+  NORWEGIAN
+  DANISH
   
-  // India
-  HINDI
-  TAMIL
-  TELUGU
-  KANNADA
-  MARATHI
-  BENGALI
+  // Europe - Other
+  DUTCH
+  TURKISH
   
-  // Africa & Middle East
-  SWAHILI
-  AMHARIC
-  YORUBA
-  IGBO
+  // Middle East
   ARABIC
   ARABIC_EGYPTIAN
   ARABIC_GULF
   ARABIC_LEVANTINE
   ARABIC_MOROCCAN
+  HEBREW
+  PERSIAN
+  
+  // Asia - East
+  CHINESE_SIMPLIFIED
+  CHINESE_TRADITIONAL
+  JAPANESE
+  KOREAN
+  
+  // Asia - Southeast
+  THAI
+  VIETNAMESE
+  INDONESIAN
+  TAGALOG
+  BURMESE
+  LAO
+  KHMER
+  
+  // Asia - South
+  HINDI
+  URDU
+  PUNJABI
+  TAMIL
+  TELUGU
+  KANNADA
+  MARATHI
+  BENGALI
+  SINHALA
+  
+  // Africa - East & Horn
+  SWAHILI
+  SOMALI
+  
+  // Africa - West & Central
+  YORUBA
+  IGBO
+  HAUSA
+  
+  // Africa - Southern
+  ZULU
+  XHOSA
+  AFRIKAANS
+  AMHARIC
   
   // South America
-  PORTUGUESE_BRAZILIAN
   SPANISH_LATIN_AMERICAN
 }
 

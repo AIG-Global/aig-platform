@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, ArrowRight, Zap, Coins, Globe, Brain, Users, TrendingUp } from 'lucide-react'
+import { Menu, X, ArrowRight, Zap, Coins, Globe, Brain, Users, TrendingUp, ChevronDown } from 'lucide-react'
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [selectedTier, setSelectedTier] = useState(null)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-950 via-luxury-900 to-luxury-950 text-luxury-cream" style={{
@@ -438,102 +439,358 @@ export default function LandingPage() {
           }} className="text-4xl font-bold text-center mb-4">
             Choose Your Tier
           </h2>
-          <p style={{ color: '#e8e8d0' }} className="text-center mb-16">
-            Select the membership that fits your goals and earning potential
+          <p style={{ color: '#e8e8d0' }} className="text-center mb-16 text-lg">
+            Membership always free. Pay only for the app bundle you choose. Bigger packs = more perks & services.
           </p>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
             {[
               {
+                id: 'remittance',
                 name: 'Remittance',
                 price: '€0',
-                period: 'forever',
-                earningCap: '€100/month',
-                description: 'Start exploring',
-                features: ['Basic ecosystem access', '€100/month earning cap', 'Limited WDM access', 'MoneyGames', 'AIG Ask (limited)'],
-                highlighted: false
+                highlighted: false,
+                description: 'Start exploring for free',
+                earnCap: '€100 / month'
               },
               {
-                name: 'Starter',
+                id: 'starter',
+                name: 'Starter Business Pack',
                 price: '€399',
-                period: '/month',
-                earningCap: '€500/month',
-                description: 'Begin your journey',
-                features: ['Full WDM access', '€500/month earning cap', 'All AIG apps (7)', 'Affiliate program', 'Commission earnings'],
-                highlighted: false
+                highlighted: false,
+                description: 'Begin your wealth journey',
+                earnCap: '€1,000 / month'
               },
               {
-                name: 'Start-Up',
-                price: '€999',
-                period: '/month',
-                earningCap: '€5000/month',
-                description: 'Scale your growth',
-                features: ['Unlimited earning potential', '10-level affiliate program', 'All apps (9)', 'Market intelligence', 'Preferred seller status'],
-                highlighted: false
-              },
-              {
-                name: 'Professional',
-                price: '€2,999',
-                period: '/month',
-                earningCap: 'Unlimited',
-                description: 'Maximum growth',
-                features: ['All current & future apps', 'Organization support', 'Custom AI training', 'VIP features', '24/7 support', 'Strategic partnerships'],
-                highlighted: true
+                id: 'startup',
+                name: 'Start-Up Business Pack',
+                price: '€699',
+                highlighted: false,
+                description: 'Scale your growth fast',
+                earnCap: '€5,000 / month'
               }
-            ].map((tier, i) => (
-              <div
-                key={i}
+            ].map((tier) => (
+              <button
+                key={tier.id}
+                onClick={() => setSelectedTier(tier.id)}
+                style={{
+                  backgroundColor: tier.highlighted ? 'rgba(212, 175, 55, 0.15)' : 'rgba(61, 44, 53, 0.3)',
+                  borderColor: '#d4af37',
+                  borderWidth: '2px'
+                }}
+                className="rounded-2xl p-8 transition transform hover:scale-105 hover:shadow-2xl text-left group cursor-pointer"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 style={{ color: '#f5f5dc' }} className="text-2xl font-bold mb-1">{tier.name}</h3>
+                    <p style={{ color: '#e8e8d0' }} className="text-sm">{tier.description}</p>
+                  </div>
+                  <ChevronDown style={{ color: '#d4af37' }} className="group-hover:translate-y-1 transition" />
+                </div>
+                <div className="mb-4">
+                  <span style={{ color: '#d4af37' }} className="text-3xl font-bold">{tier.price}</span>
+                  <p style={{ color: '#e8e8d0' }} className="text-xs mt-2">Earning cap: {tier.earnCap}</p>
+                </div>
+                <div style={{
+                  background: 'linear-gradient(to right, #d4af37, #e8d4a2)',
+                  height: '1px'
+                }} className="mb-4"></div>
+                <p style={{ color: '#d4af37' }} className="text-sm font-semibold">View full details →</p>
+              </button>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              {
+                id: 'premium',
+                name: 'Premium Business Pack',
+                price: '€1,099',
+                highlighted: false,
+                description: "It's time to build.",
+                earnCap: '€10,000 / month'
+              },
+              {
+                id: 'professional',
+                name: 'Professional Business Pack',
+                price: '€2,999',
+                highlighted: true,
+                description: 'When the target is to reach the world.',
+                earnCap: 'Unlimited / month'
+              }
+            ].map((tier) => (
+              <button
+                key={tier.id}
+                onClick={() => setSelectedTier(tier.id)}
                 style={{
                   backgroundColor: tier.highlighted ? 'rgba(212, 175, 55, 0.15)' : 'rgba(61, 44, 53, 0.3)',
                   borderColor: tier.highlighted ? '#d4af37' : '#d4af37',
-                  borderWidth: tier.highlighted ? '2px' : '1px',
-                  boxShadow: tier.highlighted ? '0 0 30px rgba(212, 175, 55, 0.2)' : 'none'
+                  borderWidth: tier.highlighted ? '2px' : '2px'
                 }}
-                className="rounded-2xl p-8 transition transform hover:scale-105"
+                className="rounded-2xl p-8 transition transform hover:scale-105 hover:shadow-2xl text-left group cursor-pointer"
               >
-                <h3 style={{ color: '#f5f5dc' }} className="text-2xl font-bold mb-2">{tier.name}</h3>
-                <p style={{ color: '#e8e8d0' }} className="text-sm mb-4">{tier.description}</p>
-                <div className="mb-6">
-                  <span style={{
-                    color: tier.highlighted ? '#d4af37' : '#f5f5dc',
-                    background: tier.highlighted ? 'linear-gradient(to right, #d4af37, #e8d4a2)' : undefined,
-                    WebkitBackgroundClip: tier.highlighted ? 'text' : undefined,
-                    WebkitTextFillColor: tier.highlighted ? 'transparent' : undefined,
-                    backgroundClip: tier.highlighted ? 'text' : undefined
-                  }} className="text-4xl font-bold">{tier.price}</span>
-                  <span style={{ color: '#e8e8d0' }} className="ml-2">{tier.period}</span>
-                  <p style={{ color: tier.highlighted ? '#d4af37' : '#e8e8d0' }} className="text-sm mt-2">Cap: {tier.earningCap}</p>
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 style={{ color: '#f5f5dc' }} className="text-2xl font-bold mb-1">{tier.name}</h3>
+                    <p style={{ color: '#e8e8d0' }} className="text-sm">{tier.description}</p>
+                  </div>
+                  <ChevronDown style={{ color: '#d4af37' }} className="group-hover:translate-y-1 transition" />
                 </div>
-                <ul className="space-y-3 mb-8">
-                  {tier.features.map((feature, j) => (
-                    <li key={j} className="flex items-center gap-2 text-sm">
-                      <div style={{
-                        background: tier.highlighted ? 'linear-gradient(to right, #d4af37, #e8d4a2)' : 'rgba(212, 175, 55, 0.6)',
-                        width: '6px',
-                        height: '6px',
-                        borderRadius: '50%',
-                        flexShrink: 0
-                      }}></div>
-                      <span style={{ color: '#e8e8d0' }}>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  style={{
-                    backgroundColor: tier.highlighted ? '#d4af37' : 'rgba(212, 175, 55, 0.2)',
-                    color: tier.highlighted ? '#1a0f15' : '#d4af37',
-                    borderColor: tier.highlighted ? undefined : '#d4af37',
-                    borderWidth: tier.highlighted ? '0' : '1px'
-                  }}
-                  className="w-full py-3 rounded-lg font-bold transition transform hover:scale-105"
-                >
-                  {tier.name === 'Remittance' ? 'Get Started' : 'Upgrade'}
-                </button>
-              </div>
+                <div className="mb-4">
+                  <span style={{ color: tier.highlighted ? '#d4af37' : '#f5f5dc' }} className="text-3xl font-bold">{tier.price}</span>
+                  <p style={{ color: '#e8e8d0' }} className="text-xs mt-2">Earning cap: {tier.earnCap}</p>
+                </div>
+                <div style={{
+                  background: 'linear-gradient(to right, #d4af37, #e8d4a2)',
+                  height: '1px'
+                }} className="mb-4"></div>
+                <p style={{ color: '#d4af37' }} className="text-sm font-semibold">View full details →</p>
+              </button>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Pricing Modal */}
+      {selectedTier && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            zIndex: 999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px'
+          }}
+          onClick={() => setSelectedTier(null)}
+        >
+          <div
+            style={{
+              backgroundColor: 'rgba(42, 31, 40, 0.98)',
+              borderColor: '#d4af37',
+              borderWidth: '2px',
+              maxWidth: '600px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto'
+            }}
+            className="rounded-2xl p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 style={{ color: '#f5f5dc' }} className="text-3xl font-bold">
+                {selectedTier === 'remittance' && 'Remittance'}
+                {selectedTier === 'starter' && 'Starter Business Pack'}
+                {selectedTier === 'startup' && 'Start-Up Business Pack'}
+                {selectedTier === 'premium' && 'Premium Business Pack'}
+                {selectedTier === 'professional' && 'Professional Business Pack'}
+              </h2>
+              <button
+                onClick={() => setSelectedTier(null)}
+                style={{ color: '#d4af37' }}
+                className="text-2xl hover:scale-110 transition"
+              >
+                ✕
+              </button>
+            </div>
+
+            {selectedTier === 'remittance' && (
+              <div style={{ color: '#e8e8d0' }} className="space-y-4">
+                <div>
+                  <p className="text-2xl font-bold mb-2">€0 · Start exploring for free</p>
+                  <p className="text-sm">Investment options aren't open for this account</p>
+                </div>
+                <div style={{
+                  background: 'linear-gradient(to right, #d4af37, #e8d4a2)',
+                  height: '1px'
+                }}></div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">KEY DETAILS</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>• <strong>Earning cap:</strong> €100 / month</li>
+                    <li>• <strong>Transfer fee:</strong> 5.0% (cash → AIG Cash)</li>
+                    <li>• <strong>AIG Cash transfers:</strong> FREE (no commissions)</li>
+                    <li>• <strong>Membership:</strong> Always FREE</li>
+                  </ul>
+                </div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">SERVICES INCLUDED</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>✓ WDM and AIG ecosystem access</li>
+                    <li>✓ Affiliate referrals up to Level 1</li>
+                    <li>✓ Basic ecosystem access</li>
+                    <li>✓ Public leaderboard visibility</li>
+                  </ul>
+                </div>
+                <p style={{ color: '#e8e8d0' }} className="text-xs mt-4 italic">Can upgrade to next level by paying via giftcard</p>
+              </div>
+            )}
+
+            {selectedTier === 'starter' && (
+              <div style={{ color: '#e8e8d0' }} className="space-y-4">
+                <div>
+                  <p className="text-2xl font-bold mb-2">€399 · Begin your wealth journey</p>
+                  <p className="text-sm">Start building your network and earning power</p>
+                </div>
+                <div style={{
+                  background: 'linear-gradient(to right, #d4af37, #e8d4a2)',
+                  height: '1px'
+                }}></div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">KEY DETAILS</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>• <strong>Earning cap:</strong> €1,000 / month</li>
+                    <li>• <strong>Investment min:</strong> €1,000</li>
+                    <li>• <strong>Transfer fee:</strong> 3.90% (80% network, 20% management)</li>
+                    <li>• <strong>AIG Cash transfers:</strong> FREE (no commissions)</li>
+                    <li>• <strong>Membership:</strong> Always FREE</li>
+                  </ul>
+                </div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">SERVICES INCLUDED</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>✓ WDM and AIG ecosystem access</li>
+                    <li>✓ AIG Investment platform access</li>
+                    <li>✓ AIG MoneyGames App</li>
+                    <li>✓ AIG Investor Alerts App</li>
+                    <li>✓ Affiliate commissions – 6 levels (26% Level-1)</li>
+                    <li>✓ Marketplace seller access</li>
+                    <li>✓ Monthly webinars</li>
+                  </ul>
+                </div>
+                <p style={{ color: '#e8e8d0' }} className="text-xs mt-4 italic">Can upgrade to next level by paying via giftcard</p>
+              </div>
+            )}
+
+            {selectedTier === 'startup' && (
+              <div style={{ color: '#e8e8d0' }} className="space-y-4">
+                <div>
+                  <p className="text-2xl font-bold mb-2">€699 · Scale your growth fast</p>
+                  <p className="text-sm">Expand your earning potential and services</p>
+                </div>
+                <div style={{
+                  background: 'linear-gradient(to right, #d4af37, #e8d4a2)',
+                  height: '1px'
+                }}></div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">KEY DETAILS</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>• <strong>Earning cap:</strong> €5,000 / month</li>
+                    <li>• <strong>Investment min:</strong> €5,000</li>
+                    <li>• <strong>Transfer fee:</strong> 1.90%</li>
+                    <li>• <strong>AIG Cash transfers:</strong> FREE (no commissions)</li>
+                    <li>• <strong>Membership:</strong> Always FREE</li>
+                  </ul>
+                </div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">SERVICES INCLUDED</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>✓ WDM and AIG ecosystem access</li>
+                    <li>✓ AIG Investment platform</li>
+                    <li>✓ AIG MoneyGames App</li>
+                    <li>✓ AIG Investor Alerts App</li>
+                    <li>✓ AIG HELO (emergency travel assistant)</li>
+                    <li>✓ AIG Business Weather</li>
+                    <li>✓ Affiliate commissions – 6 levels</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {selectedTier === 'premium' && (
+              <div style={{ color: '#e8e8d0' }} className="space-y-4">
+                <div>
+                  <p className="text-2xl font-bold mb-2">€1,099 · It's time to build</p>
+                  <p className="text-sm">Unlock premium tools and unlimited potential</p>
+                </div>
+                <div style={{
+                  background: 'linear-gradient(to right, #d4af37, #e8d4a2)',
+                  height: '1px'
+                }}></div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">KEY DETAILS</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>• <strong>Earning cap:</strong> €10,000 / month</li>
+                    <li>• <strong>Investment min:</strong> €10,000</li>
+                    <li>• <strong>Transfer fee:</strong> 0.90%</li>
+                    <li>• <strong>AIG Cash transfers:</strong> FREE (no commissions)</li>
+                    <li>• <strong>Membership:</strong> Always FREE</li>
+                  </ul>
+                </div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">SERVICES INCLUDED</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>✓ All Start-Up features</li>
+                    <li>✓ AIG Me (personal relationship manager)</li>
+                    <li>✓ Priority support</li>
+                    <li>✓ Enhanced seller tools</li>
+                    <li>✓ 6-level affiliate program</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {selectedTier === 'professional' && (
+              <div style={{ color: '#e8e8d0' }} className="space-y-4">
+                <div>
+                  <p className="text-2xl font-bold mb-2">€2,999 · Reach the world</p>
+                  <p className="text-sm">Maximum earning potential with all premium features</p>
+                </div>
+                <div style={{
+                  background: 'linear-gradient(to right, #d4af37, #e8d4a2)',
+                  height: '1px'
+                }}></div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">KEY DETAILS</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>• <strong>Earning cap:</strong> Unlimited / month</li>
+                    <li>• <strong>Investment min:</strong> €200,000</li>
+                    <li>• <strong>Transfer fee:</strong> 0.15%</li>
+                    <li>• <strong>AIG Cash transfers:</strong> FREE (no commissions)</li>
+                    <li>• <strong>Membership:</strong> Always FREE</li>
+                  </ul>
+                </div>
+                <div>
+                  <p style={{ color: '#d4af37' }} className="font-bold text-sm mb-3">ALL SERVICES INCLUDED</p>
+                  <ul className="space-y-2 text-sm">
+                    <li>✓ All current & future AIG apps</li>
+                    <li>✓ AIG Record (organization management)</li>
+                    <li>✓ AIG Secure Sign (e-signature with audit trail)</li>
+                    <li>✓ AIG Ask (Claude AI integration)</li>
+                    <li>✓ AIG ONE (premium dashboard)</li>
+                    <li>✓ Affiliate commissions – 10 levels</li>
+                    <li>✓ 24/7 VIP support</li>
+                    <li>✓ Strategic partnership opportunities</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            <div style={{
+              background: 'linear-gradient(to right, #d4af37, #e8d4a2)',
+              height: '1px'
+            }} className="my-6"></div>
+
+            <div style={{ backgroundColor: 'rgba(212, 175, 55, 0.1)', borderLeft: '3px solid #d4af37' }} className="p-4 rounded text-sm">
+              <p style={{ color: '#d4af37' }} className="font-semibold mb-2">💡 Friend Transfers</p>
+              <p style={{ color: '#e8e8d0' }} className="text-xs">Send AIG Cash to trusted partners for FREE. Establish connection with shared code, both accept, then transfer using username—no real names needed.</p>
+            </div>
+
+            <button
+              onClick={() => setSelectedTier(null)}
+              style={{
+                backgroundColor: '#d4af37',
+                color: '#1a0f15'
+              }}
+              className="w-full mt-6 py-3 rounded-lg font-bold transition hover:bg-[#e8d4a2]"
+            >
+              Get Started
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
